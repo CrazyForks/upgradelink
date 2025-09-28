@@ -101,11 +101,11 @@ docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:
 
 # 其他相关项目存储库
 ## Sdk
-- [Go](https://github.com/toolsetlink/upgradelink-api-go)   GO sdk
-- [Java](https://github.com/toolsetlink/upgradelink-api-java)   Java sdk
-- [Dart](https://github.com/toolsetlink/upgradelink-api-dart)     Dart sdk
-- [Android](https://github.com/toolsetlink/upgradelink-api-android)  Android sdk
-- [TypeScript](https://github.com/toolsetlink/upgradelink-api-ts) TypeScript sdk
+- [upgradelink-api-go](https://github.com/toolsetlink/upgradelink-api-go)   GO sdk
+- [upgradelink-api-java](https://github.com/toolsetlink/upgradelink-api-java)   Java sdk
+- [upgradelink-api-dart](https://github.com/toolsetlink/upgradelink-api-dart)     Dart sdk
+- [upgradelink-api-android](https://github.com/toolsetlink/upgradelink-api-android)  Android sdk
+- [upgradelink-api-ts](https://github.com/toolsetlink/upgradelink-api-ts) TypeScript sdk
 
 # 谁在使用
 - 托管应用：100+
