@@ -85,6 +85,7 @@ docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:
 
 ## 其他方式快速入门：
 - [standalone build 文档](https://www.toolsetlink.com/upgrade/deploy/quick-start-docker2.html)
+- [集群化部署](https://www.toolsetlink.com/upgrade/deploy/cluster-docker.html)
 
 
 # 文档
