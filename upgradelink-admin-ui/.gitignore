@@ -21,7 +21,7 @@ pnpm-debug.log*
 *.sw?
 
 # 构建输出目录
-dist/
+#dist/
 
 # 缓存/临时文件
 .cache/
