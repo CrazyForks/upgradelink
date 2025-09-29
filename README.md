@@ -3,7 +3,7 @@
 ![](https://img.shields.io/badge/free-pricing?logo=free&color=%20%23155EEF&label=pricing&labelColor=%20%23528bff)
 [![GitHub Repo stars](https://img.shields.io/github/stars/toolsetlink/upgradelink)](https://github.com/toolsetlink/upgradelink)
 ![](https://github.com/toolsetlink/upgradelink/actions/workflows/release.yml/badge.svg?branch=release)
-
+![star](https://gitcode.com/toolsetlink/upgradelink/star/badge.svg)
 
 ## 它是做什么的
 UpgradeLink 是**全端支持的应用升级系统与应用升级分发平台**，为应用提供一站式的应用升级及分发解决方案，核心价值包括：
@@ -47,10 +47,16 @@ UpgradeLink 是**全端支持的应用升级系统与应用升级分发平台**�
 ### 1. 环境准备
 需要安装[Docker](https://www.docker.com/)。
 ### 2. 下载项目
-#### 2.1. 从GitHub下载项目
+#### 2.1
+从GitHub下载项目
 ```shell
-git clone https://github.com/toolsetlink/upgradelink
+git clone https://github.com/toolsetlink/upgradelink.git
 ```
+从GitCode下载项目
+```shell
+git clone https://gitcode.com/toolsetlink/upgradelink.git
+```
+
 ### 3.进入项目 启动development目录下的 mysql 与 redis
 > 注意：如果有独立的mysql 与 redis 环境 参考 自行build 文档。
 
