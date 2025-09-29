@@ -19,10 +19,13 @@ export const dataFormSchemas: VbenFormProps = {
     //   },
     // },
     {
-      fieldName: "nickname",
-      label: $t("sys.user.nickname"),
+      fieldName: "avatar",
+      label: $t("sys.user.avatar"),
       component: "Input",
-      rules: z.string().max(40),
+      dependencies: {
+        show: (values) => values.avatar,
+        triggerFields: ["avatar"],
+      },
     },
     {
       fieldName: "mobile",

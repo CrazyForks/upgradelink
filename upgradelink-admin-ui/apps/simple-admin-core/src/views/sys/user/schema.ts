@@ -109,16 +109,25 @@ export const searchFormSchemas: VbenFormProps = {
 
 export const dataFormSchemas: VbenFormProps = {
   schema: [
+    // {
+    //   fieldName: "avatar",
+    //   label: $t("sys.user.avatar"),
+    //   component: "ImageUpload",
+    //   componentProps: {
+    //     accept: ["png", "jpeg", "jpg"],
+    //     maxSize: 2,
+    //     maxNumber: 1,
+    //     multiple: false,
+    //     provider: "cloud-default",
+    //   },
+    // },
     {
       fieldName: "avatar",
       label: $t("sys.user.avatar"),
-      component: "ImageUpload",
-      componentProps: {
-        accept: ["png", "jpeg", "jpg"],
-        maxSize: 2,
-        maxNumber: 1,
-        multiple: false,
-        provider: "cloud-default",
+      component: "Input",
+      dependencies: {
+        show: (values) => values.avatar,
+        triggerFields: ["avatar"],
       },
     },
     {
