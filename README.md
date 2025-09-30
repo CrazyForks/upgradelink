@@ -36,7 +36,7 @@ UpgradeLink 是**全端支持的应用升级系统与应用升级分发平台**�
 | [Android](https://github.com/toolsetlink/upgradelink-api-android)
 | [TypeScript](https://github.com/toolsetlink/upgradelink-api-ts) |
 
-- 支持主流开发语言：Go、Java、Dart、Android、TypeScript
+- 支持主流开发语言：Go、Java、Python、Dart、Android、TypeScript
 - 优势：提供便捷的 SDK 接入方式，帮助快速实现应用升级功能
 #### 灵活升级策略（📁）
 - 支持维度：设备、机型等
@@ -111,6 +111,7 @@ docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:
 ## Sdk
 - [upgradelink-api-go](https://github.com/toolsetlink/upgradelink-api-go)   GO sdk
 - [upgradelink-api-java](https://github.com/toolsetlink/upgradelink-api-java)   Java sdk
+- [upgradelink-api-python](https://github.com/toolsetlink/upgradelink-api-python)   Python sdk
 - [upgradelink-api-dart](https://github.com/toolsetlink/upgradelink-api-dart)     Dart sdk
 - [upgradelink-api-android](https://github.com/toolsetlink/upgradelink-api-android)  Android sdk
 - [upgradelink-api-ts](https://github.com/toolsetlink/upgradelink-api-ts) TypeScript sdk
