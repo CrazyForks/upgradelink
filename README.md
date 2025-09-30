@@ -29,7 +29,9 @@ UpgradeLink 是**全端支持的应用升级系统与应用升级分发平台**�
 - API 服务内置多重安全机制，采用**签名验证、防重放攻击、请求频率限制**等技术
 - 保障应用升级过程零风险
 #### 开箱即用 API-SDK（📦）
-| [Go](https://github.com/toolsetlink/upgradelink-api-go) | [Java](https://github.com/toolsetlink/upgradelink-api-java)
+| [Go](https://github.com/toolsetlink/upgradelink-api-go) 
+| [Java](https://github.com/toolsetlink/upgradelink-api-java)
+| [Python](https://github.com/toolsetlink/upgradelink-api-python)
 | [Dart](https://github.com/toolsetlink/upgradelink-api-dart)
 | [Android](https://github.com/toolsetlink/upgradelink-api-android)
 | [TypeScript](https://github.com/toolsetlink/upgradelink-api-ts) |
