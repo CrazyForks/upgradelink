@@ -53,3 +53,7 @@ CMD [ "/bin/bash", "start.sh" ]
 # docker buildx build --no-cache -t upgradelink-api:2.0.0 --platform=linux/amd64 -f build/Dockerfile . --load
 # arm架构
 # docker buildx build --no-cache -t upgradelink-api:2.0.0 --platform=linux/arm64 -f build/Dockerfile . --load
+
+
+# 打包开源镜像
+# docker buildx build -t toolsetlink/upgradelink-api:2.0.0 --platform=linux/amd64,linux/arm64 -f build/Dockerfile . --push
