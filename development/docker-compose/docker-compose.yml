@@ -1,0 +1,119 @@
+version: '2.0.0'
+services:
+  upgrade-mysql:
+    image: mysql:8.4.3 # MySQL 8.4.3 镜像
+    container_name: upgrade-mysql # 容器名称
+    environment:
+      MYSQL_ROOT_PASSWORD: Rootroot123! # 设置根用户密码
+      MYSQL_DATABASE: upgrade # 创建默认数据库
+      MYSQL_USER: user # 创建普通用户
+      MYSQL_PASSWORD: user_password # 设置普通用户的密码
+    ports:
+      - "3306:3306" # 指定宿主机端口与容器端口映射关系
+    volumes:
+      - ../mysql-8.4.3/data:/var/lib/mysql # 映射数据目录，宿主机:容器
+      - ../mysql-8.4.3/my.cnf:/etc/mysql/my.cnf # 映射配置文件目录
+    restart: always # 容器开机自启
+  upgrade-redis: # 服务名称
+    image: redis:6.0.20 # redis镜像版本
+    container_name: upgrade-redis # 容器名称
+    ports:
+      - 6379:6379 # 指定宿主机端口与容器端口映射关系，宿主机：容器
+    volumes:
+      - ../redis-6.0.20/redis.conf:/etc/redis/redis.conf # 映射配置文件目录，宿主机:容器
+      - ../redis-6.0.20/data:/data # 映射数据目录，宿主机:容器
+    restart: always # 容器开机自启
+    privileged: true # 获取宿主机root权限
+    command: [ "redis-server","/etc/redis/redis.conf" ] # 指定配置文件启动redis-server进程
+  upgradelink-admin-core-rpc:
+    image: toolsetlink/upgradelink-admin-core-rpc:2.0.0
+    container_name: upgradelink-admin-core-rpc # 容器名称
+    volumes:
+      - ./upgradelink-admin-core/supervisord-rpc.conf:/link/upgradelink-admin-core-rpc/build/supervisord.conf
+      - ./upgradelink-admin-core/core-rpc.yaml:/link/upgradelink-admin-core-rpc/rpc/etc/core-rpc.yaml
+    ports:
+      - '9101:9101'
+    depends_on: # 启动顺序
+      - upgrade-mysql
+      - upgrade-redis
+  upgradelink-admin-file:
+    image: toolsetlink/upgradelink-admin-file:2.0.0
+    container_name: upgradelink-admin-file # 容器名称
+    volumes:
+      - ./upgradelink-admin-file/nginx.conf:/etc/nginx/nginx.conf
+      - ./upgradelink-admin-file/logrotate-nginx:/link/upgradelink-admin-file/build/logrotate-nginx
+      - ./upgradelink-admin-file/supervisord.conf:/link/upgradelink-admin-file/build/supervisord.conf
+      - ./upgradelink-admin-file/fms.yaml:/link/upgradelink-admin-file/etc/fms.yaml
+    ports:
+      - '9112:9112'
+    depends_on: # 启动顺序
+      - upgrade-mysql
+      - upgrade-redis
+  upgradelink-admin-message:
+    image: toolsetlink/upgradelink-admin-message:2.0.0
+    container_name: upgradelink-admin-message # 容器名称
+    volumes:
+      - ./upgradelink-admin-message/supervisord.conf:/link/upgradelink-admin-message/build/supervisord.conf
+      - ./upgradelink-admin-message/mcms.yaml:/link/upgradelink-admin-message/etc/mcms.yaml
+    ports:
+      - '9106:9106'
+    depends_on: # 启动顺序
+      - upgrade-mysql
+      - upgrade-redis
+  upgradelink-admin-upgrade:
+    image: toolsetlink/upgradelink-admin-upgrade:2.0.0
+    container_name: upgradelink-admin-upgrade # 容器名称
+    volumes:
+      - ./upgradelink-admin-upgrade/nginx.conf:/etc/nginx/nginx.conf
+      - ./upgradelink-admin-upgrade/logrotate-nginx:/link/upgradelink-admin-upgrade/build/logrotate-nginx
+      - ./upgradelink-admin-upgrade/supervisord.conf:/link/upgradelink-admin-upgrade/build/supervisord.conf
+      - ./upgradelink-admin-upgrade/upgrade.yaml:/link/upgradelink-admin-upgrade/etc/upgrade.yaml
+    ports:
+      - '8182:8182'
+    depends_on: # 启动顺序
+      - upgrade-mysql
+      - upgrade-redis
+  upgradelink-admin-core-api:
+    image: toolsetlink/upgradelink-admin-core-api:2.0.0
+    container_name: upgradelink-admin-core-api # 容器名称
+    volumes:
+      - ./upgradelink-admin-core/nginx.conf:/etc/nginx/nginx.conf
+      - ./upgradelink-admin-core/logrotate-nginx:/link/upgradelink-admin-core-api/build/logrotate-nginx
+      - ./upgradelink-admin-core/supervisord-api.conf:/link/upgradelink-admin-core-api/build/supervisord.conf
+      - ./upgradelink-admin-core/core-api.yaml:/link/upgradelink-admin-core-api/api/etc/core-api.yaml
+    ports:
+      - '9110:9110'
+    depends_on: # 启动顺序
+      - upgradelink-admin-core-rpc
+      - upgradelink-admin-file
+      - upgradelink-admin-message
+      - upgradelink-admin-upgrade
+  upgradelink-admin-ui:
+    image: toolsetlink/upgradelink-admin-ui:2.0.0
+    container_name: upgradelink-admin-ui # 容器名称
+    volumes:
+      - ./upgradelink-admin-ui/nginx.conf:/etc/nginx/nginx.conf
+      - ./upgradelink-admin-ui/logrotate-nginx:/link/upgradelink-admin-ui/build/logrotate-nginx
+      - ./upgradelink-admin-ui/supervisord.conf:/link/upgradelink-admin-ui/build/supervisord.conf
+    ports:
+      - '80:80'
+    depends_on: # 启动顺序
+      - upgradelink-admin-core-api
+  upgradelink-api:
+    image: toolsetlink/upgradelink-api:2.0.0
+    container_name: upgradelink-api # 容器名称
+    volumes:
+      - ./upgradelink-api/nginx.conf:/etc/nginx/nginx.conf
+      - ./upgradelink-api/logrotate-nginx:/link/upgradelink-api/build/logrotate-nginx
+      - ./upgradelink-api/supervisord.conf:/link/upgradelink-api/build/supervisord.conf
+      - ./upgradelink-api/api.yaml:/link/upgradelink-api/api/etc/api.yaml
+    ports:
+      - '8080:8080'
+    depends_on: # 启动顺序
+      - upgradelink-admin-ui
+
+## 各个模块文件下的配置文件为替换配置文件，容器内程序配置使用默认数据库连接，需要在此选择挂载重新配置
+## 可选择自己所需启动的容器、修改端口映射关系
+## 更多compose操作请参考：https://docs.docker.com/compose/
+## 在当前目录执行
+## docker-compose up -d
