@@ -6,67 +6,70 @@
 ![star](https://gitcode.com/toolsetlink/upgradelink/star/badge.svg)
 ![star](https://gitee.com/toolsetlink/upgradelink/badge/star.svg)
 
+## Language
 
-## 它是做什么的
-UpgradeLink 是**全端支持的应用升级系统与应用分发平台**，为应用提供一站式的应用升级及分发解决方案，无论你开发的是 ​​Android 原生、Tauri 轻量化跨端、还是 Electron 桌面应用​​，都可以使用 UpgradeLink 实现统一的升级逻辑。
+- [English](README.md)
+- [中文](README_zh.md)
 
-核心价值包括：
-- 有效降低技术门槛
-- 减少研发成本
-- 助力业务快速搭建稳定高质量的应用
+## What is it
+UpgradeLink is a **full-platform supported application upgrade system and application distribution platform** that provides one-stop application upgrade and distribution solutions. Whether you develop ​​Android native, Tauri lightweight cross-platform, or Electron desktop applications, you can use UpgradeLink to implement unified upgrade logic.
 
-# 介绍
+Core values include:
+- Effectively lowering technical barriers
+- Reducing R&D costs
+- Helping businesses quickly build stable and high-quality applications
 
-## 1、全端应用升级支持
-覆盖主流应用开发框架/系统，提供针对性升级能力：
+# Introduction
 
-| 支持类型        | 核心功能描述                                |
+## 1. Full-platform Application Upgrade Support
+Covers mainstream application development frameworks/systems and provides targeted upgrade capabilities:
+
+| Supported Type | Core Function Description |
 |-------------|---------------------------------------|
-| 安卓应用升级      | 支持 APK 文件上传与管理，提供专属升级策略，用于应用更新        |
-| Tauri 应用升级  | 完全兼容 Tauri 官方升级组件接口，提供标准化升级策略与流程管理    |
-| Electron 升级 | 完全兼容 Electron 官方升级组件接口，提供标准化升级策略与流程管理 |
+| Android App Upgrade | Supports APK file upload and management, provides dedicated upgrade strategies for application updates |
+| Tauri App Upgrade | Fully compatible with Tauri official upgrade component interface, provides standardized upgrade strategies and process management |
+| Electron Upgrade | Fully compatible with Electron official upgrade component interface, provides standardized upgrade strategies and process management |
 
 
-## 2、核心功能模块
+## 2. Core Functional Modules
 
-#### 企业级安全防护（🔐）
-- API 服务内置多重安全机制，采用**签名验证、防重放攻击、请求频率限制**等技术
-- 保障应用升级过程零风险
-#### 开箱即用 API-SDK（📦）
+#### Enterprise-level Security Protection (🔐)
+- API services have multiple built-in security mechanisms, adopting technologies such as **signature verification, anti-replay attacks, and request frequency limiting**
+- Ensuring zero risks during the application upgrade process
+#### Out-of-the-box API-SDK (📦)
 | [Go](https://github.com/toolsetlink/upgradelink-api-go) 
-| [Java](https://github.com/toolsetlink/upgradelink-api-java)
-| [Python](https://github.com/toolsetlink/upgradelink-api-python)
-| [Dart](https://github.com/toolsetlink/upgradelink-api-dart)
-| [Android](https://github.com/toolsetlink/upgradelink-api-android)
+| [Java](https://github.com/toolsetlink/upgradelink-api-java) 
+| [Python](https://github.com/toolsetlink/upgradelink-api-python) 
+| [Dart](https://github.com/toolsetlink/upgradelink-api-dart) 
+| [Android](https://github.com/toolsetlink/upgradelink-api-android) 
 | [TypeScript](https://github.com/toolsetlink/upgradelink-api-ts) |
 
-- 支持主流开发语言：Go、Java、Python、Dart、Android、TypeScript
-- 优势：提供便捷的 SDK 接入方式，帮助快速实现应用升级功能
-#### 灵活升级策略（📁）
-- 支持维度：设备、机型等
-- 管理方式：可通过可视化控制台精准管理升级包分发
+- Supports mainstream development languages: Go, Java, Python, Dart, Android, TypeScript
+- Advantage: Provides convenient SDK integration methods to help quickly implement application upgrade functions
+#### Flexible Upgrade Strategies (📁)
+- Supported dimensions: devices, models, etc.
+- Management method: Accurate management of upgrade package distribution through the visual console
 
 
+# Quick Start in Just 4 Steps.
 
-#  快速开始只需4步。
-
-### 1. 环境准备
-需要安装[Docker](https://www.docker.com/)。
-### 2. 下载项目
+### 1. Environment Preparation
+You need to install [Docker](https://www.docker.com/).
+### 2. Download the Project
 #### 2.1
-从GitHub下载项目
+Download from GitHub
 ```shell
 git clone https://github.com/toolsetlink/upgradelink.git
 ```
-从GitCode下载项目
+Download from GitCode
 ```shell
 git clone https://gitcode.com/toolsetlink/upgradelink.git
 ```
 
-### 3.进入项目 启动development目录下的 mysql 与 redis
-> 注意：如果有独立的mysql 与 redis 环境 参考 自行build 文档。
+### 3. Enter the Project and Start mysql and redis in the development Directory
+> Note: If you have independent mysql and redis environments, refer to the self-build documentation.
 
-#### 3.1 启动 mysql
+#### 3.1 Start mysql
 
 ```shell
 cd upgradelink/development/mysql-8.4.3
@@ -77,7 +80,7 @@ docker-compose up -d
 ```
 
 
-#### 3.1 启动 redis
+#### 3.2 Start redis
 
 ```shell
 cd upgradelink/development/redis-6.0.20
@@ -87,49 +90,49 @@ cd upgradelink/development/redis-6.0.20
 docker-compose up -d
 ```
 
-### 4. 启动UpgradeLink
+### 4. Start UpgradeLink
 
-首次执行命令时，会自动下载所需的相关Docker镜像，需要等待的时长取决于网络速度。您也可以提前下载好相关镜像，以缩短执行部署命令的等待时间。
+When executing the command for the first time, the required Docker images will be automatically downloaded. The waiting time depends on the network speed. You can also download the relevant images in advance to shorten the waiting time for deployment commands.
 
 ```shell
 docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:8888 toolsetlink/upgradelink-standalone:v2.0.6
 ```
 
-## 其他方式快速入门：
-- [standalone build 文档](https://www.toolsetlink.com/upgrade/deploy/quick-start-docker2.html)
-- [docker-compose 快速启动文档](https://www.toolsetlink.com/upgrade/deploy/docker-compose.html)
-- [集群化部署](https://www.toolsetlink.com/upgrade/deploy/cluster-docker.html)
+## Other Quick Start Methods:
+- [Standalone build documentation](https://www.toolsetlink.com/upgrade/deploy/quick-start-docker2.html)
+- [docker-compose quick start documentation](https://www.toolsetlink.com/upgrade/deploy/docker-compose.html)
+- [Clustered deployment](https://www.toolsetlink.com/upgrade/deploy/cluster-docker.html)
 
 
-# 文档
-您可以从 [UpgradeLink](https://www.toolsetlink.com/upgrade/) 网站查看完整文档。
+# Documentation
+You can view the complete documentation from the [UpgradeLink](https://www.toolsetlink.com/upgrade/) website.
 
-所有最新和长期通知也可以在此处找到 [UpgradeLink 通知问题](https://github.com/toolsetlink/upgradelink/issues)。
+All latest and long-term notifications can also be found here [UpgradeLink Notification Issues](https://github.com/toolsetlink/upgradelink/issues).
 
-# 贡献
-欢迎贡献者加入 UpgradeLink 项目。请 [进群](https://www.toolsetlink.com/upgrade/communication-group.html) 了解如何为这个项目做出贡献。
+# Contribution
+Contributors are welcome to join the UpgradeLink project. Please [join the group](https://www.toolsetlink.com/upgrade/communication-group.html) to learn how to contribute to this project.
 
-> 本项目基于 [Go Zero](https://go-zero.dev/) 与 [simple-admin](https://doc.ryansu.tech/) 开发。
+> This project is developed based on [Go Zero](https://go-zero.dev/) and [simple-admin](https://doc.ryansu.tech/).
 
 
-# 其他相关项目存储库
-## Sdk
-- [upgradelink-api-go](https://github.com/toolsetlink/upgradelink-api-go)   GO sdk
-- [upgradelink-api-java](https://github.com/toolsetlink/upgradelink-api-java)   Java sdk
-- [upgradelink-api-python](https://github.com/toolsetlink/upgradelink-api-python)   Python sdk
-- [upgradelink-api-dart](https://github.com/toolsetlink/upgradelink-api-dart)     Dart sdk
-- [upgradelink-api-android](https://github.com/toolsetlink/upgradelink-api-android)  Android sdk
-- [upgradelink-api-ts](https://github.com/toolsetlink/upgradelink-api-ts) TypeScript sdk
+# Other Related Project Repositories
+## SDK
+- [upgradelink-api-go](https://github.com/toolsetlink/upgradelink-api-go)   GO SDK
+- [upgradelink-api-java](https://github.com/toolsetlink/upgradelink-api-java)   Java SDK
+- [upgradelink-api-python](https://github.com/toolsetlink/upgradelink-api-python)   Python SDK
+- [upgradelink-api-dart](https://github.com/toolsetlink/upgradelink-api-dart)     Dart SDK
+- [upgradelink-api-android](https://github.com/toolsetlink/upgradelink-api-android)  Android SDK
+- [upgradelink-api-ts](https://github.com/toolsetlink/upgradelink-api-ts) TypeScript SDK
 
-# 谁在使用
-- 托管应用：100+
-- 托管应用版本：900+
+# Who is Using
+- Managed applications: 100+
+- Managed application versions: 900+
 
-### 托管的开源项目
+### Managed Open Source Projects
 
-企业版 开源计划-免费提供服务 [计划链接](https://www.toolsetlink.com/upgrade/open-source/plan.html)
+Enterprise Edition Open Source Plan - Free Service [Plan Link](https://www.toolsetlink.com/upgrade/open-source/plan.html)
 
-[note-gen (AI笔记软件)](https://notegen.top/en)         | [BongoCat（桌宠）](https://github.com/ayangweb/BongoCat)   | [MarkFlowy (MD 编辑器)](https://github.com/drl990114/MarkFlowy)    | [lazyeat (手势控制)](https://github.com/lanxiuyun/lazyeat)  |
+[note-gen (AI Note Software)](https://notegen.top/en)         | [BongoCat (Desktop Pet)](https://github.com/ayangweb/BongoCat)   | [MarkFlowy (MD Editor)](https://github.com/drl990114/MarkFlowy)    | [lazyeat (Gesture Control)](https://github.com/lanxiuyun/lazyeat)  |
 
 
 # Contributors
@@ -147,20 +150,20 @@ docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:
 #
 #
 
-### 授权
-为避免对授权范围的误解，本项目对“自用”和“商用”的界定如下：
-#### 🔍 允许的“自用”行为（无需额外授权）
-1. **个人场景**：
-    - 个人非盈利性使用（如学习、个人工具部署、非商业目的的个人项目）；
-    - 修改代码后仅用于个人使用（不向任何第三方传播、提供服务或收费）。
-2. **企业/组织场景**：
-    - 企业内部员工使用（如部署在公司内网供员工办公使用、内部系统集成）；
-    - 企业为自身业务需求进行二次开发，但修改后的版本仅用于企业内部运营（不对外提供）。
-#### ❌ 禁止的“商用”行为（需提前获得作者书面授权）
-1. 直接或间接将本项目（或修改后的衍生版本）作为商品销售、出租、许可给第三方；
-2. 基于本项目提供付费服务（如付费托管、技术支持、定制化开发服务等）；
-3. 将本项目（或修改后的衍生版本）嵌入商业产品中，以盈利为目的向客户提供；
-4. 以“开源免费”为噱头，通过广告、流量、数据收集等方式从本项目中获利；
-5. 其他以盈利为目的的使用方式（未明确列举但符合“商用”性质的行为）。
-#### 📩 授权申请
-若你需要在上述“禁止的商用行为”范围内使用本项目，请通过 [toolsetlink@163.com](https://www.toolsetlink.com/) 联系作者，获取书面授权许可。
+### License
+To avoid misunderstandings about the scope of the license, this project defines "personal use" and "commercial use" as follows:
+#### 🔍 Permitted "Personal Use" Behaviors (No additional authorization required)
+1. **Personal Scenarios**:
+    - Personal non-profit use (such as learning, personal tool deployment, personal projects for non-commercial purposes);
+    - Modifying the code for personal use only (not propagating, providing services, or charging to any third party).
+2. **Enterprise/Organization Scenarios**:
+    - Internal use by enterprise employees (such as deployment in the company's intranet for employee office use, internal system integration);
+    - Secondary development by enterprises for their own business needs, but the modified version is only used for internal enterprise operations (not provided externally).
+#### ❌ Prohibited "Commercial Use" Behaviors (Written authorization from the author is required in advance)
+1. Directly or indirectly selling, renting, or licensing this project (or modified derivative versions) to third parties as commodities;
+2. Providing paid services based on this project (such as paid hosting, technical support, customized development services, etc.);
+3. Embedding this project (or modified derivative versions) into commercial products and providing them to customers for profit;
+4. Using this project to profit through advertising, traffic, data collection, etc. under the pretext of "open source and free";
+5. Other profit-oriented usage methods (behaviors not explicitly listed but conforming to the nature of "commercial use").
+#### 📩 Authorization Application
+If you need to use this project within the scope of the above "prohibited commercial behaviors", please contact the author via [toolsetlink@163.com](https://www.toolsetlink.com/) to obtain written authorization.
