@@ -2,8 +2,10 @@
 
 ![](https://img.shields.io/badge/free-pricing?logo=free&color=%20%23155EEF&label=pricing&labelColor=%20%23528bff)
 [![GitHub Repo stars](https://img.shields.io/github/stars/toolsetlink/upgradelink)](https://github.com/toolsetlink/upgradelink)
-![](https://github.com/toolsetlink/upgradelink/actions/workflows/release.yml/badge.svg?branch=release)
+![star](https://github.com/toolsetlink/upgradelink/actions/workflows/release.yml/badge.svg?branch=release)
 ![star](https://gitcode.com/toolsetlink/upgradelink/star/badge.svg)
+![star](https://gitee.com/toolsetlink/upgradelink/badge/star.svg)
+
 
 ## 它是做什么的
 UpgradeLink 是**全端支持的应用升级系统与应用分发平台**，为应用提供一站式的应用升级及分发解决方案，无论你开发的是 ​​Android 原生、Tauri 轻量化跨端、还是 Electron 桌面应用​​，都可以使用 UpgradeLink 实现统一的升级逻辑。
