@@ -138,10 +138,9 @@ docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:
   <img src="https://contrib.rocks/image?repo=toolsetlink/upgradelink" />
 </a>
 
-[//]: # (# Star History)
+# Star History
 
-[//]: # ()
-[//]: # ([![Star History Chart]&#40;https://api.star-history.com/svg?repos=toolsetlink/upgradelink&type=Date&#41;]&#40;https://www.star-history.com/#toolsetlink/upgradelink&Date&#41;)
+[![Star History Chart](https://api.star-history.com/svg?repos=toolsetlink/upgradelink&type=Date)](https://www.star-history.com/#toolsetlink/upgradelink&Date)
 
 
 #
