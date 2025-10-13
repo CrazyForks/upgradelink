@@ -6,7 +6,9 @@
 ![star](https://gitcode.com/toolsetlink/upgradelink/star/badge.svg)
 
 ## 它是做什么的
-UpgradeLink 是**全端支持的应用升级系统与应用升级分发平台**，为应用提供一站式的应用升级及分发解决方案，核心价值包括：
+UpgradeLink 是**全端支持的应用升级系统与应用分发平台**，为应用提供一站式的应用升级及分发解决方案，无论你开发的是 ​​Android 原生、Tauri 轻量化跨端、还是 Electron 桌面应用​​，都可以使用 UpgradeLink 实现统一的升级逻辑。
+
+核心价值包括：
 - 有效降低技术门槛
 - 减少研发成本
 - 助力业务快速搭建稳定高质量的应用
