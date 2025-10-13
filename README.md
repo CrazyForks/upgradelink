@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/badge/free-pricing?logo=free&color=%20%23155EEF&label=pricing&labelColor=%20%23528bff)
 [![GitHub Repo stars](https://img.shields.io/github/stars/toolsetlink/upgradelink)](https://github.com/toolsetlink/upgradelink)
-![star](https://github.com/toolsetlink/upgradelink/actions/workflows/release.yml/badge.svg?branch=release)
+![](https://github.com/toolsetlink/upgradelink/actions/workflows/release.yml/badge.svg?branch=release)
 ![star](https://gitcode.com/toolsetlink/upgradelink/star/badge.svg)
 ![star](https://gitee.com/toolsetlink/upgradelink/badge/star.svg)
 
