@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"sync"
 	"upgradelink-admin-upgrade/server/ent/fmscloudfile"
 	"upgradelink-admin-upgrade/server/ent/sysuser"
 	"upgradelink-admin-upgrade/server/ent/upgradeapk"
@@ -36,6 +37,16 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileversion"
+	"upgradelink-admin-upgrade/server/ent/upgradelnx"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxversion"
+	"upgradelink-admin-upgrade/server/ent/upgrademac"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacversion"
 	"upgradelink-admin-upgrade/server/ent/upgradetauri"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategyflowlimitstrategy"
@@ -47,7 +58,11 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlversion"
-	"sync"
+	"upgradelink-admin-upgrade/server/ent/upgradewin"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinversion"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
@@ -141,6 +156,16 @@ func checkColumn(table, column string) error {
 			upgradefileupgradestrategyflowlimitstrategy.Table:          upgradefileupgradestrategyflowlimitstrategy.ValidColumn,
 			upgradefileupgradestrategygraystrategy.Table:               upgradefileupgradestrategygraystrategy.ValidColumn,
 			upgradefileversion.Table:                                   upgradefileversion.ValidColumn,
+			upgradelnx.Table:                                           upgradelnx.ValidColumn,
+			upgradelnxupgradestrategy.Table:                            upgradelnxupgradestrategy.ValidColumn,
+			upgradelnxupgradestrategyflowlimitstrategy.Table:           upgradelnxupgradestrategyflowlimitstrategy.ValidColumn,
+			upgradelnxupgradestrategygraystrategy.Table:                upgradelnxupgradestrategygraystrategy.ValidColumn,
+			upgradelnxversion.Table:                                    upgradelnxversion.ValidColumn,
+			upgrademac.Table:                                           upgrademac.ValidColumn,
+			upgrademacupgradestrategy.Table:                            upgrademacupgradestrategy.ValidColumn,
+			upgrademacupgradestrategyflowlimitstrategy.Table:           upgrademacupgradestrategyflowlimitstrategy.ValidColumn,
+			upgrademacupgradestrategygraystrategy.Table:                upgrademacupgradestrategygraystrategy.ValidColumn,
+			upgrademacversion.Table:                                    upgrademacversion.ValidColumn,
 			upgradetauri.Table:                                         upgradetauri.ValidColumn,
 			upgradetauriupgradestrategy.Table:                          upgradetauriupgradestrategy.ValidColumn,
 			upgradetauriupgradestrategyflowlimitstrategy.Table:         upgradetauriupgradestrategyflowlimitstrategy.ValidColumn,
@@ -152,6 +177,11 @@ func checkColumn(table, column string) error {
 			upgradeurlupgradestrategyflowlimitstrategy.Table:           upgradeurlupgradestrategyflowlimitstrategy.ValidColumn,
 			upgradeurlupgradestrategygraystrategy.Table:                upgradeurlupgradestrategygraystrategy.ValidColumn,
 			upgradeurlversion.Table:                                    upgradeurlversion.ValidColumn,
+			upgradewin.Table:                                           upgradewin.ValidColumn,
+			upgradewinupgradestrategy.Table:                            upgradewinupgradestrategy.ValidColumn,
+			upgradewinupgradestrategyflowlimitstrategy.Table:           upgradewinupgradestrategyflowlimitstrategy.ValidColumn,
+			upgradewinupgradestrategygraystrategy.Table:                upgradewinupgradestrategygraystrategy.ValidColumn,
+			upgradewinversion.Table:                                    upgradewinversion.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

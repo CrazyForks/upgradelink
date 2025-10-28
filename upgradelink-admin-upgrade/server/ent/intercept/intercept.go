@@ -37,6 +37,16 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileversion"
+	"upgradelink-admin-upgrade/server/ent/upgradelnx"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxversion"
+	"upgradelink-admin-upgrade/server/ent/upgrademac"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacversion"
 	"upgradelink-admin-upgrade/server/ent/upgradetauri"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategyflowlimitstrategy"
@@ -48,6 +58,11 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlversion"
+	"upgradelink-admin-upgrade/server/ent/upgradewin"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinversion"
 
 	"entgo.io/ent/dialect/sql"
 )
@@ -891,6 +906,276 @@ func (f TraverseUpgradeFileVersion) Traverse(ctx context.Context, q ent.Query) e
 	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeFileVersionQuery", q)
 }
 
+// The UpgradeLnxFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeLnxFunc func(context.Context, *ent.UpgradeLnxQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeLnxFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeLnxQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxQuery", q)
+}
+
+// The TraverseUpgradeLnx type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeLnx func(context.Context, *ent.UpgradeLnxQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeLnx) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeLnx) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeLnxQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxQuery", q)
+}
+
+// The UpgradeLnxUpgradeStrategyFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeLnxUpgradeStrategyFunc func(context.Context, *ent.UpgradeLnxUpgradeStrategyQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeLnxUpgradeStrategyFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeLnxUpgradeStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxUpgradeStrategyQuery", q)
+}
+
+// The TraverseUpgradeLnxUpgradeStrategy type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeLnxUpgradeStrategy func(context.Context, *ent.UpgradeLnxUpgradeStrategyQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeLnxUpgradeStrategy) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeLnxUpgradeStrategy) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeLnxUpgradeStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxUpgradeStrategyQuery", q)
+}
+
+// The UpgradeLnxUpgradeStrategyFlowLimitStrategyFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeLnxUpgradeStrategyFlowLimitStrategyFunc func(context.Context, *ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeLnxUpgradeStrategyFlowLimitStrategyFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery", q)
+}
+
+// The TraverseUpgradeLnxUpgradeStrategyFlowLimitStrategy type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeLnxUpgradeStrategyFlowLimitStrategy func(context.Context, *ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeLnxUpgradeStrategyFlowLimitStrategy) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeLnxUpgradeStrategyFlowLimitStrategy) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery", q)
+}
+
+// The UpgradeLnxUpgradeStrategyGrayStrategyFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeLnxUpgradeStrategyGrayStrategyFunc func(context.Context, *ent.UpgradeLnxUpgradeStrategyGrayStrategyQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeLnxUpgradeStrategyGrayStrategyFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeLnxUpgradeStrategyGrayStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxUpgradeStrategyGrayStrategyQuery", q)
+}
+
+// The TraverseUpgradeLnxUpgradeStrategyGrayStrategy type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeLnxUpgradeStrategyGrayStrategy func(context.Context, *ent.UpgradeLnxUpgradeStrategyGrayStrategyQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeLnxUpgradeStrategyGrayStrategy) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeLnxUpgradeStrategyGrayStrategy) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeLnxUpgradeStrategyGrayStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxUpgradeStrategyGrayStrategyQuery", q)
+}
+
+// The UpgradeLnxVersionFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeLnxVersionFunc func(context.Context, *ent.UpgradeLnxVersionQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeLnxVersionFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeLnxVersionQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxVersionQuery", q)
+}
+
+// The TraverseUpgradeLnxVersion type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeLnxVersion func(context.Context, *ent.UpgradeLnxVersionQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeLnxVersion) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeLnxVersion) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeLnxVersionQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeLnxVersionQuery", q)
+}
+
+// The UpgradeMacFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeMacFunc func(context.Context, *ent.UpgradeMacQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeMacFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeMacQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacQuery", q)
+}
+
+// The TraverseUpgradeMac type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeMac func(context.Context, *ent.UpgradeMacQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeMac) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeMac) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeMacQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacQuery", q)
+}
+
+// The UpgradeMacUpgradeStrategyFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeMacUpgradeStrategyFunc func(context.Context, *ent.UpgradeMacUpgradeStrategyQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeMacUpgradeStrategyFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeMacUpgradeStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacUpgradeStrategyQuery", q)
+}
+
+// The TraverseUpgradeMacUpgradeStrategy type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeMacUpgradeStrategy func(context.Context, *ent.UpgradeMacUpgradeStrategyQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeMacUpgradeStrategy) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeMacUpgradeStrategy) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeMacUpgradeStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacUpgradeStrategyQuery", q)
+}
+
+// The UpgradeMacUpgradeStrategyFlowLimitStrategyFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeMacUpgradeStrategyFlowLimitStrategyFunc func(context.Context, *ent.UpgradeMacUpgradeStrategyFlowLimitStrategyQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeMacUpgradeStrategyFlowLimitStrategyFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeMacUpgradeStrategyFlowLimitStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacUpgradeStrategyFlowLimitStrategyQuery", q)
+}
+
+// The TraverseUpgradeMacUpgradeStrategyFlowLimitStrategy type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeMacUpgradeStrategyFlowLimitStrategy func(context.Context, *ent.UpgradeMacUpgradeStrategyFlowLimitStrategyQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeMacUpgradeStrategyFlowLimitStrategy) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeMacUpgradeStrategyFlowLimitStrategy) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeMacUpgradeStrategyFlowLimitStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacUpgradeStrategyFlowLimitStrategyQuery", q)
+}
+
+// The UpgradeMacUpgradeStrategyGrayStrategyFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeMacUpgradeStrategyGrayStrategyFunc func(context.Context, *ent.UpgradeMacUpgradeStrategyGrayStrategyQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeMacUpgradeStrategyGrayStrategyFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeMacUpgradeStrategyGrayStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacUpgradeStrategyGrayStrategyQuery", q)
+}
+
+// The TraverseUpgradeMacUpgradeStrategyGrayStrategy type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeMacUpgradeStrategyGrayStrategy func(context.Context, *ent.UpgradeMacUpgradeStrategyGrayStrategyQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeMacUpgradeStrategyGrayStrategy) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeMacUpgradeStrategyGrayStrategy) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeMacUpgradeStrategyGrayStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacUpgradeStrategyGrayStrategyQuery", q)
+}
+
+// The UpgradeMacVersionFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeMacVersionFunc func(context.Context, *ent.UpgradeMacVersionQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeMacVersionFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeMacVersionQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacVersionQuery", q)
+}
+
+// The TraverseUpgradeMacVersion type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeMacVersion func(context.Context, *ent.UpgradeMacVersionQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeMacVersion) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeMacVersion) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeMacVersionQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeMacVersionQuery", q)
+}
+
 // The UpgradeTauriFunc type is an adapter to allow the use of ordinary function as a Querier.
 type UpgradeTauriFunc func(context.Context, *ent.UpgradeTauriQuery) (ent.Value, error)
 
@@ -1188,6 +1473,141 @@ func (f TraverseUpgradeUrlVersion) Traverse(ctx context.Context, q ent.Query) er
 	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeUrlVersionQuery", q)
 }
 
+// The UpgradeWinFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeWinFunc func(context.Context, *ent.UpgradeWinQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeWinFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeWinQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinQuery", q)
+}
+
+// The TraverseUpgradeWin type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeWin func(context.Context, *ent.UpgradeWinQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeWin) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeWin) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeWinQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinQuery", q)
+}
+
+// The UpgradeWinUpgradeStrategyFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeWinUpgradeStrategyFunc func(context.Context, *ent.UpgradeWinUpgradeStrategyQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeWinUpgradeStrategyFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeWinUpgradeStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinUpgradeStrategyQuery", q)
+}
+
+// The TraverseUpgradeWinUpgradeStrategy type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeWinUpgradeStrategy func(context.Context, *ent.UpgradeWinUpgradeStrategyQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeWinUpgradeStrategy) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeWinUpgradeStrategy) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeWinUpgradeStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinUpgradeStrategyQuery", q)
+}
+
+// The UpgradeWinUpgradeStrategyFlowLimitStrategyFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeWinUpgradeStrategyFlowLimitStrategyFunc func(context.Context, *ent.UpgradeWinUpgradeStrategyFlowLimitStrategyQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeWinUpgradeStrategyFlowLimitStrategyFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeWinUpgradeStrategyFlowLimitStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinUpgradeStrategyFlowLimitStrategyQuery", q)
+}
+
+// The TraverseUpgradeWinUpgradeStrategyFlowLimitStrategy type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeWinUpgradeStrategyFlowLimitStrategy func(context.Context, *ent.UpgradeWinUpgradeStrategyFlowLimitStrategyQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeWinUpgradeStrategyFlowLimitStrategy) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeWinUpgradeStrategyFlowLimitStrategy) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeWinUpgradeStrategyFlowLimitStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinUpgradeStrategyFlowLimitStrategyQuery", q)
+}
+
+// The UpgradeWinUpgradeStrategyGrayStrategyFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeWinUpgradeStrategyGrayStrategyFunc func(context.Context, *ent.UpgradeWinUpgradeStrategyGrayStrategyQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeWinUpgradeStrategyGrayStrategyFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeWinUpgradeStrategyGrayStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinUpgradeStrategyGrayStrategyQuery", q)
+}
+
+// The TraverseUpgradeWinUpgradeStrategyGrayStrategy type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeWinUpgradeStrategyGrayStrategy func(context.Context, *ent.UpgradeWinUpgradeStrategyGrayStrategyQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeWinUpgradeStrategyGrayStrategy) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeWinUpgradeStrategyGrayStrategy) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeWinUpgradeStrategyGrayStrategyQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinUpgradeStrategyGrayStrategyQuery", q)
+}
+
+// The UpgradeWinVersionFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UpgradeWinVersionFunc func(context.Context, *ent.UpgradeWinVersionQuery) (ent.Value, error)
+
+// Query calls f(ctx, q).
+func (f UpgradeWinVersionFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UpgradeWinVersionQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinVersionQuery", q)
+}
+
+// The TraverseUpgradeWinVersion type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUpgradeWinVersion func(context.Context, *ent.UpgradeWinVersionQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseUpgradeWinVersion) Intercept(next ent.Querier) ent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseUpgradeWinVersion) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UpgradeWinVersionQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *ent.UpgradeWinVersionQuery", q)
+}
+
 // NewQuery returns the generic Query interface for the given typed query.
 func NewQuery(q ent.Query) (Query, error) {
 	switch q := q.(type) {
@@ -1249,6 +1669,26 @@ func NewQuery(q ent.Query) (Query, error) {
 		return &query[*ent.UpgradeFileUpgradeStrategyGrayStrategyQuery, predicate.UpgradeFileUpgradeStrategyGrayStrategy, upgradefileupgradestrategygraystrategy.OrderOption]{typ: ent.TypeUpgradeFileUpgradeStrategyGrayStrategy, tq: q}, nil
 	case *ent.UpgradeFileVersionQuery:
 		return &query[*ent.UpgradeFileVersionQuery, predicate.UpgradeFileVersion, upgradefileversion.OrderOption]{typ: ent.TypeUpgradeFileVersion, tq: q}, nil
+	case *ent.UpgradeLnxQuery:
+		return &query[*ent.UpgradeLnxQuery, predicate.UpgradeLnx, upgradelnx.OrderOption]{typ: ent.TypeUpgradeLnx, tq: q}, nil
+	case *ent.UpgradeLnxUpgradeStrategyQuery:
+		return &query[*ent.UpgradeLnxUpgradeStrategyQuery, predicate.UpgradeLnxUpgradeStrategy, upgradelnxupgradestrategy.OrderOption]{typ: ent.TypeUpgradeLnxUpgradeStrategy, tq: q}, nil
+	case *ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery:
+		return &query[*ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery, predicate.UpgradeLnxUpgradeStrategyFlowLimitStrategy, upgradelnxupgradestrategyflowlimitstrategy.OrderOption]{typ: ent.TypeUpgradeLnxUpgradeStrategyFlowLimitStrategy, tq: q}, nil
+	case *ent.UpgradeLnxUpgradeStrategyGrayStrategyQuery:
+		return &query[*ent.UpgradeLnxUpgradeStrategyGrayStrategyQuery, predicate.UpgradeLnxUpgradeStrategyGrayStrategy, upgradelnxupgradestrategygraystrategy.OrderOption]{typ: ent.TypeUpgradeLnxUpgradeStrategyGrayStrategy, tq: q}, nil
+	case *ent.UpgradeLnxVersionQuery:
+		return &query[*ent.UpgradeLnxVersionQuery, predicate.UpgradeLnxVersion, upgradelnxversion.OrderOption]{typ: ent.TypeUpgradeLnxVersion, tq: q}, nil
+	case *ent.UpgradeMacQuery:
+		return &query[*ent.UpgradeMacQuery, predicate.UpgradeMac, upgrademac.OrderOption]{typ: ent.TypeUpgradeMac, tq: q}, nil
+	case *ent.UpgradeMacUpgradeStrategyQuery:
+		return &query[*ent.UpgradeMacUpgradeStrategyQuery, predicate.UpgradeMacUpgradeStrategy, upgrademacupgradestrategy.OrderOption]{typ: ent.TypeUpgradeMacUpgradeStrategy, tq: q}, nil
+	case *ent.UpgradeMacUpgradeStrategyFlowLimitStrategyQuery:
+		return &query[*ent.UpgradeMacUpgradeStrategyFlowLimitStrategyQuery, predicate.UpgradeMacUpgradeStrategyFlowLimitStrategy, upgrademacupgradestrategyflowlimitstrategy.OrderOption]{typ: ent.TypeUpgradeMacUpgradeStrategyFlowLimitStrategy, tq: q}, nil
+	case *ent.UpgradeMacUpgradeStrategyGrayStrategyQuery:
+		return &query[*ent.UpgradeMacUpgradeStrategyGrayStrategyQuery, predicate.UpgradeMacUpgradeStrategyGrayStrategy, upgrademacupgradestrategygraystrategy.OrderOption]{typ: ent.TypeUpgradeMacUpgradeStrategyGrayStrategy, tq: q}, nil
+	case *ent.UpgradeMacVersionQuery:
+		return &query[*ent.UpgradeMacVersionQuery, predicate.UpgradeMacVersion, upgrademacversion.OrderOption]{typ: ent.TypeUpgradeMacVersion, tq: q}, nil
 	case *ent.UpgradeTauriQuery:
 		return &query[*ent.UpgradeTauriQuery, predicate.UpgradeTauri, upgradetauri.OrderOption]{typ: ent.TypeUpgradeTauri, tq: q}, nil
 	case *ent.UpgradeTauriUpgradeStrategyQuery:
@@ -1271,6 +1711,16 @@ func NewQuery(q ent.Query) (Query, error) {
 		return &query[*ent.UpgradeUrlUpgradeStrategyGrayStrategyQuery, predicate.UpgradeUrlUpgradeStrategyGrayStrategy, upgradeurlupgradestrategygraystrategy.OrderOption]{typ: ent.TypeUpgradeUrlUpgradeStrategyGrayStrategy, tq: q}, nil
 	case *ent.UpgradeUrlVersionQuery:
 		return &query[*ent.UpgradeUrlVersionQuery, predicate.UpgradeUrlVersion, upgradeurlversion.OrderOption]{typ: ent.TypeUpgradeUrlVersion, tq: q}, nil
+	case *ent.UpgradeWinQuery:
+		return &query[*ent.UpgradeWinQuery, predicate.UpgradeWin, upgradewin.OrderOption]{typ: ent.TypeUpgradeWin, tq: q}, nil
+	case *ent.UpgradeWinUpgradeStrategyQuery:
+		return &query[*ent.UpgradeWinUpgradeStrategyQuery, predicate.UpgradeWinUpgradeStrategy, upgradewinupgradestrategy.OrderOption]{typ: ent.TypeUpgradeWinUpgradeStrategy, tq: q}, nil
+	case *ent.UpgradeWinUpgradeStrategyFlowLimitStrategyQuery:
+		return &query[*ent.UpgradeWinUpgradeStrategyFlowLimitStrategyQuery, predicate.UpgradeWinUpgradeStrategyFlowLimitStrategy, upgradewinupgradestrategyflowlimitstrategy.OrderOption]{typ: ent.TypeUpgradeWinUpgradeStrategyFlowLimitStrategy, tq: q}, nil
+	case *ent.UpgradeWinUpgradeStrategyGrayStrategyQuery:
+		return &query[*ent.UpgradeWinUpgradeStrategyGrayStrategyQuery, predicate.UpgradeWinUpgradeStrategyGrayStrategy, upgradewinupgradestrategygraystrategy.OrderOption]{typ: ent.TypeUpgradeWinUpgradeStrategyGrayStrategy, tq: q}, nil
+	case *ent.UpgradeWinVersionQuery:
+		return &query[*ent.UpgradeWinVersionQuery, predicate.UpgradeWinVersion, upgradewinversion.OrderOption]{typ: ent.TypeUpgradeWinVersion, tq: q}, nil
 	default:
 		return nil, fmt.Errorf("unknown query type %T", q)
 	}

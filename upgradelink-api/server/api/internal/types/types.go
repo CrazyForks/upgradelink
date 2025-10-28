@@ -80,6 +80,24 @@ type GetApkUpgradeInfoRespData struct {
 	PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
 }
 
+type GetApkVersionInfoReq struct {
+	ApkKey      string `json:"apkKey"`
+	VersionCode int64  `json:"versionCode"`
+}
+
+type GetApkVersionInfoResp struct {
+	BaseDataInfo
+	Data GetApkVersionInfoRespData `json:"data"`
+}
+
+type GetApkVersionInfoRespData struct {
+	ApkKey      string `json:"apkKey,optional"`
+	PackageName string `json:"packageName,optional"`
+	VersionName string `json:"versionName,optional"`
+	VersionCode int64  `json:"versionCode,optional"`
+	Description string `json:"description,optional"`
+}
+
 type GetConfigurationUpgradeInfoReq struct {
 	ConfigurationKey   string `json:"configurationKey"`
 	VersionCode        int64  `json:"versionCode"`
@@ -100,6 +118,23 @@ type GetConfigurationUpgradeInfoRespData struct {
 	UpgradeType          int64       `json:"upgradeType,optional"`
 	PromptUpgradeContent string      `json:"promptUpgradeContent,optional"`
 	Content              interface{} `json:"content,optional"`
+}
+
+type GetConfigurationVersionInfoReq struct {
+	ConfigurationKey string `json:"configurationKey"`
+	VersionCode      int64  `json:"versionCode,default=0"`
+}
+
+type GetConfigurationVersionInfoResp struct {
+	BaseDataInfo
+	Data GetConfigurationVersionInfoRespData `json:"data"`
+}
+
+type GetConfigurationVersionInfoRespData struct {
+	ConfigurationKey string `json:"configurationKey,optional"`
+	VersionName      string `json:"versionName,optional"`
+	VersionCode      int64  `json:"versionCode,optional"`
+	Description      string `json:"description,optional"`
 }
 
 type GetElectronDownloadInfoAppImageReq struct {
@@ -207,6 +242,129 @@ type GetFileUpgradeInfoRespData struct {
 	PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
 }
 
+type GetFileVersionInfoReq struct {
+	FileKey     string `json:"fileKey"`
+	VersionCode int64  `json:"versionCode,default=0"`
+}
+
+type GetFileVersionInfoResp struct {
+	BaseDataInfo
+	Data GetFileVersionInfoRespData `json:"data"`
+}
+
+type GetFileVersionInfoRespData struct {
+	FileKey     string `json:"fileKey,optional"`
+	VersionName string `json:"versionName,optional"`
+	VersionCode int64  `json:"versionCode,optional"`
+	Description string `json:"description,optional"`
+}
+
+type GetLnxDownloadInfoReq struct {
+	LnxKey      string `form:"lnxKey"`
+	VersionCode int64  `form:"versionCode,default=0"`
+	VersionId   int64  `form:"versionId,default=0"`
+}
+
+type GetLnxUpgradeInfoReq struct {
+	LnxKey             string `json:"lnxKey"`
+	VersionCode        int64  `json:"versionCode"`
+	AppointVersionCode int64  `json:"appointVersionCode,default=0"`
+	Arch               string `json:"arch"`
+	DevModelKey        string `json:"devModelKey,optional"`
+	DevKey             string `json:"devKey,optional"`
+}
+
+type GetLnxUpgradeInfoResp struct {
+	BaseDataInfo
+	Data GetLnxUpgradeInfoRespData `json:"data"`
+}
+
+type GetLnxUpgradeInfoRespData struct {
+	LnxKey               string `json:"lnxKey,optional"`
+	PackageName          string `json:"packageName,optional"`
+	VersionName          string `json:"versionName,optional"`
+	VersionCode          int64  `json:"versionCode,optional"`
+	Arch                 string `json:"arch,optional"`
+	UrlPath              string `json:"urlPath,optional"`
+	UrlFileSize          uint64 `json:"urlFileSize,optional"`
+	UrlFileMd5           string `json:"urlFileMd5,optional"`
+	UpgradeType          int64  `json:"upgradeType,optional"`
+	PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
+}
+
+type GetLnxVersionInfoReq struct {
+	LnxKey      string `json:"lnxKey"`
+	VersionCode int64  `json:"versionCode"`
+	Arch        string `json:"arch"`
+}
+
+type GetLnxVersionInfoResp struct {
+	BaseDataInfo
+	Data GetLnxVersionInfoRespData `json:"data"`
+}
+
+type GetLnxVersionInfoRespData struct {
+	LnxKey      string `json:"lnxKey,optional"`
+	PackageName string `json:"packageName,optional"`
+	VersionName string `json:"versionName,optional"`
+	VersionCode int64  `json:"versionCode,optional"`
+	Arch        string `json:"arch,optional"`
+	Description string `json:"description,optional"`
+}
+
+type GetMacDownloadInfoReq struct {
+	MacKey      string `form:"macKey"`
+	VersionCode int64  `form:"versionCode,default=0"`
+	VersionId   int64  `form:"versionId,default=0"`
+}
+
+type GetMacUpgradeInfoReq struct {
+	MacKey             string `json:"macKey"`
+	VersionCode        int64  `json:"versionCode"`
+	AppointVersionCode int64  `json:"appointVersionCode,default=0"`
+	Arch               string `json:"arch"`
+	DevModelKey        string `json:"devModelKey,optional"`
+	DevKey             string `json:"devKey,optional"`
+}
+
+type GetMacUpgradeInfoResp struct {
+	BaseDataInfo
+	Data GetMacUpgradeInfoRespData `json:"data"`
+}
+
+type GetMacUpgradeInfoRespData struct {
+	MacKey               string `json:"macKey,optional"`
+	PackageName          string `json:"packageName,optional"`
+	VersionName          string `json:"versionName,optional"`
+	VersionCode          int64  `json:"versionCode,optional"`
+	Arch                 string `json:"arch,optional"`
+	UrlPath              string `json:"urlPath,optional"`
+	UrlFileSize          uint64 `json:"urlFileSize,optional"`
+	UrlFileMd5           string `json:"urlFileMd5,optional"`
+	UpgradeType          int64  `json:"upgradeType,optional"`
+	PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
+}
+
+type GetMacVersionInfoReq struct {
+	MacKey      string `json:"macKey"`
+	VersionCode int64  `json:"versionCode"`
+	Arch        string `json:"arch"`
+}
+
+type GetMacVersionInfoResp struct {
+	BaseDataInfo
+	Data GetMacVersionInfoRespData `json:"data"`
+}
+
+type GetMacVersionInfoRespData struct {
+	MacKey      string `json:"macKey,optional"`
+	PackageName string `json:"packageName,optional"`
+	VersionName string `json:"versionName,optional"`
+	VersionCode int64  `json:"versionCode,optional"`
+	Arch        string `json:"arch"`
+	Description string `json:"description,optional"`
+}
+
 type GetTauriDownloadInfoReq struct {
 	DownloadType int64  `form:"downloadType,default=1"`
 	TauriKey     string `form:"tauriKey"`
@@ -262,6 +420,76 @@ type GetUrlUpgradeInfoRespData struct {
 	UrlPath              string `json:"urlPath,optional"`
 	UpgradeType          int64  `json:"upgradeType,optional"`
 	PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
+}
+
+type GetUrlVersionInfoReq struct {
+	UrlKey      string `json:"urlKey"`
+	VersionCode int64  `json:"versionCode,default=0"`
+}
+
+type GetUrlVersionInfoResp struct {
+	BaseDataInfo
+	Data GetUrlVersionInfoRespData `json:"data"`
+}
+
+type GetUrlVersionInfoRespData struct {
+	UrlKey      string `json:"urlKey,optional"`
+	VersionName string `json:"versionName,optional"`
+	VersionCode int64  `json:"versionCode,optional"`
+	Description string `json:"description,optional"`
+}
+
+type GetWinDownloadInfoReq struct {
+	WinKey      string `form:"winKey"`
+	VersionCode int64  `form:"versionCode,default=0"`
+	VersionId   int64  `form:"versionId,default=0"`
+}
+
+type GetWinUpgradeInfoReq struct {
+	WinKey             string `json:"winKey"`
+	VersionCode        int64  `json:"versionCode"`
+	AppointVersionCode int64  `json:"appointVersionCode,default=0"`
+	Arch               string `json:"arch,optional"`
+	DevModelKey        string `json:"devModelKey,optional"`
+	DevKey             string `json:"devKey,optional"`
+}
+
+type GetWinUpgradeInfoResp struct {
+	BaseDataInfo
+	Data GetWinUpgradeInfoRespData `json:"data"`
+}
+
+type GetWinUpgradeInfoRespData struct {
+	WinKey               string `json:"winKey,optional"`
+	PackageName          string `json:"packageName,optional"`
+	VersionName          string `json:"versionName,optional"`
+	VersionCode          int64  `json:"versionCode,optional"`
+	Arch                 string `json:"arch,optional"`
+	UrlPath              string `json:"urlPath,optional"`
+	UrlFileSize          uint64 `json:"urlFileSize,optional"`
+	UrlFileMd5           string `json:"urlFileMd5,optional"`
+	UpgradeType          int64  `json:"upgradeType,optional"`
+	PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
+}
+
+type GetWinVersionInfoReq struct {
+	WinKey      string `json:"winKey"`
+	VersionCode int64  `json:"versionCode"`
+	Arch        string `json:"arch"`
+}
+
+type GetWinVersionInfoResp struct {
+	BaseDataInfo
+	Data GetWinVersionInfoRespData `json:"data"`
+}
+
+type GetWinVersionInfoRespData struct {
+	WinKey      string `json:"winKey,optional"`
+	PackageName string `json:"packageName,optional"`
+	VersionName string `json:"versionName,optional"`
+	VersionCode int64  `json:"versionCode,optional"`
+	Arch        string `json:"arch,optional"`
+	Description string `json:"description,optional"`
 }
 
 type IDPathReq struct {

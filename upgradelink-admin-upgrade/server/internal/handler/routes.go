@@ -26,12 +26,21 @@ import (
 	upgrade_file "upgradelink-admin-upgrade/server/internal/handler/upgrade_file"
 	upgrade_file_upgrade_strategy "upgradelink-admin-upgrade/server/internal/handler/upgrade_file_upgrade_strategy"
 	upgrade_file_version "upgradelink-admin-upgrade/server/internal/handler/upgrade_file_version"
+	upgrade_lnx "upgradelink-admin-upgrade/server/internal/handler/upgrade_lnx"
+	upgrade_lnx_upgrade_strategy "upgradelink-admin-upgrade/server/internal/handler/upgrade_lnx_upgrade_strategy"
+	upgrade_lnx_version "upgradelink-admin-upgrade/server/internal/handler/upgrade_lnx_version"
+	upgrade_mac "upgradelink-admin-upgrade/server/internal/handler/upgrade_mac"
+	upgrade_mac_upgrade_strategy "upgradelink-admin-upgrade/server/internal/handler/upgrade_mac_upgrade_strategy"
+	upgrade_mac_version "upgradelink-admin-upgrade/server/internal/handler/upgrade_mac_version"
 	upgrade_tauri "upgradelink-admin-upgrade/server/internal/handler/upgrade_tauri"
 	upgrade_tauri_upgrade_strategy "upgradelink-admin-upgrade/server/internal/handler/upgrade_tauri_upgrade_strategy"
 	upgrade_tauri_version "upgradelink-admin-upgrade/server/internal/handler/upgrade_tauri_version"
 	upgrade_url "upgradelink-admin-upgrade/server/internal/handler/upgrade_url"
 	upgrade_url_upgrade_strategy "upgradelink-admin-upgrade/server/internal/handler/upgrade_url_upgrade_strategy"
 	upgrade_url_version "upgradelink-admin-upgrade/server/internal/handler/upgrade_url_version"
+	upgrade_win "upgradelink-admin-upgrade/server/internal/handler/upgrade_win"
+	upgrade_win_upgrade_strategy "upgradelink-admin-upgrade/server/internal/handler/upgrade_win_upgrade_strategy"
+	upgrade_win_version "upgradelink-admin-upgrade/server/internal/handler/upgrade_win_version"
 	"upgradelink-admin-upgrade/server/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -877,6 +886,312 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Method:  http.MethodPost,
 					Path:    "/upgrade_company_traffic_packet",
 					Handler: upgrade_company_traffic_packet.GetUpgradeCompanyTrafficPacketByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win/create",
+					Handler: upgrade_win.CreateUpgradeWinHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win/update",
+					Handler: upgrade_win.UpdateUpgradeWinHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win/delete",
+					Handler: upgrade_win.DeleteUpgradeWinHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win/list",
+					Handler: upgrade_win.GetUpgradeWinListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win",
+					Handler: upgrade_win.GetUpgradeWinByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_upgrade_strategy/create",
+					Handler: upgrade_win_upgrade_strategy.CreateUpgradeWinUpgradeStrategyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_upgrade_strategy/update",
+					Handler: upgrade_win_upgrade_strategy.UpdateUpgradeWinUpgradeStrategyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_upgrade_strategy/delete",
+					Handler: upgrade_win_upgrade_strategy.DeleteUpgradeWinUpgradeStrategyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_upgrade_strategy/list",
+					Handler: upgrade_win_upgrade_strategy.GetUpgradeWinUpgradeStrategyListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_upgrade_strategy",
+					Handler: upgrade_win_upgrade_strategy.GetUpgradeWinUpgradeStrategyByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_version/create",
+					Handler: upgrade_win_version.CreateUpgradeWinVersionHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_version/update",
+					Handler: upgrade_win_version.UpdateUpgradeWinVersionHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_version/delete",
+					Handler: upgrade_win_version.DeleteUpgradeWinVersionHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_version/list",
+					Handler: upgrade_win_version.GetUpgradeWinVersionListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_win_version",
+					Handler: upgrade_win_version.GetUpgradeWinVersionByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx/create",
+					Handler: upgrade_lnx.CreateUpgradeLnxHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx/update",
+					Handler: upgrade_lnx.UpdateUpgradeLnxHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx/delete",
+					Handler: upgrade_lnx.DeleteUpgradeLnxHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx/list",
+					Handler: upgrade_lnx.GetUpgradeLnxListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx",
+					Handler: upgrade_lnx.GetUpgradeLnxByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_upgrade_strategy/create",
+					Handler: upgrade_lnx_upgrade_strategy.CreateUpgradeLnxUpgradeStrategyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_upgrade_strategy/update",
+					Handler: upgrade_lnx_upgrade_strategy.UpdateUpgradeLnxUpgradeStrategyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_upgrade_strategy/delete",
+					Handler: upgrade_lnx_upgrade_strategy.DeleteUpgradeLnxUpgradeStrategyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_upgrade_strategy/list",
+					Handler: upgrade_lnx_upgrade_strategy.GetUpgradeLnxUpgradeStrategyListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_upgrade_strategy",
+					Handler: upgrade_lnx_upgrade_strategy.GetUpgradeLnxUpgradeStrategyByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_version/create",
+					Handler: upgrade_lnx_version.CreateUpgradeLnxVersionHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_version/update",
+					Handler: upgrade_lnx_version.UpdateUpgradeLnxVersionHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_version/delete",
+					Handler: upgrade_lnx_version.DeleteUpgradeLnxVersionHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_version/list",
+					Handler: upgrade_lnx_version.GetUpgradeLnxVersionListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_lnx_version",
+					Handler: upgrade_lnx_version.GetUpgradeLnxVersionByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac/create",
+					Handler: upgrade_mac.CreateUpgradeMacHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac/update",
+					Handler: upgrade_mac.UpdateUpgradeMacHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac/delete",
+					Handler: upgrade_mac.DeleteUpgradeMacHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac/list",
+					Handler: upgrade_mac.GetUpgradeMacListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac",
+					Handler: upgrade_mac.GetUpgradeMacByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_upgrade_strategy/create",
+					Handler: upgrade_mac_upgrade_strategy.CreateUpgradeMacUpgradeStrategyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_upgrade_strategy/update",
+					Handler: upgrade_mac_upgrade_strategy.UpdateUpgradeMacUpgradeStrategyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_upgrade_strategy/delete",
+					Handler: upgrade_mac_upgrade_strategy.DeleteUpgradeMacUpgradeStrategyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_upgrade_strategy/list",
+					Handler: upgrade_mac_upgrade_strategy.GetUpgradeMacUpgradeStrategyListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_upgrade_strategy",
+					Handler: upgrade_mac_upgrade_strategy.GetUpgradeMacUpgradeStrategyByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_version/create",
+					Handler: upgrade_mac_version.CreateUpgradeMacVersionHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_version/update",
+					Handler: upgrade_mac_version.UpdateUpgradeMacVersionHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_version/delete",
+					Handler: upgrade_mac_version.DeleteUpgradeMacVersionHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_version/list",
+					Handler: upgrade_mac_version.GetUpgradeMacVersionListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade_mac_version",
+					Handler: upgrade_mac_version.GetUpgradeMacVersionByIdHandler(serverCtx),
 				},
 			}...,
 		),

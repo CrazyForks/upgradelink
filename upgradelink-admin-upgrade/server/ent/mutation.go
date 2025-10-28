@@ -6,6 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"sync"
+	"time"
 	"upgradelink-admin-upgrade/server/ent/fmscloudfile"
 	"upgradelink-admin-upgrade/server/ent/predicate"
 	"upgradelink-admin-upgrade/server/ent/sysuser"
@@ -36,6 +38,16 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileversion"
+	"upgradelink-admin-upgrade/server/ent/upgradelnx"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxversion"
+	"upgradelink-admin-upgrade/server/ent/upgrademac"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacversion"
 	"upgradelink-admin-upgrade/server/ent/upgradetauri"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategyflowlimitstrategy"
@@ -47,8 +59,11 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlversion"
-	"sync"
-	"time"
+	"upgradelink-admin-upgrade/server/ent/upgradewin"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinversion"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
@@ -92,6 +107,16 @@ const (
 	TypeUpgradeFileUpgradeStrategyFlowLimitStrategy          = "UpgradeFileUpgradeStrategyFlowLimitStrategy"
 	TypeUpgradeFileUpgradeStrategyGrayStrategy               = "UpgradeFileUpgradeStrategyGrayStrategy"
 	TypeUpgradeFileVersion                                   = "UpgradeFileVersion"
+	TypeUpgradeLnx                                           = "UpgradeLnx"
+	TypeUpgradeLnxUpgradeStrategy                            = "UpgradeLnxUpgradeStrategy"
+	TypeUpgradeLnxUpgradeStrategyFlowLimitStrategy           = "UpgradeLnxUpgradeStrategyFlowLimitStrategy"
+	TypeUpgradeLnxUpgradeStrategyGrayStrategy                = "UpgradeLnxUpgradeStrategyGrayStrategy"
+	TypeUpgradeLnxVersion                                    = "UpgradeLnxVersion"
+	TypeUpgradeMac                                           = "UpgradeMac"
+	TypeUpgradeMacUpgradeStrategy                            = "UpgradeMacUpgradeStrategy"
+	TypeUpgradeMacUpgradeStrategyFlowLimitStrategy           = "UpgradeMacUpgradeStrategyFlowLimitStrategy"
+	TypeUpgradeMacUpgradeStrategyGrayStrategy                = "UpgradeMacUpgradeStrategyGrayStrategy"
+	TypeUpgradeMacVersion                                    = "UpgradeMacVersion"
 	TypeUpgradeTauri                                         = "UpgradeTauri"
 	TypeUpgradeTauriUpgradeStrategy                          = "UpgradeTauriUpgradeStrategy"
 	TypeUpgradeTauriUpgradeStrategyFlowLimitStrategy         = "UpgradeTauriUpgradeStrategyFlowLimitStrategy"
@@ -103,6 +128,11 @@ const (
 	TypeUpgradeUrlUpgradeStrategyFlowLimitStrategy           = "UpgradeUrlUpgradeStrategyFlowLimitStrategy"
 	TypeUpgradeUrlUpgradeStrategyGrayStrategy                = "UpgradeUrlUpgradeStrategyGrayStrategy"
 	TypeUpgradeUrlVersion                                    = "UpgradeUrlVersion"
+	TypeUpgradeWin                                           = "UpgradeWin"
+	TypeUpgradeWinUpgradeStrategy                            = "UpgradeWinUpgradeStrategy"
+	TypeUpgradeWinUpgradeStrategyFlowLimitStrategy           = "UpgradeWinUpgradeStrategyFlowLimitStrategy"
+	TypeUpgradeWinUpgradeStrategyGrayStrategy                = "UpgradeWinUpgradeStrategyGrayStrategy"
+	TypeUpgradeWinVersion                                    = "UpgradeWinVersion"
 )
 
 // FmsCloudFileMutation represents an operation that mutates the FmsCloudFile nodes in the graph.
@@ -29402,6 +29432,10728 @@ func (m *UpgradeFileVersionMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown UpgradeFileVersion edge %s", name)
 }
 
+// UpgradeLnxMutation represents an operation that mutates the UpgradeLnx nodes in the graph.
+type UpgradeLnxMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int
+	company_id    *int
+	addcompany_id *int
+	key           *string
+	name          *string
+	package_name  *string
+	description   *string
+	is_del        *int32
+	addis_del     *int32
+	create_at     *time.Time
+	update_at     *time.Time
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*UpgradeLnx, error)
+	predicates    []predicate.UpgradeLnx
+}
+
+var _ ent.Mutation = (*UpgradeLnxMutation)(nil)
+
+// upgradelnxOption allows management of the mutation configuration using functional options.
+type upgradelnxOption func(*UpgradeLnxMutation)
+
+// newUpgradeLnxMutation creates new mutation for the UpgradeLnx entity.
+func newUpgradeLnxMutation(c config, op Op, opts ...upgradelnxOption) *UpgradeLnxMutation {
+	m := &UpgradeLnxMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeLnx,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeLnxID sets the ID field of the mutation.
+func withUpgradeLnxID(id int) upgradelnxOption {
+	return func(m *UpgradeLnxMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeLnx
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeLnx, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeLnx.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeLnx sets the old UpgradeLnx of the mutation.
+func withUpgradeLnx(node *UpgradeLnx) upgradelnxOption {
+	return func(m *UpgradeLnxMutation) {
+		m.oldValue = func(context.Context) (*UpgradeLnx, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeLnxMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeLnxMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeLnx entities.
+func (m *UpgradeLnxMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeLnxMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeLnxMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeLnx.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCompanyID sets the "company_id" field.
+func (m *UpgradeLnxMutation) SetCompanyID(i int) {
+	m.company_id = &i
+	m.addcompany_id = nil
+}
+
+// CompanyID returns the value of the "company_id" field in the mutation.
+func (m *UpgradeLnxMutation) CompanyID() (r int, exists bool) {
+	v := m.company_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCompanyID returns the old "company_id" field's value of the UpgradeLnx entity.
+// If the UpgradeLnx object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxMutation) OldCompanyID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCompanyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCompanyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCompanyID: %w", err)
+	}
+	return oldValue.CompanyID, nil
+}
+
+// AddCompanyID adds i to the "company_id" field.
+func (m *UpgradeLnxMutation) AddCompanyID(i int) {
+	if m.addcompany_id != nil {
+		*m.addcompany_id += i
+	} else {
+		m.addcompany_id = &i
+	}
+}
+
+// AddedCompanyID returns the value that was added to the "company_id" field in this mutation.
+func (m *UpgradeLnxMutation) AddedCompanyID() (r int, exists bool) {
+	v := m.addcompany_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCompanyID resets all changes to the "company_id" field.
+func (m *UpgradeLnxMutation) ResetCompanyID() {
+	m.company_id = nil
+	m.addcompany_id = nil
+}
+
+// SetKey sets the "key" field.
+func (m *UpgradeLnxMutation) SetKey(s string) {
+	m.key = &s
+}
+
+// Key returns the value of the "key" field in the mutation.
+func (m *UpgradeLnxMutation) Key() (r string, exists bool) {
+	v := m.key
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldKey returns the old "key" field's value of the UpgradeLnx entity.
+// If the UpgradeLnx object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxMutation) OldKey(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldKey is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldKey requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldKey: %w", err)
+	}
+	return oldValue.Key, nil
+}
+
+// ResetKey resets all changes to the "key" field.
+func (m *UpgradeLnxMutation) ResetKey() {
+	m.key = nil
+}
+
+// SetName sets the "name" field.
+func (m *UpgradeLnxMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *UpgradeLnxMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the UpgradeLnx entity.
+// If the UpgradeLnx object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxMutation) OldName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *UpgradeLnxMutation) ResetName() {
+	m.name = nil
+}
+
+// SetPackageName sets the "package_name" field.
+func (m *UpgradeLnxMutation) SetPackageName(s string) {
+	m.package_name = &s
+}
+
+// PackageName returns the value of the "package_name" field in the mutation.
+func (m *UpgradeLnxMutation) PackageName() (r string, exists bool) {
+	v := m.package_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPackageName returns the old "package_name" field's value of the UpgradeLnx entity.
+// If the UpgradeLnx object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxMutation) OldPackageName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldPackageName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldPackageName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPackageName: %w", err)
+	}
+	return oldValue.PackageName, nil
+}
+
+// ResetPackageName resets all changes to the "package_name" field.
+func (m *UpgradeLnxMutation) ResetPackageName() {
+	m.package_name = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *UpgradeLnxMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *UpgradeLnxMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the UpgradeLnx entity.
+// If the UpgradeLnx object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *UpgradeLnxMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[upgradelnx.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *UpgradeLnxMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[upgradelnx.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *UpgradeLnxMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, upgradelnx.FieldDescription)
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeLnxMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeLnxMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeLnx entity.
+// If the UpgradeLnx object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeLnxMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeLnxMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeLnxMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeLnxMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeLnxMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeLnx entity.
+// If the UpgradeLnx object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeLnxMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradelnx.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeLnxMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnx.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeLnxMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradelnx.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeLnxMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeLnxMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeLnx entity.
+// If the UpgradeLnx object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeLnxMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradelnx.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeLnxMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnx.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeLnxMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradelnx.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeLnxMutation builder.
+func (m *UpgradeLnxMutation) Where(ps ...predicate.UpgradeLnx) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeLnxMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeLnxMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeLnx, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeLnxMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeLnxMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeLnx).
+func (m *UpgradeLnxMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeLnxMutation) Fields() []string {
+	fields := make([]string, 0, 8)
+	if m.company_id != nil {
+		fields = append(fields, upgradelnx.FieldCompanyID)
+	}
+	if m.key != nil {
+		fields = append(fields, upgradelnx.FieldKey)
+	}
+	if m.name != nil {
+		fields = append(fields, upgradelnx.FieldName)
+	}
+	if m.package_name != nil {
+		fields = append(fields, upgradelnx.FieldPackageName)
+	}
+	if m.description != nil {
+		fields = append(fields, upgradelnx.FieldDescription)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradelnx.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradelnx.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradelnx.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeLnxMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnx.FieldCompanyID:
+		return m.CompanyID()
+	case upgradelnx.FieldKey:
+		return m.Key()
+	case upgradelnx.FieldName:
+		return m.Name()
+	case upgradelnx.FieldPackageName:
+		return m.PackageName()
+	case upgradelnx.FieldDescription:
+		return m.Description()
+	case upgradelnx.FieldIsDel:
+		return m.IsDel()
+	case upgradelnx.FieldCreateAt:
+		return m.CreateAt()
+	case upgradelnx.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeLnxMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradelnx.FieldCompanyID:
+		return m.OldCompanyID(ctx)
+	case upgradelnx.FieldKey:
+		return m.OldKey(ctx)
+	case upgradelnx.FieldName:
+		return m.OldName(ctx)
+	case upgradelnx.FieldPackageName:
+		return m.OldPackageName(ctx)
+	case upgradelnx.FieldDescription:
+		return m.OldDescription(ctx)
+	case upgradelnx.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradelnx.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradelnx.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeLnx field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnx.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCompanyID(v)
+		return nil
+	case upgradelnx.FieldKey:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetKey(v)
+		return nil
+	case upgradelnx.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case upgradelnx.FieldPackageName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPackageName(v)
+		return nil
+	case upgradelnx.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case upgradelnx.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradelnx.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradelnx.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnx field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeLnxMutation) AddedFields() []string {
+	var fields []string
+	if m.addcompany_id != nil {
+		fields = append(fields, upgradelnx.FieldCompanyID)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradelnx.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeLnxMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnx.FieldCompanyID:
+		return m.AddedCompanyID()
+	case upgradelnx.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnx.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCompanyID(v)
+		return nil
+	case upgradelnx.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnx numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeLnxMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradelnx.FieldDescription) {
+		fields = append(fields, upgradelnx.FieldDescription)
+	}
+	if m.FieldCleared(upgradelnx.FieldCreateAt) {
+		fields = append(fields, upgradelnx.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradelnx.FieldUpdateAt) {
+		fields = append(fields, upgradelnx.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeLnxMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeLnxMutation) ClearField(name string) error {
+	switch name {
+	case upgradelnx.FieldDescription:
+		m.ClearDescription()
+		return nil
+	case upgradelnx.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradelnx.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnx nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeLnxMutation) ResetField(name string) error {
+	switch name {
+	case upgradelnx.FieldCompanyID:
+		m.ResetCompanyID()
+		return nil
+	case upgradelnx.FieldKey:
+		m.ResetKey()
+		return nil
+	case upgradelnx.FieldName:
+		m.ResetName()
+		return nil
+	case upgradelnx.FieldPackageName:
+		m.ResetPackageName()
+		return nil
+	case upgradelnx.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case upgradelnx.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradelnx.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradelnx.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnx field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeLnxMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeLnxMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeLnxMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeLnxMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeLnxMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeLnxMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeLnxMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnx unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeLnxMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnx edge %s", name)
+}
+
+// UpgradeLnxUpgradeStrategyMutation represents an operation that mutates the UpgradeLnxUpgradeStrategy nodes in the graph.
+type UpgradeLnxUpgradeStrategyMutation struct {
+	config
+	op                      Op
+	typ                     string
+	id                      *int
+	company_id              *int
+	addcompany_id           *int
+	enable                  *int32
+	addenable               *int32
+	name                    *string
+	description             *string
+	lnx_id                  *int
+	addlnx_id               *int
+	lnx_version_id          *int
+	addlnx_version_id       *int
+	begin_datetime          *time.Time
+	end_datetime            *time.Time
+	upgrade_type            *int32
+	addupgrade_type         *int32
+	prompt_upgrade_content  *string
+	upgrade_dev_type        *int32
+	addupgrade_dev_type     *int32
+	upgrade_dev_data        *string
+	upgrade_version_type    *int32
+	addupgrade_version_type *int32
+	upgrade_version_data    *string
+	is_gray                 *int32
+	addis_gray              *int32
+	gray_data               *string
+	is_flow_limit           *int32
+	addis_flow_limit        *int32
+	flow_limit_data         *string
+	is_del                  *int32
+	addis_del               *int32
+	create_at               *time.Time
+	update_at               *time.Time
+	clearedFields           map[string]struct{}
+	done                    bool
+	oldValue                func(context.Context) (*UpgradeLnxUpgradeStrategy, error)
+	predicates              []predicate.UpgradeLnxUpgradeStrategy
+}
+
+var _ ent.Mutation = (*UpgradeLnxUpgradeStrategyMutation)(nil)
+
+// upgradelnxupgradestrategyOption allows management of the mutation configuration using functional options.
+type upgradelnxupgradestrategyOption func(*UpgradeLnxUpgradeStrategyMutation)
+
+// newUpgradeLnxUpgradeStrategyMutation creates new mutation for the UpgradeLnxUpgradeStrategy entity.
+func newUpgradeLnxUpgradeStrategyMutation(c config, op Op, opts ...upgradelnxupgradestrategyOption) *UpgradeLnxUpgradeStrategyMutation {
+	m := &UpgradeLnxUpgradeStrategyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeLnxUpgradeStrategy,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeLnxUpgradeStrategyID sets the ID field of the mutation.
+func withUpgradeLnxUpgradeStrategyID(id int) upgradelnxupgradestrategyOption {
+	return func(m *UpgradeLnxUpgradeStrategyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeLnxUpgradeStrategy
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeLnxUpgradeStrategy, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeLnxUpgradeStrategy.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeLnxUpgradeStrategy sets the old UpgradeLnxUpgradeStrategy of the mutation.
+func withUpgradeLnxUpgradeStrategy(node *UpgradeLnxUpgradeStrategy) upgradelnxupgradestrategyOption {
+	return func(m *UpgradeLnxUpgradeStrategyMutation) {
+		m.oldValue = func(context.Context) (*UpgradeLnxUpgradeStrategy, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeLnxUpgradeStrategyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeLnxUpgradeStrategyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeLnxUpgradeStrategy entities.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeLnxUpgradeStrategyMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeLnxUpgradeStrategy.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCompanyID sets the "company_id" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetCompanyID(i int) {
+	m.company_id = &i
+	m.addcompany_id = nil
+}
+
+// CompanyID returns the value of the "company_id" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) CompanyID() (r int, exists bool) {
+	v := m.company_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCompanyID returns the old "company_id" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldCompanyID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCompanyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCompanyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCompanyID: %w", err)
+	}
+	return oldValue.CompanyID, nil
+}
+
+// AddCompanyID adds i to the "company_id" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddCompanyID(i int) {
+	if m.addcompany_id != nil {
+		*m.addcompany_id += i
+	} else {
+		m.addcompany_id = &i
+	}
+}
+
+// AddedCompanyID returns the value that was added to the "company_id" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedCompanyID() (r int, exists bool) {
+	v := m.addcompany_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCompanyID resets all changes to the "company_id" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetCompanyID() {
+	m.company_id = nil
+	m.addcompany_id = nil
+}
+
+// SetEnable sets the "enable" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetEnable(i int32) {
+	m.enable = &i
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) Enable() (r int32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldEnable(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds i to the "enable" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddEnable(i int32) {
+	if m.addenable != nil {
+		*m.addenable += i
+	} else {
+		m.addenable = &i
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetName sets the "name" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetName() {
+	m.name = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[upgradelnxupgradestrategy.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[upgradelnxupgradestrategy.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, upgradelnxupgradestrategy.FieldDescription)
+}
+
+// SetLnxID sets the "lnx_id" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetLnxID(i int) {
+	m.lnx_id = &i
+	m.addlnx_id = nil
+}
+
+// LnxID returns the value of the "lnx_id" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) LnxID() (r int, exists bool) {
+	v := m.lnx_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLnxID returns the old "lnx_id" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldLnxID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLnxID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLnxID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLnxID: %w", err)
+	}
+	return oldValue.LnxID, nil
+}
+
+// AddLnxID adds i to the "lnx_id" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddLnxID(i int) {
+	if m.addlnx_id != nil {
+		*m.addlnx_id += i
+	} else {
+		m.addlnx_id = &i
+	}
+}
+
+// AddedLnxID returns the value that was added to the "lnx_id" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedLnxID() (r int, exists bool) {
+	v := m.addlnx_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLnxID resets all changes to the "lnx_id" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetLnxID() {
+	m.lnx_id = nil
+	m.addlnx_id = nil
+}
+
+// SetLnxVersionID sets the "lnx_version_id" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetLnxVersionID(i int) {
+	m.lnx_version_id = &i
+	m.addlnx_version_id = nil
+}
+
+// LnxVersionID returns the value of the "lnx_version_id" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) LnxVersionID() (r int, exists bool) {
+	v := m.lnx_version_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLnxVersionID returns the old "lnx_version_id" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldLnxVersionID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLnxVersionID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLnxVersionID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLnxVersionID: %w", err)
+	}
+	return oldValue.LnxVersionID, nil
+}
+
+// AddLnxVersionID adds i to the "lnx_version_id" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddLnxVersionID(i int) {
+	if m.addlnx_version_id != nil {
+		*m.addlnx_version_id += i
+	} else {
+		m.addlnx_version_id = &i
+	}
+}
+
+// AddedLnxVersionID returns the value that was added to the "lnx_version_id" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedLnxVersionID() (r int, exists bool) {
+	v := m.addlnx_version_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLnxVersionID resets all changes to the "lnx_version_id" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetLnxVersionID() {
+	m.lnx_version_id = nil
+	m.addlnx_version_id = nil
+}
+
+// SetBeginDatetime sets the "begin_datetime" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetBeginDatetime(t time.Time) {
+	m.begin_datetime = &t
+}
+
+// BeginDatetime returns the value of the "begin_datetime" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) BeginDatetime() (r time.Time, exists bool) {
+	v := m.begin_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBeginDatetime returns the old "begin_datetime" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldBeginDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBeginDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBeginDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBeginDatetime: %w", err)
+	}
+	return oldValue.BeginDatetime, nil
+}
+
+// ResetBeginDatetime resets all changes to the "begin_datetime" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetBeginDatetime() {
+	m.begin_datetime = nil
+}
+
+// SetEndDatetime sets the "end_datetime" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetEndDatetime(t time.Time) {
+	m.end_datetime = &t
+}
+
+// EndDatetime returns the value of the "end_datetime" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) EndDatetime() (r time.Time, exists bool) {
+	v := m.end_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEndDatetime returns the old "end_datetime" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldEndDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEndDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEndDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEndDatetime: %w", err)
+	}
+	return oldValue.EndDatetime, nil
+}
+
+// ResetEndDatetime resets all changes to the "end_datetime" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetEndDatetime() {
+	m.end_datetime = nil
+}
+
+// SetUpgradeType sets the "upgrade_type" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetUpgradeType(i int32) {
+	m.upgrade_type = &i
+	m.addupgrade_type = nil
+}
+
+// UpgradeType returns the value of the "upgrade_type" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) UpgradeType() (r int32, exists bool) {
+	v := m.upgrade_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeType returns the old "upgrade_type" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldUpgradeType(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeType: %w", err)
+	}
+	return oldValue.UpgradeType, nil
+}
+
+// AddUpgradeType adds i to the "upgrade_type" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddUpgradeType(i int32) {
+	if m.addupgrade_type != nil {
+		*m.addupgrade_type += i
+	} else {
+		m.addupgrade_type = &i
+	}
+}
+
+// AddedUpgradeType returns the value that was added to the "upgrade_type" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedUpgradeType() (r int32, exists bool) {
+	v := m.addupgrade_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpgradeType resets all changes to the "upgrade_type" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetUpgradeType() {
+	m.upgrade_type = nil
+	m.addupgrade_type = nil
+}
+
+// SetPromptUpgradeContent sets the "prompt_upgrade_content" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetPromptUpgradeContent(s string) {
+	m.prompt_upgrade_content = &s
+}
+
+// PromptUpgradeContent returns the value of the "prompt_upgrade_content" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) PromptUpgradeContent() (r string, exists bool) {
+	v := m.prompt_upgrade_content
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPromptUpgradeContent returns the old "prompt_upgrade_content" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldPromptUpgradeContent(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldPromptUpgradeContent is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldPromptUpgradeContent requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPromptUpgradeContent: %w", err)
+	}
+	return oldValue.PromptUpgradeContent, nil
+}
+
+// ClearPromptUpgradeContent clears the value of the "prompt_upgrade_content" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ClearPromptUpgradeContent() {
+	m.prompt_upgrade_content = nil
+	m.clearedFields[upgradelnxupgradestrategy.FieldPromptUpgradeContent] = struct{}{}
+}
+
+// PromptUpgradeContentCleared returns if the "prompt_upgrade_content" field was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) PromptUpgradeContentCleared() bool {
+	_, ok := m.clearedFields[upgradelnxupgradestrategy.FieldPromptUpgradeContent]
+	return ok
+}
+
+// ResetPromptUpgradeContent resets all changes to the "prompt_upgrade_content" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetPromptUpgradeContent() {
+	m.prompt_upgrade_content = nil
+	delete(m.clearedFields, upgradelnxupgradestrategy.FieldPromptUpgradeContent)
+}
+
+// SetUpgradeDevType sets the "upgrade_dev_type" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetUpgradeDevType(i int32) {
+	m.upgrade_dev_type = &i
+	m.addupgrade_dev_type = nil
+}
+
+// UpgradeDevType returns the value of the "upgrade_dev_type" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) UpgradeDevType() (r int32, exists bool) {
+	v := m.upgrade_dev_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeDevType returns the old "upgrade_dev_type" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldUpgradeDevType(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeDevType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeDevType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeDevType: %w", err)
+	}
+	return oldValue.UpgradeDevType, nil
+}
+
+// AddUpgradeDevType adds i to the "upgrade_dev_type" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddUpgradeDevType(i int32) {
+	if m.addupgrade_dev_type != nil {
+		*m.addupgrade_dev_type += i
+	} else {
+		m.addupgrade_dev_type = &i
+	}
+}
+
+// AddedUpgradeDevType returns the value that was added to the "upgrade_dev_type" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedUpgradeDevType() (r int32, exists bool) {
+	v := m.addupgrade_dev_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpgradeDevType resets all changes to the "upgrade_dev_type" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetUpgradeDevType() {
+	m.upgrade_dev_type = nil
+	m.addupgrade_dev_type = nil
+}
+
+// SetUpgradeDevData sets the "upgrade_dev_data" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetUpgradeDevData(s string) {
+	m.upgrade_dev_data = &s
+}
+
+// UpgradeDevData returns the value of the "upgrade_dev_data" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) UpgradeDevData() (r string, exists bool) {
+	v := m.upgrade_dev_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeDevData returns the old "upgrade_dev_data" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldUpgradeDevData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeDevData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeDevData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeDevData: %w", err)
+	}
+	return oldValue.UpgradeDevData, nil
+}
+
+// ResetUpgradeDevData resets all changes to the "upgrade_dev_data" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetUpgradeDevData() {
+	m.upgrade_dev_data = nil
+}
+
+// SetUpgradeVersionType sets the "upgrade_version_type" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetUpgradeVersionType(i int32) {
+	m.upgrade_version_type = &i
+	m.addupgrade_version_type = nil
+}
+
+// UpgradeVersionType returns the value of the "upgrade_version_type" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) UpgradeVersionType() (r int32, exists bool) {
+	v := m.upgrade_version_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeVersionType returns the old "upgrade_version_type" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldUpgradeVersionType(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeVersionType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeVersionType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeVersionType: %w", err)
+	}
+	return oldValue.UpgradeVersionType, nil
+}
+
+// AddUpgradeVersionType adds i to the "upgrade_version_type" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddUpgradeVersionType(i int32) {
+	if m.addupgrade_version_type != nil {
+		*m.addupgrade_version_type += i
+	} else {
+		m.addupgrade_version_type = &i
+	}
+}
+
+// AddedUpgradeVersionType returns the value that was added to the "upgrade_version_type" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedUpgradeVersionType() (r int32, exists bool) {
+	v := m.addupgrade_version_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpgradeVersionType resets all changes to the "upgrade_version_type" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetUpgradeVersionType() {
+	m.upgrade_version_type = nil
+	m.addupgrade_version_type = nil
+}
+
+// SetUpgradeVersionData sets the "upgrade_version_data" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetUpgradeVersionData(s string) {
+	m.upgrade_version_data = &s
+}
+
+// UpgradeVersionData returns the value of the "upgrade_version_data" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) UpgradeVersionData() (r string, exists bool) {
+	v := m.upgrade_version_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeVersionData returns the old "upgrade_version_data" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldUpgradeVersionData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeVersionData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeVersionData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeVersionData: %w", err)
+	}
+	return oldValue.UpgradeVersionData, nil
+}
+
+// ResetUpgradeVersionData resets all changes to the "upgrade_version_data" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetUpgradeVersionData() {
+	m.upgrade_version_data = nil
+}
+
+// SetIsGray sets the "is_gray" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetIsGray(i int32) {
+	m.is_gray = &i
+	m.addis_gray = nil
+}
+
+// IsGray returns the value of the "is_gray" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) IsGray() (r int32, exists bool) {
+	v := m.is_gray
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsGray returns the old "is_gray" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldIsGray(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsGray is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsGray requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsGray: %w", err)
+	}
+	return oldValue.IsGray, nil
+}
+
+// AddIsGray adds i to the "is_gray" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddIsGray(i int32) {
+	if m.addis_gray != nil {
+		*m.addis_gray += i
+	} else {
+		m.addis_gray = &i
+	}
+}
+
+// AddedIsGray returns the value that was added to the "is_gray" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedIsGray() (r int32, exists bool) {
+	v := m.addis_gray
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsGray resets all changes to the "is_gray" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetIsGray() {
+	m.is_gray = nil
+	m.addis_gray = nil
+}
+
+// SetGrayData sets the "gray_data" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetGrayData(s string) {
+	m.gray_data = &s
+}
+
+// GrayData returns the value of the "gray_data" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) GrayData() (r string, exists bool) {
+	v := m.gray_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGrayData returns the old "gray_data" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldGrayData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldGrayData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldGrayData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGrayData: %w", err)
+	}
+	return oldValue.GrayData, nil
+}
+
+// ResetGrayData resets all changes to the "gray_data" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetGrayData() {
+	m.gray_data = nil
+}
+
+// SetIsFlowLimit sets the "is_flow_limit" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetIsFlowLimit(i int32) {
+	m.is_flow_limit = &i
+	m.addis_flow_limit = nil
+}
+
+// IsFlowLimit returns the value of the "is_flow_limit" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) IsFlowLimit() (r int32, exists bool) {
+	v := m.is_flow_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsFlowLimit returns the old "is_flow_limit" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldIsFlowLimit(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsFlowLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsFlowLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsFlowLimit: %w", err)
+	}
+	return oldValue.IsFlowLimit, nil
+}
+
+// AddIsFlowLimit adds i to the "is_flow_limit" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddIsFlowLimit(i int32) {
+	if m.addis_flow_limit != nil {
+		*m.addis_flow_limit += i
+	} else {
+		m.addis_flow_limit = &i
+	}
+}
+
+// AddedIsFlowLimit returns the value that was added to the "is_flow_limit" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedIsFlowLimit() (r int32, exists bool) {
+	v := m.addis_flow_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsFlowLimit resets all changes to the "is_flow_limit" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetIsFlowLimit() {
+	m.is_flow_limit = nil
+	m.addis_flow_limit = nil
+}
+
+// SetFlowLimitData sets the "flow_limit_data" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetFlowLimitData(s string) {
+	m.flow_limit_data = &s
+}
+
+// FlowLimitData returns the value of the "flow_limit_data" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) FlowLimitData() (r string, exists bool) {
+	v := m.flow_limit_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFlowLimitData returns the old "flow_limit_data" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldFlowLimitData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldFlowLimitData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldFlowLimitData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFlowLimitData: %w", err)
+	}
+	return oldValue.FlowLimitData, nil
+}
+
+// ResetFlowLimitData resets all changes to the "flow_limit_data" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetFlowLimitData() {
+	m.flow_limit_data = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradelnxupgradestrategy.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnxupgradestrategy.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradelnxupgradestrategy.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeLnxUpgradeStrategy entity.
+// If the UpgradeLnxUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradelnxupgradestrategy.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnxupgradestrategy.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradelnxupgradestrategy.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeLnxUpgradeStrategyMutation builder.
+func (m *UpgradeLnxUpgradeStrategyMutation) Where(ps ...predicate.UpgradeLnxUpgradeStrategy) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeLnxUpgradeStrategyMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeLnxUpgradeStrategyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeLnxUpgradeStrategy, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeLnxUpgradeStrategyMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeLnxUpgradeStrategy).
+func (m *UpgradeLnxUpgradeStrategyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeLnxUpgradeStrategyMutation) Fields() []string {
+	fields := make([]string, 0, 21)
+	if m.company_id != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldCompanyID)
+	}
+	if m.enable != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldEnable)
+	}
+	if m.name != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldName)
+	}
+	if m.description != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldDescription)
+	}
+	if m.lnx_id != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldLnxID)
+	}
+	if m.lnx_version_id != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldLnxVersionID)
+	}
+	if m.begin_datetime != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldBeginDatetime)
+	}
+	if m.end_datetime != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldEndDatetime)
+	}
+	if m.upgrade_type != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpgradeType)
+	}
+	if m.prompt_upgrade_content != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldPromptUpgradeContent)
+	}
+	if m.upgrade_dev_type != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpgradeDevType)
+	}
+	if m.upgrade_dev_data != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpgradeDevData)
+	}
+	if m.upgrade_version_type != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpgradeVersionType)
+	}
+	if m.upgrade_version_data != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpgradeVersionData)
+	}
+	if m.is_gray != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldIsGray)
+	}
+	if m.gray_data != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldGrayData)
+	}
+	if m.is_flow_limit != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldIsFlowLimit)
+	}
+	if m.flow_limit_data != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldFlowLimitData)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeLnxUpgradeStrategyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnxupgradestrategy.FieldCompanyID:
+		return m.CompanyID()
+	case upgradelnxupgradestrategy.FieldEnable:
+		return m.Enable()
+	case upgradelnxupgradestrategy.FieldName:
+		return m.Name()
+	case upgradelnxupgradestrategy.FieldDescription:
+		return m.Description()
+	case upgradelnxupgradestrategy.FieldLnxID:
+		return m.LnxID()
+	case upgradelnxupgradestrategy.FieldLnxVersionID:
+		return m.LnxVersionID()
+	case upgradelnxupgradestrategy.FieldBeginDatetime:
+		return m.BeginDatetime()
+	case upgradelnxupgradestrategy.FieldEndDatetime:
+		return m.EndDatetime()
+	case upgradelnxupgradestrategy.FieldUpgradeType:
+		return m.UpgradeType()
+	case upgradelnxupgradestrategy.FieldPromptUpgradeContent:
+		return m.PromptUpgradeContent()
+	case upgradelnxupgradestrategy.FieldUpgradeDevType:
+		return m.UpgradeDevType()
+	case upgradelnxupgradestrategy.FieldUpgradeDevData:
+		return m.UpgradeDevData()
+	case upgradelnxupgradestrategy.FieldUpgradeVersionType:
+		return m.UpgradeVersionType()
+	case upgradelnxupgradestrategy.FieldUpgradeVersionData:
+		return m.UpgradeVersionData()
+	case upgradelnxupgradestrategy.FieldIsGray:
+		return m.IsGray()
+	case upgradelnxupgradestrategy.FieldGrayData:
+		return m.GrayData()
+	case upgradelnxupgradestrategy.FieldIsFlowLimit:
+		return m.IsFlowLimit()
+	case upgradelnxupgradestrategy.FieldFlowLimitData:
+		return m.FlowLimitData()
+	case upgradelnxupgradestrategy.FieldIsDel:
+		return m.IsDel()
+	case upgradelnxupgradestrategy.FieldCreateAt:
+		return m.CreateAt()
+	case upgradelnxupgradestrategy.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeLnxUpgradeStrategyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradelnxupgradestrategy.FieldCompanyID:
+		return m.OldCompanyID(ctx)
+	case upgradelnxupgradestrategy.FieldEnable:
+		return m.OldEnable(ctx)
+	case upgradelnxupgradestrategy.FieldName:
+		return m.OldName(ctx)
+	case upgradelnxupgradestrategy.FieldDescription:
+		return m.OldDescription(ctx)
+	case upgradelnxupgradestrategy.FieldLnxID:
+		return m.OldLnxID(ctx)
+	case upgradelnxupgradestrategy.FieldLnxVersionID:
+		return m.OldLnxVersionID(ctx)
+	case upgradelnxupgradestrategy.FieldBeginDatetime:
+		return m.OldBeginDatetime(ctx)
+	case upgradelnxupgradestrategy.FieldEndDatetime:
+		return m.OldEndDatetime(ctx)
+	case upgradelnxupgradestrategy.FieldUpgradeType:
+		return m.OldUpgradeType(ctx)
+	case upgradelnxupgradestrategy.FieldPromptUpgradeContent:
+		return m.OldPromptUpgradeContent(ctx)
+	case upgradelnxupgradestrategy.FieldUpgradeDevType:
+		return m.OldUpgradeDevType(ctx)
+	case upgradelnxupgradestrategy.FieldUpgradeDevData:
+		return m.OldUpgradeDevData(ctx)
+	case upgradelnxupgradestrategy.FieldUpgradeVersionType:
+		return m.OldUpgradeVersionType(ctx)
+	case upgradelnxupgradestrategy.FieldUpgradeVersionData:
+		return m.OldUpgradeVersionData(ctx)
+	case upgradelnxupgradestrategy.FieldIsGray:
+		return m.OldIsGray(ctx)
+	case upgradelnxupgradestrategy.FieldGrayData:
+		return m.OldGrayData(ctx)
+	case upgradelnxupgradestrategy.FieldIsFlowLimit:
+		return m.OldIsFlowLimit(ctx)
+	case upgradelnxupgradestrategy.FieldFlowLimitData:
+		return m.OldFlowLimitData(ctx)
+	case upgradelnxupgradestrategy.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradelnxupgradestrategy.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradelnxupgradestrategy.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeLnxUpgradeStrategy field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxUpgradeStrategyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnxupgradestrategy.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCompanyID(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldLnxID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLnxID(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldLnxVersionID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLnxVersionID(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldBeginDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBeginDatetime(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldEndDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEndDatetime(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeType(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldPromptUpgradeContent:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPromptUpgradeContent(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeDevType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeDevType(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeDevData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeDevData(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeVersionType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeVersionType(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeVersionData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeVersionData(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldIsGray:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsGray(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldGrayData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGrayData(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldIsFlowLimit:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsFlowLimit(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldFlowLimitData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFlowLimitData(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategy field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedFields() []string {
+	var fields []string
+	if m.addcompany_id != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldCompanyID)
+	}
+	if m.addenable != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldEnable)
+	}
+	if m.addlnx_id != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldLnxID)
+	}
+	if m.addlnx_version_id != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldLnxVersionID)
+	}
+	if m.addupgrade_type != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpgradeType)
+	}
+	if m.addupgrade_dev_type != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpgradeDevType)
+	}
+	if m.addupgrade_version_type != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpgradeVersionType)
+	}
+	if m.addis_gray != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldIsGray)
+	}
+	if m.addis_flow_limit != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldIsFlowLimit)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradelnxupgradestrategy.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnxupgradestrategy.FieldCompanyID:
+		return m.AddedCompanyID()
+	case upgradelnxupgradestrategy.FieldEnable:
+		return m.AddedEnable()
+	case upgradelnxupgradestrategy.FieldLnxID:
+		return m.AddedLnxID()
+	case upgradelnxupgradestrategy.FieldLnxVersionID:
+		return m.AddedLnxVersionID()
+	case upgradelnxupgradestrategy.FieldUpgradeType:
+		return m.AddedUpgradeType()
+	case upgradelnxupgradestrategy.FieldUpgradeDevType:
+		return m.AddedUpgradeDevType()
+	case upgradelnxupgradestrategy.FieldUpgradeVersionType:
+		return m.AddedUpgradeVersionType()
+	case upgradelnxupgradestrategy.FieldIsGray:
+		return m.AddedIsGray()
+	case upgradelnxupgradestrategy.FieldIsFlowLimit:
+		return m.AddedIsFlowLimit()
+	case upgradelnxupgradestrategy.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnxupgradestrategy.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCompanyID(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldLnxID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLnxID(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldLnxVersionID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLnxVersionID(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpgradeType(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeDevType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpgradeDevType(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeVersionType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpgradeVersionType(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldIsGray:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsGray(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldIsFlowLimit:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsFlowLimit(v)
+		return nil
+	case upgradelnxupgradestrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategy numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradelnxupgradestrategy.FieldDescription) {
+		fields = append(fields, upgradelnxupgradestrategy.FieldDescription)
+	}
+	if m.FieldCleared(upgradelnxupgradestrategy.FieldPromptUpgradeContent) {
+		fields = append(fields, upgradelnxupgradestrategy.FieldPromptUpgradeContent)
+	}
+	if m.FieldCleared(upgradelnxupgradestrategy.FieldCreateAt) {
+		fields = append(fields, upgradelnxupgradestrategy.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradelnxupgradestrategy.FieldUpdateAt) {
+		fields = append(fields, upgradelnxupgradestrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyMutation) ClearField(name string) error {
+	switch name {
+	case upgradelnxupgradestrategy.FieldDescription:
+		m.ClearDescription()
+		return nil
+	case upgradelnxupgradestrategy.FieldPromptUpgradeContent:
+		m.ClearPromptUpgradeContent()
+		return nil
+	case upgradelnxupgradestrategy.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradelnxupgradestrategy.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategy nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetField(name string) error {
+	switch name {
+	case upgradelnxupgradestrategy.FieldCompanyID:
+		m.ResetCompanyID()
+		return nil
+	case upgradelnxupgradestrategy.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case upgradelnxupgradestrategy.FieldName:
+		m.ResetName()
+		return nil
+	case upgradelnxupgradestrategy.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case upgradelnxupgradestrategy.FieldLnxID:
+		m.ResetLnxID()
+		return nil
+	case upgradelnxupgradestrategy.FieldLnxVersionID:
+		m.ResetLnxVersionID()
+		return nil
+	case upgradelnxupgradestrategy.FieldBeginDatetime:
+		m.ResetBeginDatetime()
+		return nil
+	case upgradelnxupgradestrategy.FieldEndDatetime:
+		m.ResetEndDatetime()
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeType:
+		m.ResetUpgradeType()
+		return nil
+	case upgradelnxupgradestrategy.FieldPromptUpgradeContent:
+		m.ResetPromptUpgradeContent()
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeDevType:
+		m.ResetUpgradeDevType()
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeDevData:
+		m.ResetUpgradeDevData()
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeVersionType:
+		m.ResetUpgradeVersionType()
+		return nil
+	case upgradelnxupgradestrategy.FieldUpgradeVersionData:
+		m.ResetUpgradeVersionData()
+		return nil
+	case upgradelnxupgradestrategy.FieldIsGray:
+		m.ResetIsGray()
+		return nil
+	case upgradelnxupgradestrategy.FieldGrayData:
+		m.ResetGrayData()
+		return nil
+	case upgradelnxupgradestrategy.FieldIsFlowLimit:
+		m.ResetIsFlowLimit()
+		return nil
+	case upgradelnxupgradestrategy.FieldFlowLimitData:
+		m.ResetFlowLimitData()
+		return nil
+	case upgradelnxupgradestrategy.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradelnxupgradestrategy.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradelnxupgradestrategy.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategy field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategy unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategy edge %s", name)
+}
+
+// UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation represents an operation that mutates the UpgradeLnxUpgradeStrategyFlowLimitStrategy nodes in the graph.
+type UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int
+	enable        *int32
+	addenable     *int32
+	begin_time    *string
+	end_time      *string
+	dimension     *int32
+	adddimension  *int32
+	_limit        *int
+	add_limit     *int
+	is_del        *int32
+	addis_del     *int32
+	create_at     *time.Time
+	update_at     *time.Time
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*UpgradeLnxUpgradeStrategyFlowLimitStrategy, error)
+	predicates    []predicate.UpgradeLnxUpgradeStrategyFlowLimitStrategy
+}
+
+var _ ent.Mutation = (*UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation)(nil)
+
+// upgradelnxupgradestrategyflowlimitstrategyOption allows management of the mutation configuration using functional options.
+type upgradelnxupgradestrategyflowlimitstrategyOption func(*UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation)
+
+// newUpgradeLnxUpgradeStrategyFlowLimitStrategyMutation creates new mutation for the UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+func newUpgradeLnxUpgradeStrategyFlowLimitStrategyMutation(c config, op Op, opts ...upgradelnxupgradestrategyflowlimitstrategyOption) *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation {
+	m := &UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeLnxUpgradeStrategyFlowLimitStrategy,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeLnxUpgradeStrategyFlowLimitStrategyID sets the ID field of the mutation.
+func withUpgradeLnxUpgradeStrategyFlowLimitStrategyID(id int) upgradelnxupgradestrategyflowlimitstrategyOption {
+	return func(m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeLnxUpgradeStrategyFlowLimitStrategy
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeLnxUpgradeStrategyFlowLimitStrategy, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeLnxUpgradeStrategyFlowLimitStrategy.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeLnxUpgradeStrategyFlowLimitStrategy sets the old UpgradeLnxUpgradeStrategyFlowLimitStrategy of the mutation.
+func withUpgradeLnxUpgradeStrategyFlowLimitStrategy(node *UpgradeLnxUpgradeStrategyFlowLimitStrategy) upgradelnxupgradestrategyflowlimitstrategyOption {
+	return func(m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) {
+		m.oldValue = func(context.Context) (*UpgradeLnxUpgradeStrategyFlowLimitStrategy, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeLnxUpgradeStrategyFlowLimitStrategy entities.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeLnxUpgradeStrategyFlowLimitStrategy.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetEnable sets the "enable" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetEnable(i int32) {
+	m.enable = &i
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Enable() (r int32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeLnxUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) OldEnable(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds i to the "enable" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddEnable(i int32) {
+	if m.addenable != nil {
+		*m.addenable += i
+	} else {
+		m.addenable = &i
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetBeginTime sets the "begin_time" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetBeginTime(s string) {
+	m.begin_time = &s
+}
+
+// BeginTime returns the value of the "begin_time" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) BeginTime() (r string, exists bool) {
+	v := m.begin_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBeginTime returns the old "begin_time" field's value of the UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeLnxUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) OldBeginTime(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBeginTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBeginTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBeginTime: %w", err)
+	}
+	return oldValue.BeginTime, nil
+}
+
+// ResetBeginTime resets all changes to the "begin_time" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetBeginTime() {
+	m.begin_time = nil
+}
+
+// SetEndTime sets the "end_time" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetEndTime(s string) {
+	m.end_time = &s
+}
+
+// EndTime returns the value of the "end_time" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) EndTime() (r string, exists bool) {
+	v := m.end_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEndTime returns the old "end_time" field's value of the UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeLnxUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) OldEndTime(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEndTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEndTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEndTime: %w", err)
+	}
+	return oldValue.EndTime, nil
+}
+
+// ResetEndTime resets all changes to the "end_time" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetEndTime() {
+	m.end_time = nil
+}
+
+// SetDimension sets the "dimension" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetDimension(i int32) {
+	m.dimension = &i
+	m.adddimension = nil
+}
+
+// Dimension returns the value of the "dimension" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Dimension() (r int32, exists bool) {
+	v := m.dimension
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDimension returns the old "dimension" field's value of the UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeLnxUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) OldDimension(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDimension is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDimension requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDimension: %w", err)
+	}
+	return oldValue.Dimension, nil
+}
+
+// AddDimension adds i to the "dimension" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddDimension(i int32) {
+	if m.adddimension != nil {
+		*m.adddimension += i
+	} else {
+		m.adddimension = &i
+	}
+}
+
+// AddedDimension returns the value that was added to the "dimension" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddedDimension() (r int32, exists bool) {
+	v := m.adddimension
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDimension resets all changes to the "dimension" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetDimension() {
+	m.dimension = nil
+	m.adddimension = nil
+}
+
+// SetLimit sets the "limit" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetLimit(i int) {
+	m._limit = &i
+	m.add_limit = nil
+}
+
+// Limit returns the value of the "limit" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Limit() (r int, exists bool) {
+	v := m._limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLimit returns the old "limit" field's value of the UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeLnxUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) OldLimit(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLimit: %w", err)
+	}
+	return oldValue.Limit, nil
+}
+
+// AddLimit adds i to the "limit" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddLimit(i int) {
+	if m.add_limit != nil {
+		*m.add_limit += i
+	} else {
+		m.add_limit = &i
+	}
+}
+
+// AddedLimit returns the value that was added to the "limit" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddedLimit() (r int, exists bool) {
+	v := m.add_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLimit resets all changes to the "limit" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetLimit() {
+	m._limit = nil
+	m.add_limit = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeLnxUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeLnxUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeLnxUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation builder.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Where(ps ...predicate.UpgradeLnxUpgradeStrategyFlowLimitStrategy) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeLnxUpgradeStrategyFlowLimitStrategy, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeLnxUpgradeStrategyFlowLimitStrategy).
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Fields() []string {
+	fields := make([]string, 0, 8)
+	if m.enable != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldEnable)
+	}
+	if m.begin_time != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldBeginTime)
+	}
+	if m.end_time != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldEndTime)
+	}
+	if m.dimension != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldDimension)
+	}
+	if m._limit != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldLimit)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEnable:
+		return m.Enable()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldBeginTime:
+		return m.BeginTime()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEndTime:
+		return m.EndTime()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldDimension:
+		return m.Dimension()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldLimit:
+		return m.Limit()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldIsDel:
+		return m.IsDel()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt:
+		return m.CreateAt()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEnable:
+		return m.OldEnable(ctx)
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldBeginTime:
+		return m.OldBeginTime(ctx)
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEndTime:
+		return m.OldEndTime(ctx)
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldDimension:
+		return m.OldDimension(ctx)
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldLimit:
+		return m.OldLimit(ctx)
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeLnxUpgradeStrategyFlowLimitStrategy field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldBeginTime:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBeginTime(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEndTime:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEndTime(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldDimension:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDimension(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLimit(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyFlowLimitStrategy field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddedFields() []string {
+	var fields []string
+	if m.addenable != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldEnable)
+	}
+	if m.adddimension != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldDimension)
+	}
+	if m.add_limit != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldLimit)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEnable:
+		return m.AddedEnable()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldDimension:
+		return m.AddedDimension()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldLimit:
+		return m.AddedLimit()
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldDimension:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDimension(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLimit(v)
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyFlowLimitStrategy numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt) {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt) {
+		fields = append(fields, upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ClearField(name string) error {
+	switch name {
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyFlowLimitStrategy nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetField(name string) error {
+	switch name {
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldBeginTime:
+		m.ResetBeginTime()
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldEndTime:
+		m.ResetEndTime()
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldDimension:
+		m.ResetDimension()
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldLimit:
+		m.ResetLimit()
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradelnxupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyFlowLimitStrategy field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyFlowLimitStrategy unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyFlowLimitStrategy edge %s", name)
+}
+
+// UpgradeLnxUpgradeStrategyGrayStrategyMutation represents an operation that mutates the UpgradeLnxUpgradeStrategyGrayStrategy nodes in the graph.
+type UpgradeLnxUpgradeStrategyGrayStrategyMutation struct {
+	config
+	op             Op
+	typ            string
+	id             *int
+	enable         *int32
+	addenable      *int32
+	begin_datetime *time.Time
+	end_datetime   *time.Time
+	_limit         *int
+	add_limit      *int
+	is_del         *int32
+	addis_del      *int32
+	create_at      *time.Time
+	update_at      *time.Time
+	clearedFields  map[string]struct{}
+	done           bool
+	oldValue       func(context.Context) (*UpgradeLnxUpgradeStrategyGrayStrategy, error)
+	predicates     []predicate.UpgradeLnxUpgradeStrategyGrayStrategy
+}
+
+var _ ent.Mutation = (*UpgradeLnxUpgradeStrategyGrayStrategyMutation)(nil)
+
+// upgradelnxupgradestrategygraystrategyOption allows management of the mutation configuration using functional options.
+type upgradelnxupgradestrategygraystrategyOption func(*UpgradeLnxUpgradeStrategyGrayStrategyMutation)
+
+// newUpgradeLnxUpgradeStrategyGrayStrategyMutation creates new mutation for the UpgradeLnxUpgradeStrategyGrayStrategy entity.
+func newUpgradeLnxUpgradeStrategyGrayStrategyMutation(c config, op Op, opts ...upgradelnxupgradestrategygraystrategyOption) *UpgradeLnxUpgradeStrategyGrayStrategyMutation {
+	m := &UpgradeLnxUpgradeStrategyGrayStrategyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeLnxUpgradeStrategyGrayStrategy,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeLnxUpgradeStrategyGrayStrategyID sets the ID field of the mutation.
+func withUpgradeLnxUpgradeStrategyGrayStrategyID(id int) upgradelnxupgradestrategygraystrategyOption {
+	return func(m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeLnxUpgradeStrategyGrayStrategy
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeLnxUpgradeStrategyGrayStrategy, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeLnxUpgradeStrategyGrayStrategy.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeLnxUpgradeStrategyGrayStrategy sets the old UpgradeLnxUpgradeStrategyGrayStrategy of the mutation.
+func withUpgradeLnxUpgradeStrategyGrayStrategy(node *UpgradeLnxUpgradeStrategyGrayStrategy) upgradelnxupgradestrategygraystrategyOption {
+	return func(m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) {
+		m.oldValue = func(context.Context) (*UpgradeLnxUpgradeStrategyGrayStrategy, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeLnxUpgradeStrategyGrayStrategyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeLnxUpgradeStrategyGrayStrategyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeLnxUpgradeStrategyGrayStrategy entities.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeLnxUpgradeStrategyGrayStrategy.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetEnable sets the "enable" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetEnable(i int32) {
+	m.enable = &i
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) Enable() (r int32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the UpgradeLnxUpgradeStrategyGrayStrategy entity.
+// If the UpgradeLnxUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) OldEnable(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds i to the "enable" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddEnable(i int32) {
+	if m.addenable != nil {
+		*m.addenable += i
+	} else {
+		m.addenable = &i
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetBeginDatetime sets the "begin_datetime" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetBeginDatetime(t time.Time) {
+	m.begin_datetime = &t
+}
+
+// BeginDatetime returns the value of the "begin_datetime" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) BeginDatetime() (r time.Time, exists bool) {
+	v := m.begin_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBeginDatetime returns the old "begin_datetime" field's value of the UpgradeLnxUpgradeStrategyGrayStrategy entity.
+// If the UpgradeLnxUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) OldBeginDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBeginDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBeginDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBeginDatetime: %w", err)
+	}
+	return oldValue.BeginDatetime, nil
+}
+
+// ResetBeginDatetime resets all changes to the "begin_datetime" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ResetBeginDatetime() {
+	m.begin_datetime = nil
+}
+
+// SetEndDatetime sets the "end_datetime" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetEndDatetime(t time.Time) {
+	m.end_datetime = &t
+}
+
+// EndDatetime returns the value of the "end_datetime" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) EndDatetime() (r time.Time, exists bool) {
+	v := m.end_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEndDatetime returns the old "end_datetime" field's value of the UpgradeLnxUpgradeStrategyGrayStrategy entity.
+// If the UpgradeLnxUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) OldEndDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEndDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEndDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEndDatetime: %w", err)
+	}
+	return oldValue.EndDatetime, nil
+}
+
+// ResetEndDatetime resets all changes to the "end_datetime" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ResetEndDatetime() {
+	m.end_datetime = nil
+}
+
+// SetLimit sets the "limit" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetLimit(i int) {
+	m._limit = &i
+	m.add_limit = nil
+}
+
+// Limit returns the value of the "limit" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) Limit() (r int, exists bool) {
+	v := m._limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLimit returns the old "limit" field's value of the UpgradeLnxUpgradeStrategyGrayStrategy entity.
+// If the UpgradeLnxUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) OldLimit(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLimit: %w", err)
+	}
+	return oldValue.Limit, nil
+}
+
+// AddLimit adds i to the "limit" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddLimit(i int) {
+	if m.add_limit != nil {
+		*m.add_limit += i
+	} else {
+		m.add_limit = &i
+	}
+}
+
+// AddedLimit returns the value that was added to the "limit" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddedLimit() (r int, exists bool) {
+	v := m.add_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLimit resets all changes to the "limit" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ResetLimit() {
+	m._limit = nil
+	m.add_limit = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeLnxUpgradeStrategyGrayStrategy entity.
+// If the UpgradeLnxUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeLnxUpgradeStrategyGrayStrategy entity.
+// If the UpgradeLnxUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradelnxupgradestrategygraystrategy.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnxupgradestrategygraystrategy.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradelnxupgradestrategygraystrategy.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeLnxUpgradeStrategyGrayStrategy entity.
+// If the UpgradeLnxUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradelnxupgradestrategygraystrategy.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnxupgradestrategygraystrategy.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradelnxupgradestrategygraystrategy.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeLnxUpgradeStrategyGrayStrategyMutation builder.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) Where(ps ...predicate.UpgradeLnxUpgradeStrategyGrayStrategy) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeLnxUpgradeStrategyGrayStrategyMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeLnxUpgradeStrategyGrayStrategy, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeLnxUpgradeStrategyGrayStrategy).
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) Fields() []string {
+	fields := make([]string, 0, 7)
+	if m.enable != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldEnable)
+	}
+	if m.begin_datetime != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldBeginDatetime)
+	}
+	if m.end_datetime != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldEndDatetime)
+	}
+	if m._limit != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldLimit)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnxupgradestrategygraystrategy.FieldEnable:
+		return m.Enable()
+	case upgradelnxupgradestrategygraystrategy.FieldBeginDatetime:
+		return m.BeginDatetime()
+	case upgradelnxupgradestrategygraystrategy.FieldEndDatetime:
+		return m.EndDatetime()
+	case upgradelnxupgradestrategygraystrategy.FieldLimit:
+		return m.Limit()
+	case upgradelnxupgradestrategygraystrategy.FieldIsDel:
+		return m.IsDel()
+	case upgradelnxupgradestrategygraystrategy.FieldCreateAt:
+		return m.CreateAt()
+	case upgradelnxupgradestrategygraystrategy.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradelnxupgradestrategygraystrategy.FieldEnable:
+		return m.OldEnable(ctx)
+	case upgradelnxupgradestrategygraystrategy.FieldBeginDatetime:
+		return m.OldBeginDatetime(ctx)
+	case upgradelnxupgradestrategygraystrategy.FieldEndDatetime:
+		return m.OldEndDatetime(ctx)
+	case upgradelnxupgradestrategygraystrategy.FieldLimit:
+		return m.OldLimit(ctx)
+	case upgradelnxupgradestrategygraystrategy.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradelnxupgradestrategygraystrategy.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradelnxupgradestrategygraystrategy.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeLnxUpgradeStrategyGrayStrategy field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnxupgradestrategygraystrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldBeginDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBeginDatetime(v)
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldEndDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEndDatetime(v)
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLimit(v)
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyGrayStrategy field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddedFields() []string {
+	var fields []string
+	if m.addenable != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldEnable)
+	}
+	if m.add_limit != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldLimit)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnxupgradestrategygraystrategy.FieldEnable:
+		return m.AddedEnable()
+	case upgradelnxupgradestrategygraystrategy.FieldLimit:
+		return m.AddedLimit()
+	case upgradelnxupgradestrategygraystrategy.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnxupgradestrategygraystrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLimit(v)
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyGrayStrategy numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradelnxupgradestrategygraystrategy.FieldCreateAt) {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradelnxupgradestrategygraystrategy.FieldUpdateAt) {
+		fields = append(fields, upgradelnxupgradestrategygraystrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ClearField(name string) error {
+	switch name {
+	case upgradelnxupgradestrategygraystrategy.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyGrayStrategy nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ResetField(name string) error {
+	switch name {
+	case upgradelnxupgradestrategygraystrategy.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldBeginDatetime:
+		m.ResetBeginDatetime()
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldEndDatetime:
+		m.ResetEndDatetime()
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldLimit:
+		m.ResetLimit()
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradelnxupgradestrategygraystrategy.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyGrayStrategy field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyGrayStrategy unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnxUpgradeStrategyGrayStrategy edge %s", name)
+}
+
+// UpgradeLnxVersionMutation represents an operation that mutates the UpgradeLnxVersion nodes in the graph.
+type UpgradeLnxVersionMutation struct {
+	config
+	op              Op
+	typ             string
+	id              *int
+	company_id      *int
+	addcompany_id   *int
+	lnx_id          *int
+	addlnx_id       *int
+	cloud_file_id   *string
+	version_name    *string
+	version_code    *int
+	addversion_code *int
+	arch            *string
+	description     *string
+	is_del          *int32
+	addis_del       *int32
+	create_at       *time.Time
+	update_at       *time.Time
+	clearedFields   map[string]struct{}
+	done            bool
+	oldValue        func(context.Context) (*UpgradeLnxVersion, error)
+	predicates      []predicate.UpgradeLnxVersion
+}
+
+var _ ent.Mutation = (*UpgradeLnxVersionMutation)(nil)
+
+// upgradelnxversionOption allows management of the mutation configuration using functional options.
+type upgradelnxversionOption func(*UpgradeLnxVersionMutation)
+
+// newUpgradeLnxVersionMutation creates new mutation for the UpgradeLnxVersion entity.
+func newUpgradeLnxVersionMutation(c config, op Op, opts ...upgradelnxversionOption) *UpgradeLnxVersionMutation {
+	m := &UpgradeLnxVersionMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeLnxVersion,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeLnxVersionID sets the ID field of the mutation.
+func withUpgradeLnxVersionID(id int) upgradelnxversionOption {
+	return func(m *UpgradeLnxVersionMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeLnxVersion
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeLnxVersion, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeLnxVersion.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeLnxVersion sets the old UpgradeLnxVersion of the mutation.
+func withUpgradeLnxVersion(node *UpgradeLnxVersion) upgradelnxversionOption {
+	return func(m *UpgradeLnxVersionMutation) {
+		m.oldValue = func(context.Context) (*UpgradeLnxVersion, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeLnxVersionMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeLnxVersionMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeLnxVersion entities.
+func (m *UpgradeLnxVersionMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeLnxVersionMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeLnxVersionMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeLnxVersion.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCompanyID sets the "company_id" field.
+func (m *UpgradeLnxVersionMutation) SetCompanyID(i int) {
+	m.company_id = &i
+	m.addcompany_id = nil
+}
+
+// CompanyID returns the value of the "company_id" field in the mutation.
+func (m *UpgradeLnxVersionMutation) CompanyID() (r int, exists bool) {
+	v := m.company_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCompanyID returns the old "company_id" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldCompanyID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCompanyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCompanyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCompanyID: %w", err)
+	}
+	return oldValue.CompanyID, nil
+}
+
+// AddCompanyID adds i to the "company_id" field.
+func (m *UpgradeLnxVersionMutation) AddCompanyID(i int) {
+	if m.addcompany_id != nil {
+		*m.addcompany_id += i
+	} else {
+		m.addcompany_id = &i
+	}
+}
+
+// AddedCompanyID returns the value that was added to the "company_id" field in this mutation.
+func (m *UpgradeLnxVersionMutation) AddedCompanyID() (r int, exists bool) {
+	v := m.addcompany_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCompanyID resets all changes to the "company_id" field.
+func (m *UpgradeLnxVersionMutation) ResetCompanyID() {
+	m.company_id = nil
+	m.addcompany_id = nil
+}
+
+// SetLnxID sets the "lnx_id" field.
+func (m *UpgradeLnxVersionMutation) SetLnxID(i int) {
+	m.lnx_id = &i
+	m.addlnx_id = nil
+}
+
+// LnxID returns the value of the "lnx_id" field in the mutation.
+func (m *UpgradeLnxVersionMutation) LnxID() (r int, exists bool) {
+	v := m.lnx_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLnxID returns the old "lnx_id" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldLnxID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLnxID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLnxID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLnxID: %w", err)
+	}
+	return oldValue.LnxID, nil
+}
+
+// AddLnxID adds i to the "lnx_id" field.
+func (m *UpgradeLnxVersionMutation) AddLnxID(i int) {
+	if m.addlnx_id != nil {
+		*m.addlnx_id += i
+	} else {
+		m.addlnx_id = &i
+	}
+}
+
+// AddedLnxID returns the value that was added to the "lnx_id" field in this mutation.
+func (m *UpgradeLnxVersionMutation) AddedLnxID() (r int, exists bool) {
+	v := m.addlnx_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLnxID resets all changes to the "lnx_id" field.
+func (m *UpgradeLnxVersionMutation) ResetLnxID() {
+	m.lnx_id = nil
+	m.addlnx_id = nil
+}
+
+// SetCloudFileID sets the "cloud_file_id" field.
+func (m *UpgradeLnxVersionMutation) SetCloudFileID(s string) {
+	m.cloud_file_id = &s
+}
+
+// CloudFileID returns the value of the "cloud_file_id" field in the mutation.
+func (m *UpgradeLnxVersionMutation) CloudFileID() (r string, exists bool) {
+	v := m.cloud_file_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCloudFileID returns the old "cloud_file_id" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldCloudFileID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCloudFileID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCloudFileID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCloudFileID: %w", err)
+	}
+	return oldValue.CloudFileID, nil
+}
+
+// ResetCloudFileID resets all changes to the "cloud_file_id" field.
+func (m *UpgradeLnxVersionMutation) ResetCloudFileID() {
+	m.cloud_file_id = nil
+}
+
+// SetVersionName sets the "version_name" field.
+func (m *UpgradeLnxVersionMutation) SetVersionName(s string) {
+	m.version_name = &s
+}
+
+// VersionName returns the value of the "version_name" field in the mutation.
+func (m *UpgradeLnxVersionMutation) VersionName() (r string, exists bool) {
+	v := m.version_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVersionName returns the old "version_name" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldVersionName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldVersionName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldVersionName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVersionName: %w", err)
+	}
+	return oldValue.VersionName, nil
+}
+
+// ResetVersionName resets all changes to the "version_name" field.
+func (m *UpgradeLnxVersionMutation) ResetVersionName() {
+	m.version_name = nil
+}
+
+// SetVersionCode sets the "version_code" field.
+func (m *UpgradeLnxVersionMutation) SetVersionCode(i int) {
+	m.version_code = &i
+	m.addversion_code = nil
+}
+
+// VersionCode returns the value of the "version_code" field in the mutation.
+func (m *UpgradeLnxVersionMutation) VersionCode() (r int, exists bool) {
+	v := m.version_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVersionCode returns the old "version_code" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldVersionCode(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldVersionCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldVersionCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVersionCode: %w", err)
+	}
+	return oldValue.VersionCode, nil
+}
+
+// AddVersionCode adds i to the "version_code" field.
+func (m *UpgradeLnxVersionMutation) AddVersionCode(i int) {
+	if m.addversion_code != nil {
+		*m.addversion_code += i
+	} else {
+		m.addversion_code = &i
+	}
+}
+
+// AddedVersionCode returns the value that was added to the "version_code" field in this mutation.
+func (m *UpgradeLnxVersionMutation) AddedVersionCode() (r int, exists bool) {
+	v := m.addversion_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetVersionCode resets all changes to the "version_code" field.
+func (m *UpgradeLnxVersionMutation) ResetVersionCode() {
+	m.version_code = nil
+	m.addversion_code = nil
+}
+
+// SetArch sets the "arch" field.
+func (m *UpgradeLnxVersionMutation) SetArch(s string) {
+	m.arch = &s
+}
+
+// Arch returns the value of the "arch" field in the mutation.
+func (m *UpgradeLnxVersionMutation) Arch() (r string, exists bool) {
+	v := m.arch
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldArch returns the old "arch" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldArch(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldArch is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldArch requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldArch: %w", err)
+	}
+	return oldValue.Arch, nil
+}
+
+// ResetArch resets all changes to the "arch" field.
+func (m *UpgradeLnxVersionMutation) ResetArch() {
+	m.arch = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *UpgradeLnxVersionMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *UpgradeLnxVersionMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *UpgradeLnxVersionMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[upgradelnxversion.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *UpgradeLnxVersionMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[upgradelnxversion.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *UpgradeLnxVersionMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, upgradelnxversion.FieldDescription)
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeLnxVersionMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeLnxVersionMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeLnxVersionMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeLnxVersionMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeLnxVersionMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeLnxVersionMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeLnxVersionMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeLnxVersionMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradelnxversion.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeLnxVersionMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnxversion.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeLnxVersionMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradelnxversion.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeLnxVersionMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeLnxVersionMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeLnxVersion entity.
+// If the UpgradeLnxVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeLnxVersionMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeLnxVersionMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradelnxversion.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeLnxVersionMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradelnxversion.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeLnxVersionMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradelnxversion.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeLnxVersionMutation builder.
+func (m *UpgradeLnxVersionMutation) Where(ps ...predicate.UpgradeLnxVersion) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeLnxVersionMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeLnxVersionMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeLnxVersion, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeLnxVersionMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeLnxVersionMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeLnxVersion).
+func (m *UpgradeLnxVersionMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeLnxVersionMutation) Fields() []string {
+	fields := make([]string, 0, 10)
+	if m.company_id != nil {
+		fields = append(fields, upgradelnxversion.FieldCompanyID)
+	}
+	if m.lnx_id != nil {
+		fields = append(fields, upgradelnxversion.FieldLnxID)
+	}
+	if m.cloud_file_id != nil {
+		fields = append(fields, upgradelnxversion.FieldCloudFileID)
+	}
+	if m.version_name != nil {
+		fields = append(fields, upgradelnxversion.FieldVersionName)
+	}
+	if m.version_code != nil {
+		fields = append(fields, upgradelnxversion.FieldVersionCode)
+	}
+	if m.arch != nil {
+		fields = append(fields, upgradelnxversion.FieldArch)
+	}
+	if m.description != nil {
+		fields = append(fields, upgradelnxversion.FieldDescription)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradelnxversion.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradelnxversion.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradelnxversion.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeLnxVersionMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnxversion.FieldCompanyID:
+		return m.CompanyID()
+	case upgradelnxversion.FieldLnxID:
+		return m.LnxID()
+	case upgradelnxversion.FieldCloudFileID:
+		return m.CloudFileID()
+	case upgradelnxversion.FieldVersionName:
+		return m.VersionName()
+	case upgradelnxversion.FieldVersionCode:
+		return m.VersionCode()
+	case upgradelnxversion.FieldArch:
+		return m.Arch()
+	case upgradelnxversion.FieldDescription:
+		return m.Description()
+	case upgradelnxversion.FieldIsDel:
+		return m.IsDel()
+	case upgradelnxversion.FieldCreateAt:
+		return m.CreateAt()
+	case upgradelnxversion.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeLnxVersionMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradelnxversion.FieldCompanyID:
+		return m.OldCompanyID(ctx)
+	case upgradelnxversion.FieldLnxID:
+		return m.OldLnxID(ctx)
+	case upgradelnxversion.FieldCloudFileID:
+		return m.OldCloudFileID(ctx)
+	case upgradelnxversion.FieldVersionName:
+		return m.OldVersionName(ctx)
+	case upgradelnxversion.FieldVersionCode:
+		return m.OldVersionCode(ctx)
+	case upgradelnxversion.FieldArch:
+		return m.OldArch(ctx)
+	case upgradelnxversion.FieldDescription:
+		return m.OldDescription(ctx)
+	case upgradelnxversion.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradelnxversion.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradelnxversion.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeLnxVersion field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxVersionMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnxversion.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCompanyID(v)
+		return nil
+	case upgradelnxversion.FieldLnxID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLnxID(v)
+		return nil
+	case upgradelnxversion.FieldCloudFileID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCloudFileID(v)
+		return nil
+	case upgradelnxversion.FieldVersionName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVersionName(v)
+		return nil
+	case upgradelnxversion.FieldVersionCode:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVersionCode(v)
+		return nil
+	case upgradelnxversion.FieldArch:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetArch(v)
+		return nil
+	case upgradelnxversion.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case upgradelnxversion.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradelnxversion.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradelnxversion.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxVersion field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeLnxVersionMutation) AddedFields() []string {
+	var fields []string
+	if m.addcompany_id != nil {
+		fields = append(fields, upgradelnxversion.FieldCompanyID)
+	}
+	if m.addlnx_id != nil {
+		fields = append(fields, upgradelnxversion.FieldLnxID)
+	}
+	if m.addversion_code != nil {
+		fields = append(fields, upgradelnxversion.FieldVersionCode)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradelnxversion.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeLnxVersionMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradelnxversion.FieldCompanyID:
+		return m.AddedCompanyID()
+	case upgradelnxversion.FieldLnxID:
+		return m.AddedLnxID()
+	case upgradelnxversion.FieldVersionCode:
+		return m.AddedVersionCode()
+	case upgradelnxversion.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeLnxVersionMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradelnxversion.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCompanyID(v)
+		return nil
+	case upgradelnxversion.FieldLnxID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLnxID(v)
+		return nil
+	case upgradelnxversion.FieldVersionCode:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddVersionCode(v)
+		return nil
+	case upgradelnxversion.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxVersion numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeLnxVersionMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradelnxversion.FieldDescription) {
+		fields = append(fields, upgradelnxversion.FieldDescription)
+	}
+	if m.FieldCleared(upgradelnxversion.FieldCreateAt) {
+		fields = append(fields, upgradelnxversion.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradelnxversion.FieldUpdateAt) {
+		fields = append(fields, upgradelnxversion.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeLnxVersionMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeLnxVersionMutation) ClearField(name string) error {
+	switch name {
+	case upgradelnxversion.FieldDescription:
+		m.ClearDescription()
+		return nil
+	case upgradelnxversion.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradelnxversion.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxVersion nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeLnxVersionMutation) ResetField(name string) error {
+	switch name {
+	case upgradelnxversion.FieldCompanyID:
+		m.ResetCompanyID()
+		return nil
+	case upgradelnxversion.FieldLnxID:
+		m.ResetLnxID()
+		return nil
+	case upgradelnxversion.FieldCloudFileID:
+		m.ResetCloudFileID()
+		return nil
+	case upgradelnxversion.FieldVersionName:
+		m.ResetVersionName()
+		return nil
+	case upgradelnxversion.FieldVersionCode:
+		m.ResetVersionCode()
+		return nil
+	case upgradelnxversion.FieldArch:
+		m.ResetArch()
+		return nil
+	case upgradelnxversion.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case upgradelnxversion.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradelnxversion.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradelnxversion.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeLnxVersion field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeLnxVersionMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeLnxVersionMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeLnxVersionMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeLnxVersionMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeLnxVersionMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeLnxVersionMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeLnxVersionMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnxVersion unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeLnxVersionMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeLnxVersion edge %s", name)
+}
+
+// UpgradeMacMutation represents an operation that mutates the UpgradeMac nodes in the graph.
+type UpgradeMacMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int
+	company_id    *int
+	addcompany_id *int
+	key           *string
+	name          *string
+	package_name  *string
+	description   *string
+	is_del        *int32
+	addis_del     *int32
+	create_at     *time.Time
+	update_at     *time.Time
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*UpgradeMac, error)
+	predicates    []predicate.UpgradeMac
+}
+
+var _ ent.Mutation = (*UpgradeMacMutation)(nil)
+
+// upgrademacOption allows management of the mutation configuration using functional options.
+type upgrademacOption func(*UpgradeMacMutation)
+
+// newUpgradeMacMutation creates new mutation for the UpgradeMac entity.
+func newUpgradeMacMutation(c config, op Op, opts ...upgrademacOption) *UpgradeMacMutation {
+	m := &UpgradeMacMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeMac,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeMacID sets the ID field of the mutation.
+func withUpgradeMacID(id int) upgrademacOption {
+	return func(m *UpgradeMacMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeMac
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeMac, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeMac.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeMac sets the old UpgradeMac of the mutation.
+func withUpgradeMac(node *UpgradeMac) upgrademacOption {
+	return func(m *UpgradeMacMutation) {
+		m.oldValue = func(context.Context) (*UpgradeMac, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeMacMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeMacMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeMac entities.
+func (m *UpgradeMacMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeMacMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeMacMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeMac.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCompanyID sets the "company_id" field.
+func (m *UpgradeMacMutation) SetCompanyID(i int) {
+	m.company_id = &i
+	m.addcompany_id = nil
+}
+
+// CompanyID returns the value of the "company_id" field in the mutation.
+func (m *UpgradeMacMutation) CompanyID() (r int, exists bool) {
+	v := m.company_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCompanyID returns the old "company_id" field's value of the UpgradeMac entity.
+// If the UpgradeMac object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacMutation) OldCompanyID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCompanyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCompanyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCompanyID: %w", err)
+	}
+	return oldValue.CompanyID, nil
+}
+
+// AddCompanyID adds i to the "company_id" field.
+func (m *UpgradeMacMutation) AddCompanyID(i int) {
+	if m.addcompany_id != nil {
+		*m.addcompany_id += i
+	} else {
+		m.addcompany_id = &i
+	}
+}
+
+// AddedCompanyID returns the value that was added to the "company_id" field in this mutation.
+func (m *UpgradeMacMutation) AddedCompanyID() (r int, exists bool) {
+	v := m.addcompany_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCompanyID resets all changes to the "company_id" field.
+func (m *UpgradeMacMutation) ResetCompanyID() {
+	m.company_id = nil
+	m.addcompany_id = nil
+}
+
+// SetKey sets the "key" field.
+func (m *UpgradeMacMutation) SetKey(s string) {
+	m.key = &s
+}
+
+// Key returns the value of the "key" field in the mutation.
+func (m *UpgradeMacMutation) Key() (r string, exists bool) {
+	v := m.key
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldKey returns the old "key" field's value of the UpgradeMac entity.
+// If the UpgradeMac object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacMutation) OldKey(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldKey is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldKey requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldKey: %w", err)
+	}
+	return oldValue.Key, nil
+}
+
+// ResetKey resets all changes to the "key" field.
+func (m *UpgradeMacMutation) ResetKey() {
+	m.key = nil
+}
+
+// SetName sets the "name" field.
+func (m *UpgradeMacMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *UpgradeMacMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the UpgradeMac entity.
+// If the UpgradeMac object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacMutation) OldName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *UpgradeMacMutation) ResetName() {
+	m.name = nil
+}
+
+// SetPackageName sets the "package_name" field.
+func (m *UpgradeMacMutation) SetPackageName(s string) {
+	m.package_name = &s
+}
+
+// PackageName returns the value of the "package_name" field in the mutation.
+func (m *UpgradeMacMutation) PackageName() (r string, exists bool) {
+	v := m.package_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPackageName returns the old "package_name" field's value of the UpgradeMac entity.
+// If the UpgradeMac object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacMutation) OldPackageName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldPackageName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldPackageName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPackageName: %w", err)
+	}
+	return oldValue.PackageName, nil
+}
+
+// ResetPackageName resets all changes to the "package_name" field.
+func (m *UpgradeMacMutation) ResetPackageName() {
+	m.package_name = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *UpgradeMacMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *UpgradeMacMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the UpgradeMac entity.
+// If the UpgradeMac object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *UpgradeMacMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[upgrademac.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *UpgradeMacMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[upgrademac.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *UpgradeMacMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, upgrademac.FieldDescription)
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeMacMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeMacMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeMac entity.
+// If the UpgradeMac object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeMacMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeMacMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeMacMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeMacMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeMacMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeMac entity.
+// If the UpgradeMac object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeMacMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgrademac.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeMacMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademac.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeMacMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgrademac.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeMacMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeMacMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeMac entity.
+// If the UpgradeMac object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeMacMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgrademac.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeMacMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademac.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeMacMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgrademac.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeMacMutation builder.
+func (m *UpgradeMacMutation) Where(ps ...predicate.UpgradeMac) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeMacMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeMacMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeMac, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeMacMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeMacMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeMac).
+func (m *UpgradeMacMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeMacMutation) Fields() []string {
+	fields := make([]string, 0, 8)
+	if m.company_id != nil {
+		fields = append(fields, upgrademac.FieldCompanyID)
+	}
+	if m.key != nil {
+		fields = append(fields, upgrademac.FieldKey)
+	}
+	if m.name != nil {
+		fields = append(fields, upgrademac.FieldName)
+	}
+	if m.package_name != nil {
+		fields = append(fields, upgrademac.FieldPackageName)
+	}
+	if m.description != nil {
+		fields = append(fields, upgrademac.FieldDescription)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgrademac.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgrademac.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgrademac.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeMacMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademac.FieldCompanyID:
+		return m.CompanyID()
+	case upgrademac.FieldKey:
+		return m.Key()
+	case upgrademac.FieldName:
+		return m.Name()
+	case upgrademac.FieldPackageName:
+		return m.PackageName()
+	case upgrademac.FieldDescription:
+		return m.Description()
+	case upgrademac.FieldIsDel:
+		return m.IsDel()
+	case upgrademac.FieldCreateAt:
+		return m.CreateAt()
+	case upgrademac.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeMacMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgrademac.FieldCompanyID:
+		return m.OldCompanyID(ctx)
+	case upgrademac.FieldKey:
+		return m.OldKey(ctx)
+	case upgrademac.FieldName:
+		return m.OldName(ctx)
+	case upgrademac.FieldPackageName:
+		return m.OldPackageName(ctx)
+	case upgrademac.FieldDescription:
+		return m.OldDescription(ctx)
+	case upgrademac.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgrademac.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgrademac.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeMac field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgrademac.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCompanyID(v)
+		return nil
+	case upgrademac.FieldKey:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetKey(v)
+		return nil
+	case upgrademac.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case upgrademac.FieldPackageName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPackageName(v)
+		return nil
+	case upgrademac.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case upgrademac.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgrademac.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgrademac.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMac field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeMacMutation) AddedFields() []string {
+	var fields []string
+	if m.addcompany_id != nil {
+		fields = append(fields, upgrademac.FieldCompanyID)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgrademac.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeMacMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademac.FieldCompanyID:
+		return m.AddedCompanyID()
+	case upgrademac.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgrademac.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCompanyID(v)
+		return nil
+	case upgrademac.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMac numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeMacMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgrademac.FieldDescription) {
+		fields = append(fields, upgrademac.FieldDescription)
+	}
+	if m.FieldCleared(upgrademac.FieldCreateAt) {
+		fields = append(fields, upgrademac.FieldCreateAt)
+	}
+	if m.FieldCleared(upgrademac.FieldUpdateAt) {
+		fields = append(fields, upgrademac.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeMacMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeMacMutation) ClearField(name string) error {
+	switch name {
+	case upgrademac.FieldDescription:
+		m.ClearDescription()
+		return nil
+	case upgrademac.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgrademac.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMac nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeMacMutation) ResetField(name string) error {
+	switch name {
+	case upgrademac.FieldCompanyID:
+		m.ResetCompanyID()
+		return nil
+	case upgrademac.FieldKey:
+		m.ResetKey()
+		return nil
+	case upgrademac.FieldName:
+		m.ResetName()
+		return nil
+	case upgrademac.FieldPackageName:
+		m.ResetPackageName()
+		return nil
+	case upgrademac.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case upgrademac.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgrademac.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgrademac.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMac field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeMacMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeMacMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeMacMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeMacMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeMacMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeMacMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeMacMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMac unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeMacMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMac edge %s", name)
+}
+
+// UpgradeMacUpgradeStrategyMutation represents an operation that mutates the UpgradeMacUpgradeStrategy nodes in the graph.
+type UpgradeMacUpgradeStrategyMutation struct {
+	config
+	op                      Op
+	typ                     string
+	id                      *int
+	company_id              *int
+	addcompany_id           *int
+	enable                  *int32
+	addenable               *int32
+	name                    *string
+	description             *string
+	mac_id                  *int
+	addmac_id               *int
+	mac_version_id          *int
+	addmac_version_id       *int
+	begin_datetime          *time.Time
+	end_datetime            *time.Time
+	upgrade_type            *int32
+	addupgrade_type         *int32
+	prompt_upgrade_content  *string
+	upgrade_dev_type        *int32
+	addupgrade_dev_type     *int32
+	upgrade_dev_data        *string
+	upgrade_version_type    *int32
+	addupgrade_version_type *int32
+	upgrade_version_data    *string
+	is_gray                 *int32
+	addis_gray              *int32
+	gray_data               *string
+	is_flow_limit           *int32
+	addis_flow_limit        *int32
+	flow_limit_data         *string
+	is_del                  *int32
+	addis_del               *int32
+	create_at               *time.Time
+	update_at               *time.Time
+	clearedFields           map[string]struct{}
+	done                    bool
+	oldValue                func(context.Context) (*UpgradeMacUpgradeStrategy, error)
+	predicates              []predicate.UpgradeMacUpgradeStrategy
+}
+
+var _ ent.Mutation = (*UpgradeMacUpgradeStrategyMutation)(nil)
+
+// upgrademacupgradestrategyOption allows management of the mutation configuration using functional options.
+type upgrademacupgradestrategyOption func(*UpgradeMacUpgradeStrategyMutation)
+
+// newUpgradeMacUpgradeStrategyMutation creates new mutation for the UpgradeMacUpgradeStrategy entity.
+func newUpgradeMacUpgradeStrategyMutation(c config, op Op, opts ...upgrademacupgradestrategyOption) *UpgradeMacUpgradeStrategyMutation {
+	m := &UpgradeMacUpgradeStrategyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeMacUpgradeStrategy,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeMacUpgradeStrategyID sets the ID field of the mutation.
+func withUpgradeMacUpgradeStrategyID(id int) upgrademacupgradestrategyOption {
+	return func(m *UpgradeMacUpgradeStrategyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeMacUpgradeStrategy
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeMacUpgradeStrategy, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeMacUpgradeStrategy.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeMacUpgradeStrategy sets the old UpgradeMacUpgradeStrategy of the mutation.
+func withUpgradeMacUpgradeStrategy(node *UpgradeMacUpgradeStrategy) upgrademacupgradestrategyOption {
+	return func(m *UpgradeMacUpgradeStrategyMutation) {
+		m.oldValue = func(context.Context) (*UpgradeMacUpgradeStrategy, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeMacUpgradeStrategyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeMacUpgradeStrategyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeMacUpgradeStrategy entities.
+func (m *UpgradeMacUpgradeStrategyMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeMacUpgradeStrategyMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeMacUpgradeStrategy.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCompanyID sets the "company_id" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetCompanyID(i int) {
+	m.company_id = &i
+	m.addcompany_id = nil
+}
+
+// CompanyID returns the value of the "company_id" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) CompanyID() (r int, exists bool) {
+	v := m.company_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCompanyID returns the old "company_id" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldCompanyID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCompanyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCompanyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCompanyID: %w", err)
+	}
+	return oldValue.CompanyID, nil
+}
+
+// AddCompanyID adds i to the "company_id" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddCompanyID(i int) {
+	if m.addcompany_id != nil {
+		*m.addcompany_id += i
+	} else {
+		m.addcompany_id = &i
+	}
+}
+
+// AddedCompanyID returns the value that was added to the "company_id" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedCompanyID() (r int, exists bool) {
+	v := m.addcompany_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCompanyID resets all changes to the "company_id" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetCompanyID() {
+	m.company_id = nil
+	m.addcompany_id = nil
+}
+
+// SetEnable sets the "enable" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetEnable(i int32) {
+	m.enable = &i
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) Enable() (r int32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldEnable(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds i to the "enable" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddEnable(i int32) {
+	if m.addenable != nil {
+		*m.addenable += i
+	} else {
+		m.addenable = &i
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetName sets the "name" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetName() {
+	m.name = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[upgrademacupgradestrategy.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[upgrademacupgradestrategy.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, upgrademacupgradestrategy.FieldDescription)
+}
+
+// SetMACID sets the "mac_id" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetMACID(i int) {
+	m.mac_id = &i
+	m.addmac_id = nil
+}
+
+// MACID returns the value of the "mac_id" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) MACID() (r int, exists bool) {
+	v := m.mac_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMACID returns the old "mac_id" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldMACID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMACID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMACID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMACID: %w", err)
+	}
+	return oldValue.MACID, nil
+}
+
+// AddMACID adds i to the "mac_id" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddMACID(i int) {
+	if m.addmac_id != nil {
+		*m.addmac_id += i
+	} else {
+		m.addmac_id = &i
+	}
+}
+
+// AddedMACID returns the value that was added to the "mac_id" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedMACID() (r int, exists bool) {
+	v := m.addmac_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetMACID resets all changes to the "mac_id" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetMACID() {
+	m.mac_id = nil
+	m.addmac_id = nil
+}
+
+// SetMACVersionID sets the "mac_version_id" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetMACVersionID(i int) {
+	m.mac_version_id = &i
+	m.addmac_version_id = nil
+}
+
+// MACVersionID returns the value of the "mac_version_id" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) MACVersionID() (r int, exists bool) {
+	v := m.mac_version_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMACVersionID returns the old "mac_version_id" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldMACVersionID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMACVersionID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMACVersionID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMACVersionID: %w", err)
+	}
+	return oldValue.MACVersionID, nil
+}
+
+// AddMACVersionID adds i to the "mac_version_id" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddMACVersionID(i int) {
+	if m.addmac_version_id != nil {
+		*m.addmac_version_id += i
+	} else {
+		m.addmac_version_id = &i
+	}
+}
+
+// AddedMACVersionID returns the value that was added to the "mac_version_id" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedMACVersionID() (r int, exists bool) {
+	v := m.addmac_version_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetMACVersionID resets all changes to the "mac_version_id" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetMACVersionID() {
+	m.mac_version_id = nil
+	m.addmac_version_id = nil
+}
+
+// SetBeginDatetime sets the "begin_datetime" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetBeginDatetime(t time.Time) {
+	m.begin_datetime = &t
+}
+
+// BeginDatetime returns the value of the "begin_datetime" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) BeginDatetime() (r time.Time, exists bool) {
+	v := m.begin_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBeginDatetime returns the old "begin_datetime" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldBeginDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBeginDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBeginDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBeginDatetime: %w", err)
+	}
+	return oldValue.BeginDatetime, nil
+}
+
+// ResetBeginDatetime resets all changes to the "begin_datetime" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetBeginDatetime() {
+	m.begin_datetime = nil
+}
+
+// SetEndDatetime sets the "end_datetime" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetEndDatetime(t time.Time) {
+	m.end_datetime = &t
+}
+
+// EndDatetime returns the value of the "end_datetime" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) EndDatetime() (r time.Time, exists bool) {
+	v := m.end_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEndDatetime returns the old "end_datetime" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldEndDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEndDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEndDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEndDatetime: %w", err)
+	}
+	return oldValue.EndDatetime, nil
+}
+
+// ResetEndDatetime resets all changes to the "end_datetime" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetEndDatetime() {
+	m.end_datetime = nil
+}
+
+// SetUpgradeType sets the "upgrade_type" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetUpgradeType(i int32) {
+	m.upgrade_type = &i
+	m.addupgrade_type = nil
+}
+
+// UpgradeType returns the value of the "upgrade_type" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) UpgradeType() (r int32, exists bool) {
+	v := m.upgrade_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeType returns the old "upgrade_type" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldUpgradeType(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeType: %w", err)
+	}
+	return oldValue.UpgradeType, nil
+}
+
+// AddUpgradeType adds i to the "upgrade_type" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddUpgradeType(i int32) {
+	if m.addupgrade_type != nil {
+		*m.addupgrade_type += i
+	} else {
+		m.addupgrade_type = &i
+	}
+}
+
+// AddedUpgradeType returns the value that was added to the "upgrade_type" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedUpgradeType() (r int32, exists bool) {
+	v := m.addupgrade_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpgradeType resets all changes to the "upgrade_type" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetUpgradeType() {
+	m.upgrade_type = nil
+	m.addupgrade_type = nil
+}
+
+// SetPromptUpgradeContent sets the "prompt_upgrade_content" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetPromptUpgradeContent(s string) {
+	m.prompt_upgrade_content = &s
+}
+
+// PromptUpgradeContent returns the value of the "prompt_upgrade_content" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) PromptUpgradeContent() (r string, exists bool) {
+	v := m.prompt_upgrade_content
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPromptUpgradeContent returns the old "prompt_upgrade_content" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldPromptUpgradeContent(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldPromptUpgradeContent is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldPromptUpgradeContent requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPromptUpgradeContent: %w", err)
+	}
+	return oldValue.PromptUpgradeContent, nil
+}
+
+// ClearPromptUpgradeContent clears the value of the "prompt_upgrade_content" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ClearPromptUpgradeContent() {
+	m.prompt_upgrade_content = nil
+	m.clearedFields[upgrademacupgradestrategy.FieldPromptUpgradeContent] = struct{}{}
+}
+
+// PromptUpgradeContentCleared returns if the "prompt_upgrade_content" field was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) PromptUpgradeContentCleared() bool {
+	_, ok := m.clearedFields[upgrademacupgradestrategy.FieldPromptUpgradeContent]
+	return ok
+}
+
+// ResetPromptUpgradeContent resets all changes to the "prompt_upgrade_content" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetPromptUpgradeContent() {
+	m.prompt_upgrade_content = nil
+	delete(m.clearedFields, upgrademacupgradestrategy.FieldPromptUpgradeContent)
+}
+
+// SetUpgradeDevType sets the "upgrade_dev_type" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetUpgradeDevType(i int32) {
+	m.upgrade_dev_type = &i
+	m.addupgrade_dev_type = nil
+}
+
+// UpgradeDevType returns the value of the "upgrade_dev_type" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) UpgradeDevType() (r int32, exists bool) {
+	v := m.upgrade_dev_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeDevType returns the old "upgrade_dev_type" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldUpgradeDevType(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeDevType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeDevType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeDevType: %w", err)
+	}
+	return oldValue.UpgradeDevType, nil
+}
+
+// AddUpgradeDevType adds i to the "upgrade_dev_type" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddUpgradeDevType(i int32) {
+	if m.addupgrade_dev_type != nil {
+		*m.addupgrade_dev_type += i
+	} else {
+		m.addupgrade_dev_type = &i
+	}
+}
+
+// AddedUpgradeDevType returns the value that was added to the "upgrade_dev_type" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedUpgradeDevType() (r int32, exists bool) {
+	v := m.addupgrade_dev_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpgradeDevType resets all changes to the "upgrade_dev_type" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetUpgradeDevType() {
+	m.upgrade_dev_type = nil
+	m.addupgrade_dev_type = nil
+}
+
+// SetUpgradeDevData sets the "upgrade_dev_data" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetUpgradeDevData(s string) {
+	m.upgrade_dev_data = &s
+}
+
+// UpgradeDevData returns the value of the "upgrade_dev_data" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) UpgradeDevData() (r string, exists bool) {
+	v := m.upgrade_dev_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeDevData returns the old "upgrade_dev_data" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldUpgradeDevData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeDevData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeDevData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeDevData: %w", err)
+	}
+	return oldValue.UpgradeDevData, nil
+}
+
+// ResetUpgradeDevData resets all changes to the "upgrade_dev_data" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetUpgradeDevData() {
+	m.upgrade_dev_data = nil
+}
+
+// SetUpgradeVersionType sets the "upgrade_version_type" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetUpgradeVersionType(i int32) {
+	m.upgrade_version_type = &i
+	m.addupgrade_version_type = nil
+}
+
+// UpgradeVersionType returns the value of the "upgrade_version_type" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) UpgradeVersionType() (r int32, exists bool) {
+	v := m.upgrade_version_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeVersionType returns the old "upgrade_version_type" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldUpgradeVersionType(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeVersionType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeVersionType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeVersionType: %w", err)
+	}
+	return oldValue.UpgradeVersionType, nil
+}
+
+// AddUpgradeVersionType adds i to the "upgrade_version_type" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddUpgradeVersionType(i int32) {
+	if m.addupgrade_version_type != nil {
+		*m.addupgrade_version_type += i
+	} else {
+		m.addupgrade_version_type = &i
+	}
+}
+
+// AddedUpgradeVersionType returns the value that was added to the "upgrade_version_type" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedUpgradeVersionType() (r int32, exists bool) {
+	v := m.addupgrade_version_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpgradeVersionType resets all changes to the "upgrade_version_type" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetUpgradeVersionType() {
+	m.upgrade_version_type = nil
+	m.addupgrade_version_type = nil
+}
+
+// SetUpgradeVersionData sets the "upgrade_version_data" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetUpgradeVersionData(s string) {
+	m.upgrade_version_data = &s
+}
+
+// UpgradeVersionData returns the value of the "upgrade_version_data" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) UpgradeVersionData() (r string, exists bool) {
+	v := m.upgrade_version_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeVersionData returns the old "upgrade_version_data" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldUpgradeVersionData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeVersionData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeVersionData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeVersionData: %w", err)
+	}
+	return oldValue.UpgradeVersionData, nil
+}
+
+// ResetUpgradeVersionData resets all changes to the "upgrade_version_data" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetUpgradeVersionData() {
+	m.upgrade_version_data = nil
+}
+
+// SetIsGray sets the "is_gray" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetIsGray(i int32) {
+	m.is_gray = &i
+	m.addis_gray = nil
+}
+
+// IsGray returns the value of the "is_gray" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) IsGray() (r int32, exists bool) {
+	v := m.is_gray
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsGray returns the old "is_gray" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldIsGray(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsGray is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsGray requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsGray: %w", err)
+	}
+	return oldValue.IsGray, nil
+}
+
+// AddIsGray adds i to the "is_gray" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddIsGray(i int32) {
+	if m.addis_gray != nil {
+		*m.addis_gray += i
+	} else {
+		m.addis_gray = &i
+	}
+}
+
+// AddedIsGray returns the value that was added to the "is_gray" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedIsGray() (r int32, exists bool) {
+	v := m.addis_gray
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsGray resets all changes to the "is_gray" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetIsGray() {
+	m.is_gray = nil
+	m.addis_gray = nil
+}
+
+// SetGrayData sets the "gray_data" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetGrayData(s string) {
+	m.gray_data = &s
+}
+
+// GrayData returns the value of the "gray_data" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) GrayData() (r string, exists bool) {
+	v := m.gray_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGrayData returns the old "gray_data" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldGrayData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldGrayData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldGrayData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGrayData: %w", err)
+	}
+	return oldValue.GrayData, nil
+}
+
+// ResetGrayData resets all changes to the "gray_data" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetGrayData() {
+	m.gray_data = nil
+}
+
+// SetIsFlowLimit sets the "is_flow_limit" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetIsFlowLimit(i int32) {
+	m.is_flow_limit = &i
+	m.addis_flow_limit = nil
+}
+
+// IsFlowLimit returns the value of the "is_flow_limit" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) IsFlowLimit() (r int32, exists bool) {
+	v := m.is_flow_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsFlowLimit returns the old "is_flow_limit" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldIsFlowLimit(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsFlowLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsFlowLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsFlowLimit: %w", err)
+	}
+	return oldValue.IsFlowLimit, nil
+}
+
+// AddIsFlowLimit adds i to the "is_flow_limit" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddIsFlowLimit(i int32) {
+	if m.addis_flow_limit != nil {
+		*m.addis_flow_limit += i
+	} else {
+		m.addis_flow_limit = &i
+	}
+}
+
+// AddedIsFlowLimit returns the value that was added to the "is_flow_limit" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedIsFlowLimit() (r int32, exists bool) {
+	v := m.addis_flow_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsFlowLimit resets all changes to the "is_flow_limit" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetIsFlowLimit() {
+	m.is_flow_limit = nil
+	m.addis_flow_limit = nil
+}
+
+// SetFlowLimitData sets the "flow_limit_data" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetFlowLimitData(s string) {
+	m.flow_limit_data = &s
+}
+
+// FlowLimitData returns the value of the "flow_limit_data" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) FlowLimitData() (r string, exists bool) {
+	v := m.flow_limit_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFlowLimitData returns the old "flow_limit_data" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldFlowLimitData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldFlowLimitData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldFlowLimitData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFlowLimitData: %w", err)
+	}
+	return oldValue.FlowLimitData, nil
+}
+
+// ResetFlowLimitData resets all changes to the "flow_limit_data" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetFlowLimitData() {
+	m.flow_limit_data = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeMacUpgradeStrategyMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgrademacupgradestrategy.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademacupgradestrategy.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgrademacupgradestrategy.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeMacUpgradeStrategyMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeMacUpgradeStrategy entity.
+// If the UpgradeMacUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgrademacupgradestrategy.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademacupgradestrategy.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgrademacupgradestrategy.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeMacUpgradeStrategyMutation builder.
+func (m *UpgradeMacUpgradeStrategyMutation) Where(ps ...predicate.UpgradeMacUpgradeStrategy) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeMacUpgradeStrategyMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeMacUpgradeStrategyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeMacUpgradeStrategy, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeMacUpgradeStrategyMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeMacUpgradeStrategyMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeMacUpgradeStrategy).
+func (m *UpgradeMacUpgradeStrategyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeMacUpgradeStrategyMutation) Fields() []string {
+	fields := make([]string, 0, 21)
+	if m.company_id != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldCompanyID)
+	}
+	if m.enable != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldEnable)
+	}
+	if m.name != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldName)
+	}
+	if m.description != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldDescription)
+	}
+	if m.mac_id != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldMACID)
+	}
+	if m.mac_version_id != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldMACVersionID)
+	}
+	if m.begin_datetime != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldBeginDatetime)
+	}
+	if m.end_datetime != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldEndDatetime)
+	}
+	if m.upgrade_type != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpgradeType)
+	}
+	if m.prompt_upgrade_content != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldPromptUpgradeContent)
+	}
+	if m.upgrade_dev_type != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpgradeDevType)
+	}
+	if m.upgrade_dev_data != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpgradeDevData)
+	}
+	if m.upgrade_version_type != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpgradeVersionType)
+	}
+	if m.upgrade_version_data != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpgradeVersionData)
+	}
+	if m.is_gray != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldIsGray)
+	}
+	if m.gray_data != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldGrayData)
+	}
+	if m.is_flow_limit != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldIsFlowLimit)
+	}
+	if m.flow_limit_data != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldFlowLimitData)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeMacUpgradeStrategyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademacupgradestrategy.FieldCompanyID:
+		return m.CompanyID()
+	case upgrademacupgradestrategy.FieldEnable:
+		return m.Enable()
+	case upgrademacupgradestrategy.FieldName:
+		return m.Name()
+	case upgrademacupgradestrategy.FieldDescription:
+		return m.Description()
+	case upgrademacupgradestrategy.FieldMACID:
+		return m.MACID()
+	case upgrademacupgradestrategy.FieldMACVersionID:
+		return m.MACVersionID()
+	case upgrademacupgradestrategy.FieldBeginDatetime:
+		return m.BeginDatetime()
+	case upgrademacupgradestrategy.FieldEndDatetime:
+		return m.EndDatetime()
+	case upgrademacupgradestrategy.FieldUpgradeType:
+		return m.UpgradeType()
+	case upgrademacupgradestrategy.FieldPromptUpgradeContent:
+		return m.PromptUpgradeContent()
+	case upgrademacupgradestrategy.FieldUpgradeDevType:
+		return m.UpgradeDevType()
+	case upgrademacupgradestrategy.FieldUpgradeDevData:
+		return m.UpgradeDevData()
+	case upgrademacupgradestrategy.FieldUpgradeVersionType:
+		return m.UpgradeVersionType()
+	case upgrademacupgradestrategy.FieldUpgradeVersionData:
+		return m.UpgradeVersionData()
+	case upgrademacupgradestrategy.FieldIsGray:
+		return m.IsGray()
+	case upgrademacupgradestrategy.FieldGrayData:
+		return m.GrayData()
+	case upgrademacupgradestrategy.FieldIsFlowLimit:
+		return m.IsFlowLimit()
+	case upgrademacupgradestrategy.FieldFlowLimitData:
+		return m.FlowLimitData()
+	case upgrademacupgradestrategy.FieldIsDel:
+		return m.IsDel()
+	case upgrademacupgradestrategy.FieldCreateAt:
+		return m.CreateAt()
+	case upgrademacupgradestrategy.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeMacUpgradeStrategyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgrademacupgradestrategy.FieldCompanyID:
+		return m.OldCompanyID(ctx)
+	case upgrademacupgradestrategy.FieldEnable:
+		return m.OldEnable(ctx)
+	case upgrademacupgradestrategy.FieldName:
+		return m.OldName(ctx)
+	case upgrademacupgradestrategy.FieldDescription:
+		return m.OldDescription(ctx)
+	case upgrademacupgradestrategy.FieldMACID:
+		return m.OldMACID(ctx)
+	case upgrademacupgradestrategy.FieldMACVersionID:
+		return m.OldMACVersionID(ctx)
+	case upgrademacupgradestrategy.FieldBeginDatetime:
+		return m.OldBeginDatetime(ctx)
+	case upgrademacupgradestrategy.FieldEndDatetime:
+		return m.OldEndDatetime(ctx)
+	case upgrademacupgradestrategy.FieldUpgradeType:
+		return m.OldUpgradeType(ctx)
+	case upgrademacupgradestrategy.FieldPromptUpgradeContent:
+		return m.OldPromptUpgradeContent(ctx)
+	case upgrademacupgradestrategy.FieldUpgradeDevType:
+		return m.OldUpgradeDevType(ctx)
+	case upgrademacupgradestrategy.FieldUpgradeDevData:
+		return m.OldUpgradeDevData(ctx)
+	case upgrademacupgradestrategy.FieldUpgradeVersionType:
+		return m.OldUpgradeVersionType(ctx)
+	case upgrademacupgradestrategy.FieldUpgradeVersionData:
+		return m.OldUpgradeVersionData(ctx)
+	case upgrademacupgradestrategy.FieldIsGray:
+		return m.OldIsGray(ctx)
+	case upgrademacupgradestrategy.FieldGrayData:
+		return m.OldGrayData(ctx)
+	case upgrademacupgradestrategy.FieldIsFlowLimit:
+		return m.OldIsFlowLimit(ctx)
+	case upgrademacupgradestrategy.FieldFlowLimitData:
+		return m.OldFlowLimitData(ctx)
+	case upgrademacupgradestrategy.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgrademacupgradestrategy.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgrademacupgradestrategy.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeMacUpgradeStrategy field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacUpgradeStrategyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgrademacupgradestrategy.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCompanyID(v)
+		return nil
+	case upgrademacupgradestrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case upgrademacupgradestrategy.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case upgrademacupgradestrategy.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case upgrademacupgradestrategy.FieldMACID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMACID(v)
+		return nil
+	case upgrademacupgradestrategy.FieldMACVersionID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMACVersionID(v)
+		return nil
+	case upgrademacupgradestrategy.FieldBeginDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBeginDatetime(v)
+		return nil
+	case upgrademacupgradestrategy.FieldEndDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEndDatetime(v)
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeType(v)
+		return nil
+	case upgrademacupgradestrategy.FieldPromptUpgradeContent:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPromptUpgradeContent(v)
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeDevType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeDevType(v)
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeDevData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeDevData(v)
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeVersionType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeVersionType(v)
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeVersionData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeVersionData(v)
+		return nil
+	case upgrademacupgradestrategy.FieldIsGray:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsGray(v)
+		return nil
+	case upgrademacupgradestrategy.FieldGrayData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGrayData(v)
+		return nil
+	case upgrademacupgradestrategy.FieldIsFlowLimit:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsFlowLimit(v)
+		return nil
+	case upgrademacupgradestrategy.FieldFlowLimitData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFlowLimitData(v)
+		return nil
+	case upgrademacupgradestrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgrademacupgradestrategy.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgrademacupgradestrategy.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategy field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedFields() []string {
+	var fields []string
+	if m.addcompany_id != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldCompanyID)
+	}
+	if m.addenable != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldEnable)
+	}
+	if m.addmac_id != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldMACID)
+	}
+	if m.addmac_version_id != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldMACVersionID)
+	}
+	if m.addupgrade_type != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpgradeType)
+	}
+	if m.addupgrade_dev_type != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpgradeDevType)
+	}
+	if m.addupgrade_version_type != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpgradeVersionType)
+	}
+	if m.addis_gray != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldIsGray)
+	}
+	if m.addis_flow_limit != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldIsFlowLimit)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgrademacupgradestrategy.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademacupgradestrategy.FieldCompanyID:
+		return m.AddedCompanyID()
+	case upgrademacupgradestrategy.FieldEnable:
+		return m.AddedEnable()
+	case upgrademacupgradestrategy.FieldMACID:
+		return m.AddedMACID()
+	case upgrademacupgradestrategy.FieldMACVersionID:
+		return m.AddedMACVersionID()
+	case upgrademacupgradestrategy.FieldUpgradeType:
+		return m.AddedUpgradeType()
+	case upgrademacupgradestrategy.FieldUpgradeDevType:
+		return m.AddedUpgradeDevType()
+	case upgrademacupgradestrategy.FieldUpgradeVersionType:
+		return m.AddedUpgradeVersionType()
+	case upgrademacupgradestrategy.FieldIsGray:
+		return m.AddedIsGray()
+	case upgrademacupgradestrategy.FieldIsFlowLimit:
+		return m.AddedIsFlowLimit()
+	case upgrademacupgradestrategy.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacUpgradeStrategyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgrademacupgradestrategy.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCompanyID(v)
+		return nil
+	case upgrademacupgradestrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case upgrademacupgradestrategy.FieldMACID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddMACID(v)
+		return nil
+	case upgrademacupgradestrategy.FieldMACVersionID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddMACVersionID(v)
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpgradeType(v)
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeDevType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpgradeDevType(v)
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeVersionType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpgradeVersionType(v)
+		return nil
+	case upgrademacupgradestrategy.FieldIsGray:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsGray(v)
+		return nil
+	case upgrademacupgradestrategy.FieldIsFlowLimit:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsFlowLimit(v)
+		return nil
+	case upgrademacupgradestrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategy numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgrademacupgradestrategy.FieldDescription) {
+		fields = append(fields, upgrademacupgradestrategy.FieldDescription)
+	}
+	if m.FieldCleared(upgrademacupgradestrategy.FieldPromptUpgradeContent) {
+		fields = append(fields, upgrademacupgradestrategy.FieldPromptUpgradeContent)
+	}
+	if m.FieldCleared(upgrademacupgradestrategy.FieldCreateAt) {
+		fields = append(fields, upgrademacupgradestrategy.FieldCreateAt)
+	}
+	if m.FieldCleared(upgrademacupgradestrategy.FieldUpdateAt) {
+		fields = append(fields, upgrademacupgradestrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyMutation) ClearField(name string) error {
+	switch name {
+	case upgrademacupgradestrategy.FieldDescription:
+		m.ClearDescription()
+		return nil
+	case upgrademacupgradestrategy.FieldPromptUpgradeContent:
+		m.ClearPromptUpgradeContent()
+		return nil
+	case upgrademacupgradestrategy.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgrademacupgradestrategy.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategy nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetField(name string) error {
+	switch name {
+	case upgrademacupgradestrategy.FieldCompanyID:
+		m.ResetCompanyID()
+		return nil
+	case upgrademacupgradestrategy.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case upgrademacupgradestrategy.FieldName:
+		m.ResetName()
+		return nil
+	case upgrademacupgradestrategy.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case upgrademacupgradestrategy.FieldMACID:
+		m.ResetMACID()
+		return nil
+	case upgrademacupgradestrategy.FieldMACVersionID:
+		m.ResetMACVersionID()
+		return nil
+	case upgrademacupgradestrategy.FieldBeginDatetime:
+		m.ResetBeginDatetime()
+		return nil
+	case upgrademacupgradestrategy.FieldEndDatetime:
+		m.ResetEndDatetime()
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeType:
+		m.ResetUpgradeType()
+		return nil
+	case upgrademacupgradestrategy.FieldPromptUpgradeContent:
+		m.ResetPromptUpgradeContent()
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeDevType:
+		m.ResetUpgradeDevType()
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeDevData:
+		m.ResetUpgradeDevData()
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeVersionType:
+		m.ResetUpgradeVersionType()
+		return nil
+	case upgrademacupgradestrategy.FieldUpgradeVersionData:
+		m.ResetUpgradeVersionData()
+		return nil
+	case upgrademacupgradestrategy.FieldIsGray:
+		m.ResetIsGray()
+		return nil
+	case upgrademacupgradestrategy.FieldGrayData:
+		m.ResetGrayData()
+		return nil
+	case upgrademacupgradestrategy.FieldIsFlowLimit:
+		m.ResetIsFlowLimit()
+		return nil
+	case upgrademacupgradestrategy.FieldFlowLimitData:
+		m.ResetFlowLimitData()
+		return nil
+	case upgrademacupgradestrategy.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgrademacupgradestrategy.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgrademacupgradestrategy.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategy field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategy unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategy edge %s", name)
+}
+
+// UpgradeMacUpgradeStrategyFlowLimitStrategyMutation represents an operation that mutates the UpgradeMacUpgradeStrategyFlowLimitStrategy nodes in the graph.
+type UpgradeMacUpgradeStrategyFlowLimitStrategyMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int
+	enable        *int32
+	addenable     *int32
+	begin_time    *string
+	end_time      *string
+	dimension     *int32
+	adddimension  *int32
+	_limit        *int
+	add_limit     *int
+	is_del        *int32
+	addis_del     *int32
+	create_at     *time.Time
+	update_at     *time.Time
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*UpgradeMacUpgradeStrategyFlowLimitStrategy, error)
+	predicates    []predicate.UpgradeMacUpgradeStrategyFlowLimitStrategy
+}
+
+var _ ent.Mutation = (*UpgradeMacUpgradeStrategyFlowLimitStrategyMutation)(nil)
+
+// upgrademacupgradestrategyflowlimitstrategyOption allows management of the mutation configuration using functional options.
+type upgrademacupgradestrategyflowlimitstrategyOption func(*UpgradeMacUpgradeStrategyFlowLimitStrategyMutation)
+
+// newUpgradeMacUpgradeStrategyFlowLimitStrategyMutation creates new mutation for the UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+func newUpgradeMacUpgradeStrategyFlowLimitStrategyMutation(c config, op Op, opts ...upgrademacupgradestrategyflowlimitstrategyOption) *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation {
+	m := &UpgradeMacUpgradeStrategyFlowLimitStrategyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeMacUpgradeStrategyFlowLimitStrategy,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeMacUpgradeStrategyFlowLimitStrategyID sets the ID field of the mutation.
+func withUpgradeMacUpgradeStrategyFlowLimitStrategyID(id int) upgrademacupgradestrategyflowlimitstrategyOption {
+	return func(m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeMacUpgradeStrategyFlowLimitStrategy
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeMacUpgradeStrategyFlowLimitStrategy, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeMacUpgradeStrategyFlowLimitStrategy.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeMacUpgradeStrategyFlowLimitStrategy sets the old UpgradeMacUpgradeStrategyFlowLimitStrategy of the mutation.
+func withUpgradeMacUpgradeStrategyFlowLimitStrategy(node *UpgradeMacUpgradeStrategyFlowLimitStrategy) upgrademacupgradestrategyflowlimitstrategyOption {
+	return func(m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) {
+		m.oldValue = func(context.Context) (*UpgradeMacUpgradeStrategyFlowLimitStrategy, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeMacUpgradeStrategyFlowLimitStrategy entities.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeMacUpgradeStrategyFlowLimitStrategy.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetEnable sets the "enable" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetEnable(i int32) {
+	m.enable = &i
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Enable() (r int32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeMacUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) OldEnable(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds i to the "enable" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddEnable(i int32) {
+	if m.addenable != nil {
+		*m.addenable += i
+	} else {
+		m.addenable = &i
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetBeginTime sets the "begin_time" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetBeginTime(s string) {
+	m.begin_time = &s
+}
+
+// BeginTime returns the value of the "begin_time" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) BeginTime() (r string, exists bool) {
+	v := m.begin_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBeginTime returns the old "begin_time" field's value of the UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeMacUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) OldBeginTime(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBeginTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBeginTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBeginTime: %w", err)
+	}
+	return oldValue.BeginTime, nil
+}
+
+// ResetBeginTime resets all changes to the "begin_time" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetBeginTime() {
+	m.begin_time = nil
+}
+
+// SetEndTime sets the "end_time" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetEndTime(s string) {
+	m.end_time = &s
+}
+
+// EndTime returns the value of the "end_time" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) EndTime() (r string, exists bool) {
+	v := m.end_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEndTime returns the old "end_time" field's value of the UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeMacUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) OldEndTime(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEndTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEndTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEndTime: %w", err)
+	}
+	return oldValue.EndTime, nil
+}
+
+// ResetEndTime resets all changes to the "end_time" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetEndTime() {
+	m.end_time = nil
+}
+
+// SetDimension sets the "dimension" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetDimension(i int32) {
+	m.dimension = &i
+	m.adddimension = nil
+}
+
+// Dimension returns the value of the "dimension" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Dimension() (r int32, exists bool) {
+	v := m.dimension
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDimension returns the old "dimension" field's value of the UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeMacUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) OldDimension(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDimension is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDimension requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDimension: %w", err)
+	}
+	return oldValue.Dimension, nil
+}
+
+// AddDimension adds i to the "dimension" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddDimension(i int32) {
+	if m.adddimension != nil {
+		*m.adddimension += i
+	} else {
+		m.adddimension = &i
+	}
+}
+
+// AddedDimension returns the value that was added to the "dimension" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddedDimension() (r int32, exists bool) {
+	v := m.adddimension
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDimension resets all changes to the "dimension" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetDimension() {
+	m.dimension = nil
+	m.adddimension = nil
+}
+
+// SetLimit sets the "limit" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetLimit(i int) {
+	m._limit = &i
+	m.add_limit = nil
+}
+
+// Limit returns the value of the "limit" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Limit() (r int, exists bool) {
+	v := m._limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLimit returns the old "limit" field's value of the UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeMacUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) OldLimit(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLimit: %w", err)
+	}
+	return oldValue.Limit, nil
+}
+
+// AddLimit adds i to the "limit" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddLimit(i int) {
+	if m.add_limit != nil {
+		*m.add_limit += i
+	} else {
+		m.add_limit = &i
+	}
+}
+
+// AddedLimit returns the value that was added to the "limit" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddedLimit() (r int, exists bool) {
+	v := m.add_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLimit resets all changes to the "limit" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetLimit() {
+	m._limit = nil
+	m.add_limit = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeMacUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeMacUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeMacUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeMacUpgradeStrategyFlowLimitStrategyMutation builder.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Where(ps ...predicate.UpgradeMacUpgradeStrategyFlowLimitStrategy) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeMacUpgradeStrategyFlowLimitStrategyMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeMacUpgradeStrategyFlowLimitStrategy, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeMacUpgradeStrategyFlowLimitStrategy).
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Fields() []string {
+	fields := make([]string, 0, 8)
+	if m.enable != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldEnable)
+	}
+	if m.begin_time != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldBeginTime)
+	}
+	if m.end_time != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldEndTime)
+	}
+	if m.dimension != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldDimension)
+	}
+	if m._limit != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldLimit)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEnable:
+		return m.Enable()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldBeginTime:
+		return m.BeginTime()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEndTime:
+		return m.EndTime()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldDimension:
+		return m.Dimension()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldLimit:
+		return m.Limit()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldIsDel:
+		return m.IsDel()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt:
+		return m.CreateAt()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEnable:
+		return m.OldEnable(ctx)
+	case upgrademacupgradestrategyflowlimitstrategy.FieldBeginTime:
+		return m.OldBeginTime(ctx)
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEndTime:
+		return m.OldEndTime(ctx)
+	case upgrademacupgradestrategyflowlimitstrategy.FieldDimension:
+		return m.OldDimension(ctx)
+	case upgrademacupgradestrategyflowlimitstrategy.FieldLimit:
+		return m.OldLimit(ctx)
+	case upgrademacupgradestrategyflowlimitstrategy.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeMacUpgradeStrategyFlowLimitStrategy field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldBeginTime:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBeginTime(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEndTime:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEndTime(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldDimension:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDimension(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLimit(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyFlowLimitStrategy field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddedFields() []string {
+	var fields []string
+	if m.addenable != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldEnable)
+	}
+	if m.adddimension != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldDimension)
+	}
+	if m.add_limit != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldLimit)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEnable:
+		return m.AddedEnable()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldDimension:
+		return m.AddedDimension()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldLimit:
+		return m.AddedLimit()
+	case upgrademacupgradestrategyflowlimitstrategy.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldDimension:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDimension(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLimit(v)
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyFlowLimitStrategy numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt) {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt)
+	}
+	if m.FieldCleared(upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt) {
+		fields = append(fields, upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ClearField(name string) error {
+	switch name {
+	case upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyFlowLimitStrategy nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetField(name string) error {
+	switch name {
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldBeginTime:
+		m.ResetBeginTime()
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldEndTime:
+		m.ResetEndTime()
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldDimension:
+		m.ResetDimension()
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldLimit:
+		m.ResetLimit()
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgrademacupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyFlowLimitStrategy field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyFlowLimitStrategy unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyFlowLimitStrategy edge %s", name)
+}
+
+// UpgradeMacUpgradeStrategyGrayStrategyMutation represents an operation that mutates the UpgradeMacUpgradeStrategyGrayStrategy nodes in the graph.
+type UpgradeMacUpgradeStrategyGrayStrategyMutation struct {
+	config
+	op             Op
+	typ            string
+	id             *int
+	enable         *int32
+	addenable      *int32
+	begin_datetime *time.Time
+	end_datetime   *time.Time
+	_limit         *int
+	add_limit      *int
+	is_del         *int32
+	addis_del      *int32
+	create_at      *time.Time
+	update_at      *time.Time
+	clearedFields  map[string]struct{}
+	done           bool
+	oldValue       func(context.Context) (*UpgradeMacUpgradeStrategyGrayStrategy, error)
+	predicates     []predicate.UpgradeMacUpgradeStrategyGrayStrategy
+}
+
+var _ ent.Mutation = (*UpgradeMacUpgradeStrategyGrayStrategyMutation)(nil)
+
+// upgrademacupgradestrategygraystrategyOption allows management of the mutation configuration using functional options.
+type upgrademacupgradestrategygraystrategyOption func(*UpgradeMacUpgradeStrategyGrayStrategyMutation)
+
+// newUpgradeMacUpgradeStrategyGrayStrategyMutation creates new mutation for the UpgradeMacUpgradeStrategyGrayStrategy entity.
+func newUpgradeMacUpgradeStrategyGrayStrategyMutation(c config, op Op, opts ...upgrademacupgradestrategygraystrategyOption) *UpgradeMacUpgradeStrategyGrayStrategyMutation {
+	m := &UpgradeMacUpgradeStrategyGrayStrategyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeMacUpgradeStrategyGrayStrategy,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeMacUpgradeStrategyGrayStrategyID sets the ID field of the mutation.
+func withUpgradeMacUpgradeStrategyGrayStrategyID(id int) upgrademacupgradestrategygraystrategyOption {
+	return func(m *UpgradeMacUpgradeStrategyGrayStrategyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeMacUpgradeStrategyGrayStrategy
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeMacUpgradeStrategyGrayStrategy, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeMacUpgradeStrategyGrayStrategy.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeMacUpgradeStrategyGrayStrategy sets the old UpgradeMacUpgradeStrategyGrayStrategy of the mutation.
+func withUpgradeMacUpgradeStrategyGrayStrategy(node *UpgradeMacUpgradeStrategyGrayStrategy) upgrademacupgradestrategygraystrategyOption {
+	return func(m *UpgradeMacUpgradeStrategyGrayStrategyMutation) {
+		m.oldValue = func(context.Context) (*UpgradeMacUpgradeStrategyGrayStrategy, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeMacUpgradeStrategyGrayStrategyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeMacUpgradeStrategyGrayStrategyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeMacUpgradeStrategyGrayStrategy entities.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeMacUpgradeStrategyGrayStrategy.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetEnable sets the "enable" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetEnable(i int32) {
+	m.enable = &i
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) Enable() (r int32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the UpgradeMacUpgradeStrategyGrayStrategy entity.
+// If the UpgradeMacUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) OldEnable(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds i to the "enable" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddEnable(i int32) {
+	if m.addenable != nil {
+		*m.addenable += i
+	} else {
+		m.addenable = &i
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetBeginDatetime sets the "begin_datetime" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetBeginDatetime(t time.Time) {
+	m.begin_datetime = &t
+}
+
+// BeginDatetime returns the value of the "begin_datetime" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) BeginDatetime() (r time.Time, exists bool) {
+	v := m.begin_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBeginDatetime returns the old "begin_datetime" field's value of the UpgradeMacUpgradeStrategyGrayStrategy entity.
+// If the UpgradeMacUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) OldBeginDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBeginDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBeginDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBeginDatetime: %w", err)
+	}
+	return oldValue.BeginDatetime, nil
+}
+
+// ResetBeginDatetime resets all changes to the "begin_datetime" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ResetBeginDatetime() {
+	m.begin_datetime = nil
+}
+
+// SetEndDatetime sets the "end_datetime" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetEndDatetime(t time.Time) {
+	m.end_datetime = &t
+}
+
+// EndDatetime returns the value of the "end_datetime" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) EndDatetime() (r time.Time, exists bool) {
+	v := m.end_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEndDatetime returns the old "end_datetime" field's value of the UpgradeMacUpgradeStrategyGrayStrategy entity.
+// If the UpgradeMacUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) OldEndDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEndDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEndDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEndDatetime: %w", err)
+	}
+	return oldValue.EndDatetime, nil
+}
+
+// ResetEndDatetime resets all changes to the "end_datetime" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ResetEndDatetime() {
+	m.end_datetime = nil
+}
+
+// SetLimit sets the "limit" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetLimit(i int) {
+	m._limit = &i
+	m.add_limit = nil
+}
+
+// Limit returns the value of the "limit" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) Limit() (r int, exists bool) {
+	v := m._limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLimit returns the old "limit" field's value of the UpgradeMacUpgradeStrategyGrayStrategy entity.
+// If the UpgradeMacUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) OldLimit(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLimit: %w", err)
+	}
+	return oldValue.Limit, nil
+}
+
+// AddLimit adds i to the "limit" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddLimit(i int) {
+	if m.add_limit != nil {
+		*m.add_limit += i
+	} else {
+		m.add_limit = &i
+	}
+}
+
+// AddedLimit returns the value that was added to the "limit" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddedLimit() (r int, exists bool) {
+	v := m.add_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLimit resets all changes to the "limit" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ResetLimit() {
+	m._limit = nil
+	m.add_limit = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeMacUpgradeStrategyGrayStrategy entity.
+// If the UpgradeMacUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeMacUpgradeStrategyGrayStrategy entity.
+// If the UpgradeMacUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgrademacupgradestrategygraystrategy.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademacupgradestrategygraystrategy.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgrademacupgradestrategygraystrategy.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeMacUpgradeStrategyGrayStrategy entity.
+// If the UpgradeMacUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgrademacupgradestrategygraystrategy.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademacupgradestrategygraystrategy.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgrademacupgradestrategygraystrategy.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeMacUpgradeStrategyGrayStrategyMutation builder.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) Where(ps ...predicate.UpgradeMacUpgradeStrategyGrayStrategy) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeMacUpgradeStrategyGrayStrategyMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeMacUpgradeStrategyGrayStrategy, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeMacUpgradeStrategyGrayStrategy).
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) Fields() []string {
+	fields := make([]string, 0, 7)
+	if m.enable != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldEnable)
+	}
+	if m.begin_datetime != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldBeginDatetime)
+	}
+	if m.end_datetime != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldEndDatetime)
+	}
+	if m._limit != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldLimit)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademacupgradestrategygraystrategy.FieldEnable:
+		return m.Enable()
+	case upgrademacupgradestrategygraystrategy.FieldBeginDatetime:
+		return m.BeginDatetime()
+	case upgrademacupgradestrategygraystrategy.FieldEndDatetime:
+		return m.EndDatetime()
+	case upgrademacupgradestrategygraystrategy.FieldLimit:
+		return m.Limit()
+	case upgrademacupgradestrategygraystrategy.FieldIsDel:
+		return m.IsDel()
+	case upgrademacupgradestrategygraystrategy.FieldCreateAt:
+		return m.CreateAt()
+	case upgrademacupgradestrategygraystrategy.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgrademacupgradestrategygraystrategy.FieldEnable:
+		return m.OldEnable(ctx)
+	case upgrademacupgradestrategygraystrategy.FieldBeginDatetime:
+		return m.OldBeginDatetime(ctx)
+	case upgrademacupgradestrategygraystrategy.FieldEndDatetime:
+		return m.OldEndDatetime(ctx)
+	case upgrademacupgradestrategygraystrategy.FieldLimit:
+		return m.OldLimit(ctx)
+	case upgrademacupgradestrategygraystrategy.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgrademacupgradestrategygraystrategy.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgrademacupgradestrategygraystrategy.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeMacUpgradeStrategyGrayStrategy field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgrademacupgradestrategygraystrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldBeginDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBeginDatetime(v)
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldEndDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEndDatetime(v)
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLimit(v)
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyGrayStrategy field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddedFields() []string {
+	var fields []string
+	if m.addenable != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldEnable)
+	}
+	if m.add_limit != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldLimit)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademacupgradestrategygraystrategy.FieldEnable:
+		return m.AddedEnable()
+	case upgrademacupgradestrategygraystrategy.FieldLimit:
+		return m.AddedLimit()
+	case upgrademacupgradestrategygraystrategy.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgrademacupgradestrategygraystrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLimit(v)
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyGrayStrategy numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgrademacupgradestrategygraystrategy.FieldCreateAt) {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldCreateAt)
+	}
+	if m.FieldCleared(upgrademacupgradestrategygraystrategy.FieldUpdateAt) {
+		fields = append(fields, upgrademacupgradestrategygraystrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ClearField(name string) error {
+	switch name {
+	case upgrademacupgradestrategygraystrategy.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyGrayStrategy nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ResetField(name string) error {
+	switch name {
+	case upgrademacupgradestrategygraystrategy.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldBeginDatetime:
+		m.ResetBeginDatetime()
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldEndDatetime:
+		m.ResetEndDatetime()
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldLimit:
+		m.ResetLimit()
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgrademacupgradestrategygraystrategy.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyGrayStrategy field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyGrayStrategy unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeMacUpgradeStrategyGrayStrategyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMacUpgradeStrategyGrayStrategy edge %s", name)
+}
+
+// UpgradeMacVersionMutation represents an operation that mutates the UpgradeMacVersion nodes in the graph.
+type UpgradeMacVersionMutation struct {
+	config
+	op              Op
+	typ             string
+	id              *int
+	company_id      *int
+	addcompany_id   *int
+	mac_id          *int
+	addmac_id       *int
+	cloud_file_id   *string
+	version_name    *string
+	version_code    *int
+	addversion_code *int
+	arch            *string
+	description     *string
+	is_del          *int32
+	addis_del       *int32
+	create_at       *time.Time
+	update_at       *time.Time
+	clearedFields   map[string]struct{}
+	done            bool
+	oldValue        func(context.Context) (*UpgradeMacVersion, error)
+	predicates      []predicate.UpgradeMacVersion
+}
+
+var _ ent.Mutation = (*UpgradeMacVersionMutation)(nil)
+
+// upgrademacversionOption allows management of the mutation configuration using functional options.
+type upgrademacversionOption func(*UpgradeMacVersionMutation)
+
+// newUpgradeMacVersionMutation creates new mutation for the UpgradeMacVersion entity.
+func newUpgradeMacVersionMutation(c config, op Op, opts ...upgrademacversionOption) *UpgradeMacVersionMutation {
+	m := &UpgradeMacVersionMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeMacVersion,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeMacVersionID sets the ID field of the mutation.
+func withUpgradeMacVersionID(id int) upgrademacversionOption {
+	return func(m *UpgradeMacVersionMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeMacVersion
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeMacVersion, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeMacVersion.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeMacVersion sets the old UpgradeMacVersion of the mutation.
+func withUpgradeMacVersion(node *UpgradeMacVersion) upgrademacversionOption {
+	return func(m *UpgradeMacVersionMutation) {
+		m.oldValue = func(context.Context) (*UpgradeMacVersion, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeMacVersionMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeMacVersionMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeMacVersion entities.
+func (m *UpgradeMacVersionMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeMacVersionMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeMacVersionMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeMacVersion.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCompanyID sets the "company_id" field.
+func (m *UpgradeMacVersionMutation) SetCompanyID(i int) {
+	m.company_id = &i
+	m.addcompany_id = nil
+}
+
+// CompanyID returns the value of the "company_id" field in the mutation.
+func (m *UpgradeMacVersionMutation) CompanyID() (r int, exists bool) {
+	v := m.company_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCompanyID returns the old "company_id" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldCompanyID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCompanyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCompanyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCompanyID: %w", err)
+	}
+	return oldValue.CompanyID, nil
+}
+
+// AddCompanyID adds i to the "company_id" field.
+func (m *UpgradeMacVersionMutation) AddCompanyID(i int) {
+	if m.addcompany_id != nil {
+		*m.addcompany_id += i
+	} else {
+		m.addcompany_id = &i
+	}
+}
+
+// AddedCompanyID returns the value that was added to the "company_id" field in this mutation.
+func (m *UpgradeMacVersionMutation) AddedCompanyID() (r int, exists bool) {
+	v := m.addcompany_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCompanyID resets all changes to the "company_id" field.
+func (m *UpgradeMacVersionMutation) ResetCompanyID() {
+	m.company_id = nil
+	m.addcompany_id = nil
+}
+
+// SetMACID sets the "mac_id" field.
+func (m *UpgradeMacVersionMutation) SetMACID(i int) {
+	m.mac_id = &i
+	m.addmac_id = nil
+}
+
+// MACID returns the value of the "mac_id" field in the mutation.
+func (m *UpgradeMacVersionMutation) MACID() (r int, exists bool) {
+	v := m.mac_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMACID returns the old "mac_id" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldMACID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMACID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMACID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMACID: %w", err)
+	}
+	return oldValue.MACID, nil
+}
+
+// AddMACID adds i to the "mac_id" field.
+func (m *UpgradeMacVersionMutation) AddMACID(i int) {
+	if m.addmac_id != nil {
+		*m.addmac_id += i
+	} else {
+		m.addmac_id = &i
+	}
+}
+
+// AddedMACID returns the value that was added to the "mac_id" field in this mutation.
+func (m *UpgradeMacVersionMutation) AddedMACID() (r int, exists bool) {
+	v := m.addmac_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetMACID resets all changes to the "mac_id" field.
+func (m *UpgradeMacVersionMutation) ResetMACID() {
+	m.mac_id = nil
+	m.addmac_id = nil
+}
+
+// SetCloudFileID sets the "cloud_file_id" field.
+func (m *UpgradeMacVersionMutation) SetCloudFileID(s string) {
+	m.cloud_file_id = &s
+}
+
+// CloudFileID returns the value of the "cloud_file_id" field in the mutation.
+func (m *UpgradeMacVersionMutation) CloudFileID() (r string, exists bool) {
+	v := m.cloud_file_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCloudFileID returns the old "cloud_file_id" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldCloudFileID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCloudFileID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCloudFileID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCloudFileID: %w", err)
+	}
+	return oldValue.CloudFileID, nil
+}
+
+// ResetCloudFileID resets all changes to the "cloud_file_id" field.
+func (m *UpgradeMacVersionMutation) ResetCloudFileID() {
+	m.cloud_file_id = nil
+}
+
+// SetVersionName sets the "version_name" field.
+func (m *UpgradeMacVersionMutation) SetVersionName(s string) {
+	m.version_name = &s
+}
+
+// VersionName returns the value of the "version_name" field in the mutation.
+func (m *UpgradeMacVersionMutation) VersionName() (r string, exists bool) {
+	v := m.version_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVersionName returns the old "version_name" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldVersionName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldVersionName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldVersionName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVersionName: %w", err)
+	}
+	return oldValue.VersionName, nil
+}
+
+// ResetVersionName resets all changes to the "version_name" field.
+func (m *UpgradeMacVersionMutation) ResetVersionName() {
+	m.version_name = nil
+}
+
+// SetVersionCode sets the "version_code" field.
+func (m *UpgradeMacVersionMutation) SetVersionCode(i int) {
+	m.version_code = &i
+	m.addversion_code = nil
+}
+
+// VersionCode returns the value of the "version_code" field in the mutation.
+func (m *UpgradeMacVersionMutation) VersionCode() (r int, exists bool) {
+	v := m.version_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVersionCode returns the old "version_code" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldVersionCode(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldVersionCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldVersionCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVersionCode: %w", err)
+	}
+	return oldValue.VersionCode, nil
+}
+
+// AddVersionCode adds i to the "version_code" field.
+func (m *UpgradeMacVersionMutation) AddVersionCode(i int) {
+	if m.addversion_code != nil {
+		*m.addversion_code += i
+	} else {
+		m.addversion_code = &i
+	}
+}
+
+// AddedVersionCode returns the value that was added to the "version_code" field in this mutation.
+func (m *UpgradeMacVersionMutation) AddedVersionCode() (r int, exists bool) {
+	v := m.addversion_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetVersionCode resets all changes to the "version_code" field.
+func (m *UpgradeMacVersionMutation) ResetVersionCode() {
+	m.version_code = nil
+	m.addversion_code = nil
+}
+
+// SetArch sets the "arch" field.
+func (m *UpgradeMacVersionMutation) SetArch(s string) {
+	m.arch = &s
+}
+
+// Arch returns the value of the "arch" field in the mutation.
+func (m *UpgradeMacVersionMutation) Arch() (r string, exists bool) {
+	v := m.arch
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldArch returns the old "arch" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldArch(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldArch is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldArch requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldArch: %w", err)
+	}
+	return oldValue.Arch, nil
+}
+
+// ResetArch resets all changes to the "arch" field.
+func (m *UpgradeMacVersionMutation) ResetArch() {
+	m.arch = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *UpgradeMacVersionMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *UpgradeMacVersionMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *UpgradeMacVersionMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[upgrademacversion.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *UpgradeMacVersionMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[upgrademacversion.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *UpgradeMacVersionMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, upgrademacversion.FieldDescription)
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeMacVersionMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeMacVersionMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeMacVersionMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeMacVersionMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeMacVersionMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeMacVersionMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeMacVersionMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeMacVersionMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgrademacversion.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeMacVersionMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademacversion.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeMacVersionMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgrademacversion.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeMacVersionMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeMacVersionMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeMacVersion entity.
+// If the UpgradeMacVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeMacVersionMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeMacVersionMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgrademacversion.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeMacVersionMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgrademacversion.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeMacVersionMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgrademacversion.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeMacVersionMutation builder.
+func (m *UpgradeMacVersionMutation) Where(ps ...predicate.UpgradeMacVersion) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeMacVersionMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeMacVersionMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeMacVersion, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeMacVersionMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeMacVersionMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeMacVersion).
+func (m *UpgradeMacVersionMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeMacVersionMutation) Fields() []string {
+	fields := make([]string, 0, 10)
+	if m.company_id != nil {
+		fields = append(fields, upgrademacversion.FieldCompanyID)
+	}
+	if m.mac_id != nil {
+		fields = append(fields, upgrademacversion.FieldMACID)
+	}
+	if m.cloud_file_id != nil {
+		fields = append(fields, upgrademacversion.FieldCloudFileID)
+	}
+	if m.version_name != nil {
+		fields = append(fields, upgrademacversion.FieldVersionName)
+	}
+	if m.version_code != nil {
+		fields = append(fields, upgrademacversion.FieldVersionCode)
+	}
+	if m.arch != nil {
+		fields = append(fields, upgrademacversion.FieldArch)
+	}
+	if m.description != nil {
+		fields = append(fields, upgrademacversion.FieldDescription)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgrademacversion.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgrademacversion.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgrademacversion.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeMacVersionMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademacversion.FieldCompanyID:
+		return m.CompanyID()
+	case upgrademacversion.FieldMACID:
+		return m.MACID()
+	case upgrademacversion.FieldCloudFileID:
+		return m.CloudFileID()
+	case upgrademacversion.FieldVersionName:
+		return m.VersionName()
+	case upgrademacversion.FieldVersionCode:
+		return m.VersionCode()
+	case upgrademacversion.FieldArch:
+		return m.Arch()
+	case upgrademacversion.FieldDescription:
+		return m.Description()
+	case upgrademacversion.FieldIsDel:
+		return m.IsDel()
+	case upgrademacversion.FieldCreateAt:
+		return m.CreateAt()
+	case upgrademacversion.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeMacVersionMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgrademacversion.FieldCompanyID:
+		return m.OldCompanyID(ctx)
+	case upgrademacversion.FieldMACID:
+		return m.OldMACID(ctx)
+	case upgrademacversion.FieldCloudFileID:
+		return m.OldCloudFileID(ctx)
+	case upgrademacversion.FieldVersionName:
+		return m.OldVersionName(ctx)
+	case upgrademacversion.FieldVersionCode:
+		return m.OldVersionCode(ctx)
+	case upgrademacversion.FieldArch:
+		return m.OldArch(ctx)
+	case upgrademacversion.FieldDescription:
+		return m.OldDescription(ctx)
+	case upgrademacversion.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgrademacversion.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgrademacversion.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeMacVersion field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacVersionMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgrademacversion.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCompanyID(v)
+		return nil
+	case upgrademacversion.FieldMACID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMACID(v)
+		return nil
+	case upgrademacversion.FieldCloudFileID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCloudFileID(v)
+		return nil
+	case upgrademacversion.FieldVersionName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVersionName(v)
+		return nil
+	case upgrademacversion.FieldVersionCode:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVersionCode(v)
+		return nil
+	case upgrademacversion.FieldArch:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetArch(v)
+		return nil
+	case upgrademacversion.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case upgrademacversion.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgrademacversion.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgrademacversion.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacVersion field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeMacVersionMutation) AddedFields() []string {
+	var fields []string
+	if m.addcompany_id != nil {
+		fields = append(fields, upgrademacversion.FieldCompanyID)
+	}
+	if m.addmac_id != nil {
+		fields = append(fields, upgrademacversion.FieldMACID)
+	}
+	if m.addversion_code != nil {
+		fields = append(fields, upgrademacversion.FieldVersionCode)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgrademacversion.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeMacVersionMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgrademacversion.FieldCompanyID:
+		return m.AddedCompanyID()
+	case upgrademacversion.FieldMACID:
+		return m.AddedMACID()
+	case upgrademacversion.FieldVersionCode:
+		return m.AddedVersionCode()
+	case upgrademacversion.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeMacVersionMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgrademacversion.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCompanyID(v)
+		return nil
+	case upgrademacversion.FieldMACID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddMACID(v)
+		return nil
+	case upgrademacversion.FieldVersionCode:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddVersionCode(v)
+		return nil
+	case upgrademacversion.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacVersion numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeMacVersionMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgrademacversion.FieldDescription) {
+		fields = append(fields, upgrademacversion.FieldDescription)
+	}
+	if m.FieldCleared(upgrademacversion.FieldCreateAt) {
+		fields = append(fields, upgrademacversion.FieldCreateAt)
+	}
+	if m.FieldCleared(upgrademacversion.FieldUpdateAt) {
+		fields = append(fields, upgrademacversion.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeMacVersionMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeMacVersionMutation) ClearField(name string) error {
+	switch name {
+	case upgrademacversion.FieldDescription:
+		m.ClearDescription()
+		return nil
+	case upgrademacversion.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgrademacversion.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacVersion nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeMacVersionMutation) ResetField(name string) error {
+	switch name {
+	case upgrademacversion.FieldCompanyID:
+		m.ResetCompanyID()
+		return nil
+	case upgrademacversion.FieldMACID:
+		m.ResetMACID()
+		return nil
+	case upgrademacversion.FieldCloudFileID:
+		m.ResetCloudFileID()
+		return nil
+	case upgrademacversion.FieldVersionName:
+		m.ResetVersionName()
+		return nil
+	case upgrademacversion.FieldVersionCode:
+		m.ResetVersionCode()
+		return nil
+	case upgrademacversion.FieldArch:
+		m.ResetArch()
+		return nil
+	case upgrademacversion.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case upgrademacversion.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgrademacversion.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgrademacversion.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeMacVersion field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeMacVersionMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeMacVersionMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeMacVersionMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeMacVersionMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeMacVersionMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeMacVersionMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeMacVersionMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMacVersion unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeMacVersionMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeMacVersion edge %s", name)
+}
+
 // UpgradeTauriMutation represents an operation that mutates the UpgradeTauri nodes in the graph.
 type UpgradeTauriMutation struct {
 	config
@@ -41154,4 +51906,5327 @@ func (m *UpgradeUrlVersionMutation) ClearEdge(name string) error {
 // It returns an error if the edge is not defined in the schema.
 func (m *UpgradeUrlVersionMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown UpgradeUrlVersion edge %s", name)
+}
+
+// UpgradeWinMutation represents an operation that mutates the UpgradeWin nodes in the graph.
+type UpgradeWinMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int
+	company_id    *int
+	addcompany_id *int
+	key           *string
+	name          *string
+	package_name  *string
+	description   *string
+	is_del        *int32
+	addis_del     *int32
+	create_at     *time.Time
+	update_at     *time.Time
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*UpgradeWin, error)
+	predicates    []predicate.UpgradeWin
+}
+
+var _ ent.Mutation = (*UpgradeWinMutation)(nil)
+
+// upgradewinOption allows management of the mutation configuration using functional options.
+type upgradewinOption func(*UpgradeWinMutation)
+
+// newUpgradeWinMutation creates new mutation for the UpgradeWin entity.
+func newUpgradeWinMutation(c config, op Op, opts ...upgradewinOption) *UpgradeWinMutation {
+	m := &UpgradeWinMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeWin,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeWinID sets the ID field of the mutation.
+func withUpgradeWinID(id int) upgradewinOption {
+	return func(m *UpgradeWinMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeWin
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeWin, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeWin.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeWin sets the old UpgradeWin of the mutation.
+func withUpgradeWin(node *UpgradeWin) upgradewinOption {
+	return func(m *UpgradeWinMutation) {
+		m.oldValue = func(context.Context) (*UpgradeWin, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeWinMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeWinMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeWin entities.
+func (m *UpgradeWinMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeWinMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeWinMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeWin.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCompanyID sets the "company_id" field.
+func (m *UpgradeWinMutation) SetCompanyID(i int) {
+	m.company_id = &i
+	m.addcompany_id = nil
+}
+
+// CompanyID returns the value of the "company_id" field in the mutation.
+func (m *UpgradeWinMutation) CompanyID() (r int, exists bool) {
+	v := m.company_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCompanyID returns the old "company_id" field's value of the UpgradeWin entity.
+// If the UpgradeWin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinMutation) OldCompanyID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCompanyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCompanyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCompanyID: %w", err)
+	}
+	return oldValue.CompanyID, nil
+}
+
+// AddCompanyID adds i to the "company_id" field.
+func (m *UpgradeWinMutation) AddCompanyID(i int) {
+	if m.addcompany_id != nil {
+		*m.addcompany_id += i
+	} else {
+		m.addcompany_id = &i
+	}
+}
+
+// AddedCompanyID returns the value that was added to the "company_id" field in this mutation.
+func (m *UpgradeWinMutation) AddedCompanyID() (r int, exists bool) {
+	v := m.addcompany_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCompanyID resets all changes to the "company_id" field.
+func (m *UpgradeWinMutation) ResetCompanyID() {
+	m.company_id = nil
+	m.addcompany_id = nil
+}
+
+// SetKey sets the "key" field.
+func (m *UpgradeWinMutation) SetKey(s string) {
+	m.key = &s
+}
+
+// Key returns the value of the "key" field in the mutation.
+func (m *UpgradeWinMutation) Key() (r string, exists bool) {
+	v := m.key
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldKey returns the old "key" field's value of the UpgradeWin entity.
+// If the UpgradeWin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinMutation) OldKey(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldKey is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldKey requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldKey: %w", err)
+	}
+	return oldValue.Key, nil
+}
+
+// ResetKey resets all changes to the "key" field.
+func (m *UpgradeWinMutation) ResetKey() {
+	m.key = nil
+}
+
+// SetName sets the "name" field.
+func (m *UpgradeWinMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *UpgradeWinMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the UpgradeWin entity.
+// If the UpgradeWin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinMutation) OldName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *UpgradeWinMutation) ResetName() {
+	m.name = nil
+}
+
+// SetPackageName sets the "package_name" field.
+func (m *UpgradeWinMutation) SetPackageName(s string) {
+	m.package_name = &s
+}
+
+// PackageName returns the value of the "package_name" field in the mutation.
+func (m *UpgradeWinMutation) PackageName() (r string, exists bool) {
+	v := m.package_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPackageName returns the old "package_name" field's value of the UpgradeWin entity.
+// If the UpgradeWin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinMutation) OldPackageName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldPackageName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldPackageName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPackageName: %w", err)
+	}
+	return oldValue.PackageName, nil
+}
+
+// ResetPackageName resets all changes to the "package_name" field.
+func (m *UpgradeWinMutation) ResetPackageName() {
+	m.package_name = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *UpgradeWinMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *UpgradeWinMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the UpgradeWin entity.
+// If the UpgradeWin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *UpgradeWinMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[upgradewin.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *UpgradeWinMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[upgradewin.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *UpgradeWinMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, upgradewin.FieldDescription)
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeWinMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeWinMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeWin entity.
+// If the UpgradeWin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeWinMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeWinMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeWinMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeWinMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeWinMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeWin entity.
+// If the UpgradeWin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeWinMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradewin.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeWinMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewin.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeWinMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradewin.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeWinMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeWinMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeWin entity.
+// If the UpgradeWin object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeWinMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradewin.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeWinMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewin.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeWinMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradewin.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeWinMutation builder.
+func (m *UpgradeWinMutation) Where(ps ...predicate.UpgradeWin) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeWinMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeWinMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeWin, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeWinMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeWinMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeWin).
+func (m *UpgradeWinMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeWinMutation) Fields() []string {
+	fields := make([]string, 0, 8)
+	if m.company_id != nil {
+		fields = append(fields, upgradewin.FieldCompanyID)
+	}
+	if m.key != nil {
+		fields = append(fields, upgradewin.FieldKey)
+	}
+	if m.name != nil {
+		fields = append(fields, upgradewin.FieldName)
+	}
+	if m.package_name != nil {
+		fields = append(fields, upgradewin.FieldPackageName)
+	}
+	if m.description != nil {
+		fields = append(fields, upgradewin.FieldDescription)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradewin.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradewin.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradewin.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeWinMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewin.FieldCompanyID:
+		return m.CompanyID()
+	case upgradewin.FieldKey:
+		return m.Key()
+	case upgradewin.FieldName:
+		return m.Name()
+	case upgradewin.FieldPackageName:
+		return m.PackageName()
+	case upgradewin.FieldDescription:
+		return m.Description()
+	case upgradewin.FieldIsDel:
+		return m.IsDel()
+	case upgradewin.FieldCreateAt:
+		return m.CreateAt()
+	case upgradewin.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeWinMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradewin.FieldCompanyID:
+		return m.OldCompanyID(ctx)
+	case upgradewin.FieldKey:
+		return m.OldKey(ctx)
+	case upgradewin.FieldName:
+		return m.OldName(ctx)
+	case upgradewin.FieldPackageName:
+		return m.OldPackageName(ctx)
+	case upgradewin.FieldDescription:
+		return m.OldDescription(ctx)
+	case upgradewin.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradewin.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradewin.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeWin field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradewin.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCompanyID(v)
+		return nil
+	case upgradewin.FieldKey:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetKey(v)
+		return nil
+	case upgradewin.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case upgradewin.FieldPackageName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPackageName(v)
+		return nil
+	case upgradewin.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case upgradewin.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradewin.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradewin.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWin field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeWinMutation) AddedFields() []string {
+	var fields []string
+	if m.addcompany_id != nil {
+		fields = append(fields, upgradewin.FieldCompanyID)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradewin.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeWinMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewin.FieldCompanyID:
+		return m.AddedCompanyID()
+	case upgradewin.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradewin.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCompanyID(v)
+		return nil
+	case upgradewin.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWin numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeWinMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradewin.FieldDescription) {
+		fields = append(fields, upgradewin.FieldDescription)
+	}
+	if m.FieldCleared(upgradewin.FieldCreateAt) {
+		fields = append(fields, upgradewin.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradewin.FieldUpdateAt) {
+		fields = append(fields, upgradewin.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeWinMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeWinMutation) ClearField(name string) error {
+	switch name {
+	case upgradewin.FieldDescription:
+		m.ClearDescription()
+		return nil
+	case upgradewin.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradewin.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWin nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeWinMutation) ResetField(name string) error {
+	switch name {
+	case upgradewin.FieldCompanyID:
+		m.ResetCompanyID()
+		return nil
+	case upgradewin.FieldKey:
+		m.ResetKey()
+		return nil
+	case upgradewin.FieldName:
+		m.ResetName()
+		return nil
+	case upgradewin.FieldPackageName:
+		m.ResetPackageName()
+		return nil
+	case upgradewin.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case upgradewin.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradewin.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradewin.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWin field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeWinMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeWinMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeWinMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeWinMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeWinMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeWinMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeWinMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWin unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeWinMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWin edge %s", name)
+}
+
+// UpgradeWinUpgradeStrategyMutation represents an operation that mutates the UpgradeWinUpgradeStrategy nodes in the graph.
+type UpgradeWinUpgradeStrategyMutation struct {
+	config
+	op                      Op
+	typ                     string
+	id                      *int
+	company_id              *int
+	addcompany_id           *int
+	enable                  *int32
+	addenable               *int32
+	name                    *string
+	description             *string
+	win_id                  *int
+	addwin_id               *int
+	win_version_id          *int
+	addwin_version_id       *int
+	begin_datetime          *time.Time
+	end_datetime            *time.Time
+	upgrade_type            *int32
+	addupgrade_type         *int32
+	prompt_upgrade_content  *string
+	upgrade_dev_type        *int32
+	addupgrade_dev_type     *int32
+	upgrade_dev_data        *string
+	upgrade_version_type    *int32
+	addupgrade_version_type *int32
+	upgrade_version_data    *string
+	is_gray                 *int32
+	addis_gray              *int32
+	gray_data               *string
+	is_flow_limit           *int32
+	addis_flow_limit        *int32
+	flow_limit_data         *string
+	is_del                  *int32
+	addis_del               *int32
+	create_at               *time.Time
+	update_at               *time.Time
+	clearedFields           map[string]struct{}
+	done                    bool
+	oldValue                func(context.Context) (*UpgradeWinUpgradeStrategy, error)
+	predicates              []predicate.UpgradeWinUpgradeStrategy
+}
+
+var _ ent.Mutation = (*UpgradeWinUpgradeStrategyMutation)(nil)
+
+// upgradewinupgradestrategyOption allows management of the mutation configuration using functional options.
+type upgradewinupgradestrategyOption func(*UpgradeWinUpgradeStrategyMutation)
+
+// newUpgradeWinUpgradeStrategyMutation creates new mutation for the UpgradeWinUpgradeStrategy entity.
+func newUpgradeWinUpgradeStrategyMutation(c config, op Op, opts ...upgradewinupgradestrategyOption) *UpgradeWinUpgradeStrategyMutation {
+	m := &UpgradeWinUpgradeStrategyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeWinUpgradeStrategy,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeWinUpgradeStrategyID sets the ID field of the mutation.
+func withUpgradeWinUpgradeStrategyID(id int) upgradewinupgradestrategyOption {
+	return func(m *UpgradeWinUpgradeStrategyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeWinUpgradeStrategy
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeWinUpgradeStrategy, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeWinUpgradeStrategy.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeWinUpgradeStrategy sets the old UpgradeWinUpgradeStrategy of the mutation.
+func withUpgradeWinUpgradeStrategy(node *UpgradeWinUpgradeStrategy) upgradewinupgradestrategyOption {
+	return func(m *UpgradeWinUpgradeStrategyMutation) {
+		m.oldValue = func(context.Context) (*UpgradeWinUpgradeStrategy, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeWinUpgradeStrategyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeWinUpgradeStrategyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeWinUpgradeStrategy entities.
+func (m *UpgradeWinUpgradeStrategyMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeWinUpgradeStrategyMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeWinUpgradeStrategy.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCompanyID sets the "company_id" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetCompanyID(i int) {
+	m.company_id = &i
+	m.addcompany_id = nil
+}
+
+// CompanyID returns the value of the "company_id" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) CompanyID() (r int, exists bool) {
+	v := m.company_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCompanyID returns the old "company_id" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldCompanyID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCompanyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCompanyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCompanyID: %w", err)
+	}
+	return oldValue.CompanyID, nil
+}
+
+// AddCompanyID adds i to the "company_id" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddCompanyID(i int) {
+	if m.addcompany_id != nil {
+		*m.addcompany_id += i
+	} else {
+		m.addcompany_id = &i
+	}
+}
+
+// AddedCompanyID returns the value that was added to the "company_id" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedCompanyID() (r int, exists bool) {
+	v := m.addcompany_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCompanyID resets all changes to the "company_id" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetCompanyID() {
+	m.company_id = nil
+	m.addcompany_id = nil
+}
+
+// SetEnable sets the "enable" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetEnable(i int32) {
+	m.enable = &i
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) Enable() (r int32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldEnable(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds i to the "enable" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddEnable(i int32) {
+	if m.addenable != nil {
+		*m.addenable += i
+	} else {
+		m.addenable = &i
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetName sets the "name" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetName() {
+	m.name = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetDescription() {
+	m.description = nil
+}
+
+// SetWinID sets the "win_id" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetWinID(i int) {
+	m.win_id = &i
+	m.addwin_id = nil
+}
+
+// WinID returns the value of the "win_id" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) WinID() (r int, exists bool) {
+	v := m.win_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldWinID returns the old "win_id" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldWinID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldWinID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldWinID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldWinID: %w", err)
+	}
+	return oldValue.WinID, nil
+}
+
+// AddWinID adds i to the "win_id" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddWinID(i int) {
+	if m.addwin_id != nil {
+		*m.addwin_id += i
+	} else {
+		m.addwin_id = &i
+	}
+}
+
+// AddedWinID returns the value that was added to the "win_id" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedWinID() (r int, exists bool) {
+	v := m.addwin_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetWinID resets all changes to the "win_id" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetWinID() {
+	m.win_id = nil
+	m.addwin_id = nil
+}
+
+// SetWinVersionID sets the "win_version_id" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetWinVersionID(i int) {
+	m.win_version_id = &i
+	m.addwin_version_id = nil
+}
+
+// WinVersionID returns the value of the "win_version_id" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) WinVersionID() (r int, exists bool) {
+	v := m.win_version_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldWinVersionID returns the old "win_version_id" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldWinVersionID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldWinVersionID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldWinVersionID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldWinVersionID: %w", err)
+	}
+	return oldValue.WinVersionID, nil
+}
+
+// AddWinVersionID adds i to the "win_version_id" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddWinVersionID(i int) {
+	if m.addwin_version_id != nil {
+		*m.addwin_version_id += i
+	} else {
+		m.addwin_version_id = &i
+	}
+}
+
+// AddedWinVersionID returns the value that was added to the "win_version_id" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedWinVersionID() (r int, exists bool) {
+	v := m.addwin_version_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetWinVersionID resets all changes to the "win_version_id" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetWinVersionID() {
+	m.win_version_id = nil
+	m.addwin_version_id = nil
+}
+
+// SetBeginDatetime sets the "begin_datetime" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetBeginDatetime(t time.Time) {
+	m.begin_datetime = &t
+}
+
+// BeginDatetime returns the value of the "begin_datetime" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) BeginDatetime() (r time.Time, exists bool) {
+	v := m.begin_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBeginDatetime returns the old "begin_datetime" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldBeginDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBeginDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBeginDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBeginDatetime: %w", err)
+	}
+	return oldValue.BeginDatetime, nil
+}
+
+// ResetBeginDatetime resets all changes to the "begin_datetime" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetBeginDatetime() {
+	m.begin_datetime = nil
+}
+
+// SetEndDatetime sets the "end_datetime" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetEndDatetime(t time.Time) {
+	m.end_datetime = &t
+}
+
+// EndDatetime returns the value of the "end_datetime" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) EndDatetime() (r time.Time, exists bool) {
+	v := m.end_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEndDatetime returns the old "end_datetime" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldEndDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEndDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEndDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEndDatetime: %w", err)
+	}
+	return oldValue.EndDatetime, nil
+}
+
+// ResetEndDatetime resets all changes to the "end_datetime" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetEndDatetime() {
+	m.end_datetime = nil
+}
+
+// SetUpgradeType sets the "upgrade_type" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetUpgradeType(i int32) {
+	m.upgrade_type = &i
+	m.addupgrade_type = nil
+}
+
+// UpgradeType returns the value of the "upgrade_type" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) UpgradeType() (r int32, exists bool) {
+	v := m.upgrade_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeType returns the old "upgrade_type" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldUpgradeType(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeType: %w", err)
+	}
+	return oldValue.UpgradeType, nil
+}
+
+// AddUpgradeType adds i to the "upgrade_type" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddUpgradeType(i int32) {
+	if m.addupgrade_type != nil {
+		*m.addupgrade_type += i
+	} else {
+		m.addupgrade_type = &i
+	}
+}
+
+// AddedUpgradeType returns the value that was added to the "upgrade_type" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedUpgradeType() (r int32, exists bool) {
+	v := m.addupgrade_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpgradeType resets all changes to the "upgrade_type" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetUpgradeType() {
+	m.upgrade_type = nil
+	m.addupgrade_type = nil
+}
+
+// SetPromptUpgradeContent sets the "prompt_upgrade_content" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetPromptUpgradeContent(s string) {
+	m.prompt_upgrade_content = &s
+}
+
+// PromptUpgradeContent returns the value of the "prompt_upgrade_content" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) PromptUpgradeContent() (r string, exists bool) {
+	v := m.prompt_upgrade_content
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPromptUpgradeContent returns the old "prompt_upgrade_content" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldPromptUpgradeContent(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldPromptUpgradeContent is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldPromptUpgradeContent requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPromptUpgradeContent: %w", err)
+	}
+	return oldValue.PromptUpgradeContent, nil
+}
+
+// ResetPromptUpgradeContent resets all changes to the "prompt_upgrade_content" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetPromptUpgradeContent() {
+	m.prompt_upgrade_content = nil
+}
+
+// SetUpgradeDevType sets the "upgrade_dev_type" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetUpgradeDevType(i int32) {
+	m.upgrade_dev_type = &i
+	m.addupgrade_dev_type = nil
+}
+
+// UpgradeDevType returns the value of the "upgrade_dev_type" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) UpgradeDevType() (r int32, exists bool) {
+	v := m.upgrade_dev_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeDevType returns the old "upgrade_dev_type" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldUpgradeDevType(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeDevType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeDevType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeDevType: %w", err)
+	}
+	return oldValue.UpgradeDevType, nil
+}
+
+// AddUpgradeDevType adds i to the "upgrade_dev_type" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddUpgradeDevType(i int32) {
+	if m.addupgrade_dev_type != nil {
+		*m.addupgrade_dev_type += i
+	} else {
+		m.addupgrade_dev_type = &i
+	}
+}
+
+// AddedUpgradeDevType returns the value that was added to the "upgrade_dev_type" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedUpgradeDevType() (r int32, exists bool) {
+	v := m.addupgrade_dev_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpgradeDevType resets all changes to the "upgrade_dev_type" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetUpgradeDevType() {
+	m.upgrade_dev_type = nil
+	m.addupgrade_dev_type = nil
+}
+
+// SetUpgradeDevData sets the "upgrade_dev_data" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetUpgradeDevData(s string) {
+	m.upgrade_dev_data = &s
+}
+
+// UpgradeDevData returns the value of the "upgrade_dev_data" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) UpgradeDevData() (r string, exists bool) {
+	v := m.upgrade_dev_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeDevData returns the old "upgrade_dev_data" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldUpgradeDevData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeDevData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeDevData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeDevData: %w", err)
+	}
+	return oldValue.UpgradeDevData, nil
+}
+
+// ResetUpgradeDevData resets all changes to the "upgrade_dev_data" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetUpgradeDevData() {
+	m.upgrade_dev_data = nil
+}
+
+// SetUpgradeVersionType sets the "upgrade_version_type" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetUpgradeVersionType(i int32) {
+	m.upgrade_version_type = &i
+	m.addupgrade_version_type = nil
+}
+
+// UpgradeVersionType returns the value of the "upgrade_version_type" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) UpgradeVersionType() (r int32, exists bool) {
+	v := m.upgrade_version_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeVersionType returns the old "upgrade_version_type" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldUpgradeVersionType(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeVersionType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeVersionType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeVersionType: %w", err)
+	}
+	return oldValue.UpgradeVersionType, nil
+}
+
+// AddUpgradeVersionType adds i to the "upgrade_version_type" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddUpgradeVersionType(i int32) {
+	if m.addupgrade_version_type != nil {
+		*m.addupgrade_version_type += i
+	} else {
+		m.addupgrade_version_type = &i
+	}
+}
+
+// AddedUpgradeVersionType returns the value that was added to the "upgrade_version_type" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedUpgradeVersionType() (r int32, exists bool) {
+	v := m.addupgrade_version_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpgradeVersionType resets all changes to the "upgrade_version_type" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetUpgradeVersionType() {
+	m.upgrade_version_type = nil
+	m.addupgrade_version_type = nil
+}
+
+// SetUpgradeVersionData sets the "upgrade_version_data" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetUpgradeVersionData(s string) {
+	m.upgrade_version_data = &s
+}
+
+// UpgradeVersionData returns the value of the "upgrade_version_data" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) UpgradeVersionData() (r string, exists bool) {
+	v := m.upgrade_version_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpgradeVersionData returns the old "upgrade_version_data" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldUpgradeVersionData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpgradeVersionData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpgradeVersionData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpgradeVersionData: %w", err)
+	}
+	return oldValue.UpgradeVersionData, nil
+}
+
+// ResetUpgradeVersionData resets all changes to the "upgrade_version_data" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetUpgradeVersionData() {
+	m.upgrade_version_data = nil
+}
+
+// SetIsGray sets the "is_gray" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetIsGray(i int32) {
+	m.is_gray = &i
+	m.addis_gray = nil
+}
+
+// IsGray returns the value of the "is_gray" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) IsGray() (r int32, exists bool) {
+	v := m.is_gray
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsGray returns the old "is_gray" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldIsGray(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsGray is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsGray requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsGray: %w", err)
+	}
+	return oldValue.IsGray, nil
+}
+
+// AddIsGray adds i to the "is_gray" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddIsGray(i int32) {
+	if m.addis_gray != nil {
+		*m.addis_gray += i
+	} else {
+		m.addis_gray = &i
+	}
+}
+
+// AddedIsGray returns the value that was added to the "is_gray" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedIsGray() (r int32, exists bool) {
+	v := m.addis_gray
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsGray resets all changes to the "is_gray" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetIsGray() {
+	m.is_gray = nil
+	m.addis_gray = nil
+}
+
+// SetGrayData sets the "gray_data" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetGrayData(s string) {
+	m.gray_data = &s
+}
+
+// GrayData returns the value of the "gray_data" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) GrayData() (r string, exists bool) {
+	v := m.gray_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGrayData returns the old "gray_data" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldGrayData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldGrayData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldGrayData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGrayData: %w", err)
+	}
+	return oldValue.GrayData, nil
+}
+
+// ResetGrayData resets all changes to the "gray_data" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetGrayData() {
+	m.gray_data = nil
+}
+
+// SetIsFlowLimit sets the "is_flow_limit" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetIsFlowLimit(i int32) {
+	m.is_flow_limit = &i
+	m.addis_flow_limit = nil
+}
+
+// IsFlowLimit returns the value of the "is_flow_limit" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) IsFlowLimit() (r int32, exists bool) {
+	v := m.is_flow_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsFlowLimit returns the old "is_flow_limit" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldIsFlowLimit(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsFlowLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsFlowLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsFlowLimit: %w", err)
+	}
+	return oldValue.IsFlowLimit, nil
+}
+
+// AddIsFlowLimit adds i to the "is_flow_limit" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddIsFlowLimit(i int32) {
+	if m.addis_flow_limit != nil {
+		*m.addis_flow_limit += i
+	} else {
+		m.addis_flow_limit = &i
+	}
+}
+
+// AddedIsFlowLimit returns the value that was added to the "is_flow_limit" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedIsFlowLimit() (r int32, exists bool) {
+	v := m.addis_flow_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsFlowLimit resets all changes to the "is_flow_limit" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetIsFlowLimit() {
+	m.is_flow_limit = nil
+	m.addis_flow_limit = nil
+}
+
+// SetFlowLimitData sets the "flow_limit_data" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetFlowLimitData(s string) {
+	m.flow_limit_data = &s
+}
+
+// FlowLimitData returns the value of the "flow_limit_data" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) FlowLimitData() (r string, exists bool) {
+	v := m.flow_limit_data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFlowLimitData returns the old "flow_limit_data" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldFlowLimitData(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldFlowLimitData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldFlowLimitData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFlowLimitData: %w", err)
+	}
+	return oldValue.FlowLimitData, nil
+}
+
+// ResetFlowLimitData resets all changes to the "flow_limit_data" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetFlowLimitData() {
+	m.flow_limit_data = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeWinUpgradeStrategyMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradewinupgradestrategy.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewinupgradestrategy.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradewinupgradestrategy.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeWinUpgradeStrategyMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeWinUpgradeStrategy entity.
+// If the UpgradeWinUpgradeStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradewinupgradestrategy.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewinupgradestrategy.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradewinupgradestrategy.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeWinUpgradeStrategyMutation builder.
+func (m *UpgradeWinUpgradeStrategyMutation) Where(ps ...predicate.UpgradeWinUpgradeStrategy) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeWinUpgradeStrategyMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeWinUpgradeStrategyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeWinUpgradeStrategy, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeWinUpgradeStrategyMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeWinUpgradeStrategyMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeWinUpgradeStrategy).
+func (m *UpgradeWinUpgradeStrategyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeWinUpgradeStrategyMutation) Fields() []string {
+	fields := make([]string, 0, 21)
+	if m.company_id != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldCompanyID)
+	}
+	if m.enable != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldEnable)
+	}
+	if m.name != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldName)
+	}
+	if m.description != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldDescription)
+	}
+	if m.win_id != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldWinID)
+	}
+	if m.win_version_id != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldWinVersionID)
+	}
+	if m.begin_datetime != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldBeginDatetime)
+	}
+	if m.end_datetime != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldEndDatetime)
+	}
+	if m.upgrade_type != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpgradeType)
+	}
+	if m.prompt_upgrade_content != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldPromptUpgradeContent)
+	}
+	if m.upgrade_dev_type != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpgradeDevType)
+	}
+	if m.upgrade_dev_data != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpgradeDevData)
+	}
+	if m.upgrade_version_type != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpgradeVersionType)
+	}
+	if m.upgrade_version_data != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpgradeVersionData)
+	}
+	if m.is_gray != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldIsGray)
+	}
+	if m.gray_data != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldGrayData)
+	}
+	if m.is_flow_limit != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldIsFlowLimit)
+	}
+	if m.flow_limit_data != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldFlowLimitData)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeWinUpgradeStrategyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewinupgradestrategy.FieldCompanyID:
+		return m.CompanyID()
+	case upgradewinupgradestrategy.FieldEnable:
+		return m.Enable()
+	case upgradewinupgradestrategy.FieldName:
+		return m.Name()
+	case upgradewinupgradestrategy.FieldDescription:
+		return m.Description()
+	case upgradewinupgradestrategy.FieldWinID:
+		return m.WinID()
+	case upgradewinupgradestrategy.FieldWinVersionID:
+		return m.WinVersionID()
+	case upgradewinupgradestrategy.FieldBeginDatetime:
+		return m.BeginDatetime()
+	case upgradewinupgradestrategy.FieldEndDatetime:
+		return m.EndDatetime()
+	case upgradewinupgradestrategy.FieldUpgradeType:
+		return m.UpgradeType()
+	case upgradewinupgradestrategy.FieldPromptUpgradeContent:
+		return m.PromptUpgradeContent()
+	case upgradewinupgradestrategy.FieldUpgradeDevType:
+		return m.UpgradeDevType()
+	case upgradewinupgradestrategy.FieldUpgradeDevData:
+		return m.UpgradeDevData()
+	case upgradewinupgradestrategy.FieldUpgradeVersionType:
+		return m.UpgradeVersionType()
+	case upgradewinupgradestrategy.FieldUpgradeVersionData:
+		return m.UpgradeVersionData()
+	case upgradewinupgradestrategy.FieldIsGray:
+		return m.IsGray()
+	case upgradewinupgradestrategy.FieldGrayData:
+		return m.GrayData()
+	case upgradewinupgradestrategy.FieldIsFlowLimit:
+		return m.IsFlowLimit()
+	case upgradewinupgradestrategy.FieldFlowLimitData:
+		return m.FlowLimitData()
+	case upgradewinupgradestrategy.FieldIsDel:
+		return m.IsDel()
+	case upgradewinupgradestrategy.FieldCreateAt:
+		return m.CreateAt()
+	case upgradewinupgradestrategy.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeWinUpgradeStrategyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradewinupgradestrategy.FieldCompanyID:
+		return m.OldCompanyID(ctx)
+	case upgradewinupgradestrategy.FieldEnable:
+		return m.OldEnable(ctx)
+	case upgradewinupgradestrategy.FieldName:
+		return m.OldName(ctx)
+	case upgradewinupgradestrategy.FieldDescription:
+		return m.OldDescription(ctx)
+	case upgradewinupgradestrategy.FieldWinID:
+		return m.OldWinID(ctx)
+	case upgradewinupgradestrategy.FieldWinVersionID:
+		return m.OldWinVersionID(ctx)
+	case upgradewinupgradestrategy.FieldBeginDatetime:
+		return m.OldBeginDatetime(ctx)
+	case upgradewinupgradestrategy.FieldEndDatetime:
+		return m.OldEndDatetime(ctx)
+	case upgradewinupgradestrategy.FieldUpgradeType:
+		return m.OldUpgradeType(ctx)
+	case upgradewinupgradestrategy.FieldPromptUpgradeContent:
+		return m.OldPromptUpgradeContent(ctx)
+	case upgradewinupgradestrategy.FieldUpgradeDevType:
+		return m.OldUpgradeDevType(ctx)
+	case upgradewinupgradestrategy.FieldUpgradeDevData:
+		return m.OldUpgradeDevData(ctx)
+	case upgradewinupgradestrategy.FieldUpgradeVersionType:
+		return m.OldUpgradeVersionType(ctx)
+	case upgradewinupgradestrategy.FieldUpgradeVersionData:
+		return m.OldUpgradeVersionData(ctx)
+	case upgradewinupgradestrategy.FieldIsGray:
+		return m.OldIsGray(ctx)
+	case upgradewinupgradestrategy.FieldGrayData:
+		return m.OldGrayData(ctx)
+	case upgradewinupgradestrategy.FieldIsFlowLimit:
+		return m.OldIsFlowLimit(ctx)
+	case upgradewinupgradestrategy.FieldFlowLimitData:
+		return m.OldFlowLimitData(ctx)
+	case upgradewinupgradestrategy.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradewinupgradestrategy.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradewinupgradestrategy.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeWinUpgradeStrategy field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinUpgradeStrategyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradewinupgradestrategy.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCompanyID(v)
+		return nil
+	case upgradewinupgradestrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case upgradewinupgradestrategy.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case upgradewinupgradestrategy.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case upgradewinupgradestrategy.FieldWinID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetWinID(v)
+		return nil
+	case upgradewinupgradestrategy.FieldWinVersionID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetWinVersionID(v)
+		return nil
+	case upgradewinupgradestrategy.FieldBeginDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBeginDatetime(v)
+		return nil
+	case upgradewinupgradestrategy.FieldEndDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEndDatetime(v)
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeType(v)
+		return nil
+	case upgradewinupgradestrategy.FieldPromptUpgradeContent:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPromptUpgradeContent(v)
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeDevType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeDevType(v)
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeDevData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeDevData(v)
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeVersionType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeVersionType(v)
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeVersionData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpgradeVersionData(v)
+		return nil
+	case upgradewinupgradestrategy.FieldIsGray:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsGray(v)
+		return nil
+	case upgradewinupgradestrategy.FieldGrayData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGrayData(v)
+		return nil
+	case upgradewinupgradestrategy.FieldIsFlowLimit:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsFlowLimit(v)
+		return nil
+	case upgradewinupgradestrategy.FieldFlowLimitData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFlowLimitData(v)
+		return nil
+	case upgradewinupgradestrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradewinupgradestrategy.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradewinupgradestrategy.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategy field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedFields() []string {
+	var fields []string
+	if m.addcompany_id != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldCompanyID)
+	}
+	if m.addenable != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldEnable)
+	}
+	if m.addwin_id != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldWinID)
+	}
+	if m.addwin_version_id != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldWinVersionID)
+	}
+	if m.addupgrade_type != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpgradeType)
+	}
+	if m.addupgrade_dev_type != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpgradeDevType)
+	}
+	if m.addupgrade_version_type != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpgradeVersionType)
+	}
+	if m.addis_gray != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldIsGray)
+	}
+	if m.addis_flow_limit != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldIsFlowLimit)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradewinupgradestrategy.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewinupgradestrategy.FieldCompanyID:
+		return m.AddedCompanyID()
+	case upgradewinupgradestrategy.FieldEnable:
+		return m.AddedEnable()
+	case upgradewinupgradestrategy.FieldWinID:
+		return m.AddedWinID()
+	case upgradewinupgradestrategy.FieldWinVersionID:
+		return m.AddedWinVersionID()
+	case upgradewinupgradestrategy.FieldUpgradeType:
+		return m.AddedUpgradeType()
+	case upgradewinupgradestrategy.FieldUpgradeDevType:
+		return m.AddedUpgradeDevType()
+	case upgradewinupgradestrategy.FieldUpgradeVersionType:
+		return m.AddedUpgradeVersionType()
+	case upgradewinupgradestrategy.FieldIsGray:
+		return m.AddedIsGray()
+	case upgradewinupgradestrategy.FieldIsFlowLimit:
+		return m.AddedIsFlowLimit()
+	case upgradewinupgradestrategy.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinUpgradeStrategyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradewinupgradestrategy.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCompanyID(v)
+		return nil
+	case upgradewinupgradestrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case upgradewinupgradestrategy.FieldWinID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddWinID(v)
+		return nil
+	case upgradewinupgradestrategy.FieldWinVersionID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddWinVersionID(v)
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpgradeType(v)
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeDevType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpgradeDevType(v)
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeVersionType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpgradeVersionType(v)
+		return nil
+	case upgradewinupgradestrategy.FieldIsGray:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsGray(v)
+		return nil
+	case upgradewinupgradestrategy.FieldIsFlowLimit:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsFlowLimit(v)
+		return nil
+	case upgradewinupgradestrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategy numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradewinupgradestrategy.FieldCreateAt) {
+		fields = append(fields, upgradewinupgradestrategy.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradewinupgradestrategy.FieldUpdateAt) {
+		fields = append(fields, upgradewinupgradestrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyMutation) ClearField(name string) error {
+	switch name {
+	case upgradewinupgradestrategy.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradewinupgradestrategy.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategy nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetField(name string) error {
+	switch name {
+	case upgradewinupgradestrategy.FieldCompanyID:
+		m.ResetCompanyID()
+		return nil
+	case upgradewinupgradestrategy.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case upgradewinupgradestrategy.FieldName:
+		m.ResetName()
+		return nil
+	case upgradewinupgradestrategy.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case upgradewinupgradestrategy.FieldWinID:
+		m.ResetWinID()
+		return nil
+	case upgradewinupgradestrategy.FieldWinVersionID:
+		m.ResetWinVersionID()
+		return nil
+	case upgradewinupgradestrategy.FieldBeginDatetime:
+		m.ResetBeginDatetime()
+		return nil
+	case upgradewinupgradestrategy.FieldEndDatetime:
+		m.ResetEndDatetime()
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeType:
+		m.ResetUpgradeType()
+		return nil
+	case upgradewinupgradestrategy.FieldPromptUpgradeContent:
+		m.ResetPromptUpgradeContent()
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeDevType:
+		m.ResetUpgradeDevType()
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeDevData:
+		m.ResetUpgradeDevData()
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeVersionType:
+		m.ResetUpgradeVersionType()
+		return nil
+	case upgradewinupgradestrategy.FieldUpgradeVersionData:
+		m.ResetUpgradeVersionData()
+		return nil
+	case upgradewinupgradestrategy.FieldIsGray:
+		m.ResetIsGray()
+		return nil
+	case upgradewinupgradestrategy.FieldGrayData:
+		m.ResetGrayData()
+		return nil
+	case upgradewinupgradestrategy.FieldIsFlowLimit:
+		m.ResetIsFlowLimit()
+		return nil
+	case upgradewinupgradestrategy.FieldFlowLimitData:
+		m.ResetFlowLimitData()
+		return nil
+	case upgradewinupgradestrategy.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradewinupgradestrategy.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradewinupgradestrategy.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategy field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategy unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategy edge %s", name)
+}
+
+// UpgradeWinUpgradeStrategyFlowLimitStrategyMutation represents an operation that mutates the UpgradeWinUpgradeStrategyFlowLimitStrategy nodes in the graph.
+type UpgradeWinUpgradeStrategyFlowLimitStrategyMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int
+	enable        *int32
+	addenable     *int32
+	begin_time    *string
+	end_time      *string
+	dimension     *int32
+	adddimension  *int32
+	_limit        *int
+	add_limit     *int
+	is_del        *int32
+	addis_del     *int32
+	create_at     *time.Time
+	update_at     *time.Time
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*UpgradeWinUpgradeStrategyFlowLimitStrategy, error)
+	predicates    []predicate.UpgradeWinUpgradeStrategyFlowLimitStrategy
+}
+
+var _ ent.Mutation = (*UpgradeWinUpgradeStrategyFlowLimitStrategyMutation)(nil)
+
+// upgradewinupgradestrategyflowlimitstrategyOption allows management of the mutation configuration using functional options.
+type upgradewinupgradestrategyflowlimitstrategyOption func(*UpgradeWinUpgradeStrategyFlowLimitStrategyMutation)
+
+// newUpgradeWinUpgradeStrategyFlowLimitStrategyMutation creates new mutation for the UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+func newUpgradeWinUpgradeStrategyFlowLimitStrategyMutation(c config, op Op, opts ...upgradewinupgradestrategyflowlimitstrategyOption) *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation {
+	m := &UpgradeWinUpgradeStrategyFlowLimitStrategyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeWinUpgradeStrategyFlowLimitStrategy,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeWinUpgradeStrategyFlowLimitStrategyID sets the ID field of the mutation.
+func withUpgradeWinUpgradeStrategyFlowLimitStrategyID(id int) upgradewinupgradestrategyflowlimitstrategyOption {
+	return func(m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeWinUpgradeStrategyFlowLimitStrategy
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeWinUpgradeStrategyFlowLimitStrategy, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeWinUpgradeStrategyFlowLimitStrategy.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeWinUpgradeStrategyFlowLimitStrategy sets the old UpgradeWinUpgradeStrategyFlowLimitStrategy of the mutation.
+func withUpgradeWinUpgradeStrategyFlowLimitStrategy(node *UpgradeWinUpgradeStrategyFlowLimitStrategy) upgradewinupgradestrategyflowlimitstrategyOption {
+	return func(m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) {
+		m.oldValue = func(context.Context) (*UpgradeWinUpgradeStrategyFlowLimitStrategy, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeWinUpgradeStrategyFlowLimitStrategy entities.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeWinUpgradeStrategyFlowLimitStrategy.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetEnable sets the "enable" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetEnable(i int32) {
+	m.enable = &i
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Enable() (r int32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeWinUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) OldEnable(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds i to the "enable" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddEnable(i int32) {
+	if m.addenable != nil {
+		*m.addenable += i
+	} else {
+		m.addenable = &i
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetBeginTime sets the "begin_time" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetBeginTime(s string) {
+	m.begin_time = &s
+}
+
+// BeginTime returns the value of the "begin_time" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) BeginTime() (r string, exists bool) {
+	v := m.begin_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBeginTime returns the old "begin_time" field's value of the UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeWinUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) OldBeginTime(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBeginTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBeginTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBeginTime: %w", err)
+	}
+	return oldValue.BeginTime, nil
+}
+
+// ResetBeginTime resets all changes to the "begin_time" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetBeginTime() {
+	m.begin_time = nil
+}
+
+// SetEndTime sets the "end_time" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetEndTime(s string) {
+	m.end_time = &s
+}
+
+// EndTime returns the value of the "end_time" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) EndTime() (r string, exists bool) {
+	v := m.end_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEndTime returns the old "end_time" field's value of the UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeWinUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) OldEndTime(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEndTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEndTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEndTime: %w", err)
+	}
+	return oldValue.EndTime, nil
+}
+
+// ResetEndTime resets all changes to the "end_time" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetEndTime() {
+	m.end_time = nil
+}
+
+// SetDimension sets the "dimension" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetDimension(i int32) {
+	m.dimension = &i
+	m.adddimension = nil
+}
+
+// Dimension returns the value of the "dimension" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Dimension() (r int32, exists bool) {
+	v := m.dimension
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDimension returns the old "dimension" field's value of the UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeWinUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) OldDimension(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDimension is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDimension requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDimension: %w", err)
+	}
+	return oldValue.Dimension, nil
+}
+
+// AddDimension adds i to the "dimension" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddDimension(i int32) {
+	if m.adddimension != nil {
+		*m.adddimension += i
+	} else {
+		m.adddimension = &i
+	}
+}
+
+// AddedDimension returns the value that was added to the "dimension" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddedDimension() (r int32, exists bool) {
+	v := m.adddimension
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDimension resets all changes to the "dimension" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetDimension() {
+	m.dimension = nil
+	m.adddimension = nil
+}
+
+// SetLimit sets the "limit" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetLimit(i int) {
+	m._limit = &i
+	m.add_limit = nil
+}
+
+// Limit returns the value of the "limit" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Limit() (r int, exists bool) {
+	v := m._limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLimit returns the old "limit" field's value of the UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeWinUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) OldLimit(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLimit: %w", err)
+	}
+	return oldValue.Limit, nil
+}
+
+// AddLimit adds i to the "limit" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddLimit(i int) {
+	if m.add_limit != nil {
+		*m.add_limit += i
+	} else {
+		m.add_limit = &i
+	}
+}
+
+// AddedLimit returns the value that was added to the "limit" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddedLimit() (r int, exists bool) {
+	v := m.add_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLimit resets all changes to the "limit" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetLimit() {
+	m._limit = nil
+	m.add_limit = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeWinUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeWinUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+// If the UpgradeWinUpgradeStrategyFlowLimitStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeWinUpgradeStrategyFlowLimitStrategyMutation builder.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Where(ps ...predicate.UpgradeWinUpgradeStrategyFlowLimitStrategy) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeWinUpgradeStrategyFlowLimitStrategyMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeWinUpgradeStrategyFlowLimitStrategy, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeWinUpgradeStrategyFlowLimitStrategy).
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Fields() []string {
+	fields := make([]string, 0, 8)
+	if m.enable != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldEnable)
+	}
+	if m.begin_time != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldBeginTime)
+	}
+	if m.end_time != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldEndTime)
+	}
+	if m.dimension != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldDimension)
+	}
+	if m._limit != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldLimit)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEnable:
+		return m.Enable()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldBeginTime:
+		return m.BeginTime()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEndTime:
+		return m.EndTime()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldDimension:
+		return m.Dimension()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldLimit:
+		return m.Limit()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldIsDel:
+		return m.IsDel()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt:
+		return m.CreateAt()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEnable:
+		return m.OldEnable(ctx)
+	case upgradewinupgradestrategyflowlimitstrategy.FieldBeginTime:
+		return m.OldBeginTime(ctx)
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEndTime:
+		return m.OldEndTime(ctx)
+	case upgradewinupgradestrategyflowlimitstrategy.FieldDimension:
+		return m.OldDimension(ctx)
+	case upgradewinupgradestrategyflowlimitstrategy.FieldLimit:
+		return m.OldLimit(ctx)
+	case upgradewinupgradestrategyflowlimitstrategy.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeWinUpgradeStrategyFlowLimitStrategy field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldBeginTime:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBeginTime(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEndTime:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEndTime(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldDimension:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDimension(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLimit(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyFlowLimitStrategy field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddedFields() []string {
+	var fields []string
+	if m.addenable != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldEnable)
+	}
+	if m.adddimension != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldDimension)
+	}
+	if m.add_limit != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldLimit)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEnable:
+		return m.AddedEnable()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldDimension:
+		return m.AddedDimension()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldLimit:
+		return m.AddedLimit()
+	case upgradewinupgradestrategyflowlimitstrategy.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldDimension:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDimension(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLimit(v)
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyFlowLimitStrategy numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt) {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt) {
+		fields = append(fields, upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ClearField(name string) error {
+	switch name {
+	case upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyFlowLimitStrategy nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetField(name string) error {
+	switch name {
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldBeginTime:
+		m.ResetBeginTime()
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldEndTime:
+		m.ResetEndTime()
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldDimension:
+		m.ResetDimension()
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldLimit:
+		m.ResetLimit()
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradewinupgradestrategyflowlimitstrategy.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyFlowLimitStrategy field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyFlowLimitStrategy unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyFlowLimitStrategy edge %s", name)
+}
+
+// UpgradeWinUpgradeStrategyGrayStrategyMutation represents an operation that mutates the UpgradeWinUpgradeStrategyGrayStrategy nodes in the graph.
+type UpgradeWinUpgradeStrategyGrayStrategyMutation struct {
+	config
+	op             Op
+	typ            string
+	id             *int
+	enable         *int32
+	addenable      *int32
+	begin_datetime *time.Time
+	end_datetime   *time.Time
+	_limit         *int
+	add_limit      *int
+	is_del         *int32
+	addis_del      *int32
+	create_at      *time.Time
+	update_at      *time.Time
+	clearedFields  map[string]struct{}
+	done           bool
+	oldValue       func(context.Context) (*UpgradeWinUpgradeStrategyGrayStrategy, error)
+	predicates     []predicate.UpgradeWinUpgradeStrategyGrayStrategy
+}
+
+var _ ent.Mutation = (*UpgradeWinUpgradeStrategyGrayStrategyMutation)(nil)
+
+// upgradewinupgradestrategygraystrategyOption allows management of the mutation configuration using functional options.
+type upgradewinupgradestrategygraystrategyOption func(*UpgradeWinUpgradeStrategyGrayStrategyMutation)
+
+// newUpgradeWinUpgradeStrategyGrayStrategyMutation creates new mutation for the UpgradeWinUpgradeStrategyGrayStrategy entity.
+func newUpgradeWinUpgradeStrategyGrayStrategyMutation(c config, op Op, opts ...upgradewinupgradestrategygraystrategyOption) *UpgradeWinUpgradeStrategyGrayStrategyMutation {
+	m := &UpgradeWinUpgradeStrategyGrayStrategyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeWinUpgradeStrategyGrayStrategy,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeWinUpgradeStrategyGrayStrategyID sets the ID field of the mutation.
+func withUpgradeWinUpgradeStrategyGrayStrategyID(id int) upgradewinupgradestrategygraystrategyOption {
+	return func(m *UpgradeWinUpgradeStrategyGrayStrategyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeWinUpgradeStrategyGrayStrategy
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeWinUpgradeStrategyGrayStrategy, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeWinUpgradeStrategyGrayStrategy.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeWinUpgradeStrategyGrayStrategy sets the old UpgradeWinUpgradeStrategyGrayStrategy of the mutation.
+func withUpgradeWinUpgradeStrategyGrayStrategy(node *UpgradeWinUpgradeStrategyGrayStrategy) upgradewinupgradestrategygraystrategyOption {
+	return func(m *UpgradeWinUpgradeStrategyGrayStrategyMutation) {
+		m.oldValue = func(context.Context) (*UpgradeWinUpgradeStrategyGrayStrategy, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeWinUpgradeStrategyGrayStrategyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeWinUpgradeStrategyGrayStrategyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeWinUpgradeStrategyGrayStrategy entities.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeWinUpgradeStrategyGrayStrategy.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetEnable sets the "enable" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetEnable(i int32) {
+	m.enable = &i
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) Enable() (r int32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the UpgradeWinUpgradeStrategyGrayStrategy entity.
+// If the UpgradeWinUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) OldEnable(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds i to the "enable" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddEnable(i int32) {
+	if m.addenable != nil {
+		*m.addenable += i
+	} else {
+		m.addenable = &i
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetBeginDatetime sets the "begin_datetime" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetBeginDatetime(t time.Time) {
+	m.begin_datetime = &t
+}
+
+// BeginDatetime returns the value of the "begin_datetime" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) BeginDatetime() (r time.Time, exists bool) {
+	v := m.begin_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBeginDatetime returns the old "begin_datetime" field's value of the UpgradeWinUpgradeStrategyGrayStrategy entity.
+// If the UpgradeWinUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) OldBeginDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBeginDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBeginDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBeginDatetime: %w", err)
+	}
+	return oldValue.BeginDatetime, nil
+}
+
+// ResetBeginDatetime resets all changes to the "begin_datetime" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ResetBeginDatetime() {
+	m.begin_datetime = nil
+}
+
+// SetEndDatetime sets the "end_datetime" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetEndDatetime(t time.Time) {
+	m.end_datetime = &t
+}
+
+// EndDatetime returns the value of the "end_datetime" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) EndDatetime() (r time.Time, exists bool) {
+	v := m.end_datetime
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEndDatetime returns the old "end_datetime" field's value of the UpgradeWinUpgradeStrategyGrayStrategy entity.
+// If the UpgradeWinUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) OldEndDatetime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEndDatetime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEndDatetime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEndDatetime: %w", err)
+	}
+	return oldValue.EndDatetime, nil
+}
+
+// ResetEndDatetime resets all changes to the "end_datetime" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ResetEndDatetime() {
+	m.end_datetime = nil
+}
+
+// SetLimit sets the "limit" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetLimit(i int) {
+	m._limit = &i
+	m.add_limit = nil
+}
+
+// Limit returns the value of the "limit" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) Limit() (r int, exists bool) {
+	v := m._limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLimit returns the old "limit" field's value of the UpgradeWinUpgradeStrategyGrayStrategy entity.
+// If the UpgradeWinUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) OldLimit(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLimit: %w", err)
+	}
+	return oldValue.Limit, nil
+}
+
+// AddLimit adds i to the "limit" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddLimit(i int) {
+	if m.add_limit != nil {
+		*m.add_limit += i
+	} else {
+		m.add_limit = &i
+	}
+}
+
+// AddedLimit returns the value that was added to the "limit" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddedLimit() (r int, exists bool) {
+	v := m.add_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLimit resets all changes to the "limit" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ResetLimit() {
+	m._limit = nil
+	m.add_limit = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeWinUpgradeStrategyGrayStrategy entity.
+// If the UpgradeWinUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeWinUpgradeStrategyGrayStrategy entity.
+// If the UpgradeWinUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradewinupgradestrategygraystrategy.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewinupgradestrategygraystrategy.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradewinupgradestrategygraystrategy.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeWinUpgradeStrategyGrayStrategy entity.
+// If the UpgradeWinUpgradeStrategyGrayStrategy object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradewinupgradestrategygraystrategy.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewinupgradestrategygraystrategy.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradewinupgradestrategygraystrategy.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeWinUpgradeStrategyGrayStrategyMutation builder.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) Where(ps ...predicate.UpgradeWinUpgradeStrategyGrayStrategy) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeWinUpgradeStrategyGrayStrategyMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeWinUpgradeStrategyGrayStrategy, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeWinUpgradeStrategyGrayStrategy).
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) Fields() []string {
+	fields := make([]string, 0, 7)
+	if m.enable != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldEnable)
+	}
+	if m.begin_datetime != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldBeginDatetime)
+	}
+	if m.end_datetime != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldEndDatetime)
+	}
+	if m._limit != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldLimit)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewinupgradestrategygraystrategy.FieldEnable:
+		return m.Enable()
+	case upgradewinupgradestrategygraystrategy.FieldBeginDatetime:
+		return m.BeginDatetime()
+	case upgradewinupgradestrategygraystrategy.FieldEndDatetime:
+		return m.EndDatetime()
+	case upgradewinupgradestrategygraystrategy.FieldLimit:
+		return m.Limit()
+	case upgradewinupgradestrategygraystrategy.FieldIsDel:
+		return m.IsDel()
+	case upgradewinupgradestrategygraystrategy.FieldCreateAt:
+		return m.CreateAt()
+	case upgradewinupgradestrategygraystrategy.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradewinupgradestrategygraystrategy.FieldEnable:
+		return m.OldEnable(ctx)
+	case upgradewinupgradestrategygraystrategy.FieldBeginDatetime:
+		return m.OldBeginDatetime(ctx)
+	case upgradewinupgradestrategygraystrategy.FieldEndDatetime:
+		return m.OldEndDatetime(ctx)
+	case upgradewinupgradestrategygraystrategy.FieldLimit:
+		return m.OldLimit(ctx)
+	case upgradewinupgradestrategygraystrategy.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradewinupgradestrategygraystrategy.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradewinupgradestrategygraystrategy.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeWinUpgradeStrategyGrayStrategy field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradewinupgradestrategygraystrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldBeginDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBeginDatetime(v)
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldEndDatetime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEndDatetime(v)
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLimit(v)
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyGrayStrategy field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddedFields() []string {
+	var fields []string
+	if m.addenable != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldEnable)
+	}
+	if m.add_limit != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldLimit)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewinupgradestrategygraystrategy.FieldEnable:
+		return m.AddedEnable()
+	case upgradewinupgradestrategygraystrategy.FieldLimit:
+		return m.AddedLimit()
+	case upgradewinupgradestrategygraystrategy.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradewinupgradestrategygraystrategy.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldLimit:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLimit(v)
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyGrayStrategy numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradewinupgradestrategygraystrategy.FieldCreateAt) {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradewinupgradestrategygraystrategy.FieldUpdateAt) {
+		fields = append(fields, upgradewinupgradestrategygraystrategy.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ClearField(name string) error {
+	switch name {
+	case upgradewinupgradestrategygraystrategy.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyGrayStrategy nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ResetField(name string) error {
+	switch name {
+	case upgradewinupgradestrategygraystrategy.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldBeginDatetime:
+		m.ResetBeginDatetime()
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldEndDatetime:
+		m.ResetEndDatetime()
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldLimit:
+		m.ResetLimit()
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradewinupgradestrategygraystrategy.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyGrayStrategy field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyGrayStrategy unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeWinUpgradeStrategyGrayStrategyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWinUpgradeStrategyGrayStrategy edge %s", name)
+}
+
+// UpgradeWinVersionMutation represents an operation that mutates the UpgradeWinVersion nodes in the graph.
+type UpgradeWinVersionMutation struct {
+	config
+	op              Op
+	typ             string
+	id              *int
+	company_id      *int
+	addcompany_id   *int
+	win_id          *int
+	addwin_id       *int
+	cloud_file_id   *string
+	version_name    *string
+	version_code    *int
+	addversion_code *int
+	arch            *string
+	description     *string
+	is_del          *int32
+	addis_del       *int32
+	create_at       *time.Time
+	update_at       *time.Time
+	clearedFields   map[string]struct{}
+	done            bool
+	oldValue        func(context.Context) (*UpgradeWinVersion, error)
+	predicates      []predicate.UpgradeWinVersion
+}
+
+var _ ent.Mutation = (*UpgradeWinVersionMutation)(nil)
+
+// upgradewinversionOption allows management of the mutation configuration using functional options.
+type upgradewinversionOption func(*UpgradeWinVersionMutation)
+
+// newUpgradeWinVersionMutation creates new mutation for the UpgradeWinVersion entity.
+func newUpgradeWinVersionMutation(c config, op Op, opts ...upgradewinversionOption) *UpgradeWinVersionMutation {
+	m := &UpgradeWinVersionMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeUpgradeWinVersion,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withUpgradeWinVersionID sets the ID field of the mutation.
+func withUpgradeWinVersionID(id int) upgradewinversionOption {
+	return func(m *UpgradeWinVersionMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *UpgradeWinVersion
+		)
+		m.oldValue = func(ctx context.Context) (*UpgradeWinVersion, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().UpgradeWinVersion.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withUpgradeWinVersion sets the old UpgradeWinVersion of the mutation.
+func withUpgradeWinVersion(node *UpgradeWinVersion) upgradewinversionOption {
+	return func(m *UpgradeWinVersionMutation) {
+		m.oldValue = func(context.Context) (*UpgradeWinVersion, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m UpgradeWinVersionMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m UpgradeWinVersionMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of UpgradeWinVersion entities.
+func (m *UpgradeWinVersionMutation) SetID(id int) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *UpgradeWinVersionMutation) ID() (id int, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *UpgradeWinVersionMutation) IDs(ctx context.Context) ([]int, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().UpgradeWinVersion.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCompanyID sets the "company_id" field.
+func (m *UpgradeWinVersionMutation) SetCompanyID(i int) {
+	m.company_id = &i
+	m.addcompany_id = nil
+}
+
+// CompanyID returns the value of the "company_id" field in the mutation.
+func (m *UpgradeWinVersionMutation) CompanyID() (r int, exists bool) {
+	v := m.company_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCompanyID returns the old "company_id" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldCompanyID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCompanyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCompanyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCompanyID: %w", err)
+	}
+	return oldValue.CompanyID, nil
+}
+
+// AddCompanyID adds i to the "company_id" field.
+func (m *UpgradeWinVersionMutation) AddCompanyID(i int) {
+	if m.addcompany_id != nil {
+		*m.addcompany_id += i
+	} else {
+		m.addcompany_id = &i
+	}
+}
+
+// AddedCompanyID returns the value that was added to the "company_id" field in this mutation.
+func (m *UpgradeWinVersionMutation) AddedCompanyID() (r int, exists bool) {
+	v := m.addcompany_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCompanyID resets all changes to the "company_id" field.
+func (m *UpgradeWinVersionMutation) ResetCompanyID() {
+	m.company_id = nil
+	m.addcompany_id = nil
+}
+
+// SetWinID sets the "win_id" field.
+func (m *UpgradeWinVersionMutation) SetWinID(i int) {
+	m.win_id = &i
+	m.addwin_id = nil
+}
+
+// WinID returns the value of the "win_id" field in the mutation.
+func (m *UpgradeWinVersionMutation) WinID() (r int, exists bool) {
+	v := m.win_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldWinID returns the old "win_id" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldWinID(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldWinID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldWinID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldWinID: %w", err)
+	}
+	return oldValue.WinID, nil
+}
+
+// AddWinID adds i to the "win_id" field.
+func (m *UpgradeWinVersionMutation) AddWinID(i int) {
+	if m.addwin_id != nil {
+		*m.addwin_id += i
+	} else {
+		m.addwin_id = &i
+	}
+}
+
+// AddedWinID returns the value that was added to the "win_id" field in this mutation.
+func (m *UpgradeWinVersionMutation) AddedWinID() (r int, exists bool) {
+	v := m.addwin_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetWinID resets all changes to the "win_id" field.
+func (m *UpgradeWinVersionMutation) ResetWinID() {
+	m.win_id = nil
+	m.addwin_id = nil
+}
+
+// SetCloudFileID sets the "cloud_file_id" field.
+func (m *UpgradeWinVersionMutation) SetCloudFileID(s string) {
+	m.cloud_file_id = &s
+}
+
+// CloudFileID returns the value of the "cloud_file_id" field in the mutation.
+func (m *UpgradeWinVersionMutation) CloudFileID() (r string, exists bool) {
+	v := m.cloud_file_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCloudFileID returns the old "cloud_file_id" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldCloudFileID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCloudFileID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCloudFileID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCloudFileID: %w", err)
+	}
+	return oldValue.CloudFileID, nil
+}
+
+// ResetCloudFileID resets all changes to the "cloud_file_id" field.
+func (m *UpgradeWinVersionMutation) ResetCloudFileID() {
+	m.cloud_file_id = nil
+}
+
+// SetVersionName sets the "version_name" field.
+func (m *UpgradeWinVersionMutation) SetVersionName(s string) {
+	m.version_name = &s
+}
+
+// VersionName returns the value of the "version_name" field in the mutation.
+func (m *UpgradeWinVersionMutation) VersionName() (r string, exists bool) {
+	v := m.version_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVersionName returns the old "version_name" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldVersionName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldVersionName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldVersionName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVersionName: %w", err)
+	}
+	return oldValue.VersionName, nil
+}
+
+// ResetVersionName resets all changes to the "version_name" field.
+func (m *UpgradeWinVersionMutation) ResetVersionName() {
+	m.version_name = nil
+}
+
+// SetVersionCode sets the "version_code" field.
+func (m *UpgradeWinVersionMutation) SetVersionCode(i int) {
+	m.version_code = &i
+	m.addversion_code = nil
+}
+
+// VersionCode returns the value of the "version_code" field in the mutation.
+func (m *UpgradeWinVersionMutation) VersionCode() (r int, exists bool) {
+	v := m.version_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVersionCode returns the old "version_code" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldVersionCode(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldVersionCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldVersionCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVersionCode: %w", err)
+	}
+	return oldValue.VersionCode, nil
+}
+
+// AddVersionCode adds i to the "version_code" field.
+func (m *UpgradeWinVersionMutation) AddVersionCode(i int) {
+	if m.addversion_code != nil {
+		*m.addversion_code += i
+	} else {
+		m.addversion_code = &i
+	}
+}
+
+// AddedVersionCode returns the value that was added to the "version_code" field in this mutation.
+func (m *UpgradeWinVersionMutation) AddedVersionCode() (r int, exists bool) {
+	v := m.addversion_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetVersionCode resets all changes to the "version_code" field.
+func (m *UpgradeWinVersionMutation) ResetVersionCode() {
+	m.version_code = nil
+	m.addversion_code = nil
+}
+
+// SetArch sets the "arch" field.
+func (m *UpgradeWinVersionMutation) SetArch(s string) {
+	m.arch = &s
+}
+
+// Arch returns the value of the "arch" field in the mutation.
+func (m *UpgradeWinVersionMutation) Arch() (r string, exists bool) {
+	v := m.arch
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldArch returns the old "arch" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldArch(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldArch is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldArch requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldArch: %w", err)
+	}
+	return oldValue.Arch, nil
+}
+
+// ResetArch resets all changes to the "arch" field.
+func (m *UpgradeWinVersionMutation) ResetArch() {
+	m.arch = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *UpgradeWinVersionMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *UpgradeWinVersionMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *UpgradeWinVersionMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[upgradewinversion.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *UpgradeWinVersionMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[upgradewinversion.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *UpgradeWinVersionMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, upgradewinversion.FieldDescription)
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *UpgradeWinVersionMutation) SetIsDel(i int32) {
+	m.is_del = &i
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *UpgradeWinVersionMutation) IsDel() (r int32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldIsDel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds i to the "is_del" field.
+func (m *UpgradeWinVersionMutation) AddIsDel(i int32) {
+	if m.addis_del != nil {
+		*m.addis_del += i
+	} else {
+		m.addis_del = &i
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *UpgradeWinVersionMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *UpgradeWinVersionMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *UpgradeWinVersionMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *UpgradeWinVersionMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ClearCreateAt clears the value of the "create_at" field.
+func (m *UpgradeWinVersionMutation) ClearCreateAt() {
+	m.create_at = nil
+	m.clearedFields[upgradewinversion.FieldCreateAt] = struct{}{}
+}
+
+// CreateAtCleared returns if the "create_at" field was cleared in this mutation.
+func (m *UpgradeWinVersionMutation) CreateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewinversion.FieldCreateAt]
+	return ok
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *UpgradeWinVersionMutation) ResetCreateAt() {
+	m.create_at = nil
+	delete(m.clearedFields, upgradewinversion.FieldCreateAt)
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *UpgradeWinVersionMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *UpgradeWinVersionMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the UpgradeWinVersion entity.
+// If the UpgradeWinVersion object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UpgradeWinVersionMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ClearUpdateAt clears the value of the "update_at" field.
+func (m *UpgradeWinVersionMutation) ClearUpdateAt() {
+	m.update_at = nil
+	m.clearedFields[upgradewinversion.FieldUpdateAt] = struct{}{}
+}
+
+// UpdateAtCleared returns if the "update_at" field was cleared in this mutation.
+func (m *UpgradeWinVersionMutation) UpdateAtCleared() bool {
+	_, ok := m.clearedFields[upgradewinversion.FieldUpdateAt]
+	return ok
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *UpgradeWinVersionMutation) ResetUpdateAt() {
+	m.update_at = nil
+	delete(m.clearedFields, upgradewinversion.FieldUpdateAt)
+}
+
+// Where appends a list predicates to the UpgradeWinVersionMutation builder.
+func (m *UpgradeWinVersionMutation) Where(ps ...predicate.UpgradeWinVersion) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the UpgradeWinVersionMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *UpgradeWinVersionMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.UpgradeWinVersion, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *UpgradeWinVersionMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *UpgradeWinVersionMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (UpgradeWinVersion).
+func (m *UpgradeWinVersionMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *UpgradeWinVersionMutation) Fields() []string {
+	fields := make([]string, 0, 10)
+	if m.company_id != nil {
+		fields = append(fields, upgradewinversion.FieldCompanyID)
+	}
+	if m.win_id != nil {
+		fields = append(fields, upgradewinversion.FieldWinID)
+	}
+	if m.cloud_file_id != nil {
+		fields = append(fields, upgradewinversion.FieldCloudFileID)
+	}
+	if m.version_name != nil {
+		fields = append(fields, upgradewinversion.FieldVersionName)
+	}
+	if m.version_code != nil {
+		fields = append(fields, upgradewinversion.FieldVersionCode)
+	}
+	if m.arch != nil {
+		fields = append(fields, upgradewinversion.FieldArch)
+	}
+	if m.description != nil {
+		fields = append(fields, upgradewinversion.FieldDescription)
+	}
+	if m.is_del != nil {
+		fields = append(fields, upgradewinversion.FieldIsDel)
+	}
+	if m.create_at != nil {
+		fields = append(fields, upgradewinversion.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, upgradewinversion.FieldUpdateAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *UpgradeWinVersionMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewinversion.FieldCompanyID:
+		return m.CompanyID()
+	case upgradewinversion.FieldWinID:
+		return m.WinID()
+	case upgradewinversion.FieldCloudFileID:
+		return m.CloudFileID()
+	case upgradewinversion.FieldVersionName:
+		return m.VersionName()
+	case upgradewinversion.FieldVersionCode:
+		return m.VersionCode()
+	case upgradewinversion.FieldArch:
+		return m.Arch()
+	case upgradewinversion.FieldDescription:
+		return m.Description()
+	case upgradewinversion.FieldIsDel:
+		return m.IsDel()
+	case upgradewinversion.FieldCreateAt:
+		return m.CreateAt()
+	case upgradewinversion.FieldUpdateAt:
+		return m.UpdateAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *UpgradeWinVersionMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case upgradewinversion.FieldCompanyID:
+		return m.OldCompanyID(ctx)
+	case upgradewinversion.FieldWinID:
+		return m.OldWinID(ctx)
+	case upgradewinversion.FieldCloudFileID:
+		return m.OldCloudFileID(ctx)
+	case upgradewinversion.FieldVersionName:
+		return m.OldVersionName(ctx)
+	case upgradewinversion.FieldVersionCode:
+		return m.OldVersionCode(ctx)
+	case upgradewinversion.FieldArch:
+		return m.OldArch(ctx)
+	case upgradewinversion.FieldDescription:
+		return m.OldDescription(ctx)
+	case upgradewinversion.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case upgradewinversion.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case upgradewinversion.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown UpgradeWinVersion field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinVersionMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case upgradewinversion.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCompanyID(v)
+		return nil
+	case upgradewinversion.FieldWinID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetWinID(v)
+		return nil
+	case upgradewinversion.FieldCloudFileID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCloudFileID(v)
+		return nil
+	case upgradewinversion.FieldVersionName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVersionName(v)
+		return nil
+	case upgradewinversion.FieldVersionCode:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVersionCode(v)
+		return nil
+	case upgradewinversion.FieldArch:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetArch(v)
+		return nil
+	case upgradewinversion.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case upgradewinversion.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case upgradewinversion.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case upgradewinversion.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinVersion field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *UpgradeWinVersionMutation) AddedFields() []string {
+	var fields []string
+	if m.addcompany_id != nil {
+		fields = append(fields, upgradewinversion.FieldCompanyID)
+	}
+	if m.addwin_id != nil {
+		fields = append(fields, upgradewinversion.FieldWinID)
+	}
+	if m.addversion_code != nil {
+		fields = append(fields, upgradewinversion.FieldVersionCode)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, upgradewinversion.FieldIsDel)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *UpgradeWinVersionMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case upgradewinversion.FieldCompanyID:
+		return m.AddedCompanyID()
+	case upgradewinversion.FieldWinID:
+		return m.AddedWinID()
+	case upgradewinversion.FieldVersionCode:
+		return m.AddedVersionCode()
+	case upgradewinversion.FieldIsDel:
+		return m.AddedIsDel()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *UpgradeWinVersionMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case upgradewinversion.FieldCompanyID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCompanyID(v)
+		return nil
+	case upgradewinversion.FieldWinID:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddWinID(v)
+		return nil
+	case upgradewinversion.FieldVersionCode:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddVersionCode(v)
+		return nil
+	case upgradewinversion.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinVersion numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *UpgradeWinVersionMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(upgradewinversion.FieldDescription) {
+		fields = append(fields, upgradewinversion.FieldDescription)
+	}
+	if m.FieldCleared(upgradewinversion.FieldCreateAt) {
+		fields = append(fields, upgradewinversion.FieldCreateAt)
+	}
+	if m.FieldCleared(upgradewinversion.FieldUpdateAt) {
+		fields = append(fields, upgradewinversion.FieldUpdateAt)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *UpgradeWinVersionMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *UpgradeWinVersionMutation) ClearField(name string) error {
+	switch name {
+	case upgradewinversion.FieldDescription:
+		m.ClearDescription()
+		return nil
+	case upgradewinversion.FieldCreateAt:
+		m.ClearCreateAt()
+		return nil
+	case upgradewinversion.FieldUpdateAt:
+		m.ClearUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinVersion nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *UpgradeWinVersionMutation) ResetField(name string) error {
+	switch name {
+	case upgradewinversion.FieldCompanyID:
+		m.ResetCompanyID()
+		return nil
+	case upgradewinversion.FieldWinID:
+		m.ResetWinID()
+		return nil
+	case upgradewinversion.FieldCloudFileID:
+		m.ResetCloudFileID()
+		return nil
+	case upgradewinversion.FieldVersionName:
+		m.ResetVersionName()
+		return nil
+	case upgradewinversion.FieldVersionCode:
+		m.ResetVersionCode()
+		return nil
+	case upgradewinversion.FieldArch:
+		m.ResetArch()
+		return nil
+	case upgradewinversion.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case upgradewinversion.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case upgradewinversion.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case upgradewinversion.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	}
+	return fmt.Errorf("unknown UpgradeWinVersion field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *UpgradeWinVersionMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *UpgradeWinVersionMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *UpgradeWinVersionMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *UpgradeWinVersionMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *UpgradeWinVersionMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *UpgradeWinVersionMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *UpgradeWinVersionMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWinVersion unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *UpgradeWinVersionMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown UpgradeWinVersion edge %s", name)
 }

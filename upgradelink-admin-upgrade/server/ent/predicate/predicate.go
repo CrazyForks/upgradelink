@@ -93,6 +93,36 @@ type UpgradeFileUpgradeStrategyGrayStrategy func(*sql.Selector)
 // UpgradeFileVersion is the predicate function for upgradefileversion builders.
 type UpgradeFileVersion func(*sql.Selector)
 
+// UpgradeLnx is the predicate function for upgradelnx builders.
+type UpgradeLnx func(*sql.Selector)
+
+// UpgradeLnxUpgradeStrategy is the predicate function for upgradelnxupgradestrategy builders.
+type UpgradeLnxUpgradeStrategy func(*sql.Selector)
+
+// UpgradeLnxUpgradeStrategyFlowLimitStrategy is the predicate function for upgradelnxupgradestrategyflowlimitstrategy builders.
+type UpgradeLnxUpgradeStrategyFlowLimitStrategy func(*sql.Selector)
+
+// UpgradeLnxUpgradeStrategyGrayStrategy is the predicate function for upgradelnxupgradestrategygraystrategy builders.
+type UpgradeLnxUpgradeStrategyGrayStrategy func(*sql.Selector)
+
+// UpgradeLnxVersion is the predicate function for upgradelnxversion builders.
+type UpgradeLnxVersion func(*sql.Selector)
+
+// UpgradeMac is the predicate function for upgrademac builders.
+type UpgradeMac func(*sql.Selector)
+
+// UpgradeMacUpgradeStrategy is the predicate function for upgrademacupgradestrategy builders.
+type UpgradeMacUpgradeStrategy func(*sql.Selector)
+
+// UpgradeMacUpgradeStrategyFlowLimitStrategy is the predicate function for upgrademacupgradestrategyflowlimitstrategy builders.
+type UpgradeMacUpgradeStrategyFlowLimitStrategy func(*sql.Selector)
+
+// UpgradeMacUpgradeStrategyGrayStrategy is the predicate function for upgrademacupgradestrategygraystrategy builders.
+type UpgradeMacUpgradeStrategyGrayStrategy func(*sql.Selector)
+
+// UpgradeMacVersion is the predicate function for upgrademacversion builders.
+type UpgradeMacVersion func(*sql.Selector)
+
 // UpgradeTauri is the predicate function for upgradetauri builders.
 type UpgradeTauri func(*sql.Selector)
 
@@ -125,3 +155,18 @@ type UpgradeUrlUpgradeStrategyGrayStrategy func(*sql.Selector)
 
 // UpgradeUrlVersion is the predicate function for upgradeurlversion builders.
 type UpgradeUrlVersion func(*sql.Selector)
+
+// UpgradeWin is the predicate function for upgradewin builders.
+type UpgradeWin func(*sql.Selector)
+
+// UpgradeWinUpgradeStrategy is the predicate function for upgradewinupgradestrategy builders.
+type UpgradeWinUpgradeStrategy func(*sql.Selector)
+
+// UpgradeWinUpgradeStrategyFlowLimitStrategy is the predicate function for upgradewinupgradestrategyflowlimitstrategy builders.
+type UpgradeWinUpgradeStrategyFlowLimitStrategy func(*sql.Selector)
+
+// UpgradeWinUpgradeStrategyGrayStrategy is the predicate function for upgradewinupgradestrategygraystrategy builders.
+type UpgradeWinUpgradeStrategyGrayStrategy func(*sql.Selector)
+
+// UpgradeWinVersion is the predicate function for upgradewinversion builders.
+type UpgradeWinVersion func(*sql.Selector)

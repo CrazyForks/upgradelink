@@ -2937,3 +2937,1111 @@ type UpgradeCompanyTrafficPacketInfoResp struct {
 	// upgrade company traffic packet information | UpgradeCompanyTrafficPacket信息数据
 	Data UpgradeCompanyTrafficPacketInfo `json:"data"`
 }
+
+// The data of upgrade win information | UpgradeWin信息
+// swagger:model UpgradeWinInfo
+type UpgradeWinInfo struct {
+	Id *int `json:"id,optional"`
+	// 应用唯一标识
+	Key *string `json:"key,optional"`
+	// 应用名称
+	Name *string `json:"name,optional"`
+	// 应用包名
+	PackageName *string `json:"packageName,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The response data of upgrade win list | UpgradeWin信息列表数据
+// swagger:model UpgradeWinListResp
+type UpgradeWinListResp struct {
+	BaseDataInfo
+	// The upgrade win list data | UpgradeWin信息列表数据
+	Data UpgradeWinListInfo `json:"data"`
+}
+
+// The upgrade win list data | UpgradeWin信息列表数据
+// swagger:model UpgradeWinListInfo
+type UpgradeWinListInfo struct {
+	BaseListInfo
+	// The upgrade win list data | UpgradeWin信息列表数据
+	Data []UpgradeWinInfo `json:"data"`
+}
+
+// Get upgrade win list request params | UpgradeWin信息列表请求参数
+// swagger:model UpgradeWinListReq
+type UpgradeWinListReq struct {
+	PageInfo
+	// 应用唯一标识
+	Key *string `json:"key,optional"`
+	// 应用名称
+	Name *string `json:"name,optional"`
+	// 应用包名
+	PackageName *string `json:"packageName,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The upgrade win information response | UpgradeWin信息返回体
+// swagger:model UpgradeWinInfoResp
+type UpgradeWinInfoResp struct {
+	BaseDataInfo
+	// upgrade win information | UpgradeWin信息数据
+	Data UpgradeWinInfo `json:"data"`
+}
+
+// The data of upgrade win upgrade strategy information | UpgradeWinUpgradeStrategy信息
+// swagger:model UpgradeWinUpgradeStrategyInfo
+type UpgradeWinUpgradeStrategyInfo struct {
+	Id *int `json:"id,optional"`
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 任务名称
+	Name *string `json:"name,optional"`
+	// 任务描述信息
+	Description *string `json:"description,optional"`
+	// win应用ID
+	WinId *int `json:"winId,optional"`
+	// win_version_id; 外键win_version.id
+	WinVersionId *int `json:"winVersionId,optional"`
+	// 升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+	UpgradeType *int32 `json:"upgradeType,optional"`
+	// 提示升级描述内容
+	PromptUpgradeContent *string `json:"promptUpgradeContent,optional"`
+	// 指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型
+	UpgradeDevType *int32 `json:"upgradeDevType,optional"`
+	// 升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;
+	UpgradeDevData         *string `json:"upgradeDevData,optional"`
+	UpgradeDevTypeZeroData *string `json:"upgradeDevTypeZeroData,optional"`
+	UpgradeDevTypeOneData  []int   `json:"upgradeDevTypeOneData,optional"`
+	UpgradeDevTypeTwoData  []int   `json:"upgradeDevTypeTwoData,optional"`
+	// 指定升级的应用版本：0：全部版本；1，指定版本
+	UpgradeVersionType *int32 `json:"upgradeVersionType,optional"`
+	// 升级应用版本数据：0.当为全部版本时，此字段为空；1.当指定版本时，此字段存储版本id；
+	UpgradeVersionData         *string `json:"upgradeVersionData,optional"`
+	UpgradeVersionTypeZeroData *string `json:"upgradeVersionTypeZeroData,optional"`
+	UpgradeVersionTypeOneData  []int   `json:"upgradeVersionTypeOneData,optional"`
+	// 升级任务开始时间
+	BeginDatetime *string `json:"beginDatetime,optional"`
+	// 升级任务结束时间
+	EndDatetime *string `json:"endDatetime,optional"`
+	// 是否开启灰度
+	IsGray *int32 `json:"isGray,optional"`
+	// 灰度策略数据
+	GrayDataInfo []*WinGrayDataInfo `json:"grayDataList,optional"`
+	// 是否开启频控
+	IsFlowLimit *int32 `json:"isFlowLimit,optional"`
+	// 频控策略数据
+	FlowLimitDataInfo []*WinFlowLimitDataInfo `json:"flowLimitDataList,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// swagger:model RespUpgradeWinUpgradeStrategyInfo
+type RespUpgradeWinUpgradeStrategyInfo struct {
+	Id *int `json:"id,optional"`
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 任务名称
+	Name *string `json:"name,optional"`
+	// 任务描述信息
+	Description *string `json:"description,optional,default="`
+	// win应用ID
+	WinId *int `json:"winId,optional"`
+	// win应用名称
+	WinName *string `json:"winName,optional"`
+	// win_version_id; 外键win_version.id
+	WinVersionId   *int    `json:"winVersionId,optional"`
+	WinVersionName *string `json:"winVersionName,optional"`
+	WinVersionCode *int    `json:"winVersionCode,optional"`
+	// 升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+	UpgradeType *int32 `json:"upgradeType,optional"`
+	// 提示升级描述内容
+	PromptUpgradeContent *string `json:"promptUpgradeContent,optional"`
+	// 指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型
+	UpgradeDevType *int32 `json:"upgradeDevType,optional"`
+	// 升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;
+	UpgradeDevData         *string `json:"upgradeDevData,optional"`
+	UpgradeDevTypeZeroData *string `json:"upgradeDevTypeZeroData,optional"`
+	UpgradeDevTypeOneData  []int   `json:"upgradeDevTypeOneData,optional"`
+	UpgradeDevTypeTwoData  []int   `json:"upgradeDevTypeTwoData,optional"`
+	// 指定升级的应用版本：0：全部版本；1，指定版本
+	UpgradeVersionType *int32 `json:"upgradeVersionType,optional"`
+	// 升级应用版本数据：0.当为全部版本时，此字段为空；1.当指定版本时，此字段存储版本id；
+	UpgradeVersionData         *string `json:"upgradeVersionData,optional"`
+	UpgradeVersionTypeZeroData *string `json:"upgradeVersionTypeZeroData,optional"`
+	UpgradeVersionTypeOneData  []int   `json:"upgradeVersionTypeOneData,optional"`
+	// 升级任务开始时间
+	BeginDatetime *string `json:"beginDatetime,optional"`
+	// 升级任务结束时间
+	EndDatetime *string `json:"endDatetime,optional"`
+	// 是否开启灰度
+	IsGray *int32 `json:"isGray,optional"`
+	// 灰度策略数据
+	GrayDataInfo []*WinGrayDataInfo `json:"grayDataList,optional"`
+	// 是否开启频控
+	IsFlowLimit *int32 `json:"isFlowLimit,optional"`
+	// 频控策略数据
+	FlowLimitDataInfo []*WinFlowLimitDataInfo `json:"flowLimitDataList,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// 灰度策略数据
+// swagger:model WinGrayDataInfo
+type WinGrayDataInfo struct {
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 开始时间
+	BeginDatetime *string `json:"beginDatetime,optional"`
+	// 结束时间
+	EndDatetime *string `json:"endDatetime,optional"`
+	// 数量
+	Limit *int `json:"limit,optional"`
+}
+
+// 频控策略数据
+// swagger:model WinFlowLimitDataInfo
+type WinFlowLimitDataInfo struct {
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 开始时间
+	Begintime *string `json:"beginTime,optional"`
+	// 结束时间
+	Endtime *string `json:"endTime,optional"`
+	// 流控维度
+	Dimension *int32 `json:"dimension,optional"`
+	// 数量
+	Limit *int `json:"limit,optional"`
+}
+
+// The response data of upgrade win upgrade strategy list | UpgradeWinUpgradeStrategy信息列表数据
+// swagger:model UpgradeWinUpgradeStrategyListResp
+type UpgradeWinUpgradeStrategyListResp struct {
+	BaseDataInfo
+	// The upgrade win upgrade strategy list data | UpgradeWinUpgradeStrategy信息列表数据
+	Data UpgradeWinUpgradeStrategyListInfo `json:"data"`
+}
+
+// The upgrade win upgrade strategy list data | UpgradeWinUpgradeStrategy信息列表数据
+// swagger:model UpgradeWinUpgradeStrategyListInfo
+type UpgradeWinUpgradeStrategyListInfo struct {
+	BaseListInfo
+	// The upgrade win upgrade strategy list data | UpgradeWinUpgradeStrategy信息列表数据
+	Data []RespUpgradeWinUpgradeStrategyInfo `json:"data"`
+}
+
+// Get upgrade win upgrade strategy list request params | UpgradeWinUpgradeStrategy信息列表请求参数
+// swagger:model UpgradeWinUpgradeStrategyListReq
+type UpgradeWinUpgradeStrategyListReq struct {
+	PageInfo
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 任务名称
+	Name *string `json:"name,optional"`
+	// 任务描述信息
+	Description *string `json:"description,optional"`
+	// 应用ID
+	WinId *int `json:"winId,optional"`
+	// win_version_id; 外键win_version.id
+	WinVersionId *int `json:"winVersionId,optional"`
+	// 升级任务开始时间
+	BeginDatetime *int64 `json:"beginDatetime,optional"`
+	// 升级任务结束时间
+	EndDatetime *int64 `json:"endDatetime,optional"`
+	// 升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+	UpgradeType *int32 `json:"upgradeType,optional"`
+	// 提示升级描述内容
+	PromptUpgradeContent *string `json:"promptUpgradeContent,optional"`
+	// 指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型
+	UpgradeDevType *int32 `json:"upgradeDevType,optional"`
+	// 升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;
+	UpgradeDevData *string `json:"upgradeDevData,optional"`
+	// 指定升级的应用版本：0：全部版本；1：指定版本
+	UpgradeVersionType *int32 `json:"upgradeVersionType,optional"`
+	// 升级设备数据：0.当为全部版本时，此字段为空；；1.当指定应用版本时，此字段存储应用版本id;
+	UpgradeVersionData *string `json:"upgradeVersionData,optional"`
+	// 是否开启灰度 0：不开启；1：开启
+	IsGray *int32 `json:"isGray,optional"`
+	// 灰度策略id数据
+	GrayData *string `json:"grayData,optional"`
+	// 是否开启频控 0：不开启；1：开启
+	IsFlowLimit *int32 `json:"isFlowLimit,optional"`
+	// 频控策略id数据
+	FlowLimitData *string `json:"flowLimitData,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The upgrade win upgrade strategy information response | UpgradeWinUpgradeStrategy信息返回体
+// swagger:model UpgradeWinUpgradeStrategyInfoResp
+type UpgradeWinUpgradeStrategyInfoResp struct {
+	BaseDataInfo
+	// upgrade win upgrade strategy information | UpgradeWinUpgradeStrategy信息数据
+	Data RespUpgradeWinUpgradeStrategyInfo `json:"data"`
+}
+
+// The data of upgrade win version information | UpgradeWinVersion信息
+// swagger:model UpgradeWinVersionInfo
+type UpgradeWinVersionInfo struct {
+	Id *int `json:"id,optional"`
+	// 应用ID
+	WinId *int `json:"winId,optional"`
+	// 云文件id
+	CloudFileId *string `json:"cloudFileId,optional"`
+	// 版本名
+	VersionName *string `json:"versionName,optional"`
+	// 版本号
+	VersionCode *int `json:"versionCode,optional"`
+	// 机器架构:x64、ia32 arm64
+	Arch *string `json:"arch,optional"`
+	// 版本文件大小
+	VersionFileSize *string `json:"versionFileSize,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// swagger:model RespUpgradeWinVersionInfo
+type RespUpgradeWinVersionInfo struct {
+	Id *int `json:"id,optional"`
+	// 安卓应用ID
+	WinId *int `json:"winId,optional"`
+	// 文件应用名称
+	WinName *string `json:"winName,optional"`
+	// 云文件id
+	CloudFileId *string `json:"cloudFileId,optional"`
+	// 云文件名称
+	CloudFileName *string `json:"cloudFileName,optional"`
+	// 版本名
+	VersionName *string `json:"versionName,optional"`
+	// 版本号
+	VersionCode *int `json:"versionCode,optional"`
+	// 机器架构:x64、ia32 arm64
+	Arch *string `json:"arch,optional"`
+	// 版本文件大小
+	VersionFileSize *string `json:"versionFileSize,optional"`
+	// 描述信息
+	Description *string `json:"description,optional,default="`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The response data of upgrade win version list | UpgradeWinVersion信息列表数据
+// swagger:model UpgradeWinVersionListResp
+type UpgradeWinVersionListResp struct {
+	BaseDataInfo
+	// The upgrade win version list data | UpgradeWinVersion信息列表数据
+	Data UpgradeWinVersionListInfo `json:"data"`
+}
+
+// The upgrade win version list data | UpgradeWinVersion信息列表数据
+// swagger:model UpgradeWinVersionListInfo
+type UpgradeWinVersionListInfo struct {
+	BaseListInfo
+	// The upgrade win version list data | UpgradeWinVersion信息列表数据
+	Data []RespUpgradeWinVersionInfo `json:"data"`
+}
+
+// Get upgrade win version list request params | UpgradeWinVersion信息列表请求参数
+// swagger:model UpgradeWinVersionListReq
+type UpgradeWinVersionListReq struct {
+	PageInfo
+	// 安卓应用ID
+	WinId *int `json:"winId,optional"`
+	// 云文件id
+	CloudFileId *string `json:"cloudFileId,optional"`
+	// 版本名
+	VersionName *string `json:"versionName,optional"`
+	// 版本号
+	VersionCode *int `json:"versionCode,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The upgrade win version information response | UpgradeWinVersion信息返回体
+// swagger:model UpgradeWinVersionInfoResp
+type UpgradeWinVersionInfoResp struct {
+	BaseDataInfo
+	// upgrade win version information | UpgradeWinVersion信息数据
+	Data RespUpgradeWinVersionInfo `json:"data"`
+}
+
+// The data of upgrade lnx information | UpgradeLnx信息
+// swagger:model UpgradeLnxInfo
+type UpgradeLnxInfo struct {
+	Id *int `json:"id,optional"`
+	// 应用唯一标识
+	Key *string `json:"key,optional"`
+	// 应用名称
+	Name *string `json:"name,optional"`
+	// 应用包名
+	PackageName *string `json:"packageName,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The response data of upgrade lnx list | UpgradeLnx信息列表数据
+// swagger:model UpgradeLnxListResp
+type UpgradeLnxListResp struct {
+	BaseDataInfo
+	// The upgrade lnx list data | UpgradeLnx信息列表数据
+	Data UpgradeLnxListInfo `json:"data"`
+}
+
+// The upgrade lnx list data | UpgradeLnx信息列表数据
+// swagger:model UpgradeLnxListInfo
+type UpgradeLnxListInfo struct {
+	BaseListInfo
+	// The upgrade lnx list data | UpgradeLnx信息列表数据
+	Data []UpgradeLnxInfo `json:"data"`
+}
+
+// Get upgrade lnx list request params | UpgradeLnx信息列表请求参数
+// swagger:model UpgradeLnxListReq
+type UpgradeLnxListReq struct {
+	PageInfo
+	// 应用唯一标识
+	Key *string `json:"key,optional"`
+	// 应用名称
+	Name *string `json:"name,optional"`
+	// 应用包名
+	PackageName *string `json:"packageName,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The upgrade lnx information response | UpgradeLnx信息返回体
+// swagger:model UpgradeLnxInfoResp
+type UpgradeLnxInfoResp struct {
+	BaseDataInfo
+	// upgrade lnx information | UpgradeLnx信息数据
+	Data UpgradeLnxInfo `json:"data"`
+}
+
+// The data of upgrade lnx upgrade strategy information | UpgradeLnxUpgradeStrategy信息
+// swagger:model UpgradeLnxUpgradeStrategyInfo
+type UpgradeLnxUpgradeStrategyInfo struct {
+	Id *int `json:"id,optional"`
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 任务名称
+	Name *string `json:"name,optional"`
+	// 任务描述信息
+	Description *string `json:"description,optional"`
+	// lnx应用ID
+	LnxId *int `json:"lnxId,optional"`
+	// lnx_version_id; 外键lnx_version.id
+	LnxVersionId *int `json:"lnxVersionId,optional"`
+	// 升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+	UpgradeType *int32 `json:"upgradeType,optional"`
+	// 提示升级描述内容
+	PromptUpgradeContent *string `json:"promptUpgradeContent,optional"`
+	// 指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型
+	UpgradeDevType *int32 `json:"upgradeDevType,optional"`
+	// 升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;
+	UpgradeDevData         *string `json:"upgradeDevData,optional"`
+	UpgradeDevTypeZeroData *string `json:"upgradeDevTypeZeroData,optional"`
+	UpgradeDevTypeOneData  []int   `json:"upgradeDevTypeOneData,optional"`
+	UpgradeDevTypeTwoData  []int   `json:"upgradeDevTypeTwoData,optional"`
+	// 指定升级的应用版本：0：全部版本；1，指定版本
+	UpgradeVersionType *int32 `json:"upgradeVersionType,optional"`
+	// 升级应用版本数据：0.当为全部版本时，此字段为空；1.当指定版本时，此字段存储版本id；
+	UpgradeVersionData         *string `json:"upgradeVersionData,optional"`
+	UpgradeVersionTypeZeroData *string `json:"upgradeVersionTypeZeroData,optional"`
+	UpgradeVersionTypeOneData  []int   `json:"upgradeVersionTypeOneData,optional"`
+	// 升级任务开始时间
+	BeginDatetime *string `json:"beginDatetime,optional"`
+	// 升级任务结束时间
+	EndDatetime *string `json:"endDatetime,optional"`
+	// 是否开启灰度
+	IsGray *int32 `json:"isGray,optional"`
+	// 灰度策略数据
+	GrayDataInfo []*LnxGrayDataInfo `json:"grayDataList,optional"`
+	// 是否开启频控
+	IsFlowLimit *int32 `json:"isFlowLimit,optional"`
+	// 频控策略数据
+	FlowLimitDataInfo []*LnxFlowLimitDataInfo `json:"flowLimitDataList,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// swagger:model RespUpgradeLnxUpgradeStrategyInfo
+type RespUpgradeLnxUpgradeStrategyInfo struct {
+	Id *int `json:"id,optional"`
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 任务名称
+	Name *string `json:"name,optional"`
+	// 任务描述信息
+	Description *string `json:"description,optional,default="`
+	// lnx应用ID
+	LnxId *int `json:"lnxId,optional"`
+	// lnx应用名称
+	LnxName *string `json:"lnxName,optional"`
+	// lnx_version_id; 外键lnx_version.id
+	LnxVersionId   *int    `json:"lnxVersionId,optional"`
+	LnxVersionName *string `json:"lnxVersionName,optional"`
+	LnxVersionCode *int    `json:"lnxVersionCode,optional"`
+	// 升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+	UpgradeType *int32 `json:"upgradeType,optional"`
+	// 提示升级描述内容
+	PromptUpgradeContent *string `json:"promptUpgradeContent,optional"`
+	// 指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型
+	UpgradeDevType *int32 `json:"upgradeDevType,optional"`
+	// 升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;
+	UpgradeDevData         *string `json:"upgradeDevData,optional"`
+	UpgradeDevTypeZeroData *string `json:"upgradeDevTypeZeroData,optional"`
+	UpgradeDevTypeOneData  []int   `json:"upgradeDevTypeOneData,optional"`
+	UpgradeDevTypeTwoData  []int   `json:"upgradeDevTypeTwoData,optional"`
+	// 指定升级的应用版本：0：全部版本；1，指定版本
+	UpgradeVersionType *int32 `json:"upgradeVersionType,optional"`
+	// 升级应用版本数据：0.当为全部版本时，此字段为空；1.当指定版本时，此字段存储版本id；
+	UpgradeVersionData         *string `json:"upgradeVersionData,optional"`
+	UpgradeVersionTypeZeroData *string `json:"upgradeVersionTypeZeroData,optional"`
+	UpgradeVersionTypeOneData  []int   `json:"upgradeVersionTypeOneData,optional"`
+	// 升级任务开始时间
+	BeginDatetime *string `json:"beginDatetime,optional"`
+	// 升级任务结束时间
+	EndDatetime *string `json:"endDatetime,optional"`
+	// 是否开启灰度
+	IsGray *int32 `json:"isGray,optional"`
+	// 灰度策略数据
+	GrayDataInfo []*LnxGrayDataInfo `json:"grayDataList,optional"`
+	// 是否开启频控
+	IsFlowLimit *int32 `json:"isFlowLimit,optional"`
+	// 频控策略数据
+	FlowLimitDataInfo []*LnxFlowLimitDataInfo `json:"flowLimitDataList,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// 灰度策略数据
+// swagger:model LnxGrayDataInfo
+type LnxGrayDataInfo struct {
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 开始时间
+	BeginDatetime *string `json:"beginDatetime,optional"`
+	// 结束时间
+	EndDatetime *string `json:"endDatetime,optional"`
+	// 数量
+	Limit *int `json:"limit,optional"`
+}
+
+// 频控策略数据
+// swagger:model LnxFlowLimitDataInfo
+type LnxFlowLimitDataInfo struct {
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 开始时间
+	Begintime *string `json:"beginTime,optional"`
+	// 结束时间
+	Endtime *string `json:"endTime,optional"`
+	// 流控维度
+	Dimension *int32 `json:"dimension,optional"`
+	// 数量
+	Limit *int `json:"limit,optional"`
+}
+
+// The response data of upgrade lnx upgrade strategy list | UpgradeLnxUpgradeStrategy信息列表数据
+// swagger:model UpgradeLnxUpgradeStrategyListResp
+type UpgradeLnxUpgradeStrategyListResp struct {
+	BaseDataInfo
+	// The upgrade lnx upgrade strategy list data | UpgradeLnxUpgradeStrategy信息列表数据
+	Data UpgradeLnxUpgradeStrategyListInfo `json:"data"`
+}
+
+// The upgrade lnx upgrade strategy list data | UpgradeLnxUpgradeStrategy信息列表数据
+// swagger:model UpgradeLnxUpgradeStrategyListInfo
+type UpgradeLnxUpgradeStrategyListInfo struct {
+	BaseListInfo
+	// The upgrade lnx upgrade strategy list data | UpgradeLnxUpgradeStrategy信息列表数据
+	Data []RespUpgradeLnxUpgradeStrategyInfo `json:"data"`
+}
+
+// Get upgrade lnx upgrade strategy list request params | UpgradeLnxUpgradeStrategy信息列表请求参数
+// swagger:model UpgradeLnxUpgradeStrategyListReq
+type UpgradeLnxUpgradeStrategyListReq struct {
+	PageInfo
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 任务名称
+	Name *string `json:"name,optional"`
+	// 任务描述信息
+	Description *string `json:"description,optional"`
+	// 应用ID
+	LnxId *int `json:"lnxId,optional"`
+	// lnx_version_id; 外键lnx_version.id
+	LnxVersionId *int `json:"lnxVersionId,optional"`
+	// 升级任务开始时间
+	BeginDatetime *int64 `json:"beginDatetime,optional"`
+	// 升级任务结束时间
+	EndDatetime *int64 `json:"endDatetime,optional"`
+	// 升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+	UpgradeType *int32 `json:"upgradeType,optional"`
+	// 提示升级描述内容
+	PromptUpgradeContent *string `json:"promptUpgradeContent,optional"`
+	// 指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型
+	UpgradeDevType *int32 `json:"upgradeDevType,optional"`
+	// 升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;
+	UpgradeDevData *string `json:"upgradeDevData,optional"`
+	// 指定升级的应用版本：0：全部版本；1：指定版本
+	UpgradeVersionType *int32 `json:"upgradeVersionType,optional"`
+	// 升级设备数据：0.当为全部版本时，此字段为空；；1.当指定应用版本时，此字段存储应用版本id;
+	UpgradeVersionData *string `json:"upgradeVersionData,optional"`
+	// 是否开启灰度 0：不开启；1：开启
+	IsGray *int32 `json:"isGray,optional"`
+	// 灰度策略id数据
+	GrayData *string `json:"grayData,optional"`
+	// 是否开启频控 0：不开启；1：开启
+	IsFlowLimit *int32 `json:"isFlowLimit,optional"`
+	// 频控策略id数据
+	FlowLimitData *string `json:"flowLimitData,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The upgrade lnx upgrade strategy information response | UpgradeLnxUpgradeStrategy信息返回体
+// swagger:model UpgradeLnxUpgradeStrategyInfoResp
+type UpgradeLnxUpgradeStrategyInfoResp struct {
+	BaseDataInfo
+	// upgrade lnx upgrade strategy information | UpgradeLnxUpgradeStrategy信息数据
+	Data RespUpgradeLnxUpgradeStrategyInfo `json:"data"`
+}
+
+// The data of upgrade lnx version information | UpgradeLnxVersion信息
+// swagger:model UpgradeLnxVersionInfo
+type UpgradeLnxVersionInfo struct {
+	Id *int `json:"id,optional"`
+	// 应用ID
+	LnxId *int `json:"lnxId,optional"`
+	// 云文件id
+	CloudFileId *string `json:"cloudFileId,optional"`
+	// 版本名
+	VersionName *string `json:"versionName,optional"`
+	// 版本号
+	VersionCode *int `json:"versionCode,optional"`
+	// 版本文件大小
+	VersionFileSize *string `json:"versionFileSize,optional"`
+	// 机器架构:x64、ia32 arm64
+	Arch *string `json:"arch,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// swagger:model RespUpgradeLnxVersionInfo
+type RespUpgradeLnxVersionInfo struct {
+	Id *int `json:"id,optional"`
+	// 安卓应用ID
+	LnxId *int `json:"lnxId,optional"`
+	// 文件应用名称
+	LnxName *string `json:"lnxName,optional"`
+	// 云文件id
+	CloudFileId *string `json:"cloudFileId,optional"`
+	// 云文件名称
+	CloudFileName *string `json:"cloudFileName,optional"`
+	// 版本名
+	VersionName *string `json:"versionName,optional"`
+	// 版本号
+	VersionCode *int `json:"versionCode,optional"`
+	// 机器架构:x64、ia32 arm64
+	Arch *string `json:"arch,optional"`
+	// 版本文件大小
+	VersionFileSize *string `json:"versionFileSize,optional"`
+	// 描述信息
+	Description *string `json:"description,optional,default="`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The response data of upgrade lnx version list | UpgradeLnxVersion信息列表数据
+// swagger:model UpgradeLnxVersionListResp
+type UpgradeLnxVersionListResp struct {
+	BaseDataInfo
+	// The upgrade lnx version list data | UpgradeLnxVersion信息列表数据
+	Data UpgradeLnxVersionListInfo `json:"data"`
+}
+
+// The upgrade lnx version list data | UpgradeLnxVersion信息列表数据
+// swagger:model UpgradeLnxVersionListInfo
+type UpgradeLnxVersionListInfo struct {
+	BaseListInfo
+	// The upgrade lnx version list data | UpgradeLnxVersion信息列表数据
+	Data []RespUpgradeLnxVersionInfo `json:"data"`
+}
+
+// Get upgrade lnx version list request params | UpgradeLnxVersion信息列表请求参数
+// swagger:model UpgradeLnxVersionListReq
+type UpgradeLnxVersionListReq struct {
+	PageInfo
+	// 安卓应用ID
+	LnxId *int `json:"lnxId,optional"`
+	// 云文件id
+	CloudFileId *string `json:"cloudFileId,optional"`
+	// 版本名
+	VersionName *string `json:"versionName,optional"`
+	// 版本号
+	VersionCode *int `json:"versionCode,optional"`
+	// 机器架构:x64、ia32 arm64
+	Arch *string `json:"arch,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The upgrade lnx version information response | UpgradeLnxVersion信息返回体
+// swagger:model UpgradeLnxVersionInfoResp
+type UpgradeLnxVersionInfoResp struct {
+	BaseDataInfo
+	// upgrade lnx version information | UpgradeLnxVersion信息数据
+	Data RespUpgradeLnxVersionInfo `json:"data"`
+}
+
+// The data of upgrade mac information | UpgradeMac信息
+// swagger:model UpgradeMacInfo
+type UpgradeMacInfo struct {
+	Id *int `json:"id,optional"`
+	// 应用唯一标识
+	Key *string `json:"key,optional"`
+	// 应用名称
+	Name *string `json:"name,optional"`
+	// 应用包名
+	PackageName *string `json:"packageName,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The response data of upgrade mac list | UpgradeMac信息列表数据
+// swagger:model UpgradeMacListResp
+type UpgradeMacListResp struct {
+	BaseDataInfo
+	// The upgrade mac list data | UpgradeMac信息列表数据
+	Data UpgradeMacListInfo `json:"data"`
+}
+
+// The upgrade mac list data | UpgradeMac信息列表数据
+// swagger:model UpgradeMacListInfo
+type UpgradeMacListInfo struct {
+	BaseListInfo
+	// The upgrade mac list data | UpgradeMac信息列表数据
+	Data []UpgradeMacInfo `json:"data"`
+}
+
+// Get upgrade mac list request params | UpgradeMac信息列表请求参数
+// swagger:model UpgradeMacListReq
+type UpgradeMacListReq struct {
+	PageInfo
+	// 应用唯一标识
+	Key *string `json:"key,optional"`
+	// 应用名称
+	Name *string `json:"name,optional"`
+	// 应用包名
+	PackageName *string `json:"packageName,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The upgrade mac information response | UpgradeMac信息返回体
+// swagger:model UpgradeMacInfoResp
+type UpgradeMacInfoResp struct {
+	BaseDataInfo
+	// upgrade mac information | UpgradeMac信息数据
+	Data UpgradeMacInfo `json:"data"`
+}
+
+// The data of upgrade mac upgrade strategy information | UpgradeMacUpgradeStrategy信息
+// swagger:model UpgradeMacUpgradeStrategyInfo
+type UpgradeMacUpgradeStrategyInfo struct {
+	Id *int `json:"id,optional"`
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 任务名称
+	Name *string `json:"name,optional"`
+	// 任务描述信息
+	Description *string `json:"description,optional"`
+	// mac应用ID
+	MacId *int `json:"macId,optional"`
+	// mac_version_id; 外键mac_version.id
+	MacVersionId *int `json:"macVersionId,optional"`
+	// 升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+	UpgradeType *int32 `json:"upgradeType,optional"`
+	// 提示升级描述内容
+	PromptUpgradeContent *string `json:"promptUpgradeContent,optional"`
+	// 指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型
+	UpgradeDevType *int32 `json:"upgradeDevType,optional"`
+	// 升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;
+	UpgradeDevData         *string `json:"upgradeDevData,optional"`
+	UpgradeDevTypeZeroData *string `json:"upgradeDevTypeZeroData,optional"`
+	UpgradeDevTypeOneData  []int   `json:"upgradeDevTypeOneData,optional"`
+	UpgradeDevTypeTwoData  []int   `json:"upgradeDevTypeTwoData,optional"`
+	// 指定升级的应用版本：0：全部版本；1，指定版本
+	UpgradeVersionType *int32 `json:"upgradeVersionType,optional"`
+	// 升级应用版本数据：0.当为全部版本时，此字段为空；1.当指定版本时，此字段存储版本id；
+	UpgradeVersionData         *string `json:"upgradeVersionData,optional"`
+	UpgradeVersionTypeZeroData *string `json:"upgradeVersionTypeZeroData,optional"`
+	UpgradeVersionTypeOneData  []int   `json:"upgradeVersionTypeOneData,optional"`
+	// 升级任务开始时间
+	BeginDatetime *string `json:"beginDatetime,optional"`
+	// 升级任务结束时间
+	EndDatetime *string `json:"endDatetime,optional"`
+	// 是否开启灰度
+	IsGray *int32 `json:"isGray,optional"`
+	// 灰度策略数据
+	GrayDataInfo []*MacGrayDataInfo `json:"grayDataList,optional"`
+	// 是否开启频控
+	IsFlowLimit *int32 `json:"isFlowLimit,optional"`
+	// 频控策略数据
+	FlowLimitDataInfo []*MacFlowLimitDataInfo `json:"flowLimitDataList,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// swagger:model RespUpgradeMacUpgradeStrategyInfo
+type RespUpgradeMacUpgradeStrategyInfo struct {
+	Id *int `json:"id,optional"`
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 任务名称
+	Name *string `json:"name,optional"`
+	// 任务描述信息
+	Description *string `json:"description,optional,default="`
+	// mac应用ID
+	MacId *int `json:"macId,optional"`
+	// mac应用名称
+	MacName *string `json:"macName,optional"`
+	// mac_version_id; 外键mac_version.id
+	MacVersionId   *int    `json:"macVersionId,optional"`
+	MacVersionName *string `json:"macVersionName,optional"`
+	MacVersionCode *int    `json:"macVersionCode,optional"`
+	// 升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+	UpgradeType *int32 `json:"upgradeType,optional"`
+	// 提示升级描述内容
+	PromptUpgradeContent *string `json:"promptUpgradeContent,optional"`
+	// 指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型
+	UpgradeDevType *int32 `json:"upgradeDevType,optional"`
+	// 升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;
+	UpgradeDevData         *string `json:"upgradeDevData,optional"`
+	UpgradeDevTypeZeroData *string `json:"upgradeDevTypeZeroData,optional"`
+	UpgradeDevTypeOneData  []int   `json:"upgradeDevTypeOneData,optional"`
+	UpgradeDevTypeTwoData  []int   `json:"upgradeDevTypeTwoData,optional"`
+	// 指定升级的应用版本：0：全部版本；1，指定版本
+	UpgradeVersionType *int32 `json:"upgradeVersionType,optional"`
+	// 升级应用版本数据：0.当为全部版本时，此字段为空；1.当指定版本时，此字段存储版本id；
+	UpgradeVersionData         *string `json:"upgradeVersionData,optional"`
+	UpgradeVersionTypeZeroData *string `json:"upgradeVersionTypeZeroData,optional"`
+	UpgradeVersionTypeOneData  []int   `json:"upgradeVersionTypeOneData,optional"`
+	// 升级任务开始时间
+	BeginDatetime *string `json:"beginDatetime,optional"`
+	// 升级任务结束时间
+	EndDatetime *string `json:"endDatetime,optional"`
+	// 是否开启灰度
+	IsGray *int32 `json:"isGray,optional"`
+	// 灰度策略数据
+	GrayDataInfo []*MacGrayDataInfo `json:"grayDataList,optional"`
+	// 是否开启频控
+	IsFlowLimit *int32 `json:"isFlowLimit,optional"`
+	// 频控策略数据
+	FlowLimitDataInfo []*MacFlowLimitDataInfo `json:"flowLimitDataList,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// 灰度策略数据
+// swagger:model MacGrayDataInfo
+type MacGrayDataInfo struct {
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 开始时间
+	BeginDatetime *string `json:"beginDatetime,optional"`
+	// 结束时间
+	EndDatetime *string `json:"endDatetime,optional"`
+	// 数量
+	Limit *int `json:"limit,optional"`
+}
+
+// 频控策略数据
+// swagger:model MacFlowLimitDataInfo
+type MacFlowLimitDataInfo struct {
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 开始时间
+	Begintime *string `json:"beginTime,optional"`
+	// 结束时间
+	Endtime *string `json:"endTime,optional"`
+	// 流控维度
+	Dimension *int32 `json:"dimension,optional"`
+	// 数量
+	Limit *int `json:"limit,optional"`
+}
+
+// The response data of upgrade mac upgrade strategy list | UpgradeMacUpgradeStrategy信息列表数据
+// swagger:model UpgradeMacUpgradeStrategyListResp
+type UpgradeMacUpgradeStrategyListResp struct {
+	BaseDataInfo
+	// The upgrade mac upgrade strategy list data | UpgradeMacUpgradeStrategy信息列表数据
+	Data UpgradeMacUpgradeStrategyListInfo `json:"data"`
+}
+
+// The upgrade mac upgrade strategy list data | UpgradeMacUpgradeStrategy信息列表数据
+// swagger:model UpgradeMacUpgradeStrategyListInfo
+type UpgradeMacUpgradeStrategyListInfo struct {
+	BaseListInfo
+	// The upgrade mac upgrade strategy list data | UpgradeMacUpgradeStrategy信息列表数据
+	Data []RespUpgradeMacUpgradeStrategyInfo `json:"data"`
+}
+
+// Get upgrade mac upgrade strategy list request params | UpgradeMacUpgradeStrategy信息列表请求参数
+// swagger:model UpgradeMacUpgradeStrategyListReq
+type UpgradeMacUpgradeStrategyListReq struct {
+	PageInfo
+	// 是否生效；可通过此控制策略是否生效0：失效；1：生效
+	Enable *int32 `json:"enable,optional"`
+	// 任务名称
+	Name *string `json:"name,optional"`
+	// 任务描述信息
+	Description *string `json:"description,optional"`
+	// 应用ID
+	MacId *int `json:"macId,optional"`
+	// mac_version_id; 外键mac_version.id
+	MacVersionId *int `json:"macVersionId,optional"`
+	// 升级任务开始时间
+	BeginDatetime *int64 `json:"beginDatetime,optional"`
+	// 升级任务结束时间
+	EndDatetime *int64 `json:"endDatetime,optional"`
+	// 升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+	UpgradeType *int32 `json:"upgradeType,optional"`
+	// 提示升级描述内容
+	PromptUpgradeContent *string `json:"promptUpgradeContent,optional"`
+	// 指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型
+	UpgradeDevType *int32 `json:"upgradeDevType,optional"`
+	// 升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;
+	UpgradeDevData *string `json:"upgradeDevData,optional"`
+	// 指定升级的应用版本：0：全部版本；1：指定版本
+	UpgradeVersionType *int32 `json:"upgradeVersionType,optional"`
+	// 升级设备数据：0.当为全部版本时，此字段为空；；1.当指定应用版本时，此字段存储应用版本id;
+	UpgradeVersionData *string `json:"upgradeVersionData,optional"`
+	// 是否开启灰度 0：不开启；1：开启
+	IsGray *int32 `json:"isGray,optional"`
+	// 灰度策略id数据
+	GrayData *string `json:"grayData,optional"`
+	// 是否开启频控 0：不开启；1：开启
+	IsFlowLimit *int32 `json:"isFlowLimit,optional"`
+	// 频控策略id数据
+	FlowLimitData *string `json:"flowLimitData,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The upgrade mac upgrade strategy information response | UpgradeMacUpgradeStrategy信息返回体
+// swagger:model UpgradeMacUpgradeStrategyInfoResp
+type UpgradeMacUpgradeStrategyInfoResp struct {
+	BaseDataInfo
+	// upgrade mac upgrade strategy information | UpgradeMacUpgradeStrategy信息数据
+	Data RespUpgradeMacUpgradeStrategyInfo `json:"data"`
+}
+
+// The data of upgrade mac version information | UpgradeMacVersion信息
+// swagger:model UpgradeMacVersionInfo
+type UpgradeMacVersionInfo struct {
+	Id *int `json:"id,optional"`
+	// 应用ID
+	MacId *int `json:"macId,optional"`
+	// 云文件id
+	CloudFileId *string `json:"cloudFileId,optional"`
+	// 版本名
+	VersionName *string `json:"versionName,optional"`
+	// 版本号
+	VersionCode *int `json:"versionCode,optional"`
+	// 机器架构:x64、ia32 arm64
+	Arch *string `json:"arch,optional"`
+	// 版本文件大小
+	VersionFileSize *string `json:"versionFileSize,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// swagger:model RespUpgradeMacVersionInfo
+type RespUpgradeMacVersionInfo struct {
+	Id *int `json:"id,optional"`
+	// 安卓应用ID
+	MacId *int `json:"macId,optional"`
+	// 文件应用名称
+	MacName *string `json:"macName,optional"`
+	// 云文件id
+	CloudFileId *string `json:"cloudFileId,optional"`
+	// 云文件名称
+	CloudFileName *string `json:"cloudFileName,optional"`
+	// 版本名
+	VersionName *string `json:"versionName,optional"`
+	// 版本号
+	VersionCode *int `json:"versionCode,optional"`
+	// 机器架构:x64、ia32 arm64
+	Arch *string `json:"arch,optional"`
+	// 版本文件大小
+	VersionFileSize *string `json:"versionFileSize,optional"`
+	// 描述信息
+	Description *string `json:"description,optional,default="`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The response data of upgrade mac version list | UpgradeMacVersion信息列表数据
+// swagger:model UpgradeMacVersionListResp
+type UpgradeMacVersionListResp struct {
+	BaseDataInfo
+	// The upgrade mac version list data | UpgradeMacVersion信息列表数据
+	Data UpgradeMacVersionListInfo `json:"data"`
+}
+
+// The upgrade mac version list data | UpgradeMacVersion信息列表数据
+// swagger:model UpgradeMacVersionListInfo
+type UpgradeMacVersionListInfo struct {
+	BaseListInfo
+	// The upgrade mac version list data | UpgradeMacVersion信息列表数据
+	Data []RespUpgradeMacVersionInfo `json:"data"`
+}
+
+// Get upgrade mac version list request params | UpgradeMacVersion信息列表请求参数
+// swagger:model UpgradeMacVersionListReq
+type UpgradeMacVersionListReq struct {
+	PageInfo
+	// 安卓应用ID
+	MacId *int `json:"macId,optional"`
+	// 云文件id
+	CloudFileId *string `json:"cloudFileId,optional"`
+	// 版本名
+	VersionName *string `json:"versionName,optional"`
+	// 版本号
+	VersionCode *int `json:"versionCode,optional"`
+	// 机器架构:x64、ia32 arm64
+	Arch *string `json:"arch,optional"`
+	// 描述信息
+	Description *string `json:"description,optional"`
+	// 是否删除 0：正常；1：已删除
+	IsDel *int32 `json:"isDel,optional"`
+	// 创建时间
+	CreateAt *int64 `json:"createAt,optional"`
+	// 修改时间
+	UpdateAt *int64 `json:"updateAt,optional"`
+}
+
+// The upgrade mac version information response | UpgradeMacVersion信息返回体
+// swagger:model UpgradeMacVersionInfoResp
+type UpgradeMacVersionInfoResp struct {
+	BaseDataInfo
+	// upgrade mac version information | UpgradeMacVersion信息数据
+	Data RespUpgradeMacVersionInfo `json:"data"`
+}

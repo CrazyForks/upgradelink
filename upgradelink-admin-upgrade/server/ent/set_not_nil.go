@@ -6869,6 +6869,2598 @@ func (ufv *UpgradeFileVersionCreate) SetNotNilUpdateAt(value *time.Time) *Upgrad
 }
 
 // set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdate) SetNotNilCompanyID(value *int) *UpgradeLnxUpdate {
+	if value != nil {
+		return ul.SetCompanyID(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdateOne) SetNotNilCompanyID(value *int) *UpgradeLnxUpdateOne {
+	if value != nil {
+		return ul.SetCompanyID(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxCreate) SetNotNilCompanyID(value *int) *UpgradeLnxCreate {
+	if value != nil {
+		return ul.SetCompanyID(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdate) SetNotNilKey(value *string) *UpgradeLnxUpdate {
+	if value != nil {
+		return ul.SetKey(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdateOne) SetNotNilKey(value *string) *UpgradeLnxUpdateOne {
+	if value != nil {
+		return ul.SetKey(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxCreate) SetNotNilKey(value *string) *UpgradeLnxCreate {
+	if value != nil {
+		return ul.SetKey(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdate) SetNotNilName(value *string) *UpgradeLnxUpdate {
+	if value != nil {
+		return ul.SetName(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdateOne) SetNotNilName(value *string) *UpgradeLnxUpdateOne {
+	if value != nil {
+		return ul.SetName(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxCreate) SetNotNilName(value *string) *UpgradeLnxCreate {
+	if value != nil {
+		return ul.SetName(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdate) SetNotNilPackageName(value *string) *UpgradeLnxUpdate {
+	if value != nil {
+		return ul.SetPackageName(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdateOne) SetNotNilPackageName(value *string) *UpgradeLnxUpdateOne {
+	if value != nil {
+		return ul.SetPackageName(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxCreate) SetNotNilPackageName(value *string) *UpgradeLnxCreate {
+	if value != nil {
+		return ul.SetPackageName(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdate) SetNotNilDescription(value *string) *UpgradeLnxUpdate {
+	if value != nil {
+		return ul.SetDescription(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdateOne) SetNotNilDescription(value *string) *UpgradeLnxUpdateOne {
+	if value != nil {
+		return ul.SetDescription(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxCreate) SetNotNilDescription(value *string) *UpgradeLnxCreate {
+	if value != nil {
+		return ul.SetDescription(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdate) SetNotNilIsDel(value *int32) *UpgradeLnxUpdate {
+	if value != nil {
+		return ul.SetIsDel(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdateOne) SetNotNilIsDel(value *int32) *UpgradeLnxUpdateOne {
+	if value != nil {
+		return ul.SetIsDel(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxCreate) SetNotNilIsDel(value *int32) *UpgradeLnxCreate {
+	if value != nil {
+		return ul.SetIsDel(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpdate {
+	if value != nil {
+		return ul.SetCreateAt(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpdateOne {
+	if value != nil {
+		return ul.SetCreateAt(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxCreate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxCreate {
+	if value != nil {
+		return ul.SetCreateAt(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpdate {
+	if value != nil {
+		return ul.SetUpdateAt(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpdateOne {
+	if value != nil {
+		return ul.SetUpdateAt(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ul *UpgradeLnxCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxCreate {
+	if value != nil {
+		return ul.SetUpdateAt(*value)
+	}
+	return ul
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilCompanyID(value *int) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetCompanyID(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilCompanyID(value *int) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetCompanyID(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilCompanyID(value *int) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetCompanyID(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilEnable(value *int32) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetEnable(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilEnable(value *int32) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetEnable(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilEnable(value *int32) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetEnable(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilName(value *string) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetName(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilName(value *string) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetName(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilName(value *string) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetName(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilDescription(value *string) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetDescription(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilDescription(value *string) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetDescription(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilDescription(value *string) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetDescription(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilLnxID(value *int) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetLnxID(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilLnxID(value *int) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetLnxID(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilLnxID(value *int) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetLnxID(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilLnxVersionID(value *int) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetLnxVersionID(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilLnxVersionID(value *int) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetLnxVersionID(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilLnxVersionID(value *int) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetLnxVersionID(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilBeginDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetBeginDatetime(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilBeginDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetBeginDatetime(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilBeginDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetBeginDatetime(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilEndDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetEndDatetime(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilEndDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetEndDatetime(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilEndDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetEndDatetime(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilUpgradeType(value *int32) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetUpgradeType(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilUpgradeType(value *int32) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetUpgradeType(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilUpgradeType(value *int32) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetUpgradeType(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilPromptUpgradeContent(value *string) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetPromptUpgradeContent(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilPromptUpgradeContent(value *string) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetPromptUpgradeContent(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilPromptUpgradeContent(value *string) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetPromptUpgradeContent(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilUpgradeDevType(value *int32) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetUpgradeDevType(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilUpgradeDevType(value *int32) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetUpgradeDevType(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilUpgradeDevType(value *int32) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetUpgradeDevType(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilUpgradeDevData(value *string) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetUpgradeDevData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilUpgradeDevData(value *string) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetUpgradeDevData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilUpgradeDevData(value *string) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetUpgradeDevData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilUpgradeVersionType(value *int32) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetUpgradeVersionType(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilUpgradeVersionType(value *int32) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetUpgradeVersionType(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilUpgradeVersionType(value *int32) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetUpgradeVersionType(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilUpgradeVersionData(value *string) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetUpgradeVersionData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilUpgradeVersionData(value *string) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetUpgradeVersionData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilUpgradeVersionData(value *string) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetUpgradeVersionData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilIsGray(value *int32) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetIsGray(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilIsGray(value *int32) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetIsGray(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilIsGray(value *int32) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetIsGray(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilGrayData(value *string) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetGrayData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilGrayData(value *string) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetGrayData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilGrayData(value *string) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetGrayData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilIsFlowLimit(value *int32) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetIsFlowLimit(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilIsFlowLimit(value *int32) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetIsFlowLimit(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilIsFlowLimit(value *int32) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetIsFlowLimit(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilFlowLimitData(value *string) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetFlowLimitData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilFlowLimitData(value *string) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetFlowLimitData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilFlowLimitData(value *string) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetFlowLimitData(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilIsDel(value *int32) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetIsDel(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilIsDel(value *int32) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetIsDel(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilIsDel(value *int32) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetIsDel(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetCreateAt(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetCreateAt(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetCreateAt(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpgradeStrategyUpdate {
+	if value != nil {
+		return ulus.SetUpdateAt(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpgradeStrategyUpdateOne {
+	if value != nil {
+		return ulus.SetUpdateAt(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulus *UpgradeLnxUpgradeStrategyCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpgradeStrategyCreate {
+	if value != nil {
+		return ulus.SetUpdateAt(*value)
+	}
+	return ulus
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilEnable(value *int32) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return ulusfls.SetEnable(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilEnable(value *int32) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return ulusfls.SetEnable(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate) SetNotNilEnable(value *int32) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return ulusfls.SetEnable(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilBeginTime(value *string) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return ulusfls.SetBeginTime(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilBeginTime(value *string) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return ulusfls.SetBeginTime(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate) SetNotNilBeginTime(value *string) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return ulusfls.SetBeginTime(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilEndTime(value *string) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return ulusfls.SetEndTime(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilEndTime(value *string) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return ulusfls.SetEndTime(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate) SetNotNilEndTime(value *string) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return ulusfls.SetEndTime(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilDimension(value *int32) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return ulusfls.SetDimension(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilDimension(value *int32) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return ulusfls.SetDimension(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate) SetNotNilDimension(value *int32) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return ulusfls.SetDimension(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilLimit(value *int) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return ulusfls.SetLimit(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilLimit(value *int) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return ulusfls.SetLimit(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate) SetNotNilLimit(value *int) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return ulusfls.SetLimit(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilIsDel(value *int32) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return ulusfls.SetIsDel(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilIsDel(value *int32) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return ulusfls.SetIsDel(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate) SetNotNilIsDel(value *int32) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return ulusfls.SetIsDel(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return ulusfls.SetCreateAt(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return ulusfls.SetCreateAt(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return ulusfls.SetCreateAt(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return ulusfls.SetUpdateAt(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return ulusfls.SetUpdateAt(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return ulusfls.SetUpdateAt(*value)
+	}
+	return ulusfls
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdate) SetNotNilEnable(value *int32) *UpgradeLnxUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return ulusgs.SetEnable(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne) SetNotNilEnable(value *int32) *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return ulusgs.SetEnable(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyCreate) SetNotNilEnable(value *int32) *UpgradeLnxUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return ulusgs.SetEnable(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdate) SetNotNilBeginDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return ulusgs.SetBeginDatetime(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne) SetNotNilBeginDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return ulusgs.SetBeginDatetime(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyCreate) SetNotNilBeginDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return ulusgs.SetBeginDatetime(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdate) SetNotNilEndDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return ulusgs.SetEndDatetime(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne) SetNotNilEndDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return ulusgs.SetEndDatetime(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyCreate) SetNotNilEndDatetime(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return ulusgs.SetEndDatetime(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdate) SetNotNilLimit(value *int) *UpgradeLnxUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return ulusgs.SetLimit(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne) SetNotNilLimit(value *int) *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return ulusgs.SetLimit(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyCreate) SetNotNilLimit(value *int) *UpgradeLnxUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return ulusgs.SetLimit(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdate) SetNotNilIsDel(value *int32) *UpgradeLnxUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return ulusgs.SetIsDel(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne) SetNotNilIsDel(value *int32) *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return ulusgs.SetIsDel(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyCreate) SetNotNilIsDel(value *int32) *UpgradeLnxUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return ulusgs.SetIsDel(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return ulusgs.SetCreateAt(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return ulusgs.SetCreateAt(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyCreate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return ulusgs.SetCreateAt(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return ulusgs.SetUpdateAt(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return ulusgs.SetUpdateAt(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return ulusgs.SetUpdateAt(*value)
+	}
+	return ulusgs
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilCompanyID(value *int) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetCompanyID(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilCompanyID(value *int) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetCompanyID(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilCompanyID(value *int) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetCompanyID(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilLnxID(value *int) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetLnxID(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilLnxID(value *int) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetLnxID(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilLnxID(value *int) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetLnxID(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilCloudFileID(value *string) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetCloudFileID(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilCloudFileID(value *string) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetCloudFileID(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilCloudFileID(value *string) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetCloudFileID(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilVersionName(value *string) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetVersionName(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilVersionName(value *string) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetVersionName(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilVersionName(value *string) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetVersionName(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilVersionCode(value *int) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetVersionCode(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilVersionCode(value *int) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetVersionCode(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilVersionCode(value *int) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetVersionCode(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilArch(value *string) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetArch(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilArch(value *string) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetArch(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilArch(value *string) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetArch(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilDescription(value *string) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetDescription(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilDescription(value *string) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetDescription(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilDescription(value *string) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetDescription(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilIsDel(value *int32) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetIsDel(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilIsDel(value *int32) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetIsDel(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilIsDel(value *int32) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetIsDel(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetCreateAt(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetCreateAt(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilCreateAt(value *time.Time) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetCreateAt(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxVersionUpdate {
+	if value != nil {
+		return ulv.SetUpdateAt(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxVersionUpdateOne {
+	if value != nil {
+		return ulv.SetUpdateAt(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (ulv *UpgradeLnxVersionCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeLnxVersionCreate {
+	if value != nil {
+		return ulv.SetUpdateAt(*value)
+	}
+	return ulv
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdate) SetNotNilCompanyID(value *int) *UpgradeMacUpdate {
+	if value != nil {
+		return um.SetCompanyID(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdateOne) SetNotNilCompanyID(value *int) *UpgradeMacUpdateOne {
+	if value != nil {
+		return um.SetCompanyID(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacCreate) SetNotNilCompanyID(value *int) *UpgradeMacCreate {
+	if value != nil {
+		return um.SetCompanyID(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdate) SetNotNilKey(value *string) *UpgradeMacUpdate {
+	if value != nil {
+		return um.SetKey(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdateOne) SetNotNilKey(value *string) *UpgradeMacUpdateOne {
+	if value != nil {
+		return um.SetKey(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacCreate) SetNotNilKey(value *string) *UpgradeMacCreate {
+	if value != nil {
+		return um.SetKey(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdate) SetNotNilName(value *string) *UpgradeMacUpdate {
+	if value != nil {
+		return um.SetName(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdateOne) SetNotNilName(value *string) *UpgradeMacUpdateOne {
+	if value != nil {
+		return um.SetName(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacCreate) SetNotNilName(value *string) *UpgradeMacCreate {
+	if value != nil {
+		return um.SetName(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdate) SetNotNilPackageName(value *string) *UpgradeMacUpdate {
+	if value != nil {
+		return um.SetPackageName(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdateOne) SetNotNilPackageName(value *string) *UpgradeMacUpdateOne {
+	if value != nil {
+		return um.SetPackageName(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacCreate) SetNotNilPackageName(value *string) *UpgradeMacCreate {
+	if value != nil {
+		return um.SetPackageName(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdate) SetNotNilDescription(value *string) *UpgradeMacUpdate {
+	if value != nil {
+		return um.SetDescription(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdateOne) SetNotNilDescription(value *string) *UpgradeMacUpdateOne {
+	if value != nil {
+		return um.SetDescription(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacCreate) SetNotNilDescription(value *string) *UpgradeMacCreate {
+	if value != nil {
+		return um.SetDescription(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdate) SetNotNilIsDel(value *int32) *UpgradeMacUpdate {
+	if value != nil {
+		return um.SetIsDel(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdateOne) SetNotNilIsDel(value *int32) *UpgradeMacUpdateOne {
+	if value != nil {
+		return um.SetIsDel(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacCreate) SetNotNilIsDel(value *int32) *UpgradeMacCreate {
+	if value != nil {
+		return um.SetIsDel(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpdate {
+	if value != nil {
+		return um.SetCreateAt(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpdateOne {
+	if value != nil {
+		return um.SetCreateAt(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacCreate) SetNotNilCreateAt(value *time.Time) *UpgradeMacCreate {
+	if value != nil {
+		return um.SetCreateAt(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpdate {
+	if value != nil {
+		return um.SetUpdateAt(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpdateOne {
+	if value != nil {
+		return um.SetUpdateAt(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (um *UpgradeMacCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacCreate {
+	if value != nil {
+		return um.SetUpdateAt(*value)
+	}
+	return um
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilCompanyID(value *int) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetCompanyID(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilCompanyID(value *int) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetCompanyID(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilCompanyID(value *int) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetCompanyID(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilEnable(value *int32) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetEnable(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilEnable(value *int32) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetEnable(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilEnable(value *int32) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetEnable(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilName(value *string) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetName(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilName(value *string) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetName(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilName(value *string) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetName(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilDescription(value *string) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetDescription(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilDescription(value *string) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetDescription(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilDescription(value *string) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetDescription(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilMACID(value *int) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetMACID(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilMACID(value *int) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetMACID(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilMACID(value *int) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetMACID(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilMACVersionID(value *int) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetMACVersionID(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilMACVersionID(value *int) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetMACVersionID(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilMACVersionID(value *int) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetMACVersionID(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilBeginDatetime(value *time.Time) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetBeginDatetime(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilBeginDatetime(value *time.Time) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetBeginDatetime(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilBeginDatetime(value *time.Time) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetBeginDatetime(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilEndDatetime(value *time.Time) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetEndDatetime(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilEndDatetime(value *time.Time) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetEndDatetime(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilEndDatetime(value *time.Time) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetEndDatetime(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilUpgradeType(value *int32) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetUpgradeType(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilUpgradeType(value *int32) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetUpgradeType(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilUpgradeType(value *int32) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetUpgradeType(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilPromptUpgradeContent(value *string) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetPromptUpgradeContent(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilPromptUpgradeContent(value *string) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetPromptUpgradeContent(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilPromptUpgradeContent(value *string) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetPromptUpgradeContent(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilUpgradeDevType(value *int32) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetUpgradeDevType(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilUpgradeDevType(value *int32) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetUpgradeDevType(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilUpgradeDevType(value *int32) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetUpgradeDevType(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilUpgradeDevData(value *string) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetUpgradeDevData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilUpgradeDevData(value *string) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetUpgradeDevData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilUpgradeDevData(value *string) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetUpgradeDevData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilUpgradeVersionType(value *int32) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetUpgradeVersionType(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilUpgradeVersionType(value *int32) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetUpgradeVersionType(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilUpgradeVersionType(value *int32) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetUpgradeVersionType(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilUpgradeVersionData(value *string) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetUpgradeVersionData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilUpgradeVersionData(value *string) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetUpgradeVersionData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilUpgradeVersionData(value *string) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetUpgradeVersionData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilIsGray(value *int32) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetIsGray(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilIsGray(value *int32) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetIsGray(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilIsGray(value *int32) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetIsGray(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilGrayData(value *string) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetGrayData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilGrayData(value *string) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetGrayData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilGrayData(value *string) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetGrayData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilIsFlowLimit(value *int32) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetIsFlowLimit(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilIsFlowLimit(value *int32) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetIsFlowLimit(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilIsFlowLimit(value *int32) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetIsFlowLimit(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilFlowLimitData(value *string) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetFlowLimitData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilFlowLimitData(value *string) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetFlowLimitData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilFlowLimitData(value *string) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetFlowLimitData(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilIsDel(value *int32) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetIsDel(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilIsDel(value *int32) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetIsDel(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilIsDel(value *int32) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetIsDel(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetCreateAt(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetCreateAt(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetCreateAt(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpgradeStrategyUpdate {
+	if value != nil {
+		return umus.SetUpdateAt(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpgradeStrategyUpdateOne {
+	if value != nil {
+		return umus.SetUpdateAt(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umus *UpgradeMacUpgradeStrategyCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpgradeStrategyCreate {
+	if value != nil {
+		return umus.SetUpdateAt(*value)
+	}
+	return umus
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilEnable(value *int32) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return umusfls.SetEnable(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilEnable(value *int32) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return umusfls.SetEnable(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate) SetNotNilEnable(value *int32) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return umusfls.SetEnable(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilBeginTime(value *string) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return umusfls.SetBeginTime(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilBeginTime(value *string) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return umusfls.SetBeginTime(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate) SetNotNilBeginTime(value *string) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return umusfls.SetBeginTime(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilEndTime(value *string) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return umusfls.SetEndTime(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilEndTime(value *string) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return umusfls.SetEndTime(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate) SetNotNilEndTime(value *string) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return umusfls.SetEndTime(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilDimension(value *int32) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return umusfls.SetDimension(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilDimension(value *int32) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return umusfls.SetDimension(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate) SetNotNilDimension(value *int32) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return umusfls.SetDimension(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilLimit(value *int) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return umusfls.SetLimit(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilLimit(value *int) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return umusfls.SetLimit(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate) SetNotNilLimit(value *int) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return umusfls.SetLimit(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilIsDel(value *int32) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return umusfls.SetIsDel(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilIsDel(value *int32) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return umusfls.SetIsDel(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate) SetNotNilIsDel(value *int32) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return umusfls.SetIsDel(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return umusfls.SetCreateAt(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return umusfls.SetCreateAt(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return umusfls.SetCreateAt(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return umusfls.SetUpdateAt(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return umusfls.SetUpdateAt(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return umusfls.SetUpdateAt(*value)
+	}
+	return umusfls
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdate) SetNotNilEnable(value *int32) *UpgradeMacUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return umusgs.SetEnable(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne) SetNotNilEnable(value *int32) *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return umusgs.SetEnable(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyCreate) SetNotNilEnable(value *int32) *UpgradeMacUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return umusgs.SetEnable(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdate) SetNotNilBeginDatetime(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return umusgs.SetBeginDatetime(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne) SetNotNilBeginDatetime(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return umusgs.SetBeginDatetime(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyCreate) SetNotNilBeginDatetime(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return umusgs.SetBeginDatetime(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdate) SetNotNilEndDatetime(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return umusgs.SetEndDatetime(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne) SetNotNilEndDatetime(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return umusgs.SetEndDatetime(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyCreate) SetNotNilEndDatetime(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return umusgs.SetEndDatetime(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdate) SetNotNilLimit(value *int) *UpgradeMacUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return umusgs.SetLimit(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne) SetNotNilLimit(value *int) *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return umusgs.SetLimit(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyCreate) SetNotNilLimit(value *int) *UpgradeMacUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return umusgs.SetLimit(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdate) SetNotNilIsDel(value *int32) *UpgradeMacUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return umusgs.SetIsDel(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne) SetNotNilIsDel(value *int32) *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return umusgs.SetIsDel(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyCreate) SetNotNilIsDel(value *int32) *UpgradeMacUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return umusgs.SetIsDel(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return umusgs.SetCreateAt(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return umusgs.SetCreateAt(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyCreate) SetNotNilCreateAt(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return umusgs.SetCreateAt(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return umusgs.SetUpdateAt(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return umusgs.SetUpdateAt(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return umusgs.SetUpdateAt(*value)
+	}
+	return umusgs
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilCompanyID(value *int) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetCompanyID(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilCompanyID(value *int) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetCompanyID(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilCompanyID(value *int) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetCompanyID(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilMACID(value *int) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetMACID(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilMACID(value *int) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetMACID(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilMACID(value *int) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetMACID(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilCloudFileID(value *string) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetCloudFileID(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilCloudFileID(value *string) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetCloudFileID(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilCloudFileID(value *string) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetCloudFileID(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilVersionName(value *string) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetVersionName(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilVersionName(value *string) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetVersionName(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilVersionName(value *string) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetVersionName(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilVersionCode(value *int) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetVersionCode(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilVersionCode(value *int) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetVersionCode(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilVersionCode(value *int) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetVersionCode(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilArch(value *string) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetArch(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilArch(value *string) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetArch(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilArch(value *string) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetArch(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilDescription(value *string) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetDescription(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilDescription(value *string) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetDescription(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilDescription(value *string) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetDescription(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilIsDel(value *int32) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetIsDel(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilIsDel(value *int32) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetIsDel(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilIsDel(value *int32) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetIsDel(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetCreateAt(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetCreateAt(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilCreateAt(value *time.Time) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetCreateAt(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacVersionUpdate {
+	if value != nil {
+		return umv.SetUpdateAt(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeMacVersionUpdateOne {
+	if value != nil {
+		return umv.SetUpdateAt(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
+func (umv *UpgradeMacVersionCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeMacVersionCreate {
+	if value != nil {
+		return umv.SetUpdateAt(*value)
+	}
+	return umv
+}
+
+// set field if value's pointer is not nil.
 func (ut *UpgradeTauriUpdate) SetNotNilCompanyID(value *int) *UpgradeTauriUpdate {
 	if value != nil {
 		return ut.SetCompanyID(*value)
@@ -9698,4 +12290,1300 @@ func (uuv *UpgradeUrlVersionCreate) SetNotNilUpdateAt(value *time.Time) *Upgrade
 		return uuv.SetUpdateAt(*value)
 	}
 	return uuv
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdate) SetNotNilCompanyID(value *int) *UpgradeWinUpdate {
+	if value != nil {
+		return uw.SetCompanyID(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdateOne) SetNotNilCompanyID(value *int) *UpgradeWinUpdateOne {
+	if value != nil {
+		return uw.SetCompanyID(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinCreate) SetNotNilCompanyID(value *int) *UpgradeWinCreate {
+	if value != nil {
+		return uw.SetCompanyID(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdate) SetNotNilKey(value *string) *UpgradeWinUpdate {
+	if value != nil {
+		return uw.SetKey(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdateOne) SetNotNilKey(value *string) *UpgradeWinUpdateOne {
+	if value != nil {
+		return uw.SetKey(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinCreate) SetNotNilKey(value *string) *UpgradeWinCreate {
+	if value != nil {
+		return uw.SetKey(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdate) SetNotNilName(value *string) *UpgradeWinUpdate {
+	if value != nil {
+		return uw.SetName(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdateOne) SetNotNilName(value *string) *UpgradeWinUpdateOne {
+	if value != nil {
+		return uw.SetName(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinCreate) SetNotNilName(value *string) *UpgradeWinCreate {
+	if value != nil {
+		return uw.SetName(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdate) SetNotNilPackageName(value *string) *UpgradeWinUpdate {
+	if value != nil {
+		return uw.SetPackageName(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdateOne) SetNotNilPackageName(value *string) *UpgradeWinUpdateOne {
+	if value != nil {
+		return uw.SetPackageName(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinCreate) SetNotNilPackageName(value *string) *UpgradeWinCreate {
+	if value != nil {
+		return uw.SetPackageName(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdate) SetNotNilDescription(value *string) *UpgradeWinUpdate {
+	if value != nil {
+		return uw.SetDescription(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdateOne) SetNotNilDescription(value *string) *UpgradeWinUpdateOne {
+	if value != nil {
+		return uw.SetDescription(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinCreate) SetNotNilDescription(value *string) *UpgradeWinCreate {
+	if value != nil {
+		return uw.SetDescription(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdate) SetNotNilIsDel(value *int32) *UpgradeWinUpdate {
+	if value != nil {
+		return uw.SetIsDel(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdateOne) SetNotNilIsDel(value *int32) *UpgradeWinUpdateOne {
+	if value != nil {
+		return uw.SetIsDel(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinCreate) SetNotNilIsDel(value *int32) *UpgradeWinCreate {
+	if value != nil {
+		return uw.SetIsDel(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpdate {
+	if value != nil {
+		return uw.SetCreateAt(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpdateOne {
+	if value != nil {
+		return uw.SetCreateAt(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinCreate) SetNotNilCreateAt(value *time.Time) *UpgradeWinCreate {
+	if value != nil {
+		return uw.SetCreateAt(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpdate {
+	if value != nil {
+		return uw.SetUpdateAt(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpdateOne {
+	if value != nil {
+		return uw.SetUpdateAt(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uw *UpgradeWinCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinCreate {
+	if value != nil {
+		return uw.SetUpdateAt(*value)
+	}
+	return uw
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilCompanyID(value *int) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetCompanyID(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilCompanyID(value *int) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetCompanyID(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilCompanyID(value *int) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetCompanyID(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilEnable(value *int32) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetEnable(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilEnable(value *int32) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetEnable(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilEnable(value *int32) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetEnable(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilName(value *string) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetName(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilName(value *string) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetName(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilName(value *string) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetName(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilDescription(value *string) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetDescription(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilDescription(value *string) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetDescription(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilDescription(value *string) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetDescription(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilWinID(value *int) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetWinID(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilWinID(value *int) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetWinID(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilWinID(value *int) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetWinID(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilWinVersionID(value *int) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetWinVersionID(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilWinVersionID(value *int) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetWinVersionID(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilWinVersionID(value *int) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetWinVersionID(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilBeginDatetime(value *time.Time) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetBeginDatetime(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilBeginDatetime(value *time.Time) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetBeginDatetime(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilBeginDatetime(value *time.Time) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetBeginDatetime(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilEndDatetime(value *time.Time) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetEndDatetime(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilEndDatetime(value *time.Time) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetEndDatetime(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilEndDatetime(value *time.Time) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetEndDatetime(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilUpgradeType(value *int32) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetUpgradeType(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilUpgradeType(value *int32) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetUpgradeType(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilUpgradeType(value *int32) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetUpgradeType(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilPromptUpgradeContent(value *string) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetPromptUpgradeContent(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilPromptUpgradeContent(value *string) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetPromptUpgradeContent(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilPromptUpgradeContent(value *string) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetPromptUpgradeContent(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilUpgradeDevType(value *int32) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetUpgradeDevType(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilUpgradeDevType(value *int32) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetUpgradeDevType(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilUpgradeDevType(value *int32) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetUpgradeDevType(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilUpgradeDevData(value *string) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetUpgradeDevData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilUpgradeDevData(value *string) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetUpgradeDevData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilUpgradeDevData(value *string) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetUpgradeDevData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilUpgradeVersionType(value *int32) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetUpgradeVersionType(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilUpgradeVersionType(value *int32) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetUpgradeVersionType(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilUpgradeVersionType(value *int32) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetUpgradeVersionType(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilUpgradeVersionData(value *string) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetUpgradeVersionData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilUpgradeVersionData(value *string) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetUpgradeVersionData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilUpgradeVersionData(value *string) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetUpgradeVersionData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilIsGray(value *int32) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetIsGray(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilIsGray(value *int32) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetIsGray(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilIsGray(value *int32) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetIsGray(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilGrayData(value *string) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetGrayData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilGrayData(value *string) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetGrayData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilGrayData(value *string) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetGrayData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilIsFlowLimit(value *int32) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetIsFlowLimit(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilIsFlowLimit(value *int32) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetIsFlowLimit(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilIsFlowLimit(value *int32) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetIsFlowLimit(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilFlowLimitData(value *string) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetFlowLimitData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilFlowLimitData(value *string) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetFlowLimitData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilFlowLimitData(value *string) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetFlowLimitData(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilIsDel(value *int32) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetIsDel(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilIsDel(value *int32) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetIsDel(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilIsDel(value *int32) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetIsDel(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetCreateAt(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetCreateAt(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetCreateAt(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpgradeStrategyUpdate {
+	if value != nil {
+		return uwus.SetUpdateAt(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpgradeStrategyUpdateOne {
+	if value != nil {
+		return uwus.SetUpdateAt(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwus *UpgradeWinUpgradeStrategyCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpgradeStrategyCreate {
+	if value != nil {
+		return uwus.SetUpdateAt(*value)
+	}
+	return uwus
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilEnable(value *int32) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return uwusfls.SetEnable(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilEnable(value *int32) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return uwusfls.SetEnable(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate) SetNotNilEnable(value *int32) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return uwusfls.SetEnable(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilBeginTime(value *string) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return uwusfls.SetBeginTime(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilBeginTime(value *string) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return uwusfls.SetBeginTime(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate) SetNotNilBeginTime(value *string) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return uwusfls.SetBeginTime(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilEndTime(value *string) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return uwusfls.SetEndTime(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilEndTime(value *string) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return uwusfls.SetEndTime(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate) SetNotNilEndTime(value *string) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return uwusfls.SetEndTime(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilDimension(value *int32) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return uwusfls.SetDimension(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilDimension(value *int32) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return uwusfls.SetDimension(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate) SetNotNilDimension(value *int32) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return uwusfls.SetDimension(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilLimit(value *int) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return uwusfls.SetLimit(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilLimit(value *int) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return uwusfls.SetLimit(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate) SetNotNilLimit(value *int) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return uwusfls.SetLimit(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilIsDel(value *int32) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return uwusfls.SetIsDel(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilIsDel(value *int32) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return uwusfls.SetIsDel(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate) SetNotNilIsDel(value *int32) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return uwusfls.SetIsDel(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return uwusfls.SetCreateAt(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return uwusfls.SetCreateAt(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return uwusfls.SetCreateAt(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate {
+	if value != nil {
+		return uwusfls.SetUpdateAt(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	if value != nil {
+		return uwusfls.SetUpdateAt(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate {
+	if value != nil {
+		return uwusfls.SetUpdateAt(*value)
+	}
+	return uwusfls
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdate) SetNotNilEnable(value *int32) *UpgradeWinUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return uwusgs.SetEnable(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne) SetNotNilEnable(value *int32) *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return uwusgs.SetEnable(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyCreate) SetNotNilEnable(value *int32) *UpgradeWinUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return uwusgs.SetEnable(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdate) SetNotNilBeginDatetime(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return uwusgs.SetBeginDatetime(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne) SetNotNilBeginDatetime(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return uwusgs.SetBeginDatetime(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyCreate) SetNotNilBeginDatetime(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return uwusgs.SetBeginDatetime(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdate) SetNotNilEndDatetime(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return uwusgs.SetEndDatetime(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne) SetNotNilEndDatetime(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return uwusgs.SetEndDatetime(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyCreate) SetNotNilEndDatetime(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return uwusgs.SetEndDatetime(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdate) SetNotNilLimit(value *int) *UpgradeWinUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return uwusgs.SetLimit(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne) SetNotNilLimit(value *int) *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return uwusgs.SetLimit(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyCreate) SetNotNilLimit(value *int) *UpgradeWinUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return uwusgs.SetLimit(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdate) SetNotNilIsDel(value *int32) *UpgradeWinUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return uwusgs.SetIsDel(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne) SetNotNilIsDel(value *int32) *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return uwusgs.SetIsDel(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyCreate) SetNotNilIsDel(value *int32) *UpgradeWinUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return uwusgs.SetIsDel(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return uwusgs.SetCreateAt(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return uwusgs.SetCreateAt(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyCreate) SetNotNilCreateAt(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return uwusgs.SetCreateAt(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyUpdate {
+	if value != nil {
+		return uwusgs.SetUpdateAt(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne {
+	if value != nil {
+		return uwusgs.SetUpdateAt(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinUpgradeStrategyGrayStrategyCreate {
+	if value != nil {
+		return uwusgs.SetUpdateAt(*value)
+	}
+	return uwusgs
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilCompanyID(value *int) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetCompanyID(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilCompanyID(value *int) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetCompanyID(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilCompanyID(value *int) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetCompanyID(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilWinID(value *int) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetWinID(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilWinID(value *int) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetWinID(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilWinID(value *int) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetWinID(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilCloudFileID(value *string) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetCloudFileID(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilCloudFileID(value *string) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetCloudFileID(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilCloudFileID(value *string) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetCloudFileID(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilVersionName(value *string) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetVersionName(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilVersionName(value *string) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetVersionName(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilVersionName(value *string) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetVersionName(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilVersionCode(value *int) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetVersionCode(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilVersionCode(value *int) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetVersionCode(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilVersionCode(value *int) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetVersionCode(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilArch(value *string) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetArch(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilArch(value *string) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetArch(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilArch(value *string) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetArch(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilDescription(value *string) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetDescription(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilDescription(value *string) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetDescription(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilDescription(value *string) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetDescription(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilIsDel(value *int32) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetIsDel(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilIsDel(value *int32) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetIsDel(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilIsDel(value *int32) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetIsDel(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilCreateAt(value *time.Time) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetCreateAt(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilCreateAt(value *time.Time) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetCreateAt(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilCreateAt(value *time.Time) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetCreateAt(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinVersionUpdate {
+	if value != nil {
+		return uwv.SetUpdateAt(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionUpdateOne) SetNotNilUpdateAt(value *time.Time) *UpgradeWinVersionUpdateOne {
+	if value != nil {
+		return uwv.SetUpdateAt(*value)
+	}
+	return uwv
+}
+
+// set field if value's pointer is not nil.
+func (uwv *UpgradeWinVersionCreate) SetNotNilUpdateAt(value *time.Time) *UpgradeWinVersionCreate {
+	if value != nil {
+		return uwv.SetUpdateAt(*value)
+	}
+	return uwv
 }

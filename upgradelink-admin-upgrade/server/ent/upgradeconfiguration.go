@@ -4,9 +4,9 @@ package ent
 
 import (
 	"fmt"
-	"upgradelink-admin-upgrade/server/ent/upgradeconfiguration"
 	"strings"
 	"time"
+	"upgradelink-admin-upgrade/server/ent/upgradeconfiguration"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"

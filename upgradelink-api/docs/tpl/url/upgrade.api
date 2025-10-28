@@ -3,8 +3,8 @@ syntax = "v1"
 info(
     title: "API management"
     desc: "API management is used to register APIs and manage APIs"
-    author: "toolsetlink"
-    email: "toolsetlink@163.com"
+    author: "Ryan Su"
+    email: "yuansu.china.work@gmail.com"
     version: "v1.0"
 )
 
@@ -57,6 +57,41 @@ type (
     }
 )
 
+
+
+type GetUrlVersionInfoRespData {
+
+    // url 应用 唯一标识
+    UrlKey string `json:"urlKey,optional"`
+
+    // 应用版本名称
+    VersionName string `json:"versionName,optional"`
+
+    // 应用版本号
+    VersionCode int64 `json:"versionCode,optional"`
+
+    // 描述
+    Description string `json:"description,optional"`
+}
+
+type (
+
+    GetUrlVersionInfoReq {
+        // url 应用 唯一标识
+        UrlKey string `json:"urlKey"`
+
+        // 客户端应用版本号
+        VersionCode int64 `json:"versionCode,default=0"`
+    }
+
+    GetUrlVersionInfoResp {
+        BaseDataInfo
+
+        Data GetUrlVersionInfoRespData `json:"data"`
+    }
+)
+
+
 // RateLimit 流量控制
 // ReplayAttack 防重放攻击
 // Signature 签名认证
@@ -68,9 +103,14 @@ type (
 )
 
 service api {
-    // 获取升级
+
+    // Get API list | 获取API列表
     @handler getUrlUpgradeInfo
     post /upgrade (GetUrlUpgradeInfoReq) returns (GetUrlUpgradeInfoResp)
+
+    // 获取 版本信息
+    @handler getUrlVersionInfo
+    post /version (GetUrlVersionInfoReq) returns (GetUrlVersionInfoResp)
 }
 
 type (

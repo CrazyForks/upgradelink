@@ -72,6 +72,26 @@ type Tx struct {
 	UpgradeFileUpgradeStrategyGrayStrategy *UpgradeFileUpgradeStrategyGrayStrategyClient
 	// UpgradeFileVersion is the client for interacting with the UpgradeFileVersion builders.
 	UpgradeFileVersion *UpgradeFileVersionClient
+	// UpgradeLnx is the client for interacting with the UpgradeLnx builders.
+	UpgradeLnx *UpgradeLnxClient
+	// UpgradeLnxUpgradeStrategy is the client for interacting with the UpgradeLnxUpgradeStrategy builders.
+	UpgradeLnxUpgradeStrategy *UpgradeLnxUpgradeStrategyClient
+	// UpgradeLnxUpgradeStrategyFlowLimitStrategy is the client for interacting with the UpgradeLnxUpgradeStrategyFlowLimitStrategy builders.
+	UpgradeLnxUpgradeStrategyFlowLimitStrategy *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient
+	// UpgradeLnxUpgradeStrategyGrayStrategy is the client for interacting with the UpgradeLnxUpgradeStrategyGrayStrategy builders.
+	UpgradeLnxUpgradeStrategyGrayStrategy *UpgradeLnxUpgradeStrategyGrayStrategyClient
+	// UpgradeLnxVersion is the client for interacting with the UpgradeLnxVersion builders.
+	UpgradeLnxVersion *UpgradeLnxVersionClient
+	// UpgradeMac is the client for interacting with the UpgradeMac builders.
+	UpgradeMac *UpgradeMacClient
+	// UpgradeMacUpgradeStrategy is the client for interacting with the UpgradeMacUpgradeStrategy builders.
+	UpgradeMacUpgradeStrategy *UpgradeMacUpgradeStrategyClient
+	// UpgradeMacUpgradeStrategyFlowLimitStrategy is the client for interacting with the UpgradeMacUpgradeStrategyFlowLimitStrategy builders.
+	UpgradeMacUpgradeStrategyFlowLimitStrategy *UpgradeMacUpgradeStrategyFlowLimitStrategyClient
+	// UpgradeMacUpgradeStrategyGrayStrategy is the client for interacting with the UpgradeMacUpgradeStrategyGrayStrategy builders.
+	UpgradeMacUpgradeStrategyGrayStrategy *UpgradeMacUpgradeStrategyGrayStrategyClient
+	// UpgradeMacVersion is the client for interacting with the UpgradeMacVersion builders.
+	UpgradeMacVersion *UpgradeMacVersionClient
 	// UpgradeTauri is the client for interacting with the UpgradeTauri builders.
 	UpgradeTauri *UpgradeTauriClient
 	// UpgradeTauriUpgradeStrategy is the client for interacting with the UpgradeTauriUpgradeStrategy builders.
@@ -94,6 +114,16 @@ type Tx struct {
 	UpgradeUrlUpgradeStrategyGrayStrategy *UpgradeUrlUpgradeStrategyGrayStrategyClient
 	// UpgradeUrlVersion is the client for interacting with the UpgradeUrlVersion builders.
 	UpgradeUrlVersion *UpgradeUrlVersionClient
+	// UpgradeWin is the client for interacting with the UpgradeWin builders.
+	UpgradeWin *UpgradeWinClient
+	// UpgradeWinUpgradeStrategy is the client for interacting with the UpgradeWinUpgradeStrategy builders.
+	UpgradeWinUpgradeStrategy *UpgradeWinUpgradeStrategyClient
+	// UpgradeWinUpgradeStrategyFlowLimitStrategy is the client for interacting with the UpgradeWinUpgradeStrategyFlowLimitStrategy builders.
+	UpgradeWinUpgradeStrategyFlowLimitStrategy *UpgradeWinUpgradeStrategyFlowLimitStrategyClient
+	// UpgradeWinUpgradeStrategyGrayStrategy is the client for interacting with the UpgradeWinUpgradeStrategyGrayStrategy builders.
+	UpgradeWinUpgradeStrategyGrayStrategy *UpgradeWinUpgradeStrategyGrayStrategyClient
+	// UpgradeWinVersion is the client for interacting with the UpgradeWinVersion builders.
+	UpgradeWinVersion *UpgradeWinVersionClient
 
 	// lazily loaded.
 	client     *Client
@@ -254,6 +284,16 @@ func (tx *Tx) init() {
 	tx.UpgradeFileUpgradeStrategyFlowLimitStrategy = NewUpgradeFileUpgradeStrategyFlowLimitStrategyClient(tx.config)
 	tx.UpgradeFileUpgradeStrategyGrayStrategy = NewUpgradeFileUpgradeStrategyGrayStrategyClient(tx.config)
 	tx.UpgradeFileVersion = NewUpgradeFileVersionClient(tx.config)
+	tx.UpgradeLnx = NewUpgradeLnxClient(tx.config)
+	tx.UpgradeLnxUpgradeStrategy = NewUpgradeLnxUpgradeStrategyClient(tx.config)
+	tx.UpgradeLnxUpgradeStrategyFlowLimitStrategy = NewUpgradeLnxUpgradeStrategyFlowLimitStrategyClient(tx.config)
+	tx.UpgradeLnxUpgradeStrategyGrayStrategy = NewUpgradeLnxUpgradeStrategyGrayStrategyClient(tx.config)
+	tx.UpgradeLnxVersion = NewUpgradeLnxVersionClient(tx.config)
+	tx.UpgradeMac = NewUpgradeMacClient(tx.config)
+	tx.UpgradeMacUpgradeStrategy = NewUpgradeMacUpgradeStrategyClient(tx.config)
+	tx.UpgradeMacUpgradeStrategyFlowLimitStrategy = NewUpgradeMacUpgradeStrategyFlowLimitStrategyClient(tx.config)
+	tx.UpgradeMacUpgradeStrategyGrayStrategy = NewUpgradeMacUpgradeStrategyGrayStrategyClient(tx.config)
+	tx.UpgradeMacVersion = NewUpgradeMacVersionClient(tx.config)
 	tx.UpgradeTauri = NewUpgradeTauriClient(tx.config)
 	tx.UpgradeTauriUpgradeStrategy = NewUpgradeTauriUpgradeStrategyClient(tx.config)
 	tx.UpgradeTauriUpgradeStrategyFlowLimitStrategy = NewUpgradeTauriUpgradeStrategyFlowLimitStrategyClient(tx.config)
@@ -265,6 +305,11 @@ func (tx *Tx) init() {
 	tx.UpgradeUrlUpgradeStrategyFlowLimitStrategy = NewUpgradeUrlUpgradeStrategyFlowLimitStrategyClient(tx.config)
 	tx.UpgradeUrlUpgradeStrategyGrayStrategy = NewUpgradeUrlUpgradeStrategyGrayStrategyClient(tx.config)
 	tx.UpgradeUrlVersion = NewUpgradeUrlVersionClient(tx.config)
+	tx.UpgradeWin = NewUpgradeWinClient(tx.config)
+	tx.UpgradeWinUpgradeStrategy = NewUpgradeWinUpgradeStrategyClient(tx.config)
+	tx.UpgradeWinUpgradeStrategyFlowLimitStrategy = NewUpgradeWinUpgradeStrategyFlowLimitStrategyClient(tx.config)
+	tx.UpgradeWinUpgradeStrategyGrayStrategy = NewUpgradeWinUpgradeStrategyGrayStrategyClient(tx.config)
+	tx.UpgradeWinVersion = NewUpgradeWinVersionClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.

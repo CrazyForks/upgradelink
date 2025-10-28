@@ -731,3 +731,270 @@ CREATE TABLE `upgrade_electron_version` (
 PRIMARY KEY (`id`) USING BTREE,
 KEY `idx_electron_active_version` (`electron_id`,`is_del`,`version_code`,`create_at`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='electron应用 版本库';
+
+
+
+
+
+
+CREATE TABLE `upgrade_lnx` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+`key` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'linux应用唯一标识',
+`name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'linux应用名称',
+`package_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'linux应用包名',
+`description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '描述信息',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='linux应用';
+
+
+CREATE TABLE `upgrade_lnx_upgrade_strategy` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+`enable` int NOT NULL DEFAULT '0' COMMENT '是否生效；可通过此控制策略是否生效0：失效；1：生效',
+`name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '任务名称',
+`description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '任务描述信息',
+`lnx_id` bigint NOT NULL DEFAULT '0' COMMENT 'linux应用ID',
+`lnx_version_id` bigint NOT NULL DEFAULT '0' COMMENT 'lnx_version_id; 外键lnx_version.id',
+`begin_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '升级任务开始时间',
+`end_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '升级任务结束时间',
+`upgrade_type` int NOT NULL DEFAULT '0' COMMENT '升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级',
+`prompt_upgrade_content` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '提示升级描述内容',
+`upgrade_dev_type` int NOT NULL DEFAULT '0' COMMENT '指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型',
+`upgrade_dev_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;',
+`upgrade_version_type` int NOT NULL DEFAULT '0' COMMENT '指定升级的应用版本：0：全部版本；1：指定版本',
+`upgrade_version_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '升级设备数据：0.当为全部版本时，此字段为空；；1.当指定应用版本时，此字段存储应用版本id;',
+`is_gray` int NOT NULL DEFAULT '0' COMMENT '是否开启灰度 0：不开启；1：开启',
+`gray_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '灰度策略id数据',
+`is_flow_limit` int NOT NULL DEFAULT '0' COMMENT '是否开启频控 0：不开启；1：开启',
+`flow_limit_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '频控策略id数据',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='linux应用 升级任务';
+
+
+CREATE TABLE `upgrade_lnx_upgrade_strategy_flow_limit_strategy` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`enable` int NOT NULL DEFAULT '9' COMMENT '是否生效；可通过此控制策略是否生效0：失效；1：生效',
+`begin_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '开始时间段: 时分秒',
+`end_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '结束时间段: 时分秒',
+`dimension` int NOT NULL DEFAULT '1' COMMENT '流控维度；流控维度：1：秒；2：分；3：时；4：天',
+`limit` bigint NOT NULL DEFAULT '10' COMMENT '频控限制；在流控维度上的次数',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='linux应用 升级任务灰度策略表；';
+
+
+
+CREATE TABLE `upgrade_lnx_upgrade_strategy_gray_strategy` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`enable` int NOT NULL DEFAULT '0' COMMENT '是否生效；可通过此控制策略是否生效0：失效；1：生效',
+`begin_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '开始时间',
+`end_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '结束时间',
+`limit` bigint NOT NULL DEFAULT '10' COMMENT '数量限制',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='linux应用 升级任务灰度策略表；';
+
+
+
+CREATE TABLE `upgrade_lnx_version` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+`lnx_id` bigint NOT NULL DEFAULT '0' COMMENT 'lnx应用ID',
+`cloud_file_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '云文件id',
+`version_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '版本名',
+`version_code` bigint NOT NULL DEFAULT '0' COMMENT '版本号',
+`arch` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '机器架构:x64、arm64',
+`description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '描述信息',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='linux应用 版本库';
+
+
+
+CREATE TABLE `upgrade_mac` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+`key` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'mac应用唯一标识',
+`name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'mac应用名称',
+`package_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'mac应用包名',
+`description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '描述信息',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='mac应用';
+
+
+
+CREATE TABLE `upgrade_mac_upgrade_strategy` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+`enable` int NOT NULL DEFAULT '0' COMMENT '是否生效；可通过此控制策略是否生效0：失效；1：生效',
+`name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '任务名称',
+`description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '任务描述信息',
+`mac_id` bigint NOT NULL DEFAULT '0' COMMENT 'mac应用ID',
+`mac_version_id` bigint NOT NULL DEFAULT '0' COMMENT 'mac_version_id; 外键mac_version.id',
+`begin_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '升级任务开始时间',
+`end_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '升级任务结束时间',
+`upgrade_type` int NOT NULL DEFAULT '0' COMMENT '升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级',
+`prompt_upgrade_content` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '提示升级描述内容',
+`upgrade_dev_type` int NOT NULL DEFAULT '0' COMMENT '指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型',
+`upgrade_dev_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;',
+`upgrade_version_type` int NOT NULL DEFAULT '0' COMMENT '指定升级的应用版本：0：全部版本；1：指定版本',
+`upgrade_version_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '升级设备数据：0.当为全部版本时，此字段为空；；1.当指定应用版本时，此字段存储应用版本id;',
+`is_gray` int NOT NULL DEFAULT '0' COMMENT '是否开启灰度 0：不开启；1：开启',
+`gray_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '灰度策略id数据',
+`is_flow_limit` int NOT NULL DEFAULT '0' COMMENT '是否开启频控 0：不开启；1：开启',
+`flow_limit_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '频控策略id数据',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='mac应用 升级任务';
+
+
+
+CREATE TABLE `upgrade_mac_upgrade_strategy_flow_limit_strategy` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`enable` int NOT NULL DEFAULT '9' COMMENT '是否生效；可通过此控制策略是否生效0：失效；1：生效',
+`begin_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '开始时间段: 时分秒',
+`end_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '结束时间段: 时分秒',
+`dimension` int NOT NULL DEFAULT '1' COMMENT '流控维度；流控维度：1：秒；2：分；3：时；4：天',
+`limit` bigint NOT NULL DEFAULT '10' COMMENT '频控限制；在流控维度上的次数',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='mac应用 升级任务灰度策略表；';
+
+
+
+CREATE TABLE `upgrade_mac_upgrade_strategy_gray_strategy` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`enable` int NOT NULL DEFAULT '0' COMMENT '是否生效；可通过此控制策略是否生效0：失效；1：生效',
+`begin_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '开始时间',
+`end_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '结束时间',
+`limit` bigint NOT NULL DEFAULT '10' COMMENT '数量限制',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='mac应用 升级任务灰度策略表；';
+
+
+
+CREATE TABLE `upgrade_mac_version` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+`mac_id` bigint NOT NULL DEFAULT '0' COMMENT 'mac应用ID',
+`cloud_file_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '云文件id',
+`version_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '版本名',
+`version_code` bigint NOT NULL DEFAULT '0' COMMENT '版本号',
+`arch` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '机器架构:x64、arm64',
+`description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '描述信息',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='mac应用 版本库';
+
+
+
+CREATE TABLE `upgrade_win` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+`key` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'win应用唯一标识',
+`name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'win应用名称',
+`package_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'win应用包名',
+`description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '描述信息',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='win应用';
+
+CREATE TABLE `upgrade_win_upgrade_strategy` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+`enable` int NOT NULL DEFAULT '0' COMMENT '是否生效；可通过此控制策略是否生效0：失效；1：生效',
+`name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '任务名称',
+`description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '任务描述信息',
+`win_id` bigint NOT NULL DEFAULT '0' COMMENT 'win应用ID',
+`win_version_id` bigint NOT NULL DEFAULT '0' COMMENT 'win_version_id; 外键win_version.id',
+`begin_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '升级任务开始时间',
+`end_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '升级任务结束时间',
+`upgrade_type` int NOT NULL DEFAULT '0' COMMENT '升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级',
+`prompt_upgrade_content` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '提示升级描述内容',
+`upgrade_dev_type` int NOT NULL DEFAULT '0' COMMENT '指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型',
+`upgrade_dev_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;',
+`upgrade_version_type` int NOT NULL DEFAULT '0' COMMENT '指定升级的应用版本：0：全部版本；1：指定版本',
+`upgrade_version_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '升级设备数据：0.当为全部版本时，此字段为空；；1.当指定应用版本时，此字段存储应用版本id;',
+`is_gray` int NOT NULL DEFAULT '0' COMMENT '是否开启灰度 0：不开启；1：开启',
+`gray_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '灰度策略id数据',
+`is_flow_limit` int NOT NULL DEFAULT '0' COMMENT '是否开启频控 0：不开启；1：开启',
+`flow_limit_data` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '频控策略id数据',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='win应用 升级任务';
+
+
+CREATE TABLE `upgrade_win_upgrade_strategy_flow_limit_strategy` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`enable` int NOT NULL DEFAULT '9' COMMENT '是否生效；可通过此控制策略是否生效0：失效；1：生效',
+`begin_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '开始时间段: 时分秒',
+`end_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '结束时间段: 时分秒',
+`dimension` int NOT NULL DEFAULT '1' COMMENT '流控维度；流控维度：1：秒；2：分；3：时；4：天',
+`limit` bigint NOT NULL DEFAULT '10' COMMENT '频控限制；在流控维度上的次数',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='win应用 升级任务灰度策略表；';
+
+
+
+CREATE TABLE `upgrade_win_upgrade_strategy_gray_strategy` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`enable` int NOT NULL DEFAULT '0' COMMENT '是否生效；可通过此控制策略是否生效0：失效；1：生效',
+`begin_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '开始时间',
+`end_datetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01' COMMENT '结束时间',
+`limit` bigint NOT NULL DEFAULT '10' COMMENT '数量限制',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='win应用 升级任务灰度策略表；';
+
+
+
+CREATE TABLE `upgrade_win_version` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+`win_id` bigint NOT NULL DEFAULT '0' COMMENT 'win应用ID',
+`cloud_file_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '云文件id',
+`version_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '版本名',
+`version_code` bigint NOT NULL DEFAULT '0' COMMENT '版本号',
+`arch` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '机器架构:x64、arm64',
+`description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '描述信息',
+`is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+`create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='win应用 版本库';
+
+

@@ -34,6 +34,16 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileversion"
+	"upgradelink-admin-upgrade/server/ent/upgradelnx"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxversion"
+	"upgradelink-admin-upgrade/server/ent/upgrademac"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacversion"
 	"upgradelink-admin-upgrade/server/ent/upgradetauri"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategyflowlimitstrategy"
@@ -45,6 +55,11 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlversion"
+	"upgradelink-admin-upgrade/server/ent/upgradewin"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinversion"
 )
 
 const errInvalidPage = "INVALID_PAGE"
@@ -2442,6 +2457,816 @@ func (ufv *UpgradeFileVersionQuery) Page(
 	return ret, nil
 }
 
+type UpgradeLnxPager struct {
+	Order  upgradelnx.OrderOption
+	Filter func(*UpgradeLnxQuery) (*UpgradeLnxQuery, error)
+}
+
+// UpgradeLnxPaginateOption enables pagination customization.
+type UpgradeLnxPaginateOption func(*UpgradeLnxPager)
+
+// DefaultUpgradeLnxOrder is the default ordering of UpgradeLnx.
+var DefaultUpgradeLnxOrder = Desc(upgradelnx.FieldID)
+
+func newUpgradeLnxPager(opts []UpgradeLnxPaginateOption) (*UpgradeLnxPager, error) {
+	pager := &UpgradeLnxPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeLnxOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeLnxPager) ApplyFilter(query *UpgradeLnxQuery) (*UpgradeLnxQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeLnxPageList is UpgradeLnx PageList result.
+type UpgradeLnxPageList struct {
+	List        []*UpgradeLnx `json:"list"`
+	PageDetails *PageDetails  `json:"pageDetails"`
+}
+
+func (ul *UpgradeLnxQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeLnxPaginateOption,
+) (*UpgradeLnxPageList, error) {
+
+	pager, err := newUpgradeLnxPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if ul, err = pager.ApplyFilter(ul); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeLnxPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := ul.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		ul = ul.Order(pager.Order)
+	} else {
+		ul = ul.Order(DefaultUpgradeLnxOrder)
+	}
+
+	ul = ul.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := ul.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeLnxUpgradeStrategyPager struct {
+	Order  upgradelnxupgradestrategy.OrderOption
+	Filter func(*UpgradeLnxUpgradeStrategyQuery) (*UpgradeLnxUpgradeStrategyQuery, error)
+}
+
+// UpgradeLnxUpgradeStrategyPaginateOption enables pagination customization.
+type UpgradeLnxUpgradeStrategyPaginateOption func(*UpgradeLnxUpgradeStrategyPager)
+
+// DefaultUpgradeLnxUpgradeStrategyOrder is the default ordering of UpgradeLnxUpgradeStrategy.
+var DefaultUpgradeLnxUpgradeStrategyOrder = Desc(upgradelnxupgradestrategy.FieldID)
+
+func newUpgradeLnxUpgradeStrategyPager(opts []UpgradeLnxUpgradeStrategyPaginateOption) (*UpgradeLnxUpgradeStrategyPager, error) {
+	pager := &UpgradeLnxUpgradeStrategyPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeLnxUpgradeStrategyOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeLnxUpgradeStrategyPager) ApplyFilter(query *UpgradeLnxUpgradeStrategyQuery) (*UpgradeLnxUpgradeStrategyQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeLnxUpgradeStrategyPageList is UpgradeLnxUpgradeStrategy PageList result.
+type UpgradeLnxUpgradeStrategyPageList struct {
+	List        []*UpgradeLnxUpgradeStrategy `json:"list"`
+	PageDetails *PageDetails                 `json:"pageDetails"`
+}
+
+func (ulus *UpgradeLnxUpgradeStrategyQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeLnxUpgradeStrategyPaginateOption,
+) (*UpgradeLnxUpgradeStrategyPageList, error) {
+
+	pager, err := newUpgradeLnxUpgradeStrategyPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if ulus, err = pager.ApplyFilter(ulus); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeLnxUpgradeStrategyPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := ulus.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		ulus = ulus.Order(pager.Order)
+	} else {
+		ulus = ulus.Order(DefaultUpgradeLnxUpgradeStrategyOrder)
+	}
+
+	ulus = ulus.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := ulus.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeLnxUpgradeStrategyFlowLimitStrategyPager struct {
+	Order  upgradelnxupgradestrategyflowlimitstrategy.OrderOption
+	Filter func(*UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery) (*UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery, error)
+}
+
+// UpgradeLnxUpgradeStrategyFlowLimitStrategyPaginateOption enables pagination customization.
+type UpgradeLnxUpgradeStrategyFlowLimitStrategyPaginateOption func(*UpgradeLnxUpgradeStrategyFlowLimitStrategyPager)
+
+// DefaultUpgradeLnxUpgradeStrategyFlowLimitStrategyOrder is the default ordering of UpgradeLnxUpgradeStrategyFlowLimitStrategy.
+var DefaultUpgradeLnxUpgradeStrategyFlowLimitStrategyOrder = Desc(upgradelnxupgradestrategyflowlimitstrategy.FieldID)
+
+func newUpgradeLnxUpgradeStrategyFlowLimitStrategyPager(opts []UpgradeLnxUpgradeStrategyFlowLimitStrategyPaginateOption) (*UpgradeLnxUpgradeStrategyFlowLimitStrategyPager, error) {
+	pager := &UpgradeLnxUpgradeStrategyFlowLimitStrategyPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeLnxUpgradeStrategyFlowLimitStrategyOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeLnxUpgradeStrategyFlowLimitStrategyPager) ApplyFilter(query *UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery) (*UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeLnxUpgradeStrategyFlowLimitStrategyPageList is UpgradeLnxUpgradeStrategyFlowLimitStrategy PageList result.
+type UpgradeLnxUpgradeStrategyFlowLimitStrategyPageList struct {
+	List        []*UpgradeLnxUpgradeStrategyFlowLimitStrategy `json:"list"`
+	PageDetails *PageDetails                                  `json:"pageDetails"`
+}
+
+func (ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeLnxUpgradeStrategyFlowLimitStrategyPaginateOption,
+) (*UpgradeLnxUpgradeStrategyFlowLimitStrategyPageList, error) {
+
+	pager, err := newUpgradeLnxUpgradeStrategyFlowLimitStrategyPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if ulusfls, err = pager.ApplyFilter(ulusfls); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeLnxUpgradeStrategyFlowLimitStrategyPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := ulusfls.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		ulusfls = ulusfls.Order(pager.Order)
+	} else {
+		ulusfls = ulusfls.Order(DefaultUpgradeLnxUpgradeStrategyFlowLimitStrategyOrder)
+	}
+
+	ulusfls = ulusfls.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := ulusfls.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeLnxUpgradeStrategyGrayStrategyPager struct {
+	Order  upgradelnxupgradestrategygraystrategy.OrderOption
+	Filter func(*UpgradeLnxUpgradeStrategyGrayStrategyQuery) (*UpgradeLnxUpgradeStrategyGrayStrategyQuery, error)
+}
+
+// UpgradeLnxUpgradeStrategyGrayStrategyPaginateOption enables pagination customization.
+type UpgradeLnxUpgradeStrategyGrayStrategyPaginateOption func(*UpgradeLnxUpgradeStrategyGrayStrategyPager)
+
+// DefaultUpgradeLnxUpgradeStrategyGrayStrategyOrder is the default ordering of UpgradeLnxUpgradeStrategyGrayStrategy.
+var DefaultUpgradeLnxUpgradeStrategyGrayStrategyOrder = Desc(upgradelnxupgradestrategygraystrategy.FieldID)
+
+func newUpgradeLnxUpgradeStrategyGrayStrategyPager(opts []UpgradeLnxUpgradeStrategyGrayStrategyPaginateOption) (*UpgradeLnxUpgradeStrategyGrayStrategyPager, error) {
+	pager := &UpgradeLnxUpgradeStrategyGrayStrategyPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeLnxUpgradeStrategyGrayStrategyOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeLnxUpgradeStrategyGrayStrategyPager) ApplyFilter(query *UpgradeLnxUpgradeStrategyGrayStrategyQuery) (*UpgradeLnxUpgradeStrategyGrayStrategyQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeLnxUpgradeStrategyGrayStrategyPageList is UpgradeLnxUpgradeStrategyGrayStrategy PageList result.
+type UpgradeLnxUpgradeStrategyGrayStrategyPageList struct {
+	List        []*UpgradeLnxUpgradeStrategyGrayStrategy `json:"list"`
+	PageDetails *PageDetails                             `json:"pageDetails"`
+}
+
+func (ulusgs *UpgradeLnxUpgradeStrategyGrayStrategyQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeLnxUpgradeStrategyGrayStrategyPaginateOption,
+) (*UpgradeLnxUpgradeStrategyGrayStrategyPageList, error) {
+
+	pager, err := newUpgradeLnxUpgradeStrategyGrayStrategyPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if ulusgs, err = pager.ApplyFilter(ulusgs); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeLnxUpgradeStrategyGrayStrategyPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := ulusgs.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		ulusgs = ulusgs.Order(pager.Order)
+	} else {
+		ulusgs = ulusgs.Order(DefaultUpgradeLnxUpgradeStrategyGrayStrategyOrder)
+	}
+
+	ulusgs = ulusgs.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := ulusgs.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeLnxVersionPager struct {
+	Order  upgradelnxversion.OrderOption
+	Filter func(*UpgradeLnxVersionQuery) (*UpgradeLnxVersionQuery, error)
+}
+
+// UpgradeLnxVersionPaginateOption enables pagination customization.
+type UpgradeLnxVersionPaginateOption func(*UpgradeLnxVersionPager)
+
+// DefaultUpgradeLnxVersionOrder is the default ordering of UpgradeLnxVersion.
+var DefaultUpgradeLnxVersionOrder = Desc(upgradelnxversion.FieldID)
+
+func newUpgradeLnxVersionPager(opts []UpgradeLnxVersionPaginateOption) (*UpgradeLnxVersionPager, error) {
+	pager := &UpgradeLnxVersionPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeLnxVersionOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeLnxVersionPager) ApplyFilter(query *UpgradeLnxVersionQuery) (*UpgradeLnxVersionQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeLnxVersionPageList is UpgradeLnxVersion PageList result.
+type UpgradeLnxVersionPageList struct {
+	List        []*UpgradeLnxVersion `json:"list"`
+	PageDetails *PageDetails         `json:"pageDetails"`
+}
+
+func (ulv *UpgradeLnxVersionQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeLnxVersionPaginateOption,
+) (*UpgradeLnxVersionPageList, error) {
+
+	pager, err := newUpgradeLnxVersionPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if ulv, err = pager.ApplyFilter(ulv); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeLnxVersionPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := ulv.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		ulv = ulv.Order(pager.Order)
+	} else {
+		ulv = ulv.Order(DefaultUpgradeLnxVersionOrder)
+	}
+
+	ulv = ulv.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := ulv.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeMacPager struct {
+	Order  upgrademac.OrderOption
+	Filter func(*UpgradeMacQuery) (*UpgradeMacQuery, error)
+}
+
+// UpgradeMacPaginateOption enables pagination customization.
+type UpgradeMacPaginateOption func(*UpgradeMacPager)
+
+// DefaultUpgradeMacOrder is the default ordering of UpgradeMac.
+var DefaultUpgradeMacOrder = Desc(upgrademac.FieldID)
+
+func newUpgradeMacPager(opts []UpgradeMacPaginateOption) (*UpgradeMacPager, error) {
+	pager := &UpgradeMacPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeMacOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeMacPager) ApplyFilter(query *UpgradeMacQuery) (*UpgradeMacQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeMacPageList is UpgradeMac PageList result.
+type UpgradeMacPageList struct {
+	List        []*UpgradeMac `json:"list"`
+	PageDetails *PageDetails  `json:"pageDetails"`
+}
+
+func (um *UpgradeMacQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeMacPaginateOption,
+) (*UpgradeMacPageList, error) {
+
+	pager, err := newUpgradeMacPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if um, err = pager.ApplyFilter(um); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeMacPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := um.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		um = um.Order(pager.Order)
+	} else {
+		um = um.Order(DefaultUpgradeMacOrder)
+	}
+
+	um = um.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := um.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeMacUpgradeStrategyPager struct {
+	Order  upgrademacupgradestrategy.OrderOption
+	Filter func(*UpgradeMacUpgradeStrategyQuery) (*UpgradeMacUpgradeStrategyQuery, error)
+}
+
+// UpgradeMacUpgradeStrategyPaginateOption enables pagination customization.
+type UpgradeMacUpgradeStrategyPaginateOption func(*UpgradeMacUpgradeStrategyPager)
+
+// DefaultUpgradeMacUpgradeStrategyOrder is the default ordering of UpgradeMacUpgradeStrategy.
+var DefaultUpgradeMacUpgradeStrategyOrder = Desc(upgrademacupgradestrategy.FieldID)
+
+func newUpgradeMacUpgradeStrategyPager(opts []UpgradeMacUpgradeStrategyPaginateOption) (*UpgradeMacUpgradeStrategyPager, error) {
+	pager := &UpgradeMacUpgradeStrategyPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeMacUpgradeStrategyOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeMacUpgradeStrategyPager) ApplyFilter(query *UpgradeMacUpgradeStrategyQuery) (*UpgradeMacUpgradeStrategyQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeMacUpgradeStrategyPageList is UpgradeMacUpgradeStrategy PageList result.
+type UpgradeMacUpgradeStrategyPageList struct {
+	List        []*UpgradeMacUpgradeStrategy `json:"list"`
+	PageDetails *PageDetails                 `json:"pageDetails"`
+}
+
+func (umus *UpgradeMacUpgradeStrategyQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeMacUpgradeStrategyPaginateOption,
+) (*UpgradeMacUpgradeStrategyPageList, error) {
+
+	pager, err := newUpgradeMacUpgradeStrategyPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if umus, err = pager.ApplyFilter(umus); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeMacUpgradeStrategyPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := umus.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		umus = umus.Order(pager.Order)
+	} else {
+		umus = umus.Order(DefaultUpgradeMacUpgradeStrategyOrder)
+	}
+
+	umus = umus.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := umus.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeMacUpgradeStrategyFlowLimitStrategyPager struct {
+	Order  upgrademacupgradestrategyflowlimitstrategy.OrderOption
+	Filter func(*UpgradeMacUpgradeStrategyFlowLimitStrategyQuery) (*UpgradeMacUpgradeStrategyFlowLimitStrategyQuery, error)
+}
+
+// UpgradeMacUpgradeStrategyFlowLimitStrategyPaginateOption enables pagination customization.
+type UpgradeMacUpgradeStrategyFlowLimitStrategyPaginateOption func(*UpgradeMacUpgradeStrategyFlowLimitStrategyPager)
+
+// DefaultUpgradeMacUpgradeStrategyFlowLimitStrategyOrder is the default ordering of UpgradeMacUpgradeStrategyFlowLimitStrategy.
+var DefaultUpgradeMacUpgradeStrategyFlowLimitStrategyOrder = Desc(upgrademacupgradestrategyflowlimitstrategy.FieldID)
+
+func newUpgradeMacUpgradeStrategyFlowLimitStrategyPager(opts []UpgradeMacUpgradeStrategyFlowLimitStrategyPaginateOption) (*UpgradeMacUpgradeStrategyFlowLimitStrategyPager, error) {
+	pager := &UpgradeMacUpgradeStrategyFlowLimitStrategyPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeMacUpgradeStrategyFlowLimitStrategyOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeMacUpgradeStrategyFlowLimitStrategyPager) ApplyFilter(query *UpgradeMacUpgradeStrategyFlowLimitStrategyQuery) (*UpgradeMacUpgradeStrategyFlowLimitStrategyQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeMacUpgradeStrategyFlowLimitStrategyPageList is UpgradeMacUpgradeStrategyFlowLimitStrategy PageList result.
+type UpgradeMacUpgradeStrategyFlowLimitStrategyPageList struct {
+	List        []*UpgradeMacUpgradeStrategyFlowLimitStrategy `json:"list"`
+	PageDetails *PageDetails                                  `json:"pageDetails"`
+}
+
+func (umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategyQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeMacUpgradeStrategyFlowLimitStrategyPaginateOption,
+) (*UpgradeMacUpgradeStrategyFlowLimitStrategyPageList, error) {
+
+	pager, err := newUpgradeMacUpgradeStrategyFlowLimitStrategyPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if umusfls, err = pager.ApplyFilter(umusfls); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeMacUpgradeStrategyFlowLimitStrategyPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := umusfls.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		umusfls = umusfls.Order(pager.Order)
+	} else {
+		umusfls = umusfls.Order(DefaultUpgradeMacUpgradeStrategyFlowLimitStrategyOrder)
+	}
+
+	umusfls = umusfls.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := umusfls.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeMacUpgradeStrategyGrayStrategyPager struct {
+	Order  upgrademacupgradestrategygraystrategy.OrderOption
+	Filter func(*UpgradeMacUpgradeStrategyGrayStrategyQuery) (*UpgradeMacUpgradeStrategyGrayStrategyQuery, error)
+}
+
+// UpgradeMacUpgradeStrategyGrayStrategyPaginateOption enables pagination customization.
+type UpgradeMacUpgradeStrategyGrayStrategyPaginateOption func(*UpgradeMacUpgradeStrategyGrayStrategyPager)
+
+// DefaultUpgradeMacUpgradeStrategyGrayStrategyOrder is the default ordering of UpgradeMacUpgradeStrategyGrayStrategy.
+var DefaultUpgradeMacUpgradeStrategyGrayStrategyOrder = Desc(upgrademacupgradestrategygraystrategy.FieldID)
+
+func newUpgradeMacUpgradeStrategyGrayStrategyPager(opts []UpgradeMacUpgradeStrategyGrayStrategyPaginateOption) (*UpgradeMacUpgradeStrategyGrayStrategyPager, error) {
+	pager := &UpgradeMacUpgradeStrategyGrayStrategyPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeMacUpgradeStrategyGrayStrategyOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeMacUpgradeStrategyGrayStrategyPager) ApplyFilter(query *UpgradeMacUpgradeStrategyGrayStrategyQuery) (*UpgradeMacUpgradeStrategyGrayStrategyQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeMacUpgradeStrategyGrayStrategyPageList is UpgradeMacUpgradeStrategyGrayStrategy PageList result.
+type UpgradeMacUpgradeStrategyGrayStrategyPageList struct {
+	List        []*UpgradeMacUpgradeStrategyGrayStrategy `json:"list"`
+	PageDetails *PageDetails                             `json:"pageDetails"`
+}
+
+func (umusgs *UpgradeMacUpgradeStrategyGrayStrategyQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeMacUpgradeStrategyGrayStrategyPaginateOption,
+) (*UpgradeMacUpgradeStrategyGrayStrategyPageList, error) {
+
+	pager, err := newUpgradeMacUpgradeStrategyGrayStrategyPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if umusgs, err = pager.ApplyFilter(umusgs); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeMacUpgradeStrategyGrayStrategyPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := umusgs.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		umusgs = umusgs.Order(pager.Order)
+	} else {
+		umusgs = umusgs.Order(DefaultUpgradeMacUpgradeStrategyGrayStrategyOrder)
+	}
+
+	umusgs = umusgs.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := umusgs.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeMacVersionPager struct {
+	Order  upgrademacversion.OrderOption
+	Filter func(*UpgradeMacVersionQuery) (*UpgradeMacVersionQuery, error)
+}
+
+// UpgradeMacVersionPaginateOption enables pagination customization.
+type UpgradeMacVersionPaginateOption func(*UpgradeMacVersionPager)
+
+// DefaultUpgradeMacVersionOrder is the default ordering of UpgradeMacVersion.
+var DefaultUpgradeMacVersionOrder = Desc(upgrademacversion.FieldID)
+
+func newUpgradeMacVersionPager(opts []UpgradeMacVersionPaginateOption) (*UpgradeMacVersionPager, error) {
+	pager := &UpgradeMacVersionPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeMacVersionOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeMacVersionPager) ApplyFilter(query *UpgradeMacVersionQuery) (*UpgradeMacVersionQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeMacVersionPageList is UpgradeMacVersion PageList result.
+type UpgradeMacVersionPageList struct {
+	List        []*UpgradeMacVersion `json:"list"`
+	PageDetails *PageDetails         `json:"pageDetails"`
+}
+
+func (umv *UpgradeMacVersionQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeMacVersionPaginateOption,
+) (*UpgradeMacVersionPageList, error) {
+
+	pager, err := newUpgradeMacVersionPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if umv, err = pager.ApplyFilter(umv); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeMacVersionPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := umv.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		umv = umv.Order(pager.Order)
+	} else {
+		umv = umv.Order(DefaultUpgradeMacVersionOrder)
+	}
+
+	umv = umv.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := umv.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
 type UpgradeTauriPager struct {
 	Order  upgradetauri.OrderOption
 	Filter func(*UpgradeTauriQuery) (*UpgradeTauriQuery, error)
@@ -3325,6 +4150,411 @@ func (uuv *UpgradeUrlVersionQuery) Page(
 
 	uuv = uuv.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
 	list, err := uuv.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeWinPager struct {
+	Order  upgradewin.OrderOption
+	Filter func(*UpgradeWinQuery) (*UpgradeWinQuery, error)
+}
+
+// UpgradeWinPaginateOption enables pagination customization.
+type UpgradeWinPaginateOption func(*UpgradeWinPager)
+
+// DefaultUpgradeWinOrder is the default ordering of UpgradeWin.
+var DefaultUpgradeWinOrder = Desc(upgradewin.FieldID)
+
+func newUpgradeWinPager(opts []UpgradeWinPaginateOption) (*UpgradeWinPager, error) {
+	pager := &UpgradeWinPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeWinOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeWinPager) ApplyFilter(query *UpgradeWinQuery) (*UpgradeWinQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeWinPageList is UpgradeWin PageList result.
+type UpgradeWinPageList struct {
+	List        []*UpgradeWin `json:"list"`
+	PageDetails *PageDetails  `json:"pageDetails"`
+}
+
+func (uw *UpgradeWinQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeWinPaginateOption,
+) (*UpgradeWinPageList, error) {
+
+	pager, err := newUpgradeWinPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if uw, err = pager.ApplyFilter(uw); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeWinPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := uw.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		uw = uw.Order(pager.Order)
+	} else {
+		uw = uw.Order(DefaultUpgradeWinOrder)
+	}
+
+	uw = uw.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := uw.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeWinUpgradeStrategyPager struct {
+	Order  upgradewinupgradestrategy.OrderOption
+	Filter func(*UpgradeWinUpgradeStrategyQuery) (*UpgradeWinUpgradeStrategyQuery, error)
+}
+
+// UpgradeWinUpgradeStrategyPaginateOption enables pagination customization.
+type UpgradeWinUpgradeStrategyPaginateOption func(*UpgradeWinUpgradeStrategyPager)
+
+// DefaultUpgradeWinUpgradeStrategyOrder is the default ordering of UpgradeWinUpgradeStrategy.
+var DefaultUpgradeWinUpgradeStrategyOrder = Desc(upgradewinupgradestrategy.FieldID)
+
+func newUpgradeWinUpgradeStrategyPager(opts []UpgradeWinUpgradeStrategyPaginateOption) (*UpgradeWinUpgradeStrategyPager, error) {
+	pager := &UpgradeWinUpgradeStrategyPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeWinUpgradeStrategyOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeWinUpgradeStrategyPager) ApplyFilter(query *UpgradeWinUpgradeStrategyQuery) (*UpgradeWinUpgradeStrategyQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeWinUpgradeStrategyPageList is UpgradeWinUpgradeStrategy PageList result.
+type UpgradeWinUpgradeStrategyPageList struct {
+	List        []*UpgradeWinUpgradeStrategy `json:"list"`
+	PageDetails *PageDetails                 `json:"pageDetails"`
+}
+
+func (uwus *UpgradeWinUpgradeStrategyQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeWinUpgradeStrategyPaginateOption,
+) (*UpgradeWinUpgradeStrategyPageList, error) {
+
+	pager, err := newUpgradeWinUpgradeStrategyPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if uwus, err = pager.ApplyFilter(uwus); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeWinUpgradeStrategyPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := uwus.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		uwus = uwus.Order(pager.Order)
+	} else {
+		uwus = uwus.Order(DefaultUpgradeWinUpgradeStrategyOrder)
+	}
+
+	uwus = uwus.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := uwus.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeWinUpgradeStrategyFlowLimitStrategyPager struct {
+	Order  upgradewinupgradestrategyflowlimitstrategy.OrderOption
+	Filter func(*UpgradeWinUpgradeStrategyFlowLimitStrategyQuery) (*UpgradeWinUpgradeStrategyFlowLimitStrategyQuery, error)
+}
+
+// UpgradeWinUpgradeStrategyFlowLimitStrategyPaginateOption enables pagination customization.
+type UpgradeWinUpgradeStrategyFlowLimitStrategyPaginateOption func(*UpgradeWinUpgradeStrategyFlowLimitStrategyPager)
+
+// DefaultUpgradeWinUpgradeStrategyFlowLimitStrategyOrder is the default ordering of UpgradeWinUpgradeStrategyFlowLimitStrategy.
+var DefaultUpgradeWinUpgradeStrategyFlowLimitStrategyOrder = Desc(upgradewinupgradestrategyflowlimitstrategy.FieldID)
+
+func newUpgradeWinUpgradeStrategyFlowLimitStrategyPager(opts []UpgradeWinUpgradeStrategyFlowLimitStrategyPaginateOption) (*UpgradeWinUpgradeStrategyFlowLimitStrategyPager, error) {
+	pager := &UpgradeWinUpgradeStrategyFlowLimitStrategyPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeWinUpgradeStrategyFlowLimitStrategyOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeWinUpgradeStrategyFlowLimitStrategyPager) ApplyFilter(query *UpgradeWinUpgradeStrategyFlowLimitStrategyQuery) (*UpgradeWinUpgradeStrategyFlowLimitStrategyQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeWinUpgradeStrategyFlowLimitStrategyPageList is UpgradeWinUpgradeStrategyFlowLimitStrategy PageList result.
+type UpgradeWinUpgradeStrategyFlowLimitStrategyPageList struct {
+	List        []*UpgradeWinUpgradeStrategyFlowLimitStrategy `json:"list"`
+	PageDetails *PageDetails                                  `json:"pageDetails"`
+}
+
+func (uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategyQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeWinUpgradeStrategyFlowLimitStrategyPaginateOption,
+) (*UpgradeWinUpgradeStrategyFlowLimitStrategyPageList, error) {
+
+	pager, err := newUpgradeWinUpgradeStrategyFlowLimitStrategyPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if uwusfls, err = pager.ApplyFilter(uwusfls); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeWinUpgradeStrategyFlowLimitStrategyPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := uwusfls.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		uwusfls = uwusfls.Order(pager.Order)
+	} else {
+		uwusfls = uwusfls.Order(DefaultUpgradeWinUpgradeStrategyFlowLimitStrategyOrder)
+	}
+
+	uwusfls = uwusfls.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := uwusfls.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeWinUpgradeStrategyGrayStrategyPager struct {
+	Order  upgradewinupgradestrategygraystrategy.OrderOption
+	Filter func(*UpgradeWinUpgradeStrategyGrayStrategyQuery) (*UpgradeWinUpgradeStrategyGrayStrategyQuery, error)
+}
+
+// UpgradeWinUpgradeStrategyGrayStrategyPaginateOption enables pagination customization.
+type UpgradeWinUpgradeStrategyGrayStrategyPaginateOption func(*UpgradeWinUpgradeStrategyGrayStrategyPager)
+
+// DefaultUpgradeWinUpgradeStrategyGrayStrategyOrder is the default ordering of UpgradeWinUpgradeStrategyGrayStrategy.
+var DefaultUpgradeWinUpgradeStrategyGrayStrategyOrder = Desc(upgradewinupgradestrategygraystrategy.FieldID)
+
+func newUpgradeWinUpgradeStrategyGrayStrategyPager(opts []UpgradeWinUpgradeStrategyGrayStrategyPaginateOption) (*UpgradeWinUpgradeStrategyGrayStrategyPager, error) {
+	pager := &UpgradeWinUpgradeStrategyGrayStrategyPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeWinUpgradeStrategyGrayStrategyOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeWinUpgradeStrategyGrayStrategyPager) ApplyFilter(query *UpgradeWinUpgradeStrategyGrayStrategyQuery) (*UpgradeWinUpgradeStrategyGrayStrategyQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeWinUpgradeStrategyGrayStrategyPageList is UpgradeWinUpgradeStrategyGrayStrategy PageList result.
+type UpgradeWinUpgradeStrategyGrayStrategyPageList struct {
+	List        []*UpgradeWinUpgradeStrategyGrayStrategy `json:"list"`
+	PageDetails *PageDetails                             `json:"pageDetails"`
+}
+
+func (uwusgs *UpgradeWinUpgradeStrategyGrayStrategyQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeWinUpgradeStrategyGrayStrategyPaginateOption,
+) (*UpgradeWinUpgradeStrategyGrayStrategyPageList, error) {
+
+	pager, err := newUpgradeWinUpgradeStrategyGrayStrategyPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if uwusgs, err = pager.ApplyFilter(uwusgs); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeWinUpgradeStrategyGrayStrategyPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := uwusgs.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		uwusgs = uwusgs.Order(pager.Order)
+	} else {
+		uwusgs = uwusgs.Order(DefaultUpgradeWinUpgradeStrategyGrayStrategyOrder)
+	}
+
+	uwusgs = uwusgs.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := uwusgs.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type UpgradeWinVersionPager struct {
+	Order  upgradewinversion.OrderOption
+	Filter func(*UpgradeWinVersionQuery) (*UpgradeWinVersionQuery, error)
+}
+
+// UpgradeWinVersionPaginateOption enables pagination customization.
+type UpgradeWinVersionPaginateOption func(*UpgradeWinVersionPager)
+
+// DefaultUpgradeWinVersionOrder is the default ordering of UpgradeWinVersion.
+var DefaultUpgradeWinVersionOrder = Desc(upgradewinversion.FieldID)
+
+func newUpgradeWinVersionPager(opts []UpgradeWinVersionPaginateOption) (*UpgradeWinVersionPager, error) {
+	pager := &UpgradeWinVersionPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultUpgradeWinVersionOrder
+	}
+	return pager, nil
+}
+
+func (p *UpgradeWinVersionPager) ApplyFilter(query *UpgradeWinVersionQuery) (*UpgradeWinVersionQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// UpgradeWinVersionPageList is UpgradeWinVersion PageList result.
+type UpgradeWinVersionPageList struct {
+	List        []*UpgradeWinVersion `json:"list"`
+	PageDetails *PageDetails         `json:"pageDetails"`
+}
+
+func (uwv *UpgradeWinVersionQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UpgradeWinVersionPaginateOption,
+) (*UpgradeWinVersionPageList, error) {
+
+	pager, err := newUpgradeWinVersionPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if uwv, err = pager.ApplyFilter(uwv); err != nil {
+		return nil, err
+	}
+
+	ret := &UpgradeWinVersionPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	query := uwv.Clone()
+	query.ctx.Fields = nil
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		uwv = uwv.Order(pager.Order)
+	} else {
+		uwv = uwv.Order(DefaultUpgradeWinVersionOrder)
+	}
+
+	uwv = uwv.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := uwv.All(ctx)
 	if err != nil {
 		return nil, err
 	}

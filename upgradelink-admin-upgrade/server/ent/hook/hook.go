@@ -356,6 +356,126 @@ func (f UpgradeFileVersionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeFileVersionMutation", m)
 }
 
+// The UpgradeLnxFunc type is an adapter to allow the use of ordinary
+// function as UpgradeLnx mutator.
+type UpgradeLnxFunc func(context.Context, *ent.UpgradeLnxMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeLnxFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeLnxMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeLnxMutation", m)
+}
+
+// The UpgradeLnxUpgradeStrategyFunc type is an adapter to allow the use of ordinary
+// function as UpgradeLnxUpgradeStrategy mutator.
+type UpgradeLnxUpgradeStrategyFunc func(context.Context, *ent.UpgradeLnxUpgradeStrategyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeLnxUpgradeStrategyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeLnxUpgradeStrategyMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeLnxUpgradeStrategyMutation", m)
+}
+
+// The UpgradeLnxUpgradeStrategyFlowLimitStrategyFunc type is an adapter to allow the use of ordinary
+// function as UpgradeLnxUpgradeStrategyFlowLimitStrategy mutator.
+type UpgradeLnxUpgradeStrategyFlowLimitStrategyFunc func(context.Context, *ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeLnxUpgradeStrategyFlowLimitStrategyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation", m)
+}
+
+// The UpgradeLnxUpgradeStrategyGrayStrategyFunc type is an adapter to allow the use of ordinary
+// function as UpgradeLnxUpgradeStrategyGrayStrategy mutator.
+type UpgradeLnxUpgradeStrategyGrayStrategyFunc func(context.Context, *ent.UpgradeLnxUpgradeStrategyGrayStrategyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeLnxUpgradeStrategyGrayStrategyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeLnxUpgradeStrategyGrayStrategyMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeLnxUpgradeStrategyGrayStrategyMutation", m)
+}
+
+// The UpgradeLnxVersionFunc type is an adapter to allow the use of ordinary
+// function as UpgradeLnxVersion mutator.
+type UpgradeLnxVersionFunc func(context.Context, *ent.UpgradeLnxVersionMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeLnxVersionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeLnxVersionMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeLnxVersionMutation", m)
+}
+
+// The UpgradeMacFunc type is an adapter to allow the use of ordinary
+// function as UpgradeMac mutator.
+type UpgradeMacFunc func(context.Context, *ent.UpgradeMacMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeMacFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeMacMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeMacMutation", m)
+}
+
+// The UpgradeMacUpgradeStrategyFunc type is an adapter to allow the use of ordinary
+// function as UpgradeMacUpgradeStrategy mutator.
+type UpgradeMacUpgradeStrategyFunc func(context.Context, *ent.UpgradeMacUpgradeStrategyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeMacUpgradeStrategyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeMacUpgradeStrategyMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeMacUpgradeStrategyMutation", m)
+}
+
+// The UpgradeMacUpgradeStrategyFlowLimitStrategyFunc type is an adapter to allow the use of ordinary
+// function as UpgradeMacUpgradeStrategyFlowLimitStrategy mutator.
+type UpgradeMacUpgradeStrategyFlowLimitStrategyFunc func(context.Context, *ent.UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeMacUpgradeStrategyFlowLimitStrategyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeMacUpgradeStrategyFlowLimitStrategyMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeMacUpgradeStrategyFlowLimitStrategyMutation", m)
+}
+
+// The UpgradeMacUpgradeStrategyGrayStrategyFunc type is an adapter to allow the use of ordinary
+// function as UpgradeMacUpgradeStrategyGrayStrategy mutator.
+type UpgradeMacUpgradeStrategyGrayStrategyFunc func(context.Context, *ent.UpgradeMacUpgradeStrategyGrayStrategyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeMacUpgradeStrategyGrayStrategyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeMacUpgradeStrategyGrayStrategyMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeMacUpgradeStrategyGrayStrategyMutation", m)
+}
+
+// The UpgradeMacVersionFunc type is an adapter to allow the use of ordinary
+// function as UpgradeMacVersion mutator.
+type UpgradeMacVersionFunc func(context.Context, *ent.UpgradeMacVersionMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeMacVersionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeMacVersionMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeMacVersionMutation", m)
+}
+
 // The UpgradeTauriFunc type is an adapter to allow the use of ordinary
 // function as UpgradeTauri mutator.
 type UpgradeTauriFunc func(context.Context, *ent.UpgradeTauriMutation) (ent.Value, error)
@@ -486,6 +606,66 @@ func (f UpgradeUrlVersionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.
 		return f(ctx, mv)
 	}
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeUrlVersionMutation", m)
+}
+
+// The UpgradeWinFunc type is an adapter to allow the use of ordinary
+// function as UpgradeWin mutator.
+type UpgradeWinFunc func(context.Context, *ent.UpgradeWinMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeWinFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeWinMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeWinMutation", m)
+}
+
+// The UpgradeWinUpgradeStrategyFunc type is an adapter to allow the use of ordinary
+// function as UpgradeWinUpgradeStrategy mutator.
+type UpgradeWinUpgradeStrategyFunc func(context.Context, *ent.UpgradeWinUpgradeStrategyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeWinUpgradeStrategyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeWinUpgradeStrategyMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeWinUpgradeStrategyMutation", m)
+}
+
+// The UpgradeWinUpgradeStrategyFlowLimitStrategyFunc type is an adapter to allow the use of ordinary
+// function as UpgradeWinUpgradeStrategyFlowLimitStrategy mutator.
+type UpgradeWinUpgradeStrategyFlowLimitStrategyFunc func(context.Context, *ent.UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeWinUpgradeStrategyFlowLimitStrategyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeWinUpgradeStrategyFlowLimitStrategyMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeWinUpgradeStrategyFlowLimitStrategyMutation", m)
+}
+
+// The UpgradeWinUpgradeStrategyGrayStrategyFunc type is an adapter to allow the use of ordinary
+// function as UpgradeWinUpgradeStrategyGrayStrategy mutator.
+type UpgradeWinUpgradeStrategyGrayStrategyFunc func(context.Context, *ent.UpgradeWinUpgradeStrategyGrayStrategyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeWinUpgradeStrategyGrayStrategyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeWinUpgradeStrategyGrayStrategyMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeWinUpgradeStrategyGrayStrategyMutation", m)
+}
+
+// The UpgradeWinVersionFunc type is an adapter to allow the use of ordinary
+// function as UpgradeWinVersion mutator.
+type UpgradeWinVersionFunc func(context.Context, *ent.UpgradeWinVersionMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UpgradeWinVersionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UpgradeWinVersionMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UpgradeWinVersionMutation", m)
 }
 
 // Condition is a hook condition function.

@@ -13,8 +13,11 @@ import (
 	download "upgradelink-api/server/api/internal/handler/download"
 	electron "upgradelink-api/server/api/internal/handler/electron"
 	file "upgradelink-api/server/api/internal/handler/file"
+	lnx "upgradelink-api/server/api/internal/handler/lnx"
+	mac "upgradelink-api/server/api/internal/handler/mac"
 	tauri "upgradelink-api/server/api/internal/handler/tauri"
 	url "upgradelink-api/server/api/internal/handler/url"
+	win "upgradelink-api/server/api/internal/handler/win"
 	"upgradelink-api/server/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -29,6 +32,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Method:  http.MethodPost,
 					Path:    "/upgrade",
 					Handler: apk.GetApkUpgradeInfoHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/version",
+					Handler: apk.GetApkVersionInfoHandler(serverCtx),
 				},
 			}...,
 		),
@@ -60,9 +68,59 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/upgrade",
 					Handler: configuration.GetConfigurationUpgradeInfoHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/version",
+					Handler: configuration.GetConfigurationVersionInfoHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithPrefix("/v1/configuration"),
+		rest.WithTimeout(30000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.CdnRateLimit},
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/download",
+					Handler: download.GetMacDownloadInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/v1/mac"),
+		rest.WithTimeout(30000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.CdnRateLimit},
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/download",
+					Handler: download.GetLnxDownloadInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/v1/lnx"),
+		rest.WithTimeout(30000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.CdnRateLimit},
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/download",
+					Handler: download.GetApkDownloadInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/v1/apk"),
 		rest.WithTimeout(30000*time.Millisecond),
 	)
 
@@ -153,11 +211,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				{
 					Method:  http.MethodGet,
 					Path:    "/download",
-					Handler: download.GetApkDownloadInfoHandler(serverCtx),
+					Handler: download.GetWinDownloadInfoHandler(serverCtx),
 				},
 			}...,
 		),
-		rest.WithPrefix("/v1/apk"),
+		rest.WithPrefix("/v1/win"),
 		rest.WithTimeout(30000*time.Millisecond),
 	)
 
@@ -205,9 +263,54 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/upgrade",
 					Handler: file.GetFileUpgradeInfoHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/version",
+					Handler: file.GetFileVersionInfoHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithPrefix("/v1/file"),
+		rest.WithTimeout(30000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.RateLimit, serverCtx.ReplayAttack, serverCtx.Signature},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade",
+					Handler: lnx.GetLnxUpgradeInfoHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/version",
+					Handler: lnx.GetLnxVersionInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/v1/lnx"),
+		rest.WithTimeout(30000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.RateLimit, serverCtx.ReplayAttack, serverCtx.Signature},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade",
+					Handler: mac.GetMacUpgradeInfoHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/version",
+					Handler: mac.GetMacVersionInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/v1/mac"),
 		rest.WithTimeout(30000*time.Millisecond),
 	)
 
@@ -235,9 +338,34 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/upgrade",
 					Handler: url.GetUrlUpgradeInfoHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/version",
+					Handler: url.GetUrlVersionInfoHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithPrefix("/v1/url"),
+		rest.WithTimeout(30000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.RateLimit, serverCtx.ReplayAttack, serverCtx.Signature},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/upgrade",
+					Handler: win.GetWinUpgradeInfoHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/version",
+					Handler: win.GetWinVersionInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/v1/win"),
 		rest.WithTimeout(30000*time.Millisecond),
 	)
 }

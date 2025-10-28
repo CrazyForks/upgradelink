@@ -3,8 +3,8 @@ syntax = "v1"
 info(
     title: "API management"
     desc: "API management is used to register APIs and manage APIs"
-    author: "toolsetlink"
-    email: "toolsetlink@163.com"
+    author: "Ryan Su"
+    email: "yuansu.china.work@gmail.com"
     version: "v1.0"
 )
 
@@ -60,6 +60,40 @@ type (
     }
 )
 
+
+type GetFileVersionInfoRespData {
+
+    // file 应用 唯一标识
+    FileKey string `json:"fileKey,optional"`
+
+    // 应用版本名称
+    VersionName string `json:"versionName,optional"`
+
+    // 应用版本号
+    VersionCode int64 `json:"versionCode,optional"`
+
+    // 描述
+    Description string `json:"description,optional"`
+}
+
+type (
+
+    GetFileVersionInfoReq {
+        // file 应用 唯一标识
+        FileKey string `json:"fileKey"`
+
+        // 客户端应用版本号
+        VersionCode int64 `json:"versionCode,default=0"`
+    }
+
+    GetFileVersionInfoResp {
+        BaseDataInfo
+
+        Data GetFileVersionInfoRespData `json:"data"`
+    }
+)
+
+
 // RateLimit 流量控制
 // ReplayAttack 防重放攻击
 // Signature 签名认证
@@ -73,6 +107,10 @@ service api {
     // Get API list | 获取API列表
     @handler getFileUpgradeInfo
     post /upgrade (GetFileUpgradeInfoReq) returns (GetFileUpgradeInfoResp)
+
+    // 获取 版本信息
+    @handler getFileVersionInfo
+    post /version (GetFileVersionInfoReq) returns (GetFileVersionInfoResp)
 }
 
 
@@ -87,6 +125,7 @@ type (
         VersionId int64 `form:"versionId,default=0"`
     }
 )
+
 // RateLimit 流量控制
 @server(
     group: download
@@ -94,7 +133,10 @@ type (
     timeout: 30s
     middleware: CdnRateLimit
 )
+
 service api {
     @handler getFileDownloadInfo
     get /download (GetFileDownloadInfoReq) returns (*string)
+
+
 }

@@ -614,6 +614,214 @@ var (
 		Columns:    UpgradeFileVersionColumns,
 		PrimaryKey: []*schema.Column{UpgradeFileVersionColumns[0]},
 	}
+	// UpgradeLnxColumns holds the columns for the "upgrade_lnx" table.
+	UpgradeLnxColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "company_id", Type: field.TypeInt, Comment: "公司ID"},
+		{Name: "key", Type: field.TypeString, Comment: "linux应用唯一标识"},
+		{Name: "name", Type: field.TypeString, Comment: "linux应用名称"},
+		{Name: "package_name", Type: field.TypeString, Comment: "linux应用包名"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "描述信息"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeLnxTable holds the schema information for the "upgrade_lnx" table.
+	UpgradeLnxTable = &schema.Table{
+		Name:       "upgrade_lnx",
+		Columns:    UpgradeLnxColumns,
+		PrimaryKey: []*schema.Column{UpgradeLnxColumns[0]},
+	}
+	// UpgradeLnxUpgradeStrategyColumns holds the columns for the "upgrade_lnx_upgrade_strategy" table.
+	UpgradeLnxUpgradeStrategyColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "company_id", Type: field.TypeInt, Comment: "公司ID"},
+		{Name: "enable", Type: field.TypeInt32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效"},
+		{Name: "name", Type: field.TypeString, Comment: "任务名称"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "任务描述信息"},
+		{Name: "lnx_id", Type: field.TypeInt, Comment: "linux应用ID"},
+		{Name: "lnx_version_id", Type: field.TypeInt, Comment: "lnx_version_id; 外键lnx_version.id"},
+		{Name: "begin_datetime", Type: field.TypeTime, Comment: "升级任务开始时间"},
+		{Name: "end_datetime", Type: field.TypeTime, Comment: "升级任务结束时间"},
+		{Name: "upgrade_type", Type: field.TypeInt32, Comment: "升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级"},
+		{Name: "prompt_upgrade_content", Type: field.TypeString, Nullable: true, Comment: "提示升级描述内容"},
+		{Name: "upgrade_dev_type", Type: field.TypeInt32, Comment: "指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型"},
+		{Name: "upgrade_dev_data", Type: field.TypeString, Comment: "升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;"},
+		{Name: "upgrade_version_type", Type: field.TypeInt32, Comment: "指定升级的应用版本：0：全部版本；1：指定版本"},
+		{Name: "upgrade_version_data", Type: field.TypeString, Comment: "升级设备数据：0.当为全部版本时，此字段为空；；1.当指定应用版本时，此字段存储应用版本id;"},
+		{Name: "is_gray", Type: field.TypeInt32, Comment: "是否开启灰度 0：不开启；1：开启"},
+		{Name: "gray_data", Type: field.TypeString, Comment: "灰度策略id数据"},
+		{Name: "is_flow_limit", Type: field.TypeInt32, Comment: "是否开启频控 0：不开启；1：开启"},
+		{Name: "flow_limit_data", Type: field.TypeString, Comment: "频控策略id数据"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeLnxUpgradeStrategyTable holds the schema information for the "upgrade_lnx_upgrade_strategy" table.
+	UpgradeLnxUpgradeStrategyTable = &schema.Table{
+		Name:       "upgrade_lnx_upgrade_strategy",
+		Columns:    UpgradeLnxUpgradeStrategyColumns,
+		PrimaryKey: []*schema.Column{UpgradeLnxUpgradeStrategyColumns[0]},
+	}
+	// UpgradeLnxUpgradeStrategyFlowLimitStrategyColumns holds the columns for the "upgrade_lnx_upgrade_strategy_flow_limit_strategy" table.
+	UpgradeLnxUpgradeStrategyFlowLimitStrategyColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "enable", Type: field.TypeInt32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效"},
+		{Name: "begin_time", Type: field.TypeString, Comment: "开始时间段: 时分秒"},
+		{Name: "end_time", Type: field.TypeString, Comment: "结束时间段: 时分秒"},
+		{Name: "dimension", Type: field.TypeInt32, Comment: "流控维度；流控维度：1：秒；2：分；3：时；4：天"},
+		{Name: "limit", Type: field.TypeInt, Comment: "频控限制；在流控维度上的次数"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeLnxUpgradeStrategyFlowLimitStrategyTable holds the schema information for the "upgrade_lnx_upgrade_strategy_flow_limit_strategy" table.
+	UpgradeLnxUpgradeStrategyFlowLimitStrategyTable = &schema.Table{
+		Name:       "upgrade_lnx_upgrade_strategy_flow_limit_strategy",
+		Columns:    UpgradeLnxUpgradeStrategyFlowLimitStrategyColumns,
+		PrimaryKey: []*schema.Column{UpgradeLnxUpgradeStrategyFlowLimitStrategyColumns[0]},
+	}
+	// UpgradeLnxUpgradeStrategyGrayStrategyColumns holds the columns for the "upgrade_lnx_upgrade_strategy_gray_strategy" table.
+	UpgradeLnxUpgradeStrategyGrayStrategyColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "enable", Type: field.TypeInt32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效"},
+		{Name: "begin_datetime", Type: field.TypeTime, Comment: "开始时间"},
+		{Name: "end_datetime", Type: field.TypeTime, Comment: "结束时间"},
+		{Name: "limit", Type: field.TypeInt, Comment: "数量限制"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeLnxUpgradeStrategyGrayStrategyTable holds the schema information for the "upgrade_lnx_upgrade_strategy_gray_strategy" table.
+	UpgradeLnxUpgradeStrategyGrayStrategyTable = &schema.Table{
+		Name:       "upgrade_lnx_upgrade_strategy_gray_strategy",
+		Columns:    UpgradeLnxUpgradeStrategyGrayStrategyColumns,
+		PrimaryKey: []*schema.Column{UpgradeLnxUpgradeStrategyGrayStrategyColumns[0]},
+	}
+	// UpgradeLnxVersionColumns holds the columns for the "upgrade_lnx_version" table.
+	UpgradeLnxVersionColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "company_id", Type: field.TypeInt, Comment: "公司ID"},
+		{Name: "lnx_id", Type: field.TypeInt, Comment: "lnx应用ID"},
+		{Name: "cloud_file_id", Type: field.TypeString, Comment: "云文件id"},
+		{Name: "version_name", Type: field.TypeString, Comment: "版本名"},
+		{Name: "version_code", Type: field.TypeInt, Comment: "版本号"},
+		{Name: "arch", Type: field.TypeString, Comment: "机器架构:x64、arm64"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "描述信息"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeLnxVersionTable holds the schema information for the "upgrade_lnx_version" table.
+	UpgradeLnxVersionTable = &schema.Table{
+		Name:       "upgrade_lnx_version",
+		Columns:    UpgradeLnxVersionColumns,
+		PrimaryKey: []*schema.Column{UpgradeLnxVersionColumns[0]},
+	}
+	// UpgradeMACColumns holds the columns for the "upgrade_mac" table.
+	UpgradeMACColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "company_id", Type: field.TypeInt, Comment: "公司ID"},
+		{Name: "key", Type: field.TypeString, Comment: "mac应用唯一标识"},
+		{Name: "name", Type: field.TypeString, Comment: "mac应用名称"},
+		{Name: "package_name", Type: field.TypeString, Comment: "mac应用包名"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "描述信息"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeMACTable holds the schema information for the "upgrade_mac" table.
+	UpgradeMACTable = &schema.Table{
+		Name:       "upgrade_mac",
+		Columns:    UpgradeMACColumns,
+		PrimaryKey: []*schema.Column{UpgradeMACColumns[0]},
+	}
+	// UpgradeMACUpgradeStrategyColumns holds the columns for the "upgrade_mac_upgrade_strategy" table.
+	UpgradeMACUpgradeStrategyColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "company_id", Type: field.TypeInt, Comment: "公司ID"},
+		{Name: "enable", Type: field.TypeInt32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效"},
+		{Name: "name", Type: field.TypeString, Comment: "任务名称"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "任务描述信息"},
+		{Name: "mac_id", Type: field.TypeInt, Comment: "mac应用ID"},
+		{Name: "mac_version_id", Type: field.TypeInt, Comment: "mac_version_id; 外键mac_version.id"},
+		{Name: "begin_datetime", Type: field.TypeTime, Comment: "升级任务开始时间"},
+		{Name: "end_datetime", Type: field.TypeTime, Comment: "升级任务结束时间"},
+		{Name: "upgrade_type", Type: field.TypeInt32, Comment: "升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级"},
+		{Name: "prompt_upgrade_content", Type: field.TypeString, Nullable: true, Comment: "提示升级描述内容"},
+		{Name: "upgrade_dev_type", Type: field.TypeInt32, Comment: "指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型"},
+		{Name: "upgrade_dev_data", Type: field.TypeString, Comment: "升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;"},
+		{Name: "upgrade_version_type", Type: field.TypeInt32, Comment: "指定升级的应用版本：0：全部版本；1：指定版本"},
+		{Name: "upgrade_version_data", Type: field.TypeString, Comment: "升级设备数据：0.当为全部版本时，此字段为空；；1.当指定应用版本时，此字段存储应用版本id;"},
+		{Name: "is_gray", Type: field.TypeInt32, Comment: "是否开启灰度 0：不开启；1：开启"},
+		{Name: "gray_data", Type: field.TypeString, Comment: "灰度策略id数据"},
+		{Name: "is_flow_limit", Type: field.TypeInt32, Comment: "是否开启频控 0：不开启；1：开启"},
+		{Name: "flow_limit_data", Type: field.TypeString, Comment: "频控策略id数据"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeMACUpgradeStrategyTable holds the schema information for the "upgrade_mac_upgrade_strategy" table.
+	UpgradeMACUpgradeStrategyTable = &schema.Table{
+		Name:       "upgrade_mac_upgrade_strategy",
+		Columns:    UpgradeMACUpgradeStrategyColumns,
+		PrimaryKey: []*schema.Column{UpgradeMACUpgradeStrategyColumns[0]},
+	}
+	// UpgradeMACUpgradeStrategyFlowLimitStrategyColumns holds the columns for the "upgrade_mac_upgrade_strategy_flow_limit_strategy" table.
+	UpgradeMACUpgradeStrategyFlowLimitStrategyColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "enable", Type: field.TypeInt32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效"},
+		{Name: "begin_time", Type: field.TypeString, Comment: "开始时间段: 时分秒"},
+		{Name: "end_time", Type: field.TypeString, Comment: "结束时间段: 时分秒"},
+		{Name: "dimension", Type: field.TypeInt32, Comment: "流控维度；流控维度：1：秒；2：分；3：时；4：天"},
+		{Name: "limit", Type: field.TypeInt, Comment: "频控限制；在流控维度上的次数"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeMACUpgradeStrategyFlowLimitStrategyTable holds the schema information for the "upgrade_mac_upgrade_strategy_flow_limit_strategy" table.
+	UpgradeMACUpgradeStrategyFlowLimitStrategyTable = &schema.Table{
+		Name:       "upgrade_mac_upgrade_strategy_flow_limit_strategy",
+		Columns:    UpgradeMACUpgradeStrategyFlowLimitStrategyColumns,
+		PrimaryKey: []*schema.Column{UpgradeMACUpgradeStrategyFlowLimitStrategyColumns[0]},
+	}
+	// UpgradeMACUpgradeStrategyGrayStrategyColumns holds the columns for the "upgrade_mac_upgrade_strategy_gray_strategy" table.
+	UpgradeMACUpgradeStrategyGrayStrategyColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "enable", Type: field.TypeInt32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效"},
+		{Name: "begin_datetime", Type: field.TypeTime, Comment: "开始时间"},
+		{Name: "end_datetime", Type: field.TypeTime, Comment: "结束时间"},
+		{Name: "limit", Type: field.TypeInt, Comment: "数量限制"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeMACUpgradeStrategyGrayStrategyTable holds the schema information for the "upgrade_mac_upgrade_strategy_gray_strategy" table.
+	UpgradeMACUpgradeStrategyGrayStrategyTable = &schema.Table{
+		Name:       "upgrade_mac_upgrade_strategy_gray_strategy",
+		Columns:    UpgradeMACUpgradeStrategyGrayStrategyColumns,
+		PrimaryKey: []*schema.Column{UpgradeMACUpgradeStrategyGrayStrategyColumns[0]},
+	}
+	// UpgradeMACVersionColumns holds the columns for the "upgrade_mac_version" table.
+	UpgradeMACVersionColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "company_id", Type: field.TypeInt, Comment: "公司ID"},
+		{Name: "mac_id", Type: field.TypeInt, Comment: "mac应用ID"},
+		{Name: "cloud_file_id", Type: field.TypeString, Comment: "云文件id"},
+		{Name: "version_name", Type: field.TypeString, Comment: "版本名"},
+		{Name: "version_code", Type: field.TypeInt, Comment: "版本号"},
+		{Name: "arch", Type: field.TypeString, Comment: "机器架构:x64、arm64"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "描述信息"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeMACVersionTable holds the schema information for the "upgrade_mac_version" table.
+	UpgradeMACVersionTable = &schema.Table{
+		Name:       "upgrade_mac_version",
+		Columns:    UpgradeMACVersionColumns,
+		PrimaryKey: []*schema.Column{UpgradeMACVersionColumns[0]},
+	}
 	// UpgradeTauriColumns holds the columns for the "upgrade_tauri" table.
 	UpgradeTauriColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
@@ -842,6 +1050,110 @@ var (
 		Columns:    UpgradeURLVersionColumns,
 		PrimaryKey: []*schema.Column{UpgradeURLVersionColumns[0]},
 	}
+	// UpgradeWinColumns holds the columns for the "upgrade_win" table.
+	UpgradeWinColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "company_id", Type: field.TypeInt, Comment: "公司ID"},
+		{Name: "key", Type: field.TypeString, Comment: "win应用唯一标识"},
+		{Name: "name", Type: field.TypeString, Comment: "win应用名称"},
+		{Name: "package_name", Type: field.TypeString, Comment: "win应用包名"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "描述信息"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeWinTable holds the schema information for the "upgrade_win" table.
+	UpgradeWinTable = &schema.Table{
+		Name:       "upgrade_win",
+		Columns:    UpgradeWinColumns,
+		PrimaryKey: []*schema.Column{UpgradeWinColumns[0]},
+	}
+	// UpgradeWinUpgradeStrategyColumns holds the columns for the "upgrade_win_upgrade_strategy" table.
+	UpgradeWinUpgradeStrategyColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "company_id", Type: field.TypeInt, Comment: "公司ID"},
+		{Name: "enable", Type: field.TypeInt32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效"},
+		{Name: "name", Type: field.TypeString, Comment: "任务名称"},
+		{Name: "description", Type: field.TypeString, Comment: "任务描述信息"},
+		{Name: "win_id", Type: field.TypeInt, Comment: "win应用ID"},
+		{Name: "win_version_id", Type: field.TypeInt, Comment: "win_version_id; 外键win_version.id"},
+		{Name: "begin_datetime", Type: field.TypeTime, Comment: "升级任务开始时间"},
+		{Name: "end_datetime", Type: field.TypeTime, Comment: "升级任务结束时间"},
+		{Name: "upgrade_type", Type: field.TypeInt32, Comment: "升级方式：0：未知方式；1：提示升级；2：静默升级；3: 强制升级"},
+		{Name: "prompt_upgrade_content", Type: field.TypeString, Comment: "提示升级描述内容"},
+		{Name: "upgrade_dev_type", Type: field.TypeInt32, Comment: "指定升级的设备范围：0：全部设备；1：指定设备分组；2：指定机型"},
+		{Name: "upgrade_dev_data", Type: field.TypeString, Comment: "升级设备数据：0.当为全部设备时，此字段为空；；1.当指定设备分组时，此字段存储设备分组id；2.当指定设备机型时，此字段存储选中的设备机型id;"},
+		{Name: "upgrade_version_type", Type: field.TypeInt32, Comment: "指定升级的应用版本：0：全部版本；1：指定版本"},
+		{Name: "upgrade_version_data", Type: field.TypeString, Comment: "升级设备数据：0.当为全部版本时，此字段为空；；1.当指定应用版本时，此字段存储应用版本id;"},
+		{Name: "is_gray", Type: field.TypeInt32, Comment: "是否开启灰度 0：不开启；1：开启"},
+		{Name: "gray_data", Type: field.TypeString, Comment: "灰度策略id数据"},
+		{Name: "is_flow_limit", Type: field.TypeInt32, Comment: "是否开启频控 0：不开启；1：开启"},
+		{Name: "flow_limit_data", Type: field.TypeString, Comment: "频控策略id数据"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeWinUpgradeStrategyTable holds the schema information for the "upgrade_win_upgrade_strategy" table.
+	UpgradeWinUpgradeStrategyTable = &schema.Table{
+		Name:       "upgrade_win_upgrade_strategy",
+		Columns:    UpgradeWinUpgradeStrategyColumns,
+		PrimaryKey: []*schema.Column{UpgradeWinUpgradeStrategyColumns[0]},
+	}
+	// UpgradeWinUpgradeStrategyFlowLimitStrategyColumns holds the columns for the "upgrade_win_upgrade_strategy_flow_limit_strategy" table.
+	UpgradeWinUpgradeStrategyFlowLimitStrategyColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "enable", Type: field.TypeInt32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效"},
+		{Name: "begin_time", Type: field.TypeString, Comment: "开始时间段: 时分秒"},
+		{Name: "end_time", Type: field.TypeString, Comment: "结束时间段: 时分秒"},
+		{Name: "dimension", Type: field.TypeInt32, Comment: "流控维度；流控维度：1：秒；2：分；3：时；4：天"},
+		{Name: "limit", Type: field.TypeInt, Comment: "频控限制；在流控维度上的次数"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeWinUpgradeStrategyFlowLimitStrategyTable holds the schema information for the "upgrade_win_upgrade_strategy_flow_limit_strategy" table.
+	UpgradeWinUpgradeStrategyFlowLimitStrategyTable = &schema.Table{
+		Name:       "upgrade_win_upgrade_strategy_flow_limit_strategy",
+		Columns:    UpgradeWinUpgradeStrategyFlowLimitStrategyColumns,
+		PrimaryKey: []*schema.Column{UpgradeWinUpgradeStrategyFlowLimitStrategyColumns[0]},
+	}
+	// UpgradeWinUpgradeStrategyGrayStrategyColumns holds the columns for the "upgrade_win_upgrade_strategy_gray_strategy" table.
+	UpgradeWinUpgradeStrategyGrayStrategyColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "enable", Type: field.TypeInt32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效"},
+		{Name: "begin_datetime", Type: field.TypeTime, Comment: "开始时间"},
+		{Name: "end_datetime", Type: field.TypeTime, Comment: "结束时间"},
+		{Name: "limit", Type: field.TypeInt, Comment: "数量限制"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeWinUpgradeStrategyGrayStrategyTable holds the schema information for the "upgrade_win_upgrade_strategy_gray_strategy" table.
+	UpgradeWinUpgradeStrategyGrayStrategyTable = &schema.Table{
+		Name:       "upgrade_win_upgrade_strategy_gray_strategy",
+		Columns:    UpgradeWinUpgradeStrategyGrayStrategyColumns,
+		PrimaryKey: []*schema.Column{UpgradeWinUpgradeStrategyGrayStrategyColumns[0]},
+	}
+	// UpgradeWinVersionColumns holds the columns for the "upgrade_win_version" table.
+	UpgradeWinVersionColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true, Comment: "ID"},
+		{Name: "company_id", Type: field.TypeInt, Comment: "公司ID"},
+		{Name: "win_id", Type: field.TypeInt, Comment: "win应用ID"},
+		{Name: "cloud_file_id", Type: field.TypeString, Comment: "云文件id"},
+		{Name: "version_name", Type: field.TypeString, Comment: "版本名"},
+		{Name: "version_code", Type: field.TypeInt, Comment: "版本号"},
+		{Name: "arch", Type: field.TypeString, Comment: "机器架构:x64、arm64"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "描述信息"},
+		{Name: "is_del", Type: field.TypeInt32, Comment: "是否删除 0：正常；1：已删除"},
+		{Name: "create_at", Type: field.TypeTime, Nullable: true, Comment: "创建时间"},
+		{Name: "update_at", Type: field.TypeTime, Nullable: true, Comment: "修改时间"},
+	}
+	// UpgradeWinVersionTable holds the schema information for the "upgrade_win_version" table.
+	UpgradeWinVersionTable = &schema.Table{
+		Name:       "upgrade_win_version",
+		Columns:    UpgradeWinVersionColumns,
+		PrimaryKey: []*schema.Column{UpgradeWinVersionColumns[0]},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		FmsCloudFilesTable,
@@ -873,6 +1185,16 @@ var (
 		UpgradeFileUpgradeStrategyFlowLimitStrategyTable,
 		UpgradeFileUpgradeStrategyGrayStrategyTable,
 		UpgradeFileVersionTable,
+		UpgradeLnxTable,
+		UpgradeLnxUpgradeStrategyTable,
+		UpgradeLnxUpgradeStrategyFlowLimitStrategyTable,
+		UpgradeLnxUpgradeStrategyGrayStrategyTable,
+		UpgradeLnxVersionTable,
+		UpgradeMACTable,
+		UpgradeMACUpgradeStrategyTable,
+		UpgradeMACUpgradeStrategyFlowLimitStrategyTable,
+		UpgradeMACUpgradeStrategyGrayStrategyTable,
+		UpgradeMACVersionTable,
 		UpgradeTauriTable,
 		UpgradeTauriUpgradeStrategyTable,
 		UpgradeTauriUpgradeStrategyFlowLimitStrategyTable,
@@ -884,6 +1206,11 @@ var (
 		UpgradeURLUpgradeStrategyFlowLimitStrategyTable,
 		UpgradeURLUpgradeStrategyGrayStrategyTable,
 		UpgradeURLVersionTable,
+		UpgradeWinTable,
+		UpgradeWinUpgradeStrategyTable,
+		UpgradeWinUpgradeStrategyFlowLimitStrategyTable,
+		UpgradeWinUpgradeStrategyGrayStrategyTable,
+		UpgradeWinVersionTable,
 	}
 )
 
@@ -975,6 +1302,36 @@ func init() {
 	UpgradeFileVersionTable.Annotation = &entsql.Annotation{
 		Table: "upgrade_file_version",
 	}
+	UpgradeLnxTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_lnx",
+	}
+	UpgradeLnxUpgradeStrategyTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_lnx_upgrade_strategy",
+	}
+	UpgradeLnxUpgradeStrategyFlowLimitStrategyTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_lnx_upgrade_strategy_flow_limit_strategy",
+	}
+	UpgradeLnxUpgradeStrategyGrayStrategyTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_lnx_upgrade_strategy_gray_strategy",
+	}
+	UpgradeLnxVersionTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_lnx_version",
+	}
+	UpgradeMACTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_mac",
+	}
+	UpgradeMACUpgradeStrategyTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_mac_upgrade_strategy",
+	}
+	UpgradeMACUpgradeStrategyFlowLimitStrategyTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_mac_upgrade_strategy_flow_limit_strategy",
+	}
+	UpgradeMACUpgradeStrategyGrayStrategyTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_mac_upgrade_strategy_gray_strategy",
+	}
+	UpgradeMACVersionTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_mac_version",
+	}
 	UpgradeTauriTable.Annotation = &entsql.Annotation{
 		Table: "upgrade_tauri",
 	}
@@ -1007,5 +1364,20 @@ func init() {
 	}
 	UpgradeURLVersionTable.Annotation = &entsql.Annotation{
 		Table: "upgrade_url_version",
+	}
+	UpgradeWinTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_win",
+	}
+	UpgradeWinUpgradeStrategyTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_win_upgrade_strategy",
+	}
+	UpgradeWinUpgradeStrategyFlowLimitStrategyTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_win_upgrade_strategy_flow_limit_strategy",
+	}
+	UpgradeWinUpgradeStrategyGrayStrategyTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_win_upgrade_strategy_gray_strategy",
+	}
+	UpgradeWinVersionTable.Annotation = &entsql.Annotation{
+		Table: "upgrade_win_version",
 	}
 }

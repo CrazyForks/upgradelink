@@ -40,6 +40,16 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradefileversion"
+	"upgradelink-admin-upgrade/server/ent/upgradelnx"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradelnxversion"
+	"upgradelink-admin-upgrade/server/ent/upgrademac"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgrademacversion"
 	"upgradelink-admin-upgrade/server/ent/upgradetauri"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradetauriupgradestrategyflowlimitstrategy"
@@ -51,6 +61,11 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategyflowlimitstrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlupgradestrategygraystrategy"
 	"upgradelink-admin-upgrade/server/ent/upgradeurlversion"
+	"upgradelink-admin-upgrade/server/ent/upgradewin"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategyflowlimitstrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinupgradestrategygraystrategy"
+	"upgradelink-admin-upgrade/server/ent/upgradewinversion"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
@@ -122,6 +137,26 @@ type Client struct {
 	UpgradeFileUpgradeStrategyGrayStrategy *UpgradeFileUpgradeStrategyGrayStrategyClient
 	// UpgradeFileVersion is the client for interacting with the UpgradeFileVersion builders.
 	UpgradeFileVersion *UpgradeFileVersionClient
+	// UpgradeLnx is the client for interacting with the UpgradeLnx builders.
+	UpgradeLnx *UpgradeLnxClient
+	// UpgradeLnxUpgradeStrategy is the client for interacting with the UpgradeLnxUpgradeStrategy builders.
+	UpgradeLnxUpgradeStrategy *UpgradeLnxUpgradeStrategyClient
+	// UpgradeLnxUpgradeStrategyFlowLimitStrategy is the client for interacting with the UpgradeLnxUpgradeStrategyFlowLimitStrategy builders.
+	UpgradeLnxUpgradeStrategyFlowLimitStrategy *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient
+	// UpgradeLnxUpgradeStrategyGrayStrategy is the client for interacting with the UpgradeLnxUpgradeStrategyGrayStrategy builders.
+	UpgradeLnxUpgradeStrategyGrayStrategy *UpgradeLnxUpgradeStrategyGrayStrategyClient
+	// UpgradeLnxVersion is the client for interacting with the UpgradeLnxVersion builders.
+	UpgradeLnxVersion *UpgradeLnxVersionClient
+	// UpgradeMac is the client for interacting with the UpgradeMac builders.
+	UpgradeMac *UpgradeMacClient
+	// UpgradeMacUpgradeStrategy is the client for interacting with the UpgradeMacUpgradeStrategy builders.
+	UpgradeMacUpgradeStrategy *UpgradeMacUpgradeStrategyClient
+	// UpgradeMacUpgradeStrategyFlowLimitStrategy is the client for interacting with the UpgradeMacUpgradeStrategyFlowLimitStrategy builders.
+	UpgradeMacUpgradeStrategyFlowLimitStrategy *UpgradeMacUpgradeStrategyFlowLimitStrategyClient
+	// UpgradeMacUpgradeStrategyGrayStrategy is the client for interacting with the UpgradeMacUpgradeStrategyGrayStrategy builders.
+	UpgradeMacUpgradeStrategyGrayStrategy *UpgradeMacUpgradeStrategyGrayStrategyClient
+	// UpgradeMacVersion is the client for interacting with the UpgradeMacVersion builders.
+	UpgradeMacVersion *UpgradeMacVersionClient
 	// UpgradeTauri is the client for interacting with the UpgradeTauri builders.
 	UpgradeTauri *UpgradeTauriClient
 	// UpgradeTauriUpgradeStrategy is the client for interacting with the UpgradeTauriUpgradeStrategy builders.
@@ -144,6 +179,16 @@ type Client struct {
 	UpgradeUrlUpgradeStrategyGrayStrategy *UpgradeUrlUpgradeStrategyGrayStrategyClient
 	// UpgradeUrlVersion is the client for interacting with the UpgradeUrlVersion builders.
 	UpgradeUrlVersion *UpgradeUrlVersionClient
+	// UpgradeWin is the client for interacting with the UpgradeWin builders.
+	UpgradeWin *UpgradeWinClient
+	// UpgradeWinUpgradeStrategy is the client for interacting with the UpgradeWinUpgradeStrategy builders.
+	UpgradeWinUpgradeStrategy *UpgradeWinUpgradeStrategyClient
+	// UpgradeWinUpgradeStrategyFlowLimitStrategy is the client for interacting with the UpgradeWinUpgradeStrategyFlowLimitStrategy builders.
+	UpgradeWinUpgradeStrategyFlowLimitStrategy *UpgradeWinUpgradeStrategyFlowLimitStrategyClient
+	// UpgradeWinUpgradeStrategyGrayStrategy is the client for interacting with the UpgradeWinUpgradeStrategyGrayStrategy builders.
+	UpgradeWinUpgradeStrategyGrayStrategy *UpgradeWinUpgradeStrategyGrayStrategyClient
+	// UpgradeWinVersion is the client for interacting with the UpgradeWinVersion builders.
+	UpgradeWinVersion *UpgradeWinVersionClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -184,6 +229,16 @@ func (c *Client) init() {
 	c.UpgradeFileUpgradeStrategyFlowLimitStrategy = NewUpgradeFileUpgradeStrategyFlowLimitStrategyClient(c.config)
 	c.UpgradeFileUpgradeStrategyGrayStrategy = NewUpgradeFileUpgradeStrategyGrayStrategyClient(c.config)
 	c.UpgradeFileVersion = NewUpgradeFileVersionClient(c.config)
+	c.UpgradeLnx = NewUpgradeLnxClient(c.config)
+	c.UpgradeLnxUpgradeStrategy = NewUpgradeLnxUpgradeStrategyClient(c.config)
+	c.UpgradeLnxUpgradeStrategyFlowLimitStrategy = NewUpgradeLnxUpgradeStrategyFlowLimitStrategyClient(c.config)
+	c.UpgradeLnxUpgradeStrategyGrayStrategy = NewUpgradeLnxUpgradeStrategyGrayStrategyClient(c.config)
+	c.UpgradeLnxVersion = NewUpgradeLnxVersionClient(c.config)
+	c.UpgradeMac = NewUpgradeMacClient(c.config)
+	c.UpgradeMacUpgradeStrategy = NewUpgradeMacUpgradeStrategyClient(c.config)
+	c.UpgradeMacUpgradeStrategyFlowLimitStrategy = NewUpgradeMacUpgradeStrategyFlowLimitStrategyClient(c.config)
+	c.UpgradeMacUpgradeStrategyGrayStrategy = NewUpgradeMacUpgradeStrategyGrayStrategyClient(c.config)
+	c.UpgradeMacVersion = NewUpgradeMacVersionClient(c.config)
 	c.UpgradeTauri = NewUpgradeTauriClient(c.config)
 	c.UpgradeTauriUpgradeStrategy = NewUpgradeTauriUpgradeStrategyClient(c.config)
 	c.UpgradeTauriUpgradeStrategyFlowLimitStrategy = NewUpgradeTauriUpgradeStrategyFlowLimitStrategyClient(c.config)
@@ -195,6 +250,11 @@ func (c *Client) init() {
 	c.UpgradeUrlUpgradeStrategyFlowLimitStrategy = NewUpgradeUrlUpgradeStrategyFlowLimitStrategyClient(c.config)
 	c.UpgradeUrlUpgradeStrategyGrayStrategy = NewUpgradeUrlUpgradeStrategyGrayStrategyClient(c.config)
 	c.UpgradeUrlVersion = NewUpgradeUrlVersionClient(c.config)
+	c.UpgradeWin = NewUpgradeWinClient(c.config)
+	c.UpgradeWinUpgradeStrategy = NewUpgradeWinUpgradeStrategyClient(c.config)
+	c.UpgradeWinUpgradeStrategyFlowLimitStrategy = NewUpgradeWinUpgradeStrategyFlowLimitStrategyClient(c.config)
+	c.UpgradeWinUpgradeStrategyGrayStrategy = NewUpgradeWinUpgradeStrategyGrayStrategyClient(c.config)
+	c.UpgradeWinVersion = NewUpgradeWinVersionClient(c.config)
 }
 
 type (
@@ -316,6 +376,16 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		UpgradeFileUpgradeStrategyFlowLimitStrategy:          NewUpgradeFileUpgradeStrategyFlowLimitStrategyClient(cfg),
 		UpgradeFileUpgradeStrategyGrayStrategy:               NewUpgradeFileUpgradeStrategyGrayStrategyClient(cfg),
 		UpgradeFileVersion:                                   NewUpgradeFileVersionClient(cfg),
+		UpgradeLnx:                                           NewUpgradeLnxClient(cfg),
+		UpgradeLnxUpgradeStrategy:                            NewUpgradeLnxUpgradeStrategyClient(cfg),
+		UpgradeLnxUpgradeStrategyFlowLimitStrategy:           NewUpgradeLnxUpgradeStrategyFlowLimitStrategyClient(cfg),
+		UpgradeLnxUpgradeStrategyGrayStrategy:                NewUpgradeLnxUpgradeStrategyGrayStrategyClient(cfg),
+		UpgradeLnxVersion:                                    NewUpgradeLnxVersionClient(cfg),
+		UpgradeMac:                                           NewUpgradeMacClient(cfg),
+		UpgradeMacUpgradeStrategy:                            NewUpgradeMacUpgradeStrategyClient(cfg),
+		UpgradeMacUpgradeStrategyFlowLimitStrategy:           NewUpgradeMacUpgradeStrategyFlowLimitStrategyClient(cfg),
+		UpgradeMacUpgradeStrategyGrayStrategy:                NewUpgradeMacUpgradeStrategyGrayStrategyClient(cfg),
+		UpgradeMacVersion:                                    NewUpgradeMacVersionClient(cfg),
 		UpgradeTauri:                                         NewUpgradeTauriClient(cfg),
 		UpgradeTauriUpgradeStrategy:                          NewUpgradeTauriUpgradeStrategyClient(cfg),
 		UpgradeTauriUpgradeStrategyFlowLimitStrategy:         NewUpgradeTauriUpgradeStrategyFlowLimitStrategyClient(cfg),
@@ -327,6 +397,11 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		UpgradeUrlUpgradeStrategyFlowLimitStrategy:           NewUpgradeUrlUpgradeStrategyFlowLimitStrategyClient(cfg),
 		UpgradeUrlUpgradeStrategyGrayStrategy:                NewUpgradeUrlUpgradeStrategyGrayStrategyClient(cfg),
 		UpgradeUrlVersion:                                    NewUpgradeUrlVersionClient(cfg),
+		UpgradeWin:                                           NewUpgradeWinClient(cfg),
+		UpgradeWinUpgradeStrategy:                            NewUpgradeWinUpgradeStrategyClient(cfg),
+		UpgradeWinUpgradeStrategyFlowLimitStrategy:           NewUpgradeWinUpgradeStrategyFlowLimitStrategyClient(cfg),
+		UpgradeWinUpgradeStrategyGrayStrategy:                NewUpgradeWinUpgradeStrategyGrayStrategyClient(cfg),
+		UpgradeWinVersion:                                    NewUpgradeWinVersionClient(cfg),
 	}, nil
 }
 
@@ -375,6 +450,16 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		UpgradeFileUpgradeStrategyFlowLimitStrategy:          NewUpgradeFileUpgradeStrategyFlowLimitStrategyClient(cfg),
 		UpgradeFileUpgradeStrategyGrayStrategy:               NewUpgradeFileUpgradeStrategyGrayStrategyClient(cfg),
 		UpgradeFileVersion:                                   NewUpgradeFileVersionClient(cfg),
+		UpgradeLnx:                                           NewUpgradeLnxClient(cfg),
+		UpgradeLnxUpgradeStrategy:                            NewUpgradeLnxUpgradeStrategyClient(cfg),
+		UpgradeLnxUpgradeStrategyFlowLimitStrategy:           NewUpgradeLnxUpgradeStrategyFlowLimitStrategyClient(cfg),
+		UpgradeLnxUpgradeStrategyGrayStrategy:                NewUpgradeLnxUpgradeStrategyGrayStrategyClient(cfg),
+		UpgradeLnxVersion:                                    NewUpgradeLnxVersionClient(cfg),
+		UpgradeMac:                                           NewUpgradeMacClient(cfg),
+		UpgradeMacUpgradeStrategy:                            NewUpgradeMacUpgradeStrategyClient(cfg),
+		UpgradeMacUpgradeStrategyFlowLimitStrategy:           NewUpgradeMacUpgradeStrategyFlowLimitStrategyClient(cfg),
+		UpgradeMacUpgradeStrategyGrayStrategy:                NewUpgradeMacUpgradeStrategyGrayStrategyClient(cfg),
+		UpgradeMacVersion:                                    NewUpgradeMacVersionClient(cfg),
 		UpgradeTauri:                                         NewUpgradeTauriClient(cfg),
 		UpgradeTauriUpgradeStrategy:                          NewUpgradeTauriUpgradeStrategyClient(cfg),
 		UpgradeTauriUpgradeStrategyFlowLimitStrategy:         NewUpgradeTauriUpgradeStrategyFlowLimitStrategyClient(cfg),
@@ -386,6 +471,11 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		UpgradeUrlUpgradeStrategyFlowLimitStrategy:           NewUpgradeUrlUpgradeStrategyFlowLimitStrategyClient(cfg),
 		UpgradeUrlUpgradeStrategyGrayStrategy:                NewUpgradeUrlUpgradeStrategyGrayStrategyClient(cfg),
 		UpgradeUrlVersion:                                    NewUpgradeUrlVersionClient(cfg),
+		UpgradeWin:                                           NewUpgradeWinClient(cfg),
+		UpgradeWinUpgradeStrategy:                            NewUpgradeWinUpgradeStrategyClient(cfg),
+		UpgradeWinUpgradeStrategyFlowLimitStrategy:           NewUpgradeWinUpgradeStrategyFlowLimitStrategyClient(cfg),
+		UpgradeWinUpgradeStrategyGrayStrategy:                NewUpgradeWinUpgradeStrategyGrayStrategyClient(cfg),
+		UpgradeWinVersion:                                    NewUpgradeWinVersionClient(cfg),
 	}, nil
 }
 
@@ -430,12 +520,18 @@ func (c *Client) Use(hooks ...Hook) {
 		c.UpgradeElectronUpgradeStrategyGrayStrategy, c.UpgradeElectronVersion,
 		c.UpgradeFile, c.UpgradeFileUpgradeStrategy,
 		c.UpgradeFileUpgradeStrategyFlowLimitStrategy,
-		c.UpgradeFileUpgradeStrategyGrayStrategy, c.UpgradeFileVersion, c.UpgradeTauri,
+		c.UpgradeFileUpgradeStrategyGrayStrategy, c.UpgradeFileVersion, c.UpgradeLnx,
+		c.UpgradeLnxUpgradeStrategy, c.UpgradeLnxUpgradeStrategyFlowLimitStrategy,
+		c.UpgradeLnxUpgradeStrategyGrayStrategy, c.UpgradeLnxVersion, c.UpgradeMac,
+		c.UpgradeMacUpgradeStrategy, c.UpgradeMacUpgradeStrategyFlowLimitStrategy,
+		c.UpgradeMacUpgradeStrategyGrayStrategy, c.UpgradeMacVersion, c.UpgradeTauri,
 		c.UpgradeTauriUpgradeStrategy, c.UpgradeTauriUpgradeStrategyFlowLimitStrategy,
 		c.UpgradeTauriUpgradeStrategyGrayStrategy, c.UpgradeTauriVersion,
 		c.UpgradeTrafficPacket, c.UpgradeUrl, c.UpgradeUrlUpgradeStrategy,
 		c.UpgradeUrlUpgradeStrategyFlowLimitStrategy,
-		c.UpgradeUrlUpgradeStrategyGrayStrategy, c.UpgradeUrlVersion,
+		c.UpgradeUrlUpgradeStrategyGrayStrategy, c.UpgradeUrlVersion, c.UpgradeWin,
+		c.UpgradeWinUpgradeStrategy, c.UpgradeWinUpgradeStrategyFlowLimitStrategy,
+		c.UpgradeWinUpgradeStrategyGrayStrategy, c.UpgradeWinVersion,
 	} {
 		n.Use(hooks...)
 	}
@@ -460,12 +556,18 @@ func (c *Client) Intercept(interceptors ...Interceptor) {
 		c.UpgradeElectronUpgradeStrategyGrayStrategy, c.UpgradeElectronVersion,
 		c.UpgradeFile, c.UpgradeFileUpgradeStrategy,
 		c.UpgradeFileUpgradeStrategyFlowLimitStrategy,
-		c.UpgradeFileUpgradeStrategyGrayStrategy, c.UpgradeFileVersion, c.UpgradeTauri,
+		c.UpgradeFileUpgradeStrategyGrayStrategy, c.UpgradeFileVersion, c.UpgradeLnx,
+		c.UpgradeLnxUpgradeStrategy, c.UpgradeLnxUpgradeStrategyFlowLimitStrategy,
+		c.UpgradeLnxUpgradeStrategyGrayStrategy, c.UpgradeLnxVersion, c.UpgradeMac,
+		c.UpgradeMacUpgradeStrategy, c.UpgradeMacUpgradeStrategyFlowLimitStrategy,
+		c.UpgradeMacUpgradeStrategyGrayStrategy, c.UpgradeMacVersion, c.UpgradeTauri,
 		c.UpgradeTauriUpgradeStrategy, c.UpgradeTauriUpgradeStrategyFlowLimitStrategy,
 		c.UpgradeTauriUpgradeStrategyGrayStrategy, c.UpgradeTauriVersion,
 		c.UpgradeTrafficPacket, c.UpgradeUrl, c.UpgradeUrlUpgradeStrategy,
 		c.UpgradeUrlUpgradeStrategyFlowLimitStrategy,
-		c.UpgradeUrlUpgradeStrategyGrayStrategy, c.UpgradeUrlVersion,
+		c.UpgradeUrlUpgradeStrategyGrayStrategy, c.UpgradeUrlVersion, c.UpgradeWin,
+		c.UpgradeWinUpgradeStrategy, c.UpgradeWinUpgradeStrategyFlowLimitStrategy,
+		c.UpgradeWinUpgradeStrategyGrayStrategy, c.UpgradeWinVersion,
 	} {
 		n.Intercept(interceptors...)
 	}
@@ -532,6 +634,26 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.UpgradeFileUpgradeStrategyGrayStrategy.mutate(ctx, m)
 	case *UpgradeFileVersionMutation:
 		return c.UpgradeFileVersion.mutate(ctx, m)
+	case *UpgradeLnxMutation:
+		return c.UpgradeLnx.mutate(ctx, m)
+	case *UpgradeLnxUpgradeStrategyMutation:
+		return c.UpgradeLnxUpgradeStrategy.mutate(ctx, m)
+	case *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation:
+		return c.UpgradeLnxUpgradeStrategyFlowLimitStrategy.mutate(ctx, m)
+	case *UpgradeLnxUpgradeStrategyGrayStrategyMutation:
+		return c.UpgradeLnxUpgradeStrategyGrayStrategy.mutate(ctx, m)
+	case *UpgradeLnxVersionMutation:
+		return c.UpgradeLnxVersion.mutate(ctx, m)
+	case *UpgradeMacMutation:
+		return c.UpgradeMac.mutate(ctx, m)
+	case *UpgradeMacUpgradeStrategyMutation:
+		return c.UpgradeMacUpgradeStrategy.mutate(ctx, m)
+	case *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation:
+		return c.UpgradeMacUpgradeStrategyFlowLimitStrategy.mutate(ctx, m)
+	case *UpgradeMacUpgradeStrategyGrayStrategyMutation:
+		return c.UpgradeMacUpgradeStrategyGrayStrategy.mutate(ctx, m)
+	case *UpgradeMacVersionMutation:
+		return c.UpgradeMacVersion.mutate(ctx, m)
 	case *UpgradeTauriMutation:
 		return c.UpgradeTauri.mutate(ctx, m)
 	case *UpgradeTauriUpgradeStrategyMutation:
@@ -554,6 +676,16 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.UpgradeUrlUpgradeStrategyGrayStrategy.mutate(ctx, m)
 	case *UpgradeUrlVersionMutation:
 		return c.UpgradeUrlVersion.mutate(ctx, m)
+	case *UpgradeWinMutation:
+		return c.UpgradeWin.mutate(ctx, m)
+	case *UpgradeWinUpgradeStrategyMutation:
+		return c.UpgradeWinUpgradeStrategy.mutate(ctx, m)
+	case *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation:
+		return c.UpgradeWinUpgradeStrategyFlowLimitStrategy.mutate(ctx, m)
+	case *UpgradeWinUpgradeStrategyGrayStrategyMutation:
+		return c.UpgradeWinUpgradeStrategyGrayStrategy.mutate(ctx, m)
+	case *UpgradeWinVersionMutation:
+		return c.UpgradeWinVersion.mutate(ctx, m)
 	default:
 		return nil, fmt.Errorf("ent: unknown mutation type %T", m)
 	}
@@ -4416,6 +4548,1336 @@ func (c *UpgradeFileVersionClient) mutate(ctx context.Context, m *UpgradeFileVer
 	}
 }
 
+// UpgradeLnxClient is a client for the UpgradeLnx schema.
+type UpgradeLnxClient struct {
+	config
+}
+
+// NewUpgradeLnxClient returns a client for the UpgradeLnx from the given config.
+func NewUpgradeLnxClient(c config) *UpgradeLnxClient {
+	return &UpgradeLnxClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradelnx.Hooks(f(g(h())))`.
+func (c *UpgradeLnxClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeLnx = append(c.hooks.UpgradeLnx, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradelnx.Intercept(f(g(h())))`.
+func (c *UpgradeLnxClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeLnx = append(c.inters.UpgradeLnx, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeLnx entity.
+func (c *UpgradeLnxClient) Create() *UpgradeLnxCreate {
+	mutation := newUpgradeLnxMutation(c.config, OpCreate)
+	return &UpgradeLnxCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeLnx entities.
+func (c *UpgradeLnxClient) CreateBulk(builders ...*UpgradeLnxCreate) *UpgradeLnxCreateBulk {
+	return &UpgradeLnxCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeLnxClient) MapCreateBulk(slice any, setFunc func(*UpgradeLnxCreate, int)) *UpgradeLnxCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeLnxCreateBulk{err: fmt.Errorf("calling to UpgradeLnxClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeLnxCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeLnxCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeLnx.
+func (c *UpgradeLnxClient) Update() *UpgradeLnxUpdate {
+	mutation := newUpgradeLnxMutation(c.config, OpUpdate)
+	return &UpgradeLnxUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeLnxClient) UpdateOne(ul *UpgradeLnx) *UpgradeLnxUpdateOne {
+	mutation := newUpgradeLnxMutation(c.config, OpUpdateOne, withUpgradeLnx(ul))
+	return &UpgradeLnxUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeLnxClient) UpdateOneID(id int) *UpgradeLnxUpdateOne {
+	mutation := newUpgradeLnxMutation(c.config, OpUpdateOne, withUpgradeLnxID(id))
+	return &UpgradeLnxUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeLnx.
+func (c *UpgradeLnxClient) Delete() *UpgradeLnxDelete {
+	mutation := newUpgradeLnxMutation(c.config, OpDelete)
+	return &UpgradeLnxDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeLnxClient) DeleteOne(ul *UpgradeLnx) *UpgradeLnxDeleteOne {
+	return c.DeleteOneID(ul.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeLnxClient) DeleteOneID(id int) *UpgradeLnxDeleteOne {
+	builder := c.Delete().Where(upgradelnx.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeLnxDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeLnx.
+func (c *UpgradeLnxClient) Query() *UpgradeLnxQuery {
+	return &UpgradeLnxQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeLnx},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeLnx entity by its id.
+func (c *UpgradeLnxClient) Get(ctx context.Context, id int) (*UpgradeLnx, error) {
+	return c.Query().Where(upgradelnx.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeLnxClient) GetX(ctx context.Context, id int) *UpgradeLnx {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeLnxClient) Hooks() []Hook {
+	return c.hooks.UpgradeLnx
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeLnxClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeLnx
+}
+
+func (c *UpgradeLnxClient) mutate(ctx context.Context, m *UpgradeLnxMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeLnxCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeLnxUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeLnxUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeLnxDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeLnx mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeLnxUpgradeStrategyClient is a client for the UpgradeLnxUpgradeStrategy schema.
+type UpgradeLnxUpgradeStrategyClient struct {
+	config
+}
+
+// NewUpgradeLnxUpgradeStrategyClient returns a client for the UpgradeLnxUpgradeStrategy from the given config.
+func NewUpgradeLnxUpgradeStrategyClient(c config) *UpgradeLnxUpgradeStrategyClient {
+	return &UpgradeLnxUpgradeStrategyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradelnxupgradestrategy.Hooks(f(g(h())))`.
+func (c *UpgradeLnxUpgradeStrategyClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeLnxUpgradeStrategy = append(c.hooks.UpgradeLnxUpgradeStrategy, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradelnxupgradestrategy.Intercept(f(g(h())))`.
+func (c *UpgradeLnxUpgradeStrategyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeLnxUpgradeStrategy = append(c.inters.UpgradeLnxUpgradeStrategy, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeLnxUpgradeStrategy entity.
+func (c *UpgradeLnxUpgradeStrategyClient) Create() *UpgradeLnxUpgradeStrategyCreate {
+	mutation := newUpgradeLnxUpgradeStrategyMutation(c.config, OpCreate)
+	return &UpgradeLnxUpgradeStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeLnxUpgradeStrategy entities.
+func (c *UpgradeLnxUpgradeStrategyClient) CreateBulk(builders ...*UpgradeLnxUpgradeStrategyCreate) *UpgradeLnxUpgradeStrategyCreateBulk {
+	return &UpgradeLnxUpgradeStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeLnxUpgradeStrategyClient) MapCreateBulk(slice any, setFunc func(*UpgradeLnxUpgradeStrategyCreate, int)) *UpgradeLnxUpgradeStrategyCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeLnxUpgradeStrategyCreateBulk{err: fmt.Errorf("calling to UpgradeLnxUpgradeStrategyClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeLnxUpgradeStrategyCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeLnxUpgradeStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeLnxUpgradeStrategy.
+func (c *UpgradeLnxUpgradeStrategyClient) Update() *UpgradeLnxUpgradeStrategyUpdate {
+	mutation := newUpgradeLnxUpgradeStrategyMutation(c.config, OpUpdate)
+	return &UpgradeLnxUpgradeStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeLnxUpgradeStrategyClient) UpdateOne(ulus *UpgradeLnxUpgradeStrategy) *UpgradeLnxUpgradeStrategyUpdateOne {
+	mutation := newUpgradeLnxUpgradeStrategyMutation(c.config, OpUpdateOne, withUpgradeLnxUpgradeStrategy(ulus))
+	return &UpgradeLnxUpgradeStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeLnxUpgradeStrategyClient) UpdateOneID(id int) *UpgradeLnxUpgradeStrategyUpdateOne {
+	mutation := newUpgradeLnxUpgradeStrategyMutation(c.config, OpUpdateOne, withUpgradeLnxUpgradeStrategyID(id))
+	return &UpgradeLnxUpgradeStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeLnxUpgradeStrategy.
+func (c *UpgradeLnxUpgradeStrategyClient) Delete() *UpgradeLnxUpgradeStrategyDelete {
+	mutation := newUpgradeLnxUpgradeStrategyMutation(c.config, OpDelete)
+	return &UpgradeLnxUpgradeStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeLnxUpgradeStrategyClient) DeleteOne(ulus *UpgradeLnxUpgradeStrategy) *UpgradeLnxUpgradeStrategyDeleteOne {
+	return c.DeleteOneID(ulus.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeLnxUpgradeStrategyClient) DeleteOneID(id int) *UpgradeLnxUpgradeStrategyDeleteOne {
+	builder := c.Delete().Where(upgradelnxupgradestrategy.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeLnxUpgradeStrategyDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeLnxUpgradeStrategy.
+func (c *UpgradeLnxUpgradeStrategyClient) Query() *UpgradeLnxUpgradeStrategyQuery {
+	return &UpgradeLnxUpgradeStrategyQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeLnxUpgradeStrategy},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeLnxUpgradeStrategy entity by its id.
+func (c *UpgradeLnxUpgradeStrategyClient) Get(ctx context.Context, id int) (*UpgradeLnxUpgradeStrategy, error) {
+	return c.Query().Where(upgradelnxupgradestrategy.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeLnxUpgradeStrategyClient) GetX(ctx context.Context, id int) *UpgradeLnxUpgradeStrategy {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeLnxUpgradeStrategyClient) Hooks() []Hook {
+	return c.hooks.UpgradeLnxUpgradeStrategy
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeLnxUpgradeStrategyClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeLnxUpgradeStrategy
+}
+
+func (c *UpgradeLnxUpgradeStrategyClient) mutate(ctx context.Context, m *UpgradeLnxUpgradeStrategyMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeLnxUpgradeStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeLnxUpgradeStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeLnxUpgradeStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeLnxUpgradeStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeLnxUpgradeStrategy mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeLnxUpgradeStrategyFlowLimitStrategyClient is a client for the UpgradeLnxUpgradeStrategyFlowLimitStrategy schema.
+type UpgradeLnxUpgradeStrategyFlowLimitStrategyClient struct {
+	config
+}
+
+// NewUpgradeLnxUpgradeStrategyFlowLimitStrategyClient returns a client for the UpgradeLnxUpgradeStrategyFlowLimitStrategy from the given config.
+func NewUpgradeLnxUpgradeStrategyFlowLimitStrategyClient(c config) *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient {
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradelnxupgradestrategyflowlimitstrategy.Hooks(f(g(h())))`.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeLnxUpgradeStrategyFlowLimitStrategy = append(c.hooks.UpgradeLnxUpgradeStrategyFlowLimitStrategy, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradelnxupgradestrategyflowlimitstrategy.Intercept(f(g(h())))`.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeLnxUpgradeStrategyFlowLimitStrategy = append(c.inters.UpgradeLnxUpgradeStrategyFlowLimitStrategy, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeLnxUpgradeStrategyFlowLimitStrategy entity.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) Create() *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate {
+	mutation := newUpgradeLnxUpgradeStrategyFlowLimitStrategyMutation(c.config, OpCreate)
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeLnxUpgradeStrategyFlowLimitStrategy entities.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) CreateBulk(builders ...*UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreateBulk {
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) MapCreateBulk(slice any, setFunc func(*UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate, int)) *UpgradeLnxUpgradeStrategyFlowLimitStrategyCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeLnxUpgradeStrategyFlowLimitStrategyCreateBulk{err: fmt.Errorf("calling to UpgradeLnxUpgradeStrategyFlowLimitStrategyClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeLnxUpgradeStrategyFlowLimitStrategy.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) Update() *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate {
+	mutation := newUpgradeLnxUpgradeStrategyFlowLimitStrategyMutation(c.config, OpUpdate)
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) UpdateOne(ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategy) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	mutation := newUpgradeLnxUpgradeStrategyFlowLimitStrategyMutation(c.config, OpUpdateOne, withUpgradeLnxUpgradeStrategyFlowLimitStrategy(ulusfls))
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) UpdateOneID(id int) *UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne {
+	mutation := newUpgradeLnxUpgradeStrategyFlowLimitStrategyMutation(c.config, OpUpdateOne, withUpgradeLnxUpgradeStrategyFlowLimitStrategyID(id))
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeLnxUpgradeStrategyFlowLimitStrategy.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) Delete() *UpgradeLnxUpgradeStrategyFlowLimitStrategyDelete {
+	mutation := newUpgradeLnxUpgradeStrategyFlowLimitStrategyMutation(c.config, OpDelete)
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) DeleteOne(ulusfls *UpgradeLnxUpgradeStrategyFlowLimitStrategy) *UpgradeLnxUpgradeStrategyFlowLimitStrategyDeleteOne {
+	return c.DeleteOneID(ulusfls.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) DeleteOneID(id int) *UpgradeLnxUpgradeStrategyFlowLimitStrategyDeleteOne {
+	builder := c.Delete().Where(upgradelnxupgradestrategyflowlimitstrategy.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeLnxUpgradeStrategyFlowLimitStrategy.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) Query() *UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery {
+	return &UpgradeLnxUpgradeStrategyFlowLimitStrategyQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeLnxUpgradeStrategyFlowLimitStrategy},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeLnxUpgradeStrategyFlowLimitStrategy entity by its id.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) Get(ctx context.Context, id int) (*UpgradeLnxUpgradeStrategyFlowLimitStrategy, error) {
+	return c.Query().Where(upgradelnxupgradestrategyflowlimitstrategy.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) GetX(ctx context.Context, id int) *UpgradeLnxUpgradeStrategyFlowLimitStrategy {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) Hooks() []Hook {
+	return c.hooks.UpgradeLnxUpgradeStrategyFlowLimitStrategy
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeLnxUpgradeStrategyFlowLimitStrategy
+}
+
+func (c *UpgradeLnxUpgradeStrategyFlowLimitStrategyClient) mutate(ctx context.Context, m *UpgradeLnxUpgradeStrategyFlowLimitStrategyMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeLnxUpgradeStrategyFlowLimitStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeLnxUpgradeStrategyFlowLimitStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeLnxUpgradeStrategyFlowLimitStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeLnxUpgradeStrategyFlowLimitStrategy mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeLnxUpgradeStrategyGrayStrategyClient is a client for the UpgradeLnxUpgradeStrategyGrayStrategy schema.
+type UpgradeLnxUpgradeStrategyGrayStrategyClient struct {
+	config
+}
+
+// NewUpgradeLnxUpgradeStrategyGrayStrategyClient returns a client for the UpgradeLnxUpgradeStrategyGrayStrategy from the given config.
+func NewUpgradeLnxUpgradeStrategyGrayStrategyClient(c config) *UpgradeLnxUpgradeStrategyGrayStrategyClient {
+	return &UpgradeLnxUpgradeStrategyGrayStrategyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradelnxupgradestrategygraystrategy.Hooks(f(g(h())))`.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeLnxUpgradeStrategyGrayStrategy = append(c.hooks.UpgradeLnxUpgradeStrategyGrayStrategy, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradelnxupgradestrategygraystrategy.Intercept(f(g(h())))`.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeLnxUpgradeStrategyGrayStrategy = append(c.inters.UpgradeLnxUpgradeStrategyGrayStrategy, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeLnxUpgradeStrategyGrayStrategy entity.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) Create() *UpgradeLnxUpgradeStrategyGrayStrategyCreate {
+	mutation := newUpgradeLnxUpgradeStrategyGrayStrategyMutation(c.config, OpCreate)
+	return &UpgradeLnxUpgradeStrategyGrayStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeLnxUpgradeStrategyGrayStrategy entities.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) CreateBulk(builders ...*UpgradeLnxUpgradeStrategyGrayStrategyCreate) *UpgradeLnxUpgradeStrategyGrayStrategyCreateBulk {
+	return &UpgradeLnxUpgradeStrategyGrayStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) MapCreateBulk(slice any, setFunc func(*UpgradeLnxUpgradeStrategyGrayStrategyCreate, int)) *UpgradeLnxUpgradeStrategyGrayStrategyCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeLnxUpgradeStrategyGrayStrategyCreateBulk{err: fmt.Errorf("calling to UpgradeLnxUpgradeStrategyGrayStrategyClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeLnxUpgradeStrategyGrayStrategyCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeLnxUpgradeStrategyGrayStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeLnxUpgradeStrategyGrayStrategy.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) Update() *UpgradeLnxUpgradeStrategyGrayStrategyUpdate {
+	mutation := newUpgradeLnxUpgradeStrategyGrayStrategyMutation(c.config, OpUpdate)
+	return &UpgradeLnxUpgradeStrategyGrayStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) UpdateOne(ulusgs *UpgradeLnxUpgradeStrategyGrayStrategy) *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne {
+	mutation := newUpgradeLnxUpgradeStrategyGrayStrategyMutation(c.config, OpUpdateOne, withUpgradeLnxUpgradeStrategyGrayStrategy(ulusgs))
+	return &UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) UpdateOneID(id int) *UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne {
+	mutation := newUpgradeLnxUpgradeStrategyGrayStrategyMutation(c.config, OpUpdateOne, withUpgradeLnxUpgradeStrategyGrayStrategyID(id))
+	return &UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeLnxUpgradeStrategyGrayStrategy.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) Delete() *UpgradeLnxUpgradeStrategyGrayStrategyDelete {
+	mutation := newUpgradeLnxUpgradeStrategyGrayStrategyMutation(c.config, OpDelete)
+	return &UpgradeLnxUpgradeStrategyGrayStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) DeleteOne(ulusgs *UpgradeLnxUpgradeStrategyGrayStrategy) *UpgradeLnxUpgradeStrategyGrayStrategyDeleteOne {
+	return c.DeleteOneID(ulusgs.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) DeleteOneID(id int) *UpgradeLnxUpgradeStrategyGrayStrategyDeleteOne {
+	builder := c.Delete().Where(upgradelnxupgradestrategygraystrategy.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeLnxUpgradeStrategyGrayStrategyDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeLnxUpgradeStrategyGrayStrategy.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) Query() *UpgradeLnxUpgradeStrategyGrayStrategyQuery {
+	return &UpgradeLnxUpgradeStrategyGrayStrategyQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeLnxUpgradeStrategyGrayStrategy},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeLnxUpgradeStrategyGrayStrategy entity by its id.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) Get(ctx context.Context, id int) (*UpgradeLnxUpgradeStrategyGrayStrategy, error) {
+	return c.Query().Where(upgradelnxupgradestrategygraystrategy.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) GetX(ctx context.Context, id int) *UpgradeLnxUpgradeStrategyGrayStrategy {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) Hooks() []Hook {
+	return c.hooks.UpgradeLnxUpgradeStrategyGrayStrategy
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeLnxUpgradeStrategyGrayStrategy
+}
+
+func (c *UpgradeLnxUpgradeStrategyGrayStrategyClient) mutate(ctx context.Context, m *UpgradeLnxUpgradeStrategyGrayStrategyMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeLnxUpgradeStrategyGrayStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeLnxUpgradeStrategyGrayStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeLnxUpgradeStrategyGrayStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeLnxUpgradeStrategyGrayStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeLnxUpgradeStrategyGrayStrategy mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeLnxVersionClient is a client for the UpgradeLnxVersion schema.
+type UpgradeLnxVersionClient struct {
+	config
+}
+
+// NewUpgradeLnxVersionClient returns a client for the UpgradeLnxVersion from the given config.
+func NewUpgradeLnxVersionClient(c config) *UpgradeLnxVersionClient {
+	return &UpgradeLnxVersionClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradelnxversion.Hooks(f(g(h())))`.
+func (c *UpgradeLnxVersionClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeLnxVersion = append(c.hooks.UpgradeLnxVersion, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradelnxversion.Intercept(f(g(h())))`.
+func (c *UpgradeLnxVersionClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeLnxVersion = append(c.inters.UpgradeLnxVersion, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeLnxVersion entity.
+func (c *UpgradeLnxVersionClient) Create() *UpgradeLnxVersionCreate {
+	mutation := newUpgradeLnxVersionMutation(c.config, OpCreate)
+	return &UpgradeLnxVersionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeLnxVersion entities.
+func (c *UpgradeLnxVersionClient) CreateBulk(builders ...*UpgradeLnxVersionCreate) *UpgradeLnxVersionCreateBulk {
+	return &UpgradeLnxVersionCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeLnxVersionClient) MapCreateBulk(slice any, setFunc func(*UpgradeLnxVersionCreate, int)) *UpgradeLnxVersionCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeLnxVersionCreateBulk{err: fmt.Errorf("calling to UpgradeLnxVersionClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeLnxVersionCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeLnxVersionCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeLnxVersion.
+func (c *UpgradeLnxVersionClient) Update() *UpgradeLnxVersionUpdate {
+	mutation := newUpgradeLnxVersionMutation(c.config, OpUpdate)
+	return &UpgradeLnxVersionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeLnxVersionClient) UpdateOne(ulv *UpgradeLnxVersion) *UpgradeLnxVersionUpdateOne {
+	mutation := newUpgradeLnxVersionMutation(c.config, OpUpdateOne, withUpgradeLnxVersion(ulv))
+	return &UpgradeLnxVersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeLnxVersionClient) UpdateOneID(id int) *UpgradeLnxVersionUpdateOne {
+	mutation := newUpgradeLnxVersionMutation(c.config, OpUpdateOne, withUpgradeLnxVersionID(id))
+	return &UpgradeLnxVersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeLnxVersion.
+func (c *UpgradeLnxVersionClient) Delete() *UpgradeLnxVersionDelete {
+	mutation := newUpgradeLnxVersionMutation(c.config, OpDelete)
+	return &UpgradeLnxVersionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeLnxVersionClient) DeleteOne(ulv *UpgradeLnxVersion) *UpgradeLnxVersionDeleteOne {
+	return c.DeleteOneID(ulv.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeLnxVersionClient) DeleteOneID(id int) *UpgradeLnxVersionDeleteOne {
+	builder := c.Delete().Where(upgradelnxversion.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeLnxVersionDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeLnxVersion.
+func (c *UpgradeLnxVersionClient) Query() *UpgradeLnxVersionQuery {
+	return &UpgradeLnxVersionQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeLnxVersion},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeLnxVersion entity by its id.
+func (c *UpgradeLnxVersionClient) Get(ctx context.Context, id int) (*UpgradeLnxVersion, error) {
+	return c.Query().Where(upgradelnxversion.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeLnxVersionClient) GetX(ctx context.Context, id int) *UpgradeLnxVersion {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeLnxVersionClient) Hooks() []Hook {
+	return c.hooks.UpgradeLnxVersion
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeLnxVersionClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeLnxVersion
+}
+
+func (c *UpgradeLnxVersionClient) mutate(ctx context.Context, m *UpgradeLnxVersionMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeLnxVersionCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeLnxVersionUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeLnxVersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeLnxVersionDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeLnxVersion mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeMacClient is a client for the UpgradeMac schema.
+type UpgradeMacClient struct {
+	config
+}
+
+// NewUpgradeMacClient returns a client for the UpgradeMac from the given config.
+func NewUpgradeMacClient(c config) *UpgradeMacClient {
+	return &UpgradeMacClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgrademac.Hooks(f(g(h())))`.
+func (c *UpgradeMacClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeMac = append(c.hooks.UpgradeMac, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgrademac.Intercept(f(g(h())))`.
+func (c *UpgradeMacClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeMac = append(c.inters.UpgradeMac, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeMac entity.
+func (c *UpgradeMacClient) Create() *UpgradeMacCreate {
+	mutation := newUpgradeMacMutation(c.config, OpCreate)
+	return &UpgradeMacCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeMac entities.
+func (c *UpgradeMacClient) CreateBulk(builders ...*UpgradeMacCreate) *UpgradeMacCreateBulk {
+	return &UpgradeMacCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeMacClient) MapCreateBulk(slice any, setFunc func(*UpgradeMacCreate, int)) *UpgradeMacCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeMacCreateBulk{err: fmt.Errorf("calling to UpgradeMacClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeMacCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeMacCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeMac.
+func (c *UpgradeMacClient) Update() *UpgradeMacUpdate {
+	mutation := newUpgradeMacMutation(c.config, OpUpdate)
+	return &UpgradeMacUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeMacClient) UpdateOne(um *UpgradeMac) *UpgradeMacUpdateOne {
+	mutation := newUpgradeMacMutation(c.config, OpUpdateOne, withUpgradeMac(um))
+	return &UpgradeMacUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeMacClient) UpdateOneID(id int) *UpgradeMacUpdateOne {
+	mutation := newUpgradeMacMutation(c.config, OpUpdateOne, withUpgradeMacID(id))
+	return &UpgradeMacUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeMac.
+func (c *UpgradeMacClient) Delete() *UpgradeMacDelete {
+	mutation := newUpgradeMacMutation(c.config, OpDelete)
+	return &UpgradeMacDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeMacClient) DeleteOne(um *UpgradeMac) *UpgradeMacDeleteOne {
+	return c.DeleteOneID(um.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeMacClient) DeleteOneID(id int) *UpgradeMacDeleteOne {
+	builder := c.Delete().Where(upgrademac.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeMacDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeMac.
+func (c *UpgradeMacClient) Query() *UpgradeMacQuery {
+	return &UpgradeMacQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeMac},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeMac entity by its id.
+func (c *UpgradeMacClient) Get(ctx context.Context, id int) (*UpgradeMac, error) {
+	return c.Query().Where(upgrademac.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeMacClient) GetX(ctx context.Context, id int) *UpgradeMac {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeMacClient) Hooks() []Hook {
+	return c.hooks.UpgradeMac
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeMacClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeMac
+}
+
+func (c *UpgradeMacClient) mutate(ctx context.Context, m *UpgradeMacMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeMacCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeMacUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeMacUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeMacDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeMac mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeMacUpgradeStrategyClient is a client for the UpgradeMacUpgradeStrategy schema.
+type UpgradeMacUpgradeStrategyClient struct {
+	config
+}
+
+// NewUpgradeMacUpgradeStrategyClient returns a client for the UpgradeMacUpgradeStrategy from the given config.
+func NewUpgradeMacUpgradeStrategyClient(c config) *UpgradeMacUpgradeStrategyClient {
+	return &UpgradeMacUpgradeStrategyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgrademacupgradestrategy.Hooks(f(g(h())))`.
+func (c *UpgradeMacUpgradeStrategyClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeMacUpgradeStrategy = append(c.hooks.UpgradeMacUpgradeStrategy, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgrademacupgradestrategy.Intercept(f(g(h())))`.
+func (c *UpgradeMacUpgradeStrategyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeMacUpgradeStrategy = append(c.inters.UpgradeMacUpgradeStrategy, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeMacUpgradeStrategy entity.
+func (c *UpgradeMacUpgradeStrategyClient) Create() *UpgradeMacUpgradeStrategyCreate {
+	mutation := newUpgradeMacUpgradeStrategyMutation(c.config, OpCreate)
+	return &UpgradeMacUpgradeStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeMacUpgradeStrategy entities.
+func (c *UpgradeMacUpgradeStrategyClient) CreateBulk(builders ...*UpgradeMacUpgradeStrategyCreate) *UpgradeMacUpgradeStrategyCreateBulk {
+	return &UpgradeMacUpgradeStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeMacUpgradeStrategyClient) MapCreateBulk(slice any, setFunc func(*UpgradeMacUpgradeStrategyCreate, int)) *UpgradeMacUpgradeStrategyCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeMacUpgradeStrategyCreateBulk{err: fmt.Errorf("calling to UpgradeMacUpgradeStrategyClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeMacUpgradeStrategyCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeMacUpgradeStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeMacUpgradeStrategy.
+func (c *UpgradeMacUpgradeStrategyClient) Update() *UpgradeMacUpgradeStrategyUpdate {
+	mutation := newUpgradeMacUpgradeStrategyMutation(c.config, OpUpdate)
+	return &UpgradeMacUpgradeStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeMacUpgradeStrategyClient) UpdateOne(umus *UpgradeMacUpgradeStrategy) *UpgradeMacUpgradeStrategyUpdateOne {
+	mutation := newUpgradeMacUpgradeStrategyMutation(c.config, OpUpdateOne, withUpgradeMacUpgradeStrategy(umus))
+	return &UpgradeMacUpgradeStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeMacUpgradeStrategyClient) UpdateOneID(id int) *UpgradeMacUpgradeStrategyUpdateOne {
+	mutation := newUpgradeMacUpgradeStrategyMutation(c.config, OpUpdateOne, withUpgradeMacUpgradeStrategyID(id))
+	return &UpgradeMacUpgradeStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeMacUpgradeStrategy.
+func (c *UpgradeMacUpgradeStrategyClient) Delete() *UpgradeMacUpgradeStrategyDelete {
+	mutation := newUpgradeMacUpgradeStrategyMutation(c.config, OpDelete)
+	return &UpgradeMacUpgradeStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeMacUpgradeStrategyClient) DeleteOne(umus *UpgradeMacUpgradeStrategy) *UpgradeMacUpgradeStrategyDeleteOne {
+	return c.DeleteOneID(umus.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeMacUpgradeStrategyClient) DeleteOneID(id int) *UpgradeMacUpgradeStrategyDeleteOne {
+	builder := c.Delete().Where(upgrademacupgradestrategy.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeMacUpgradeStrategyDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeMacUpgradeStrategy.
+func (c *UpgradeMacUpgradeStrategyClient) Query() *UpgradeMacUpgradeStrategyQuery {
+	return &UpgradeMacUpgradeStrategyQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeMacUpgradeStrategy},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeMacUpgradeStrategy entity by its id.
+func (c *UpgradeMacUpgradeStrategyClient) Get(ctx context.Context, id int) (*UpgradeMacUpgradeStrategy, error) {
+	return c.Query().Where(upgrademacupgradestrategy.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeMacUpgradeStrategyClient) GetX(ctx context.Context, id int) *UpgradeMacUpgradeStrategy {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeMacUpgradeStrategyClient) Hooks() []Hook {
+	return c.hooks.UpgradeMacUpgradeStrategy
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeMacUpgradeStrategyClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeMacUpgradeStrategy
+}
+
+func (c *UpgradeMacUpgradeStrategyClient) mutate(ctx context.Context, m *UpgradeMacUpgradeStrategyMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeMacUpgradeStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeMacUpgradeStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeMacUpgradeStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeMacUpgradeStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeMacUpgradeStrategy mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeMacUpgradeStrategyFlowLimitStrategyClient is a client for the UpgradeMacUpgradeStrategyFlowLimitStrategy schema.
+type UpgradeMacUpgradeStrategyFlowLimitStrategyClient struct {
+	config
+}
+
+// NewUpgradeMacUpgradeStrategyFlowLimitStrategyClient returns a client for the UpgradeMacUpgradeStrategyFlowLimitStrategy from the given config.
+func NewUpgradeMacUpgradeStrategyFlowLimitStrategyClient(c config) *UpgradeMacUpgradeStrategyFlowLimitStrategyClient {
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgrademacupgradestrategyflowlimitstrategy.Hooks(f(g(h())))`.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeMacUpgradeStrategyFlowLimitStrategy = append(c.hooks.UpgradeMacUpgradeStrategyFlowLimitStrategy, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgrademacupgradestrategyflowlimitstrategy.Intercept(f(g(h())))`.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeMacUpgradeStrategyFlowLimitStrategy = append(c.inters.UpgradeMacUpgradeStrategyFlowLimitStrategy, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeMacUpgradeStrategyFlowLimitStrategy entity.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) Create() *UpgradeMacUpgradeStrategyFlowLimitStrategyCreate {
+	mutation := newUpgradeMacUpgradeStrategyFlowLimitStrategyMutation(c.config, OpCreate)
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeMacUpgradeStrategyFlowLimitStrategy entities.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) CreateBulk(builders ...*UpgradeMacUpgradeStrategyFlowLimitStrategyCreate) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreateBulk {
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) MapCreateBulk(slice any, setFunc func(*UpgradeMacUpgradeStrategyFlowLimitStrategyCreate, int)) *UpgradeMacUpgradeStrategyFlowLimitStrategyCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeMacUpgradeStrategyFlowLimitStrategyCreateBulk{err: fmt.Errorf("calling to UpgradeMacUpgradeStrategyFlowLimitStrategyClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeMacUpgradeStrategyFlowLimitStrategyCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeMacUpgradeStrategyFlowLimitStrategy.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) Update() *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate {
+	mutation := newUpgradeMacUpgradeStrategyFlowLimitStrategyMutation(c.config, OpUpdate)
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) UpdateOne(umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategy) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	mutation := newUpgradeMacUpgradeStrategyFlowLimitStrategyMutation(c.config, OpUpdateOne, withUpgradeMacUpgradeStrategyFlowLimitStrategy(umusfls))
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) UpdateOneID(id int) *UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne {
+	mutation := newUpgradeMacUpgradeStrategyFlowLimitStrategyMutation(c.config, OpUpdateOne, withUpgradeMacUpgradeStrategyFlowLimitStrategyID(id))
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeMacUpgradeStrategyFlowLimitStrategy.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) Delete() *UpgradeMacUpgradeStrategyFlowLimitStrategyDelete {
+	mutation := newUpgradeMacUpgradeStrategyFlowLimitStrategyMutation(c.config, OpDelete)
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) DeleteOne(umusfls *UpgradeMacUpgradeStrategyFlowLimitStrategy) *UpgradeMacUpgradeStrategyFlowLimitStrategyDeleteOne {
+	return c.DeleteOneID(umusfls.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) DeleteOneID(id int) *UpgradeMacUpgradeStrategyFlowLimitStrategyDeleteOne {
+	builder := c.Delete().Where(upgrademacupgradestrategyflowlimitstrategy.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeMacUpgradeStrategyFlowLimitStrategy.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) Query() *UpgradeMacUpgradeStrategyFlowLimitStrategyQuery {
+	return &UpgradeMacUpgradeStrategyFlowLimitStrategyQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeMacUpgradeStrategyFlowLimitStrategy},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeMacUpgradeStrategyFlowLimitStrategy entity by its id.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) Get(ctx context.Context, id int) (*UpgradeMacUpgradeStrategyFlowLimitStrategy, error) {
+	return c.Query().Where(upgrademacupgradestrategyflowlimitstrategy.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) GetX(ctx context.Context, id int) *UpgradeMacUpgradeStrategyFlowLimitStrategy {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) Hooks() []Hook {
+	return c.hooks.UpgradeMacUpgradeStrategyFlowLimitStrategy
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeMacUpgradeStrategyFlowLimitStrategy
+}
+
+func (c *UpgradeMacUpgradeStrategyFlowLimitStrategyClient) mutate(ctx context.Context, m *UpgradeMacUpgradeStrategyFlowLimitStrategyMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeMacUpgradeStrategyFlowLimitStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeMacUpgradeStrategyFlowLimitStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeMacUpgradeStrategyFlowLimitStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeMacUpgradeStrategyFlowLimitStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeMacUpgradeStrategyFlowLimitStrategy mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeMacUpgradeStrategyGrayStrategyClient is a client for the UpgradeMacUpgradeStrategyGrayStrategy schema.
+type UpgradeMacUpgradeStrategyGrayStrategyClient struct {
+	config
+}
+
+// NewUpgradeMacUpgradeStrategyGrayStrategyClient returns a client for the UpgradeMacUpgradeStrategyGrayStrategy from the given config.
+func NewUpgradeMacUpgradeStrategyGrayStrategyClient(c config) *UpgradeMacUpgradeStrategyGrayStrategyClient {
+	return &UpgradeMacUpgradeStrategyGrayStrategyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgrademacupgradestrategygraystrategy.Hooks(f(g(h())))`.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeMacUpgradeStrategyGrayStrategy = append(c.hooks.UpgradeMacUpgradeStrategyGrayStrategy, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgrademacupgradestrategygraystrategy.Intercept(f(g(h())))`.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeMacUpgradeStrategyGrayStrategy = append(c.inters.UpgradeMacUpgradeStrategyGrayStrategy, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeMacUpgradeStrategyGrayStrategy entity.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) Create() *UpgradeMacUpgradeStrategyGrayStrategyCreate {
+	mutation := newUpgradeMacUpgradeStrategyGrayStrategyMutation(c.config, OpCreate)
+	return &UpgradeMacUpgradeStrategyGrayStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeMacUpgradeStrategyGrayStrategy entities.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) CreateBulk(builders ...*UpgradeMacUpgradeStrategyGrayStrategyCreate) *UpgradeMacUpgradeStrategyGrayStrategyCreateBulk {
+	return &UpgradeMacUpgradeStrategyGrayStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) MapCreateBulk(slice any, setFunc func(*UpgradeMacUpgradeStrategyGrayStrategyCreate, int)) *UpgradeMacUpgradeStrategyGrayStrategyCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeMacUpgradeStrategyGrayStrategyCreateBulk{err: fmt.Errorf("calling to UpgradeMacUpgradeStrategyGrayStrategyClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeMacUpgradeStrategyGrayStrategyCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeMacUpgradeStrategyGrayStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeMacUpgradeStrategyGrayStrategy.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) Update() *UpgradeMacUpgradeStrategyGrayStrategyUpdate {
+	mutation := newUpgradeMacUpgradeStrategyGrayStrategyMutation(c.config, OpUpdate)
+	return &UpgradeMacUpgradeStrategyGrayStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) UpdateOne(umusgs *UpgradeMacUpgradeStrategyGrayStrategy) *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne {
+	mutation := newUpgradeMacUpgradeStrategyGrayStrategyMutation(c.config, OpUpdateOne, withUpgradeMacUpgradeStrategyGrayStrategy(umusgs))
+	return &UpgradeMacUpgradeStrategyGrayStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) UpdateOneID(id int) *UpgradeMacUpgradeStrategyGrayStrategyUpdateOne {
+	mutation := newUpgradeMacUpgradeStrategyGrayStrategyMutation(c.config, OpUpdateOne, withUpgradeMacUpgradeStrategyGrayStrategyID(id))
+	return &UpgradeMacUpgradeStrategyGrayStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeMacUpgradeStrategyGrayStrategy.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) Delete() *UpgradeMacUpgradeStrategyGrayStrategyDelete {
+	mutation := newUpgradeMacUpgradeStrategyGrayStrategyMutation(c.config, OpDelete)
+	return &UpgradeMacUpgradeStrategyGrayStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) DeleteOne(umusgs *UpgradeMacUpgradeStrategyGrayStrategy) *UpgradeMacUpgradeStrategyGrayStrategyDeleteOne {
+	return c.DeleteOneID(umusgs.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) DeleteOneID(id int) *UpgradeMacUpgradeStrategyGrayStrategyDeleteOne {
+	builder := c.Delete().Where(upgrademacupgradestrategygraystrategy.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeMacUpgradeStrategyGrayStrategyDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeMacUpgradeStrategyGrayStrategy.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) Query() *UpgradeMacUpgradeStrategyGrayStrategyQuery {
+	return &UpgradeMacUpgradeStrategyGrayStrategyQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeMacUpgradeStrategyGrayStrategy},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeMacUpgradeStrategyGrayStrategy entity by its id.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) Get(ctx context.Context, id int) (*UpgradeMacUpgradeStrategyGrayStrategy, error) {
+	return c.Query().Where(upgrademacupgradestrategygraystrategy.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) GetX(ctx context.Context, id int) *UpgradeMacUpgradeStrategyGrayStrategy {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) Hooks() []Hook {
+	return c.hooks.UpgradeMacUpgradeStrategyGrayStrategy
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeMacUpgradeStrategyGrayStrategy
+}
+
+func (c *UpgradeMacUpgradeStrategyGrayStrategyClient) mutate(ctx context.Context, m *UpgradeMacUpgradeStrategyGrayStrategyMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeMacUpgradeStrategyGrayStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeMacUpgradeStrategyGrayStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeMacUpgradeStrategyGrayStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeMacUpgradeStrategyGrayStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeMacUpgradeStrategyGrayStrategy mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeMacVersionClient is a client for the UpgradeMacVersion schema.
+type UpgradeMacVersionClient struct {
+	config
+}
+
+// NewUpgradeMacVersionClient returns a client for the UpgradeMacVersion from the given config.
+func NewUpgradeMacVersionClient(c config) *UpgradeMacVersionClient {
+	return &UpgradeMacVersionClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgrademacversion.Hooks(f(g(h())))`.
+func (c *UpgradeMacVersionClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeMacVersion = append(c.hooks.UpgradeMacVersion, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgrademacversion.Intercept(f(g(h())))`.
+func (c *UpgradeMacVersionClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeMacVersion = append(c.inters.UpgradeMacVersion, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeMacVersion entity.
+func (c *UpgradeMacVersionClient) Create() *UpgradeMacVersionCreate {
+	mutation := newUpgradeMacVersionMutation(c.config, OpCreate)
+	return &UpgradeMacVersionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeMacVersion entities.
+func (c *UpgradeMacVersionClient) CreateBulk(builders ...*UpgradeMacVersionCreate) *UpgradeMacVersionCreateBulk {
+	return &UpgradeMacVersionCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeMacVersionClient) MapCreateBulk(slice any, setFunc func(*UpgradeMacVersionCreate, int)) *UpgradeMacVersionCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeMacVersionCreateBulk{err: fmt.Errorf("calling to UpgradeMacVersionClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeMacVersionCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeMacVersionCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeMacVersion.
+func (c *UpgradeMacVersionClient) Update() *UpgradeMacVersionUpdate {
+	mutation := newUpgradeMacVersionMutation(c.config, OpUpdate)
+	return &UpgradeMacVersionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeMacVersionClient) UpdateOne(umv *UpgradeMacVersion) *UpgradeMacVersionUpdateOne {
+	mutation := newUpgradeMacVersionMutation(c.config, OpUpdateOne, withUpgradeMacVersion(umv))
+	return &UpgradeMacVersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeMacVersionClient) UpdateOneID(id int) *UpgradeMacVersionUpdateOne {
+	mutation := newUpgradeMacVersionMutation(c.config, OpUpdateOne, withUpgradeMacVersionID(id))
+	return &UpgradeMacVersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeMacVersion.
+func (c *UpgradeMacVersionClient) Delete() *UpgradeMacVersionDelete {
+	mutation := newUpgradeMacVersionMutation(c.config, OpDelete)
+	return &UpgradeMacVersionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeMacVersionClient) DeleteOne(umv *UpgradeMacVersion) *UpgradeMacVersionDeleteOne {
+	return c.DeleteOneID(umv.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeMacVersionClient) DeleteOneID(id int) *UpgradeMacVersionDeleteOne {
+	builder := c.Delete().Where(upgrademacversion.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeMacVersionDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeMacVersion.
+func (c *UpgradeMacVersionClient) Query() *UpgradeMacVersionQuery {
+	return &UpgradeMacVersionQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeMacVersion},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeMacVersion entity by its id.
+func (c *UpgradeMacVersionClient) Get(ctx context.Context, id int) (*UpgradeMacVersion, error) {
+	return c.Query().Where(upgrademacversion.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeMacVersionClient) GetX(ctx context.Context, id int) *UpgradeMacVersion {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeMacVersionClient) Hooks() []Hook {
+	return c.hooks.UpgradeMacVersion
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeMacVersionClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeMacVersion
+}
+
+func (c *UpgradeMacVersionClient) mutate(ctx context.Context, m *UpgradeMacVersionMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeMacVersionCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeMacVersionUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeMacVersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeMacVersionDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeMacVersion mutation op: %q", m.Op())
+	}
+}
+
 // UpgradeTauriClient is a client for the UpgradeTauri schema.
 type UpgradeTauriClient struct {
 	config
@@ -5879,6 +7341,671 @@ func (c *UpgradeUrlVersionClient) mutate(ctx context.Context, m *UpgradeUrlVersi
 	}
 }
 
+// UpgradeWinClient is a client for the UpgradeWin schema.
+type UpgradeWinClient struct {
+	config
+}
+
+// NewUpgradeWinClient returns a client for the UpgradeWin from the given config.
+func NewUpgradeWinClient(c config) *UpgradeWinClient {
+	return &UpgradeWinClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradewin.Hooks(f(g(h())))`.
+func (c *UpgradeWinClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeWin = append(c.hooks.UpgradeWin, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradewin.Intercept(f(g(h())))`.
+func (c *UpgradeWinClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeWin = append(c.inters.UpgradeWin, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeWin entity.
+func (c *UpgradeWinClient) Create() *UpgradeWinCreate {
+	mutation := newUpgradeWinMutation(c.config, OpCreate)
+	return &UpgradeWinCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeWin entities.
+func (c *UpgradeWinClient) CreateBulk(builders ...*UpgradeWinCreate) *UpgradeWinCreateBulk {
+	return &UpgradeWinCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeWinClient) MapCreateBulk(slice any, setFunc func(*UpgradeWinCreate, int)) *UpgradeWinCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeWinCreateBulk{err: fmt.Errorf("calling to UpgradeWinClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeWinCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeWinCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeWin.
+func (c *UpgradeWinClient) Update() *UpgradeWinUpdate {
+	mutation := newUpgradeWinMutation(c.config, OpUpdate)
+	return &UpgradeWinUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeWinClient) UpdateOne(uw *UpgradeWin) *UpgradeWinUpdateOne {
+	mutation := newUpgradeWinMutation(c.config, OpUpdateOne, withUpgradeWin(uw))
+	return &UpgradeWinUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeWinClient) UpdateOneID(id int) *UpgradeWinUpdateOne {
+	mutation := newUpgradeWinMutation(c.config, OpUpdateOne, withUpgradeWinID(id))
+	return &UpgradeWinUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeWin.
+func (c *UpgradeWinClient) Delete() *UpgradeWinDelete {
+	mutation := newUpgradeWinMutation(c.config, OpDelete)
+	return &UpgradeWinDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeWinClient) DeleteOne(uw *UpgradeWin) *UpgradeWinDeleteOne {
+	return c.DeleteOneID(uw.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeWinClient) DeleteOneID(id int) *UpgradeWinDeleteOne {
+	builder := c.Delete().Where(upgradewin.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeWinDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeWin.
+func (c *UpgradeWinClient) Query() *UpgradeWinQuery {
+	return &UpgradeWinQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeWin},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeWin entity by its id.
+func (c *UpgradeWinClient) Get(ctx context.Context, id int) (*UpgradeWin, error) {
+	return c.Query().Where(upgradewin.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeWinClient) GetX(ctx context.Context, id int) *UpgradeWin {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeWinClient) Hooks() []Hook {
+	return c.hooks.UpgradeWin
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeWinClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeWin
+}
+
+func (c *UpgradeWinClient) mutate(ctx context.Context, m *UpgradeWinMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeWinCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeWinUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeWinUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeWinDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeWin mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeWinUpgradeStrategyClient is a client for the UpgradeWinUpgradeStrategy schema.
+type UpgradeWinUpgradeStrategyClient struct {
+	config
+}
+
+// NewUpgradeWinUpgradeStrategyClient returns a client for the UpgradeWinUpgradeStrategy from the given config.
+func NewUpgradeWinUpgradeStrategyClient(c config) *UpgradeWinUpgradeStrategyClient {
+	return &UpgradeWinUpgradeStrategyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradewinupgradestrategy.Hooks(f(g(h())))`.
+func (c *UpgradeWinUpgradeStrategyClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeWinUpgradeStrategy = append(c.hooks.UpgradeWinUpgradeStrategy, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradewinupgradestrategy.Intercept(f(g(h())))`.
+func (c *UpgradeWinUpgradeStrategyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeWinUpgradeStrategy = append(c.inters.UpgradeWinUpgradeStrategy, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeWinUpgradeStrategy entity.
+func (c *UpgradeWinUpgradeStrategyClient) Create() *UpgradeWinUpgradeStrategyCreate {
+	mutation := newUpgradeWinUpgradeStrategyMutation(c.config, OpCreate)
+	return &UpgradeWinUpgradeStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeWinUpgradeStrategy entities.
+func (c *UpgradeWinUpgradeStrategyClient) CreateBulk(builders ...*UpgradeWinUpgradeStrategyCreate) *UpgradeWinUpgradeStrategyCreateBulk {
+	return &UpgradeWinUpgradeStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeWinUpgradeStrategyClient) MapCreateBulk(slice any, setFunc func(*UpgradeWinUpgradeStrategyCreate, int)) *UpgradeWinUpgradeStrategyCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeWinUpgradeStrategyCreateBulk{err: fmt.Errorf("calling to UpgradeWinUpgradeStrategyClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeWinUpgradeStrategyCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeWinUpgradeStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeWinUpgradeStrategy.
+func (c *UpgradeWinUpgradeStrategyClient) Update() *UpgradeWinUpgradeStrategyUpdate {
+	mutation := newUpgradeWinUpgradeStrategyMutation(c.config, OpUpdate)
+	return &UpgradeWinUpgradeStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeWinUpgradeStrategyClient) UpdateOne(uwus *UpgradeWinUpgradeStrategy) *UpgradeWinUpgradeStrategyUpdateOne {
+	mutation := newUpgradeWinUpgradeStrategyMutation(c.config, OpUpdateOne, withUpgradeWinUpgradeStrategy(uwus))
+	return &UpgradeWinUpgradeStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeWinUpgradeStrategyClient) UpdateOneID(id int) *UpgradeWinUpgradeStrategyUpdateOne {
+	mutation := newUpgradeWinUpgradeStrategyMutation(c.config, OpUpdateOne, withUpgradeWinUpgradeStrategyID(id))
+	return &UpgradeWinUpgradeStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeWinUpgradeStrategy.
+func (c *UpgradeWinUpgradeStrategyClient) Delete() *UpgradeWinUpgradeStrategyDelete {
+	mutation := newUpgradeWinUpgradeStrategyMutation(c.config, OpDelete)
+	return &UpgradeWinUpgradeStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeWinUpgradeStrategyClient) DeleteOne(uwus *UpgradeWinUpgradeStrategy) *UpgradeWinUpgradeStrategyDeleteOne {
+	return c.DeleteOneID(uwus.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeWinUpgradeStrategyClient) DeleteOneID(id int) *UpgradeWinUpgradeStrategyDeleteOne {
+	builder := c.Delete().Where(upgradewinupgradestrategy.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeWinUpgradeStrategyDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeWinUpgradeStrategy.
+func (c *UpgradeWinUpgradeStrategyClient) Query() *UpgradeWinUpgradeStrategyQuery {
+	return &UpgradeWinUpgradeStrategyQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeWinUpgradeStrategy},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeWinUpgradeStrategy entity by its id.
+func (c *UpgradeWinUpgradeStrategyClient) Get(ctx context.Context, id int) (*UpgradeWinUpgradeStrategy, error) {
+	return c.Query().Where(upgradewinupgradestrategy.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeWinUpgradeStrategyClient) GetX(ctx context.Context, id int) *UpgradeWinUpgradeStrategy {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeWinUpgradeStrategyClient) Hooks() []Hook {
+	return c.hooks.UpgradeWinUpgradeStrategy
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeWinUpgradeStrategyClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeWinUpgradeStrategy
+}
+
+func (c *UpgradeWinUpgradeStrategyClient) mutate(ctx context.Context, m *UpgradeWinUpgradeStrategyMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeWinUpgradeStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeWinUpgradeStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeWinUpgradeStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeWinUpgradeStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeWinUpgradeStrategy mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeWinUpgradeStrategyFlowLimitStrategyClient is a client for the UpgradeWinUpgradeStrategyFlowLimitStrategy schema.
+type UpgradeWinUpgradeStrategyFlowLimitStrategyClient struct {
+	config
+}
+
+// NewUpgradeWinUpgradeStrategyFlowLimitStrategyClient returns a client for the UpgradeWinUpgradeStrategyFlowLimitStrategy from the given config.
+func NewUpgradeWinUpgradeStrategyFlowLimitStrategyClient(c config) *UpgradeWinUpgradeStrategyFlowLimitStrategyClient {
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradewinupgradestrategyflowlimitstrategy.Hooks(f(g(h())))`.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeWinUpgradeStrategyFlowLimitStrategy = append(c.hooks.UpgradeWinUpgradeStrategyFlowLimitStrategy, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradewinupgradestrategyflowlimitstrategy.Intercept(f(g(h())))`.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeWinUpgradeStrategyFlowLimitStrategy = append(c.inters.UpgradeWinUpgradeStrategyFlowLimitStrategy, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeWinUpgradeStrategyFlowLimitStrategy entity.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) Create() *UpgradeWinUpgradeStrategyFlowLimitStrategyCreate {
+	mutation := newUpgradeWinUpgradeStrategyFlowLimitStrategyMutation(c.config, OpCreate)
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeWinUpgradeStrategyFlowLimitStrategy entities.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) CreateBulk(builders ...*UpgradeWinUpgradeStrategyFlowLimitStrategyCreate) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreateBulk {
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) MapCreateBulk(slice any, setFunc func(*UpgradeWinUpgradeStrategyFlowLimitStrategyCreate, int)) *UpgradeWinUpgradeStrategyFlowLimitStrategyCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeWinUpgradeStrategyFlowLimitStrategyCreateBulk{err: fmt.Errorf("calling to UpgradeWinUpgradeStrategyFlowLimitStrategyClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeWinUpgradeStrategyFlowLimitStrategyCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeWinUpgradeStrategyFlowLimitStrategy.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) Update() *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate {
+	mutation := newUpgradeWinUpgradeStrategyFlowLimitStrategyMutation(c.config, OpUpdate)
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) UpdateOne(uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategy) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	mutation := newUpgradeWinUpgradeStrategyFlowLimitStrategyMutation(c.config, OpUpdateOne, withUpgradeWinUpgradeStrategyFlowLimitStrategy(uwusfls))
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) UpdateOneID(id int) *UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne {
+	mutation := newUpgradeWinUpgradeStrategyFlowLimitStrategyMutation(c.config, OpUpdateOne, withUpgradeWinUpgradeStrategyFlowLimitStrategyID(id))
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeWinUpgradeStrategyFlowLimitStrategy.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) Delete() *UpgradeWinUpgradeStrategyFlowLimitStrategyDelete {
+	mutation := newUpgradeWinUpgradeStrategyFlowLimitStrategyMutation(c.config, OpDelete)
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) DeleteOne(uwusfls *UpgradeWinUpgradeStrategyFlowLimitStrategy) *UpgradeWinUpgradeStrategyFlowLimitStrategyDeleteOne {
+	return c.DeleteOneID(uwusfls.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) DeleteOneID(id int) *UpgradeWinUpgradeStrategyFlowLimitStrategyDeleteOne {
+	builder := c.Delete().Where(upgradewinupgradestrategyflowlimitstrategy.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeWinUpgradeStrategyFlowLimitStrategy.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) Query() *UpgradeWinUpgradeStrategyFlowLimitStrategyQuery {
+	return &UpgradeWinUpgradeStrategyFlowLimitStrategyQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeWinUpgradeStrategyFlowLimitStrategy},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeWinUpgradeStrategyFlowLimitStrategy entity by its id.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) Get(ctx context.Context, id int) (*UpgradeWinUpgradeStrategyFlowLimitStrategy, error) {
+	return c.Query().Where(upgradewinupgradestrategyflowlimitstrategy.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) GetX(ctx context.Context, id int) *UpgradeWinUpgradeStrategyFlowLimitStrategy {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) Hooks() []Hook {
+	return c.hooks.UpgradeWinUpgradeStrategyFlowLimitStrategy
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeWinUpgradeStrategyFlowLimitStrategy
+}
+
+func (c *UpgradeWinUpgradeStrategyFlowLimitStrategyClient) mutate(ctx context.Context, m *UpgradeWinUpgradeStrategyFlowLimitStrategyMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeWinUpgradeStrategyFlowLimitStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeWinUpgradeStrategyFlowLimitStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeWinUpgradeStrategyFlowLimitStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeWinUpgradeStrategyFlowLimitStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeWinUpgradeStrategyFlowLimitStrategy mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeWinUpgradeStrategyGrayStrategyClient is a client for the UpgradeWinUpgradeStrategyGrayStrategy schema.
+type UpgradeWinUpgradeStrategyGrayStrategyClient struct {
+	config
+}
+
+// NewUpgradeWinUpgradeStrategyGrayStrategyClient returns a client for the UpgradeWinUpgradeStrategyGrayStrategy from the given config.
+func NewUpgradeWinUpgradeStrategyGrayStrategyClient(c config) *UpgradeWinUpgradeStrategyGrayStrategyClient {
+	return &UpgradeWinUpgradeStrategyGrayStrategyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradewinupgradestrategygraystrategy.Hooks(f(g(h())))`.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeWinUpgradeStrategyGrayStrategy = append(c.hooks.UpgradeWinUpgradeStrategyGrayStrategy, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradewinupgradestrategygraystrategy.Intercept(f(g(h())))`.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeWinUpgradeStrategyGrayStrategy = append(c.inters.UpgradeWinUpgradeStrategyGrayStrategy, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeWinUpgradeStrategyGrayStrategy entity.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) Create() *UpgradeWinUpgradeStrategyGrayStrategyCreate {
+	mutation := newUpgradeWinUpgradeStrategyGrayStrategyMutation(c.config, OpCreate)
+	return &UpgradeWinUpgradeStrategyGrayStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeWinUpgradeStrategyGrayStrategy entities.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) CreateBulk(builders ...*UpgradeWinUpgradeStrategyGrayStrategyCreate) *UpgradeWinUpgradeStrategyGrayStrategyCreateBulk {
+	return &UpgradeWinUpgradeStrategyGrayStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) MapCreateBulk(slice any, setFunc func(*UpgradeWinUpgradeStrategyGrayStrategyCreate, int)) *UpgradeWinUpgradeStrategyGrayStrategyCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeWinUpgradeStrategyGrayStrategyCreateBulk{err: fmt.Errorf("calling to UpgradeWinUpgradeStrategyGrayStrategyClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeWinUpgradeStrategyGrayStrategyCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeWinUpgradeStrategyGrayStrategyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeWinUpgradeStrategyGrayStrategy.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) Update() *UpgradeWinUpgradeStrategyGrayStrategyUpdate {
+	mutation := newUpgradeWinUpgradeStrategyGrayStrategyMutation(c.config, OpUpdate)
+	return &UpgradeWinUpgradeStrategyGrayStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) UpdateOne(uwusgs *UpgradeWinUpgradeStrategyGrayStrategy) *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne {
+	mutation := newUpgradeWinUpgradeStrategyGrayStrategyMutation(c.config, OpUpdateOne, withUpgradeWinUpgradeStrategyGrayStrategy(uwusgs))
+	return &UpgradeWinUpgradeStrategyGrayStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) UpdateOneID(id int) *UpgradeWinUpgradeStrategyGrayStrategyUpdateOne {
+	mutation := newUpgradeWinUpgradeStrategyGrayStrategyMutation(c.config, OpUpdateOne, withUpgradeWinUpgradeStrategyGrayStrategyID(id))
+	return &UpgradeWinUpgradeStrategyGrayStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeWinUpgradeStrategyGrayStrategy.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) Delete() *UpgradeWinUpgradeStrategyGrayStrategyDelete {
+	mutation := newUpgradeWinUpgradeStrategyGrayStrategyMutation(c.config, OpDelete)
+	return &UpgradeWinUpgradeStrategyGrayStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) DeleteOne(uwusgs *UpgradeWinUpgradeStrategyGrayStrategy) *UpgradeWinUpgradeStrategyGrayStrategyDeleteOne {
+	return c.DeleteOneID(uwusgs.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) DeleteOneID(id int) *UpgradeWinUpgradeStrategyGrayStrategyDeleteOne {
+	builder := c.Delete().Where(upgradewinupgradestrategygraystrategy.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeWinUpgradeStrategyGrayStrategyDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeWinUpgradeStrategyGrayStrategy.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) Query() *UpgradeWinUpgradeStrategyGrayStrategyQuery {
+	return &UpgradeWinUpgradeStrategyGrayStrategyQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeWinUpgradeStrategyGrayStrategy},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeWinUpgradeStrategyGrayStrategy entity by its id.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) Get(ctx context.Context, id int) (*UpgradeWinUpgradeStrategyGrayStrategy, error) {
+	return c.Query().Where(upgradewinupgradestrategygraystrategy.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) GetX(ctx context.Context, id int) *UpgradeWinUpgradeStrategyGrayStrategy {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) Hooks() []Hook {
+	return c.hooks.UpgradeWinUpgradeStrategyGrayStrategy
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeWinUpgradeStrategyGrayStrategy
+}
+
+func (c *UpgradeWinUpgradeStrategyGrayStrategyClient) mutate(ctx context.Context, m *UpgradeWinUpgradeStrategyGrayStrategyMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeWinUpgradeStrategyGrayStrategyCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeWinUpgradeStrategyGrayStrategyUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeWinUpgradeStrategyGrayStrategyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeWinUpgradeStrategyGrayStrategyDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeWinUpgradeStrategyGrayStrategy mutation op: %q", m.Op())
+	}
+}
+
+// UpgradeWinVersionClient is a client for the UpgradeWinVersion schema.
+type UpgradeWinVersionClient struct {
+	config
+}
+
+// NewUpgradeWinVersionClient returns a client for the UpgradeWinVersion from the given config.
+func NewUpgradeWinVersionClient(c config) *UpgradeWinVersionClient {
+	return &UpgradeWinVersionClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `upgradewinversion.Hooks(f(g(h())))`.
+func (c *UpgradeWinVersionClient) Use(hooks ...Hook) {
+	c.hooks.UpgradeWinVersion = append(c.hooks.UpgradeWinVersion, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `upgradewinversion.Intercept(f(g(h())))`.
+func (c *UpgradeWinVersionClient) Intercept(interceptors ...Interceptor) {
+	c.inters.UpgradeWinVersion = append(c.inters.UpgradeWinVersion, interceptors...)
+}
+
+// Create returns a builder for creating a UpgradeWinVersion entity.
+func (c *UpgradeWinVersionClient) Create() *UpgradeWinVersionCreate {
+	mutation := newUpgradeWinVersionMutation(c.config, OpCreate)
+	return &UpgradeWinVersionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UpgradeWinVersion entities.
+func (c *UpgradeWinVersionClient) CreateBulk(builders ...*UpgradeWinVersionCreate) *UpgradeWinVersionCreateBulk {
+	return &UpgradeWinVersionCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *UpgradeWinVersionClient) MapCreateBulk(slice any, setFunc func(*UpgradeWinVersionCreate, int)) *UpgradeWinVersionCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &UpgradeWinVersionCreateBulk{err: fmt.Errorf("calling to UpgradeWinVersionClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*UpgradeWinVersionCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &UpgradeWinVersionCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UpgradeWinVersion.
+func (c *UpgradeWinVersionClient) Update() *UpgradeWinVersionUpdate {
+	mutation := newUpgradeWinVersionMutation(c.config, OpUpdate)
+	return &UpgradeWinVersionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UpgradeWinVersionClient) UpdateOne(uwv *UpgradeWinVersion) *UpgradeWinVersionUpdateOne {
+	mutation := newUpgradeWinVersionMutation(c.config, OpUpdateOne, withUpgradeWinVersion(uwv))
+	return &UpgradeWinVersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UpgradeWinVersionClient) UpdateOneID(id int) *UpgradeWinVersionUpdateOne {
+	mutation := newUpgradeWinVersionMutation(c.config, OpUpdateOne, withUpgradeWinVersionID(id))
+	return &UpgradeWinVersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UpgradeWinVersion.
+func (c *UpgradeWinVersionClient) Delete() *UpgradeWinVersionDelete {
+	mutation := newUpgradeWinVersionMutation(c.config, OpDelete)
+	return &UpgradeWinVersionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *UpgradeWinVersionClient) DeleteOne(uwv *UpgradeWinVersion) *UpgradeWinVersionDeleteOne {
+	return c.DeleteOneID(uwv.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *UpgradeWinVersionClient) DeleteOneID(id int) *UpgradeWinVersionDeleteOne {
+	builder := c.Delete().Where(upgradewinversion.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UpgradeWinVersionDeleteOne{builder}
+}
+
+// Query returns a query builder for UpgradeWinVersion.
+func (c *UpgradeWinVersionClient) Query() *UpgradeWinVersionQuery {
+	return &UpgradeWinVersionQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeUpgradeWinVersion},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a UpgradeWinVersion entity by its id.
+func (c *UpgradeWinVersionClient) Get(ctx context.Context, id int) (*UpgradeWinVersion, error) {
+	return c.Query().Where(upgradewinversion.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UpgradeWinVersionClient) GetX(ctx context.Context, id int) *UpgradeWinVersion {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *UpgradeWinVersionClient) Hooks() []Hook {
+	return c.hooks.UpgradeWinVersion
+}
+
+// Interceptors returns the client interceptors.
+func (c *UpgradeWinVersionClient) Interceptors() []Interceptor {
+	return c.inters.UpgradeWinVersion
+}
+
+func (c *UpgradeWinVersionClient) mutate(ctx context.Context, m *UpgradeWinVersionMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&UpgradeWinVersionCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&UpgradeWinVersionUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&UpgradeWinVersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&UpgradeWinVersionDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown UpgradeWinVersion mutation op: %q", m.Op())
+	}
+}
+
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
@@ -5895,12 +8022,18 @@ type (
 		UpgradeElectronUpgradeStrategyGrayStrategy, UpgradeElectronVersion,
 		UpgradeFile, UpgradeFileUpgradeStrategy,
 		UpgradeFileUpgradeStrategyFlowLimitStrategy,
-		UpgradeFileUpgradeStrategyGrayStrategy, UpgradeFileVersion, UpgradeTauri,
+		UpgradeFileUpgradeStrategyGrayStrategy, UpgradeFileVersion, UpgradeLnx,
+		UpgradeLnxUpgradeStrategy, UpgradeLnxUpgradeStrategyFlowLimitStrategy,
+		UpgradeLnxUpgradeStrategyGrayStrategy, UpgradeLnxVersion, UpgradeMac,
+		UpgradeMacUpgradeStrategy, UpgradeMacUpgradeStrategyFlowLimitStrategy,
+		UpgradeMacUpgradeStrategyGrayStrategy, UpgradeMacVersion, UpgradeTauri,
 		UpgradeTauriUpgradeStrategy, UpgradeTauriUpgradeStrategyFlowLimitStrategy,
 		UpgradeTauriUpgradeStrategyGrayStrategy, UpgradeTauriVersion,
 		UpgradeTrafficPacket, UpgradeUrl, UpgradeUrlUpgradeStrategy,
 		UpgradeUrlUpgradeStrategyFlowLimitStrategy,
-		UpgradeUrlUpgradeStrategyGrayStrategy, UpgradeUrlVersion []ent.Hook
+		UpgradeUrlUpgradeStrategyGrayStrategy, UpgradeUrlVersion, UpgradeWin,
+		UpgradeWinUpgradeStrategy, UpgradeWinUpgradeStrategyFlowLimitStrategy,
+		UpgradeWinUpgradeStrategyGrayStrategy, UpgradeWinVersion []ent.Hook
 	}
 	inters struct {
 		FmsCloudFile, SysUser, UpgradeApk, UpgradeApkUpgradeStrategy,
@@ -5916,12 +8049,18 @@ type (
 		UpgradeElectronUpgradeStrategyGrayStrategy, UpgradeElectronVersion,
 		UpgradeFile, UpgradeFileUpgradeStrategy,
 		UpgradeFileUpgradeStrategyFlowLimitStrategy,
-		UpgradeFileUpgradeStrategyGrayStrategy, UpgradeFileVersion, UpgradeTauri,
+		UpgradeFileUpgradeStrategyGrayStrategy, UpgradeFileVersion, UpgradeLnx,
+		UpgradeLnxUpgradeStrategy, UpgradeLnxUpgradeStrategyFlowLimitStrategy,
+		UpgradeLnxUpgradeStrategyGrayStrategy, UpgradeLnxVersion, UpgradeMac,
+		UpgradeMacUpgradeStrategy, UpgradeMacUpgradeStrategyFlowLimitStrategy,
+		UpgradeMacUpgradeStrategyGrayStrategy, UpgradeMacVersion, UpgradeTauri,
 		UpgradeTauriUpgradeStrategy, UpgradeTauriUpgradeStrategyFlowLimitStrategy,
 		UpgradeTauriUpgradeStrategyGrayStrategy, UpgradeTauriVersion,
 		UpgradeTrafficPacket, UpgradeUrl, UpgradeUrlUpgradeStrategy,
 		UpgradeUrlUpgradeStrategyFlowLimitStrategy,
-		UpgradeUrlUpgradeStrategyGrayStrategy, UpgradeUrlVersion []ent.Interceptor
+		UpgradeUrlUpgradeStrategyGrayStrategy, UpgradeUrlVersion, UpgradeWin,
+		UpgradeWinUpgradeStrategy, UpgradeWinUpgradeStrategyFlowLimitStrategy,
+		UpgradeWinUpgradeStrategyGrayStrategy, UpgradeWinVersion []ent.Interceptor
 	}
 )
 

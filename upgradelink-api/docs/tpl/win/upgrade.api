@@ -1,0 +1,157 @@
+syntax = "v1"
+
+info(
+    title: "API management"
+    desc: "API management is used to register APIs and manage APIs"
+    author: "Ryan Su"
+    email: "yuansu.china.work@gmail.com"
+    version: "v1.0"
+)
+
+import "../base.api"
+
+type GetWinUpgradeInfoRespData {
+
+    // win 应用 唯一标识
+    WinKey string `json:"winKey,optional"`
+
+    // 应用包名
+    PackageName string `json:"packageName,optional"`
+
+    // 客户端应用版本名称
+    VersionName string `json:"versionName,optional"`
+
+    // 应用版本号
+    VersionCode int64 `json:"versionCode,optional"`
+
+    // arch
+    Arch string `json:"arch,optional"`
+
+    // 最新版本下载地址
+    UrlPath string `json:"urlPath,optional"`
+
+    // 文件 大小
+    UrlFileSize uint64 `json:"urlFileSize,optional"`
+
+    // 文件 Md5
+    UrlFileMd5 string `json:"urlFileMd5,optional"`
+
+    // 升级类型 0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+    UpgradeType int64 `json:"upgradeType,optional"`
+
+    // 提示升级描述内容
+    PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
+}
+
+type (
+
+    GetWinUpgradeInfoReq {
+        // Win 应用 唯一标识
+        WinKey string `json:"winKey"`
+
+        // 客户端应用版本号
+        VersionCode int64 `json:"versionCode"`
+
+        // 升级指定版本（可空，为空时是最新版本）
+        AppointVersionCode int64 `json:"appointVersionCode,default=0"`
+
+        // arch
+        Arch string `json:"arch,optional"`
+
+        // 设备机型唯一标识
+        DevModelKey string `json:"devModelKey,optional"`
+
+        // 设备唯一标识
+        DevKey string `json:"devKey,optional"`
+    }
+
+    GetWinUpgradeInfoResp {
+        BaseDataInfo
+
+        Data GetWinUpgradeInfoRespData `json:"data"`
+    }
+)
+
+
+
+type GetWinVersionInfoRespData {
+
+    // win 应用 唯一标识
+    WinKey string `json:"winKey,optional"`
+
+    // 应用包名
+    PackageName string `json:"packageName,optional"`
+
+    // 客户端应用版本名称
+    VersionName string `json:"versionName,optional"`
+
+    // 应用版本号
+    VersionCode int64 `json:"versionCode,optional"`
+
+    // arch
+    Arch string `json:"arch,optional"`
+
+    // 描述
+    Description string `json:"description,optional"`
+}
+
+type (
+
+    GetWinVersionInfoReq {
+        // Win 应用 唯一标识
+        WinKey string `json:"winKey"`
+
+        // 客户端应用版本号
+        VersionCode int64 `json:"versionCode"`
+
+        // arch
+        Arch string `json:"arch"`
+    }
+
+    GetWinVersionInfoResp {
+        BaseDataInfo
+
+        Data GetWinVersionInfoRespData `json:"data"`
+    }
+)
+
+// RateLimit 流量控制
+// ReplayAttack 防重放攻击
+// Signature 签名认证
+@server(
+    prefix: /v1/win
+    group: win
+    timeout: 30s
+    middleware: RateLimit, ReplayAttack, Signature
+)
+service api {
+    // Get API list | 获取升级任务
+    @handler getWinUpgradeInfo
+    post /upgrade (GetWinUpgradeInfoReq) returns (GetWinUpgradeInfoResp)
+
+    // 获取 版本信息
+    @handler getWinVersionInfo
+    post /version (GetWinVersionInfoReq) returns (GetWinVersionInfoResp)
+}
+
+type (
+    GetWinDownloadInfoReq {
+        // win 应用 唯一标识
+        WinKey string `form:"winKey"`
+        // 指定版本（可空，为空时是最新版本）
+        VersionCode int64 `form:"versionCode,default=0"`
+        // 指定版本id
+        VersionId int64 `form:"versionId,default=0"`
+    }
+)
+// RateLimit 流量控制
+@server(
+    group: download
+    prefix: /v1/win
+    timeout: 30s
+    middleware: CdnRateLimit
+)
+service api {
+    @handler getWinDownloadInfo
+    get /download (GetWinDownloadInfoReq) returns (string)
+}
