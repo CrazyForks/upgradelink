@@ -23,6 +23,12 @@ const (
 	FieldAccessKey = "access_key"
 	// FieldSecretKey holds the string denoting the secret_key field in the database.
 	FieldSecretKey = "secret_key"
+	// FieldEnable holds the string denoting the enable field in the database.
+	FieldEnable = "enable"
+	// FieldDescription holds the string denoting the description field in the database.
+	FieldDescription = "description"
+	// FieldIsDel holds the string denoting the is_del field in the database.
+	FieldIsDel = "is_del"
 	// Table holds the table name of the companysecret in the database.
 	Table = "sys_company_secret"
 )
@@ -35,6 +41,9 @@ var Columns = []string{
 	FieldCompanyID,
 	FieldAccessKey,
 	FieldSecretKey,
+	FieldEnable,
+	FieldDescription,
+	FieldIsDel,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -56,6 +65,10 @@ var (
 	UpdateDefaultUpdatedAt func() time.Time
 	// DefaultCompanyID holds the default value on creation for the "company_id" field.
 	DefaultCompanyID uint64
+	// DefaultEnable holds the default value on creation for the "enable" field.
+	DefaultEnable uint32
+	// DefaultIsDel holds the default value on creation for the "is_del" field.
+	DefaultIsDel uint32
 )
 
 // OrderOption defines the ordering options for the CompanySecret queries.
@@ -89,4 +102,19 @@ func ByAccessKey(opts ...sql.OrderTermOption) OrderOption {
 // BySecretKey orders the results by the secret_key field.
 func BySecretKey(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSecretKey, opts...).ToFunc()
+}
+
+// ByEnable orders the results by the enable field.
+func ByEnable(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEnable, opts...).ToFunc()
+}
+
+// ByDescription orders the results by the description field.
+func ByDescription(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDescription, opts...).ToFunc()
+}
+
+// ByIsDel orders the results by the is_del field.
+func ByIsDel(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIsDel, opts...).ToFunc()
 }

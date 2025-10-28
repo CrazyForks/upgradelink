@@ -3,8 +3,8 @@
 package companysecret
 
 import (
-	"upgradelink-admin-core/server/rpc/ent/predicate"
 	"time"
+	"upgradelink-admin-core/server/rpc/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 )
@@ -77,6 +77,21 @@ func AccessKey(v string) predicate.CompanySecret {
 // SecretKey applies equality check predicate on the "secret_key" field. It's identical to SecretKeyEQ.
 func SecretKey(v string) predicate.CompanySecret {
 	return predicate.CompanySecret(sql.FieldEQ(FieldSecretKey, v))
+}
+
+// Enable applies equality check predicate on the "enable" field. It's identical to EnableEQ.
+func Enable(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldEQ(FieldEnable, v))
+}
+
+// Description applies equality check predicate on the "description" field. It's identical to DescriptionEQ.
+func Description(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldEQ(FieldDescription, v))
+}
+
+// IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
+func IsDel(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldEQ(FieldIsDel, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -337,6 +352,161 @@ func SecretKeyEqualFold(v string) predicate.CompanySecret {
 // SecretKeyContainsFold applies the ContainsFold predicate on the "secret_key" field.
 func SecretKeyContainsFold(v string) predicate.CompanySecret {
 	return predicate.CompanySecret(sql.FieldContainsFold(FieldSecretKey, v))
+}
+
+// EnableEQ applies the EQ predicate on the "enable" field.
+func EnableEQ(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldEQ(FieldEnable, v))
+}
+
+// EnableNEQ applies the NEQ predicate on the "enable" field.
+func EnableNEQ(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldNEQ(FieldEnable, v))
+}
+
+// EnableIn applies the In predicate on the "enable" field.
+func EnableIn(vs ...uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldIn(FieldEnable, vs...))
+}
+
+// EnableNotIn applies the NotIn predicate on the "enable" field.
+func EnableNotIn(vs ...uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldNotIn(FieldEnable, vs...))
+}
+
+// EnableGT applies the GT predicate on the "enable" field.
+func EnableGT(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldGT(FieldEnable, v))
+}
+
+// EnableGTE applies the GTE predicate on the "enable" field.
+func EnableGTE(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldGTE(FieldEnable, v))
+}
+
+// EnableLT applies the LT predicate on the "enable" field.
+func EnableLT(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldLT(FieldEnable, v))
+}
+
+// EnableLTE applies the LTE predicate on the "enable" field.
+func EnableLTE(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldLTE(FieldEnable, v))
+}
+
+// DescriptionEQ applies the EQ predicate on the "description" field.
+func DescriptionEQ(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldEQ(FieldDescription, v))
+}
+
+// DescriptionNEQ applies the NEQ predicate on the "description" field.
+func DescriptionNEQ(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldNEQ(FieldDescription, v))
+}
+
+// DescriptionIn applies the In predicate on the "description" field.
+func DescriptionIn(vs ...string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldIn(FieldDescription, vs...))
+}
+
+// DescriptionNotIn applies the NotIn predicate on the "description" field.
+func DescriptionNotIn(vs ...string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldNotIn(FieldDescription, vs...))
+}
+
+// DescriptionGT applies the GT predicate on the "description" field.
+func DescriptionGT(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldGT(FieldDescription, v))
+}
+
+// DescriptionGTE applies the GTE predicate on the "description" field.
+func DescriptionGTE(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldGTE(FieldDescription, v))
+}
+
+// DescriptionLT applies the LT predicate on the "description" field.
+func DescriptionLT(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldLT(FieldDescription, v))
+}
+
+// DescriptionLTE applies the LTE predicate on the "description" field.
+func DescriptionLTE(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldLTE(FieldDescription, v))
+}
+
+// DescriptionContains applies the Contains predicate on the "description" field.
+func DescriptionContains(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldContains(FieldDescription, v))
+}
+
+// DescriptionHasPrefix applies the HasPrefix predicate on the "description" field.
+func DescriptionHasPrefix(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldHasPrefix(FieldDescription, v))
+}
+
+// DescriptionHasSuffix applies the HasSuffix predicate on the "description" field.
+func DescriptionHasSuffix(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldHasSuffix(FieldDescription, v))
+}
+
+// DescriptionIsNil applies the IsNil predicate on the "description" field.
+func DescriptionIsNil() predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldIsNull(FieldDescription))
+}
+
+// DescriptionNotNil applies the NotNil predicate on the "description" field.
+func DescriptionNotNil() predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldNotNull(FieldDescription))
+}
+
+// DescriptionEqualFold applies the EqualFold predicate on the "description" field.
+func DescriptionEqualFold(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldEqualFold(FieldDescription, v))
+}
+
+// DescriptionContainsFold applies the ContainsFold predicate on the "description" field.
+func DescriptionContainsFold(v string) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldContainsFold(FieldDescription, v))
+}
+
+// IsDelEQ applies the EQ predicate on the "is_del" field.
+func IsDelEQ(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldEQ(FieldIsDel, v))
+}
+
+// IsDelNEQ applies the NEQ predicate on the "is_del" field.
+func IsDelNEQ(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldNEQ(FieldIsDel, v))
+}
+
+// IsDelIn applies the In predicate on the "is_del" field.
+func IsDelIn(vs ...uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldIn(FieldIsDel, vs...))
+}
+
+// IsDelNotIn applies the NotIn predicate on the "is_del" field.
+func IsDelNotIn(vs ...uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldNotIn(FieldIsDel, vs...))
+}
+
+// IsDelGT applies the GT predicate on the "is_del" field.
+func IsDelGT(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldGT(FieldIsDel, v))
+}
+
+// IsDelGTE applies the GTE predicate on the "is_del" field.
+func IsDelGTE(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldGTE(FieldIsDel, v))
+}
+
+// IsDelLT applies the LT predicate on the "is_del" field.
+func IsDelLT(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldLT(FieldIsDel, v))
+}
+
+// IsDelLTE applies the LTE predicate on the "is_del" field.
+func IsDelLTE(v uint32) predicate.CompanySecret {
+	return predicate.CompanySecret(sql.FieldLTE(FieldIsDel, v))
 }
 
 // And groups predicates with the AND operator between them.

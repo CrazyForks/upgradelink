@@ -6,6 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"sync"
+	"time"
 	"upgradelink-admin-core/server/rpc/ent/api"
 	"upgradelink-admin-core/server/rpc/ent/company"
 	"upgradelink-admin-core/server/rpc/ent/companysecret"
@@ -20,8 +22,6 @@ import (
 	"upgradelink-admin-core/server/rpc/ent/role"
 	"upgradelink-admin-core/server/rpc/ent/token"
 	"upgradelink-admin-core/server/rpc/ent/user"
-	"sync"
-	"time"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
@@ -1214,6 +1214,11 @@ type CompanySecretMutation struct {
 	addcompany_id *int64
 	access_key    *string
 	secret_key    *string
+	enable        *uint32
+	addenable     *int32
+	description   *string
+	is_del        *uint32
+	addis_del     *int32
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*CompanySecret, error)
@@ -1538,6 +1543,167 @@ func (m *CompanySecretMutation) ResetSecretKey() {
 	m.secret_key = nil
 }
 
+// SetEnable sets the "enable" field.
+func (m *CompanySecretMutation) SetEnable(u uint32) {
+	m.enable = &u
+	m.addenable = nil
+}
+
+// Enable returns the value of the "enable" field in the mutation.
+func (m *CompanySecretMutation) Enable() (r uint32, exists bool) {
+	v := m.enable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnable returns the old "enable" field's value of the CompanySecret entity.
+// If the CompanySecret object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *CompanySecretMutation) OldEnable(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEnable is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEnable requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnable: %w", err)
+	}
+	return oldValue.Enable, nil
+}
+
+// AddEnable adds u to the "enable" field.
+func (m *CompanySecretMutation) AddEnable(u int32) {
+	if m.addenable != nil {
+		*m.addenable += u
+	} else {
+		m.addenable = &u
+	}
+}
+
+// AddedEnable returns the value that was added to the "enable" field in this mutation.
+func (m *CompanySecretMutation) AddedEnable() (r int32, exists bool) {
+	v := m.addenable
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetEnable resets all changes to the "enable" field.
+func (m *CompanySecretMutation) ResetEnable() {
+	m.enable = nil
+	m.addenable = nil
+}
+
+// SetDescription sets the "description" field.
+func (m *CompanySecretMutation) SetDescription(s string) {
+	m.description = &s
+}
+
+// Description returns the value of the "description" field in the mutation.
+func (m *CompanySecretMutation) Description() (r string, exists bool) {
+	v := m.description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDescription returns the old "description" field's value of the CompanySecret entity.
+// If the CompanySecret object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *CompanySecretMutation) OldDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+	}
+	return oldValue.Description, nil
+}
+
+// ClearDescription clears the value of the "description" field.
+func (m *CompanySecretMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[companysecret.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *CompanySecretMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[companysecret.FieldDescription]
+	return ok
+}
+
+// ResetDescription resets all changes to the "description" field.
+func (m *CompanySecretMutation) ResetDescription() {
+	m.description = nil
+	delete(m.clearedFields, companysecret.FieldDescription)
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *CompanySecretMutation) SetIsDel(u uint32) {
+	m.is_del = &u
+	m.addis_del = nil
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *CompanySecretMutation) IsDel() (r uint32, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the CompanySecret entity.
+// If the CompanySecret object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *CompanySecretMutation) OldIsDel(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// AddIsDel adds u to the "is_del" field.
+func (m *CompanySecretMutation) AddIsDel(u int32) {
+	if m.addis_del != nil {
+		*m.addis_del += u
+	} else {
+		m.addis_del = &u
+	}
+}
+
+// AddedIsDel returns the value that was added to the "is_del" field in this mutation.
+func (m *CompanySecretMutation) AddedIsDel() (r int32, exists bool) {
+	v := m.addis_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *CompanySecretMutation) ResetIsDel() {
+	m.is_del = nil
+	m.addis_del = nil
+}
+
 // Where appends a list predicates to the CompanySecretMutation builder.
 func (m *CompanySecretMutation) Where(ps ...predicate.CompanySecret) {
 	m.predicates = append(m.predicates, ps...)
@@ -1572,7 +1738,7 @@ func (m *CompanySecretMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *CompanySecretMutation) Fields() []string {
-	fields := make([]string, 0, 5)
+	fields := make([]string, 0, 8)
 	if m.created_at != nil {
 		fields = append(fields, companysecret.FieldCreatedAt)
 	}
@@ -1587,6 +1753,15 @@ func (m *CompanySecretMutation) Fields() []string {
 	}
 	if m.secret_key != nil {
 		fields = append(fields, companysecret.FieldSecretKey)
+	}
+	if m.enable != nil {
+		fields = append(fields, companysecret.FieldEnable)
+	}
+	if m.description != nil {
+		fields = append(fields, companysecret.FieldDescription)
+	}
+	if m.is_del != nil {
+		fields = append(fields, companysecret.FieldIsDel)
 	}
 	return fields
 }
@@ -1606,6 +1781,12 @@ func (m *CompanySecretMutation) Field(name string) (ent.Value, bool) {
 		return m.AccessKey()
 	case companysecret.FieldSecretKey:
 		return m.SecretKey()
+	case companysecret.FieldEnable:
+		return m.Enable()
+	case companysecret.FieldDescription:
+		return m.Description()
+	case companysecret.FieldIsDel:
+		return m.IsDel()
 	}
 	return nil, false
 }
@@ -1625,6 +1806,12 @@ func (m *CompanySecretMutation) OldField(ctx context.Context, name string) (ent.
 		return m.OldAccessKey(ctx)
 	case companysecret.FieldSecretKey:
 		return m.OldSecretKey(ctx)
+	case companysecret.FieldEnable:
+		return m.OldEnable(ctx)
+	case companysecret.FieldDescription:
+		return m.OldDescription(ctx)
+	case companysecret.FieldIsDel:
+		return m.OldIsDel(ctx)
 	}
 	return nil, fmt.Errorf("unknown CompanySecret field %s", name)
 }
@@ -1669,6 +1856,27 @@ func (m *CompanySecretMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetSecretKey(v)
 		return nil
+	case companysecret.FieldEnable:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnable(v)
+		return nil
+	case companysecret.FieldDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDescription(v)
+		return nil
+	case companysecret.FieldIsDel:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
 	}
 	return fmt.Errorf("unknown CompanySecret field %s", name)
 }
@@ -1680,6 +1888,12 @@ func (m *CompanySecretMutation) AddedFields() []string {
 	if m.addcompany_id != nil {
 		fields = append(fields, companysecret.FieldCompanyID)
 	}
+	if m.addenable != nil {
+		fields = append(fields, companysecret.FieldEnable)
+	}
+	if m.addis_del != nil {
+		fields = append(fields, companysecret.FieldIsDel)
+	}
 	return fields
 }
 
@@ -1690,6 +1904,10 @@ func (m *CompanySecretMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case companysecret.FieldCompanyID:
 		return m.AddedCompanyID()
+	case companysecret.FieldEnable:
+		return m.AddedEnable()
+	case companysecret.FieldIsDel:
+		return m.AddedIsDel()
 	}
 	return nil, false
 }
@@ -1706,6 +1924,20 @@ func (m *CompanySecretMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddCompanyID(v)
 		return nil
+	case companysecret.FieldEnable:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddEnable(v)
+		return nil
+	case companysecret.FieldIsDel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddIsDel(v)
+		return nil
 	}
 	return fmt.Errorf("unknown CompanySecret numeric field %s", name)
 }
@@ -1716,6 +1948,9 @@ func (m *CompanySecretMutation) ClearedFields() []string {
 	var fields []string
 	if m.FieldCleared(companysecret.FieldCompanyID) {
 		fields = append(fields, companysecret.FieldCompanyID)
+	}
+	if m.FieldCleared(companysecret.FieldDescription) {
+		fields = append(fields, companysecret.FieldDescription)
 	}
 	return fields
 }
@@ -1733,6 +1968,9 @@ func (m *CompanySecretMutation) ClearField(name string) error {
 	switch name {
 	case companysecret.FieldCompanyID:
 		m.ClearCompanyID()
+		return nil
+	case companysecret.FieldDescription:
+		m.ClearDescription()
 		return nil
 	}
 	return fmt.Errorf("unknown CompanySecret nullable field %s", name)
@@ -1756,6 +1994,15 @@ func (m *CompanySecretMutation) ResetField(name string) error {
 		return nil
 	case companysecret.FieldSecretKey:
 		m.ResetSecretKey()
+		return nil
+	case companysecret.FieldEnable:
+		m.ResetEnable()
+		return nil
+	case companysecret.FieldDescription:
+		m.ResetDescription()
+		return nil
+	case companysecret.FieldIsDel:
+		m.ResetIsDel()
 		return nil
 	}
 	return fmt.Errorf("unknown CompanySecret field %s", name)

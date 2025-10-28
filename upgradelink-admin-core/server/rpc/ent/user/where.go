@@ -3,8 +3,8 @@
 package user
 
 import (
-	"upgradelink-admin-core/server/rpc/ent/predicate"
 	"time"
+	"upgradelink-admin-core/server/rpc/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

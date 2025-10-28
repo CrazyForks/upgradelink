@@ -2,4 +2,4 @@
 
 package ent
 
-// The schema-stitching logic is generated in upgradelink-admin-core/rpc/ent/runtime/runtime.go
+// The schema-stitching logic is generated in upgradelink-admin-core/server/rpc/ent/runtime/runtime.go

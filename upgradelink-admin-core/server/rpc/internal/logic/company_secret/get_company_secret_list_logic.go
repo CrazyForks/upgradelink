@@ -45,6 +45,15 @@ func (l *GetCompanySecretListLogic) GetCompanySecretList(in *core.CompanySecretL
 	if in.SecretKey != nil {
 		predicates = append(predicates, companysecret.SecretKeyContains(*in.SecretKey))
 	}
+	if in.Enable != nil {
+		predicates = append(predicates, companysecret.EnableEQ(*in.Enable))
+	}
+	if in.Description != nil {
+		predicates = append(predicates, companysecret.DescriptionContains(*in.Description))
+	}
+	if in.IsDel != nil {
+		predicates = append(predicates, companysecret.IsDelEQ(*in.IsDel))
+	}
 	result, err := l.svcCtx.DB.CompanySecret.Query().Where(predicates...).Page(l.ctx, in.Page, in.PageSize)
 
 	if err != nil {
@@ -56,12 +65,15 @@ func (l *GetCompanySecretListLogic) GetCompanySecretList(in *core.CompanySecretL
 
 	for _, v := range result.List {
 		resp.Data = append(resp.Data, &core.CompanySecretInfo{
-			Id:        &v.ID,
-			CreatedAt: pointy.GetPointer(v.CreatedAt.UnixMilli()),
-			UpdatedAt: pointy.GetPointer(v.UpdatedAt.UnixMilli()),
-			CompanyId: &v.CompanyID,
-			AccessKey: &v.AccessKey,
-			SecretKey: &v.SecretKey,
+			Id:          &v.ID,
+			CreatedAt:   pointy.GetPointer(v.CreatedAt.UnixMilli()),
+			UpdatedAt:   pointy.GetPointer(v.UpdatedAt.UnixMilli()),
+			CompanyId:   &v.CompanyID,
+			AccessKey:   &v.AccessKey,
+			SecretKey:   &v.SecretKey,
+			Enable:      &v.Enable,
+			Description: &v.Description,
+			IsDel:       &v.IsDel,
 		})
 	}
 

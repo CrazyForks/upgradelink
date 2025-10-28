@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"sync"
 	"upgradelink-admin-core/server/rpc/ent/api"
 	"upgradelink-admin-core/server/rpc/ent/company"
 	"upgradelink-admin-core/server/rpc/ent/companysecret"
@@ -20,7 +21,6 @@ import (
 	"upgradelink-admin-core/server/rpc/ent/role"
 	"upgradelink-admin-core/server/rpc/ent/token"
 	"upgradelink-admin-core/server/rpc/ent/user"
-	"sync"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
@@ -82,7 +82,7 @@ var (
 )
 
 // checkColumn checks if the column exists in the given table.
-func checkColumn(table, column string) error {
+func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
 			api.Table:              api.ValidColumn,
@@ -100,7 +100,7 @@ func checkColumn(table, column string) error {
 			user.Table:             user.ValidColumn,
 		})
 	})
-	return columnCheck(table, column)
+	return columnCheck(t, c)
 }
 
 // Asc applies the given fields in ASC order.

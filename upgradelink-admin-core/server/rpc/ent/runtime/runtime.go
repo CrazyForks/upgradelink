@@ -3,6 +3,7 @@
 package runtime
 
 import (
+	"time"
 	"upgradelink-admin-core/server/rpc/ent/api"
 	"upgradelink-admin-core/server/rpc/ent/company"
 	"upgradelink-admin-core/server/rpc/ent/companysecret"
@@ -17,7 +18,6 @@ import (
 	"upgradelink-admin-core/server/rpc/ent/schema"
 	"upgradelink-admin-core/server/rpc/ent/token"
 	"upgradelink-admin-core/server/rpc/ent/user"
-	"time"
 
 	uuid "github.com/gofrs/uuid/v5"
 )
@@ -87,6 +87,14 @@ func init() {
 	companysecretDescCompanyID := companysecretFields[0].Descriptor()
 	// companysecret.DefaultCompanyID holds the default value on creation for the company_id field.
 	companysecret.DefaultCompanyID = companysecretDescCompanyID.Default.(uint64)
+	// companysecretDescEnable is the schema descriptor for enable field.
+	companysecretDescEnable := companysecretFields[3].Descriptor()
+	// companysecret.DefaultEnable holds the default value on creation for the enable field.
+	companysecret.DefaultEnable = companysecretDescEnable.Default.(uint32)
+	// companysecretDescIsDel is the schema descriptor for is_del field.
+	companysecretDescIsDel := companysecretFields[5].Descriptor()
+	// companysecret.DefaultIsDel holds the default value on creation for the is_del field.
+	companysecret.DefaultIsDel = companysecretDescIsDel.Default.(uint32)
 	configurationMixin := schema.Configuration{}.Mixin()
 	configurationMixinFields0 := configurationMixin[0].Fields()
 	_ = configurationMixinFields0
@@ -426,6 +434,6 @@ func init() {
 }
 
 const (
-	Version = "v0.14.1"                                         // Version of ent codegen.
-	Sum     = "h1:fUERL506Pqr92EPHJqr8EYxbPioflJo6PudkrEA8a/s=" // Sum of ent codegen.
+	Version = "v0.14.5"                                         // Version of ent codegen.
+	Sum     = "h1:Rj2WOYJtCkWyFo6a+5wB3EfBRP0rnx1fMk6gGA0UUe4=" // Sum of ent codegen.
 )

@@ -7,9 +7,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeUrl": "Add UpgradeUrl",
-    "editUpgradeUrl": "Edit UpgradeUrl",
-    "upgradeUrlList": "UpgradeUrl List"
+    "addUpgradeUrl": "Add",
+    "editUpgradeUrl": "Edit",
+    "upgradeUrlList": "List"
   },
   "upgradeDevModel": {
     "id": "Id",
@@ -19,9 +19,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeDevModel": "Add UpgradeDevModel",
-    "editUpgradeDevModel": "Edit UpgradeDevModel",
-    "upgradeDevModelList": "UpgradeDevModel List"
+    "addUpgradeDevModel": "Add",
+    "editUpgradeDevModel": "Edit",
+    "upgradeDevModelList": "List"
   },
   "upgradeUrlUpgradeStrategy": {
     "id": "Id",
@@ -48,9 +48,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeUrlUpgradeStrategy": "Add UpgradeUrlUpgradeStrategy",
-    "editUpgradeUrlUpgradeStrategy": "Edit UpgradeUrlUpgradeStrategy",
-    "upgradeUrlUpgradeStrategyList": "UpgradeUrlUpgradeStrategy List",
+    "addUpgradeUrlUpgradeStrategy": "Add",
+    "editUpgradeUrlUpgradeStrategy": "Edit",
+    "upgradeUrlUpgradeStrategyList": "List",
     "isGray": "Gray",
     "isFlowLimit": "Flow Limit"
   },
@@ -76,9 +76,9 @@
     "totalReqCount": "TotalReqCount",
     "devCount7Day": "DevCount7Day",
     "reqCount7Day": "ReqCount7Day",
-    "addUpgradeDashboard": "Add UpgradeDashboard",
-    "editUpgradeDashboard": "Edit UpgradeDashboard",
-    "upgradeDashboardList": "UpgradeDashboard List"
+    "addUpgradeDashboard": "Add",
+    "editUpgradeDashboard": "Edit",
+    "upgradeDashboardList": "List"
   },
   "upgradeFile": {
     "id": "Id",
@@ -87,9 +87,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeFile": "Add UpgradeFile",
-    "editUpgradeFile": "Edit UpgradeFile",
-    "upgradeFileList": "UpgradeFile List"
+    "addUpgradeFile": "Add",
+    "editUpgradeFile": "Edit",
+    "upgradeFileList": "List"
   },
   "upgradeFileUpgradeStrategy": {
     "id": "Id",
@@ -107,9 +107,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeFileUpgradeStrategy": "Add UpgradeFileUpgradeStrategy",
-    "editUpgradeFileUpgradeStrategy": "Edit UpgradeFileUpgradeStrategy",
-    "upgradeFileUpgradeStrategyList": "UpgradeFileUpgradeStrategy List"
+    "addUpgradeFileUpgradeStrategy": "Add",
+    "editUpgradeFileUpgradeStrategy": "Edit",
+    "upgradeFileUpgradeStrategyList": "List"
   },
   "upgradeFileVersion": {
     "id": "Id",
@@ -124,9 +124,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeFileVersion": "Add UpgradeFileVersion",
-    "editUpgradeFileVersion": "Edit UpgradeFileVersion",
-    "upgradeFileVersionList": "UpgradeFileVersion List"
+    "addUpgradeFileVersion": "Add",
+    "editUpgradeFileVersion": "Edit",
+    "upgradeFileVersionList": "List"
   },
   "upgradeDev": {
     "id": "Id",
@@ -136,9 +136,9 @@
     "devGroupName": "DevGroup Name",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeDev": "Add UpgradeDev",
-    "editUpgradeDev": "Edit UpgradeDev",
-    "upgradeDevList": "UpgradeDev List"
+    "addUpgradeDev": "Add",
+    "editUpgradeDev": "Edit",
+    "upgradeDevList": "List"
   },
   "upgradeDevGroup": {
     "id": "Id",
@@ -146,9 +146,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeDevGroup": "Add UpgradeDevGroup",
-    "editUpgradeDevGroup": "Edit UpgradeDevGroup",
-    "upgradeDevGroupList": "UpgradeDevGroup List"
+    "addUpgradeDevGroup": "Add",
+    "editUpgradeDevGroup": "Edit",
+    "upgradeDevGroupList": "List"
   },
   "upgradeTauri": {
     "id": "Id",
@@ -157,9 +157,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeFile": "Add UpgradeTauri",
-    "editUpgradeFile": "Edit UpgradeTauri",
-    "upgradeFileList": "UpgradeTauri List"
+    "addUpgradeFile": "Add",
+    "editUpgradeFile": "Edit",
+    "upgradeFileList": "List"
   },
   "upgradeTauriUpgradeStrategy": {
     "id": "Id",
@@ -177,9 +177,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeFileUpgradeStrategy": "Add UpgradeTauriUpgradeStrategy",
-    "editUpgradeFileUpgradeStrategy": "Edit UpgradeTauriUpgradeStrategy",
-    "upgradeFileUpgradeStrategyList": "UpgradeTauriUpgradeStrategy List"
+    "addUpgradeFileUpgradeStrategy": "Add",
+    "editUpgradeFileUpgradeStrategy": "Edit",
+    "upgradeFileUpgradeStrategyList": "List"
   },
   "upgradeTauriVersion": {
     "id": "Id",
@@ -190,16 +190,16 @@
     "versionFile": "VersionFile",
     "versionCode": "VersionCode",
     "target": "VersionCode",
-    "arch": "VersionCode",
+    "arch": "Arch",
     "description": "Description",
     "installVersionFileSize": "InstallVersionFileSize",
     "upgradeVersionFileSize": "UpgradeVersionFileSize",
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeFileVersion": "Add UpgradeTauriVersion",
-    "editUpgradeFileVersion": "Edit UpgradeTauriVersion",
-    "upgradeFileVersionList": "UpgradeTauriVersion List"
+    "addUpgradeFileVersion": "Add",
+    "editUpgradeFileVersion": "Edit",
+    "upgradeFileVersionList": "List"
   },
   "upgradeConfiguration": {
     "id": "Id",
@@ -210,9 +210,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeConfiguration": "Add UpgradeConfiguration",
-    "editUpgradeConfiguration": "Edit UpgradeConfiguration",
-    "upgradeConfigurationList": "UpgradeConfiguration List"
+    "addUpgradeConfiguration": "Add",
+    "editUpgradeConfiguration": "Edit",
+    "upgradeConfigurationList": "List"
   },
   "upgradeConfigurationUpgradeStrategy": {
     "id": "Id",
@@ -241,9 +241,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeConfigurationUpgradeStrategy": "Add UpgradeConfigurationUpgradeStrategy",
-    "editUpgradeConfigurationUpgradeStrategy": "Edit UpgradeConfigurationUpgradeStrategy",
-    "upgradeConfigurationUpgradeStrategyList": "UpgradeConfigurationUpgradeStrategy List"
+    "addUpgradeConfigurationUpgradeStrategy": "Add",
+    "editUpgradeConfigurationUpgradeStrategy": "Edit",
+    "upgradeConfigurationUpgradeStrategyList": "List"
   },
   "upgradeConfigurationVersion": {
     "id": "Id",
@@ -256,9 +256,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeConfigurationVersion": "Add UpgradeConfigurationVersion",
-    "editUpgradeConfigurationVersion": "Edit UpgradeConfigurationVersion",
-    "upgradeConfigurationVersionList": "UpgradeConfigurationVersion List"
+    "addUpgradeConfigurationVersion": "Add",
+    "editUpgradeConfigurationVersion": "Edit",
+    "upgradeConfigurationVersionList": "List"
   },
   "upgradeApk": {
     "id": "Id",
@@ -284,9 +284,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeApkVersion": "Add UpgradeApkVersion",
-    "editUpgradeApkVersion": "Edit UpgradeApkVersion",
-    "upgradeApkVersionList": "UpgradeApkVersion List"
+    "addUpgradeApkVersion": "Add",
+    "editUpgradeApkVersion": "Edit",
+    "upgradeApkVersionList": "List"
   },
   "upgradeApkUpgradeStrategy": {
     "id": "Id",
@@ -315,9 +315,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeApkUpgradeStrategy": "Add UpgradeApkUpgradeStrategy",
-    "editUpgradeApkUpgradeStrategy": "Edit UpgradeApkUpgradeStrategy",
-    "upgradeApkUpgradeStrategyList": "UpgradeApkUpgradeStrategy List"
+    "addUpgradeApkUpgradeStrategy": "Add",
+    "editUpgradeApkUpgradeStrategy": "Edit",
+    "upgradeApkUpgradeStrategyList": "List"
   },
   "upgradeElectron": {
     "id": "Id",
@@ -359,9 +359,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeElectronUpgradeStrategy": "Add UpgradeElectronUpgradeStrategy",
-    "editUpgradeElectronUpgradeStrategy": "Edit UpgradeElectronUpgradeStrategy",
-    "upgradeElectronUpgradeStrategyList": "UpgradeElectronUpgradeStrategy List"
+    "addUpgradeElectronUpgradeStrategy": "Add",
+    "editUpgradeElectronUpgradeStrategy": "Edit",
+    "upgradeElectronUpgradeStrategyList": "List"
   },
   "upgradeElectronVersion": {
     "id": "Id",
@@ -380,9 +380,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeElectronVersion": "Add UpgradeElectronVersion",
-    "editUpgradeElectronVersion": "Edit UpgradeElectronVersion",
-    "upgradeElectronVersionList": "UpgradeElectronVersion List"
+    "addUpgradeElectronVersion": "Add",
+    "editUpgradeElectronVersion": "Edit",
+    "upgradeElectronVersionList": "List"
   },
   "upgradeCompanyIncome": {
     "id": "Id",
@@ -394,9 +394,9 @@
     "isDel": "IsDel",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeCompanyIncome": "Add UpgradeCompanyIncome",
-    "editUpgradeCompanyIncome": "Edit UpgradeCompanyIncome",
-    "upgradeCompanyIncomeList": "UpgradeCompanyIncome List"
+    "addUpgradeCompanyIncome": "Add",
+    "editUpgradeCompanyIncome": "Edit",
+    "upgradeCompanyIncomeList": "List"
   },
   "upgradeCompanyTrafficPacket": {
     "id": "Id",
@@ -415,8 +415,188 @@
     "exchangeTime": "ExchangeTime",
     "createAt": "CreateAt",
     "updateAt": "UpdateAt",
-    "addUpgradeCompanyTrafficPacket": "Add UpgradeCompanyTrafficPacket",
-    "editUpgradeCompanyTrafficPacket": "Edit UpgradeCompanyTrafficPacket",
-    "upgradeCompanyTrafficPacketList": "UpgradeCompanyTrafficPacket List"
+    "addUpgradeCompanyTrafficPacket": "Add",
+    "editUpgradeCompanyTrafficPacket": "Edit",
+    "upgradeCompanyTrafficPacketList": "List"
+  },
+  "upgradeWin": {
+    "id": "Id",
+    "key": "Key",
+    "name": "Name",
+    "packageName": "PackageName",
+    "description": "Description",
+    "isDel": "IsDel",
+    "createAt": "CreateAt",
+    "updateAt": "UpdateAt",
+    "addUpgradeWin": "Add",
+    "editUpgradeWin": "Edit",
+    "upgradeWinList": "List"
+  },
+  "upgradeWinVersion": {
+    "id": "Id",
+    "winId": "WinId",
+    "cloudFileId": "CloudFileId",
+    "versionName": "VersionName",
+    "versionCode": "VersionCode",
+    "versionFileSize": "VersionFileSize",
+    "arch": "Arch",
+    "description": "Description",
+    "isDel": "IsDel",
+    "createAt": "CreateAt",
+    "updateAt": "UpdateAt",
+    "addUpgradeWinVersion": "Add",
+    "editUpgradeWinVersion": "Edit",
+    "upgradeWinVersionList": "List"
+  },
+  "upgradeWinUpgradeStrategy": {
+    "id": "Id",
+    "enable": "Enable",
+    "name": "Name",
+    "description": "Description",
+    "winId": "WinId",
+    "winVersionId": "WinVersionId",
+    "upgradeType": "UpgradeType",
+    "promptUpgradeContent": "PromptUpgradeContent",
+    "upgradeDevType": "UpgradeDevType",
+    "upgradeDevData": "UpgradeDevData",
+    "upgradeDevTypeZeroData": "UpgradeDevTypeZeroData",
+    "upgradeDevTypeOneData": "UpgradeDevTypeOneData",
+    "upgradeDevTypeTwoData": "UpgradeDevTypeTwoData",
+    "upgradeVersionType": "UpgradeVersionType",
+    "upgradeVersionData": "UpgradeVersionData",
+    "upgradeVersionTypeZeroData": "UpgradeVersionTypeZeroData",
+    "upgradeVersionTypeOneData": "UpgradeVersionTypeOneData",
+    "beginDatetime": "BeginDatetime",
+    "endDatetime": "EndDatetime",
+    "isGray": "IsGray",
+    "grayDataInfo": "GrayDataInfo",
+    "isFlowLimit": "IsFlowLimit",
+    "flowLimitDataInfo": "FlowLimitDataInfo",
+    "isDel": "IsDel",
+    "createAt": "CreateAt",
+    "updateAt": "UpdateAt",
+    "addUpgradeWinUpgradeStrategy": "Add",
+    "editUpgradeWinUpgradeStrategy": "Edit",
+    "upgradeWinUpgradeStrategyList": "List"
+  },
+  "upgradeLnx": {
+    "id": "Id",
+    "key": "Key",
+    "name": "Name",
+    "packageName": "PackageName",
+    "description": "Description",
+    "isDel": "IsDel",
+    "createAt": "CreateAt",
+    "updateAt": "UpdateAt",
+    "addUpgradeLnx": "Add",
+    "editUpgradeLnx": "Edit",
+    "upgradeLnxList": "List"
+  },
+  "upgradeLnxVersion": {
+    "id": "Id",
+    "lnxId": "LnxId",
+    "cloudFileId": "CloudFileId",
+    "versionName": "VersionName",
+    "versionCode": "VersionCode",
+    "versionFileSize": "VersionFileSize",
+    "arch": "Arch",
+    "description": "Description",
+    "isDel": "IsDel",
+    "createAt": "CreateAt",
+    "updateAt": "UpdateAt",
+    "addUpgradeLnxVersion": "Add",
+    "editUpgradeLnxVersion": "Edit",
+    "upgradeLnxVersionList": "List"
+  },
+  "upgradeLnxUpgradeStrategy": {
+    "id": "Id",
+    "enable": "Enable",
+    "name": "Name",
+    "description": "Description",
+    "lnxId": "LnxId",
+    "lnxVersionId": "LnxVersionId",
+    "upgradeType": "UpgradeType",
+    "promptUpgradeContent": "PromptUpgradeContent",
+    "upgradeDevType": "UpgradeDevType",
+    "upgradeDevData": "UpgradeDevData",
+    "upgradeDevTypeZeroData": "UpgradeDevTypeZeroData",
+    "upgradeDevTypeOneData": "UpgradeDevTypeOneData",
+    "upgradeDevTypeTwoData": "UpgradeDevTypeTwoData",
+    "upgradeVersionType": "UpgradeVersionType",
+    "upgradeVersionData": "UpgradeVersionData",
+    "upgradeVersionTypeZeroData": "UpgradeVersionTypeZeroData",
+    "upgradeVersionTypeOneData": "UpgradeVersionTypeOneData",
+    "beginDatetime": "BeginDatetime",
+    "endDatetime": "EndDatetime",
+    "isGray": "IsGray",
+    "grayDataInfo": "GrayDataInfo",
+    "isFlowLimit": "IsFlowLimit",
+    "flowLimitDataInfo": "FlowLimitDataInfo",
+    "isDel": "IsDel",
+    "createAt": "CreateAt",
+    "updateAt": "UpdateAt",
+    "addUpgradeLnxUpgradeStrategy": "Add",
+    "editUpgradeLnxUpgradeStrategy": "Edit",
+    "upgradeLnxUpgradeStrategyList": "List"
+  },
+  "upgradeMac": {
+    "id": "Id",
+    "key": "Key",
+    "name": "Name",
+    "packageName": "PackageName",
+    "description": "Description",
+    "isDel": "IsDel",
+    "createAt": "CreateAt",
+    "updateAt": "UpdateAt",
+    "addUpgradeMac": "Add",
+    "editUpgradeMac": "Edit",
+    "upgradeMacList": "List"
+  },
+  "upgradeMacVersion": {
+    "id": "Id",
+    "macId": "MacId",
+    "cloudFileId": "CloudFileId",
+    "versionName": "VersionName",
+    "versionCode": "VersionCode",
+    "versionFileSize": "VersionFileSize",
+    "arch": "Arch",
+    "description": "Description",
+    "isDel": "IsDel",
+    "createAt": "CreateAt",
+    "updateAt": "UpdateAt",
+    "addUpgradeLnxVersion": "Add",
+    "editUpgradeLnxVersion": "Edit",
+    "upgradeLnxVersionList": "List"
+  },
+  "upgradeMacUpgradeStrategy": {
+    "id": "Id",
+    "enable": "Enable",
+    "name": "Name",
+    "description": "Description",
+    "macId": "MacId",
+    "macVersionId": "MacVersionId",
+    "upgradeType": "UpgradeType",
+    "promptUpgradeContent": "PromptUpgradeContent",
+    "upgradeDevType": "UpgradeDevType",
+    "upgradeDevData": "UpgradeDevData",
+    "upgradeDevTypeZeroData": "UpgradeDevTypeZeroData",
+    "upgradeDevTypeOneData": "UpgradeDevTypeOneData",
+    "upgradeDevTypeTwoData": "UpgradeDevTypeTwoData",
+    "upgradeVersionType": "UpgradeVersionType",
+    "upgradeVersionData": "UpgradeVersionData",
+    "upgradeVersionTypeZeroData": "UpgradeVersionTypeZeroData",
+    "upgradeVersionTypeOneData": "UpgradeVersionTypeOneData",
+    "beginDatetime": "BeginDatetime",
+    "endDatetime": "EndDatetime",
+    "isGray": "IsGray",
+    "grayDataInfo": "GrayDataInfo",
+    "isFlowLimit": "IsFlowLimit",
+    "flowLimitDataInfo": "FlowLimitDataInfo",
+    "isDel": "IsDel",
+    "createAt": "CreateAt",
+    "updateAt": "UpdateAt",
+    "addUpgradeMacUpgradeStrategy": "Add",
+    "editUpgradeMacUpgradeStrategy": "Edit",
+    "upgradeMacUpgradeStrategyList": "List"
   }
 }

@@ -20,56 +20,56 @@ type CompanySecretDelete struct {
 }
 
 // Where appends a list predicates to the CompanySecretDelete builder.
-func (csd *CompanySecretDelete) Where(ps ...predicate.CompanySecret) *CompanySecretDelete {
-	csd.mutation.Where(ps...)
-	return csd
+func (_d *CompanySecretDelete) Where(ps ...predicate.CompanySecret) *CompanySecretDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (csd *CompanySecretDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, csd.sqlExec, csd.mutation, csd.hooks)
+func (_d *CompanySecretDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (csd *CompanySecretDelete) ExecX(ctx context.Context) int {
-	n, err := csd.Exec(ctx)
+func (_d *CompanySecretDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (csd *CompanySecretDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *CompanySecretDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(companysecret.Table, sqlgraph.NewFieldSpec(companysecret.FieldID, field.TypeUint64))
-	if ps := csd.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, csd.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	csd.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // CompanySecretDeleteOne is the builder for deleting a single CompanySecret entity.
 type CompanySecretDeleteOne struct {
-	csd *CompanySecretDelete
+	_d *CompanySecretDelete
 }
 
 // Where appends a list predicates to the CompanySecretDelete builder.
-func (csdo *CompanySecretDeleteOne) Where(ps ...predicate.CompanySecret) *CompanySecretDeleteOne {
-	csdo.csd.mutation.Where(ps...)
-	return csdo
+func (_d *CompanySecretDeleteOne) Where(ps ...predicate.CompanySecret) *CompanySecretDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (csdo *CompanySecretDeleteOne) Exec(ctx context.Context) error {
-	n, err := csdo.csd.Exec(ctx)
+func (_d *CompanySecretDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (csdo *CompanySecretDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (csdo *CompanySecretDeleteOne) ExecX(ctx context.Context) {
-	if err := csdo.Exec(ctx); err != nil {
+func (_d *CompanySecretDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

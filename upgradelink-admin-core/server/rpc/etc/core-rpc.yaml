@@ -3,7 +3,7 @@ ListenOn: 0.0.0.0:9101
 
 DatabaseConf:
   Type: mysql
-  Host: host.docker.internal
+  Host: 127.0.0.1
   Port: 3306
   DBName: upgrade
   Username: root # set your username
@@ -23,7 +23,7 @@ Log:
   StackCoolDownMillis: 100
 
 RedisConf:
-  Host: host.docker.internal:6379
+  Host: 127.0.0.1:6379
   Db: 0
   Pass: a123456
 

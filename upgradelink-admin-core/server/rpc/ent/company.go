@@ -4,9 +4,9 @@ package ent
 
 import (
 	"fmt"
-	"upgradelink-admin-core/server/rpc/ent/company"
 	"strings"
 	"time"
+	"upgradelink-admin-core/server/rpc/ent/company"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
@@ -46,7 +46,7 @@ func (*Company) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the Company fields.
-func (c *Company) assignValues(columns []string, values []any) error {
+func (_m *Company) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -57,27 +57,27 @@ func (c *Company) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			c.ID = uint64(value.Int64)
+			_m.ID = uint64(value.Int64)
 		case company.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				c.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		case company.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				c.UpdatedAt = value.Time
+				_m.UpdatedAt = value.Time
 			}
 		case company.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				c.Name = value.String
+				_m.Name = value.String
 			}
 		default:
-			c.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -85,41 +85,41 @@ func (c *Company) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the Company.
 // This includes values selected through modifiers, order, etc.
-func (c *Company) Value(name string) (ent.Value, error) {
-	return c.selectValues.Get(name)
+func (_m *Company) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Company.
 // Note that you need to call Company.Unwrap() before calling this method if this Company
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (c *Company) Update() *CompanyUpdateOne {
-	return NewCompanyClient(c.config).UpdateOne(c)
+func (_m *Company) Update() *CompanyUpdateOne {
+	return NewCompanyClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the Company entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (c *Company) Unwrap() *Company {
-	_tx, ok := c.config.driver.(*txDriver)
+func (_m *Company) Unwrap() *Company {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: Company is not a transactional entity")
 	}
-	c.config.driver = _tx.drv
-	return c
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (c *Company) String() string {
+func (_m *Company) String() string {
 	var builder strings.Builder
 	builder.WriteString("Company(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", c.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("created_at=")
-	builder.WriteString(c.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(c.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
-	builder.WriteString(c.Name)
+	builder.WriteString(_m.Name)
 	builder.WriteByte(')')
 	return builder.String()
 }

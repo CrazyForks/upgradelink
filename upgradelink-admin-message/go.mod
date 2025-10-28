@@ -1,36 +1,26 @@
 module upgradelink-admin-message
 
-go 1.25.0
-
-replace github.com/zeromicro/go-zero v1.8.0 => github.com/suyuan32/simple-admin-tools v1.8.0
+go 1.23.0
 
 require (
-	entgo.io/ent v0.14.3
-	github.com/alibabacloud-go/darabonba-openapi/v2 v2.0.10
-	github.com/alibabacloud-go/dysmsapi-20170525/v3 v3.0.6
-	github.com/alibabacloud-go/tea v1.3.2
-	github.com/alibabacloud-go/tea-utils/v2 v2.0.7
-	github.com/apistd/uni-go-sdk v0.0.2
-	github.com/go-resty/resty/v2 v2.16.5
+	entgo.io/ent v0.14.2
+	github.com/bsm/redislock v0.9.4
+	github.com/casbin/casbin/v2 v2.103.0
+	github.com/duke-git/lancet/v2 v2.3.4
 	github.com/gofrs/uuid/v5 v5.3.1
-	github.com/pkg/errors v0.9.1
+	github.com/larksuite/oapi-sdk-go/v3 v3.4.8
+	github.com/mojocn/base64Captcha v1.3.8
 	github.com/redis/go-redis/v9 v9.7.1
 	github.com/suyuan32/simple-admin-common v1.6.4
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1106
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.1106
+	github.com/suyuan32/simple-admin-job v1.6.4
+	github.com/suyuan32/simple-admin-message-center v1.6.4
 	github.com/zeromicro/go-zero v1.8.0
+	golang.org/x/oauth2 v0.27.0
 	google.golang.org/grpc v1.70.0
 	google.golang.org/protobuf v1.36.5
 )
 
-require (
-	github.com/bmatcuk/doublestar v1.3.4 // indirect
-	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
-	github.com/klauspost/compress v1.18.0 // indirect
-	github.com/x448/float16 v0.8.4 // indirect
-	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
-	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
-)
+require github.com/bmatcuk/doublestar/v4 v4.8.1 // indirect
 
 require (
 	ariga.io/atlas v0.31.1-0.20250212144724-069be8033e83 // indirect
@@ -88,7 +78,6 @@ require (
 	github.com/prometheus/common v0.62.0 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
-	github.com/suyuan32/simple-admin-message-center v1.6.4 // indirect
 	github.com/tjfoc/gmsm v1.4.1 // indirect
 	github.com/zclconf/go-cty v1.16.2 // indirect
 	github.com/zclconf/go-cty-yaml v1.1.0 // indirect
@@ -110,7 +99,6 @@ require (
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
-	golang.org/x/oauth2 v0.27.0 // indirect
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/term v0.29.0 // indirect

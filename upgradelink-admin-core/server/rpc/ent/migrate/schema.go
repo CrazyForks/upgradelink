@@ -55,6 +55,9 @@ var (
 		{Name: "company_id", Type: field.TypeUint64, Nullable: true, Comment: "Company ID | 公司ID", Default: 1},
 		{Name: "access_key", Type: field.TypeString, Unique: true, Comment: "access_key | 密钥id"},
 		{Name: "secret_key", Type: field.TypeString, Unique: true, Comment: "secret_key | 密钥key"},
+		{Name: "enable", Type: field.TypeUint32, Comment: "是否生效；可通过此控制策略是否生效0：失效；1：生效", Default: 0},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "描述信息"},
+		{Name: "is_del", Type: field.TypeUint32, Comment: "是否删除 0：正常；1：已删除", Default: 0},
 	}
 	// SysCompanySecretTable holds the schema information for the "sys_company_secret" table.
 	SysCompanySecretTable = &schema.Table{
@@ -335,7 +338,7 @@ var (
 		{Name: "home_path", Type: field.TypeString, Comment: "The home page that the user enters after logging in | 用户登陆后进入的首页", Default: "/dashboard"},
 		{Name: "mobile", Type: field.TypeString, Nullable: true, Comment: "Mobile number | 手机号"},
 		{Name: "email", Type: field.TypeString, Nullable: true, Comment: "Email | 邮箱号"},
-		{Name: "avatar", Type: field.TypeString, Nullable: true, Comment: "Avatar | 头像路径", SchemaType: map[string]string{"mysql-8.4.3": "varchar(512)"}},
+		{Name: "avatar", Type: field.TypeString, Nullable: true, Comment: "Avatar | 头像路径", SchemaType: map[string]string{"mysql": "varchar(512)"}},
 		{Name: "company_id", Type: field.TypeUint64, Nullable: true, Comment: "Company ID | 公司ID", Default: 1},
 		{Name: "department_id", Type: field.TypeUint64, Nullable: true, Comment: "Department ID | 部门ID", Default: 1},
 	}

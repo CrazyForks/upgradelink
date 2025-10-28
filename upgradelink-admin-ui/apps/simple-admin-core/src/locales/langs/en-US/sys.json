@@ -343,8 +343,11 @@
   "companySecret": {
     "accessKey": "AccessKey",
     "secretKey": "SecretKey",
-    "addCompanySecret": "Add CompanySecret",
-    "editCompanySecret": "Edit CompanySecret",
-    "companySecretList": "CompanySecret List"
+    "enable": "Enable",
+    "isDel": "IsDel",
+    "description": "Description",
+    "addCompanySecret": "Add",
+    "editCompanySecret": "Edit",
+    "companySecretList": "Secret List"
   }
 }

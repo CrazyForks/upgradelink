@@ -85,6 +85,12 @@ message CompanySecretInfo {
   optional string access_key = 5;
   //  secret_key | 密钥key
   optional string secret_key = 6;
+  //  是否生效；可通过此控制策略是否生效0：失效；1：生效
+  optional uint32 enable = 7;
+  //  描述信息
+  optional string description = 8;
+  //  是否删除 0：正常；1：已删除
+  optional uint32 is_del = 9;
 }
 
 message CompanySecretListReq {
@@ -95,6 +101,9 @@ message CompanySecretListReq {
   optional uint64 company_id = 5;
   optional string access_key = 6;
   optional string secret_key = 7;
+  optional uint32 enable = 8;
+  optional string description = 9;
+  optional uint32 is_del = 10;
 }
 
 message CompanySecretListResp {

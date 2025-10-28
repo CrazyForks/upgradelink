@@ -24,7 +24,7 @@ Captcha:
 
 DatabaseConf:
   Type: mysql
-  Host: host.docker.internal
+  Host: 127.0.0.1
   Port: 3306
   DBName: upgrade
   Username: root # set your username
@@ -74,7 +74,7 @@ CROSConf:
   Address: '*'    # if it is *, allow all ip and address. e.g. http://example.com
 
 RedisConf:
-  Host: host.docker.internal:6379
+  Host: 127.0.0.1:6379
   Db: 0
   Pass: a123456
 

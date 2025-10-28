@@ -3,8 +3,8 @@
 package oauthprovider
 
 import (
-	"upgradelink-admin-core/server/rpc/ent/predicate"
 	"time"
+	"upgradelink-admin-core/server/rpc/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 )

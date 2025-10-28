@@ -342,8 +342,11 @@
   "companySecret": {
     "accessKey": "AccessKey",
     "secretKey": "SecretKey",
-    "addCompanySecret": "添加 CompanySecret",
-    "editCompanySecret": "编辑 CompanySecret",
-    "companySecretList": "CompanySecret 列表"
+    "enable": "是否开启",
+    "isDel": "IsDel",
+    "description": "详情",
+    "addCompanySecret": "添加",
+    "editCompanySecret": "编辑",
+    "companySecretList": "密钥 列表"
   }
 }

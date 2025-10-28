@@ -101,7 +101,7 @@ type APIPageList struct {
 	PageDetails *PageDetails `json:"pageDetails"`
 }
 
-func (a *APIQuery) Page(
+func (_m *APIQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...APIPaginateOption,
 ) (*APIPageList, error) {
 
@@ -110,7 +110,7 @@ func (a *APIQuery) Page(
 		return nil, err
 	}
 
-	if a, err = pager.ApplyFilter(a); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -121,7 +121,7 @@ func (a *APIQuery) Page(
 		Size: pageSize,
 	}
 
-	query := a.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -132,13 +132,13 @@ func (a *APIQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		a = a.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		a = a.Order(DefaultAPIOrder)
+		_m = _m.Order(DefaultAPIOrder)
 	}
 
-	a = a.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := a.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +182,7 @@ type CompanyPageList struct {
 	PageDetails *PageDetails `json:"pageDetails"`
 }
 
-func (c *CompanyQuery) Page(
+func (_m *CompanyQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...CompanyPaginateOption,
 ) (*CompanyPageList, error) {
 
@@ -191,7 +191,7 @@ func (c *CompanyQuery) Page(
 		return nil, err
 	}
 
-	if c, err = pager.ApplyFilter(c); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -202,7 +202,7 @@ func (c *CompanyQuery) Page(
 		Size: pageSize,
 	}
 
-	query := c.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -213,13 +213,13 @@ func (c *CompanyQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		c = c.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		c = c.Order(DefaultCompanyOrder)
+		_m = _m.Order(DefaultCompanyOrder)
 	}
 
-	c = c.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := c.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +263,7 @@ type CompanySecretPageList struct {
 	PageDetails *PageDetails     `json:"pageDetails"`
 }
 
-func (cs *CompanySecretQuery) Page(
+func (_m *CompanySecretQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...CompanySecretPaginateOption,
 ) (*CompanySecretPageList, error) {
 
@@ -272,7 +272,7 @@ func (cs *CompanySecretQuery) Page(
 		return nil, err
 	}
 
-	if cs, err = pager.ApplyFilter(cs); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -283,7 +283,7 @@ func (cs *CompanySecretQuery) Page(
 		Size: pageSize,
 	}
 
-	query := cs.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -294,13 +294,13 @@ func (cs *CompanySecretQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		cs = cs.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		cs = cs.Order(DefaultCompanySecretOrder)
+		_m = _m.Order(DefaultCompanySecretOrder)
 	}
 
-	cs = cs.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := cs.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -344,7 +344,7 @@ type ConfigurationPageList struct {
 	PageDetails *PageDetails     `json:"pageDetails"`
 }
 
-func (c *ConfigurationQuery) Page(
+func (_m *ConfigurationQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...ConfigurationPaginateOption,
 ) (*ConfigurationPageList, error) {
 
@@ -353,7 +353,7 @@ func (c *ConfigurationQuery) Page(
 		return nil, err
 	}
 
-	if c, err = pager.ApplyFilter(c); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -364,7 +364,7 @@ func (c *ConfigurationQuery) Page(
 		Size: pageSize,
 	}
 
-	query := c.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -375,13 +375,13 @@ func (c *ConfigurationQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		c = c.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		c = c.Order(DefaultConfigurationOrder)
+		_m = _m.Order(DefaultConfigurationOrder)
 	}
 
-	c = c.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := c.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -425,7 +425,7 @@ type DepartmentPageList struct {
 	PageDetails *PageDetails  `json:"pageDetails"`
 }
 
-func (d *DepartmentQuery) Page(
+func (_m *DepartmentQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...DepartmentPaginateOption,
 ) (*DepartmentPageList, error) {
 
@@ -434,7 +434,7 @@ func (d *DepartmentQuery) Page(
 		return nil, err
 	}
 
-	if d, err = pager.ApplyFilter(d); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -445,7 +445,7 @@ func (d *DepartmentQuery) Page(
 		Size: pageSize,
 	}
 
-	query := d.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -456,13 +456,13 @@ func (d *DepartmentQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		d = d.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		d = d.Order(DefaultDepartmentOrder)
+		_m = _m.Order(DefaultDepartmentOrder)
 	}
 
-	d = d.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := d.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -506,7 +506,7 @@ type DictionaryPageList struct {
 	PageDetails *PageDetails  `json:"pageDetails"`
 }
 
-func (d *DictionaryQuery) Page(
+func (_m *DictionaryQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...DictionaryPaginateOption,
 ) (*DictionaryPageList, error) {
 
@@ -515,7 +515,7 @@ func (d *DictionaryQuery) Page(
 		return nil, err
 	}
 
-	if d, err = pager.ApplyFilter(d); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -526,7 +526,7 @@ func (d *DictionaryQuery) Page(
 		Size: pageSize,
 	}
 
-	query := d.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -537,13 +537,13 @@ func (d *DictionaryQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		d = d.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		d = d.Order(DefaultDictionaryOrder)
+		_m = _m.Order(DefaultDictionaryOrder)
 	}
 
-	d = d.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := d.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -587,7 +587,7 @@ type DictionaryDetailPageList struct {
 	PageDetails *PageDetails        `json:"pageDetails"`
 }
 
-func (dd *DictionaryDetailQuery) Page(
+func (_m *DictionaryDetailQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...DictionaryDetailPaginateOption,
 ) (*DictionaryDetailPageList, error) {
 
@@ -596,7 +596,7 @@ func (dd *DictionaryDetailQuery) Page(
 		return nil, err
 	}
 
-	if dd, err = pager.ApplyFilter(dd); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -607,7 +607,7 @@ func (dd *DictionaryDetailQuery) Page(
 		Size: pageSize,
 	}
 
-	query := dd.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -618,13 +618,13 @@ func (dd *DictionaryDetailQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		dd = dd.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		dd = dd.Order(DefaultDictionaryDetailOrder)
+		_m = _m.Order(DefaultDictionaryDetailOrder)
 	}
 
-	dd = dd.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := dd.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -668,7 +668,7 @@ type MenuPageList struct {
 	PageDetails *PageDetails `json:"pageDetails"`
 }
 
-func (m *MenuQuery) Page(
+func (_m *MenuQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...MenuPaginateOption,
 ) (*MenuPageList, error) {
 
@@ -677,7 +677,7 @@ func (m *MenuQuery) Page(
 		return nil, err
 	}
 
-	if m, err = pager.ApplyFilter(m); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -688,7 +688,7 @@ func (m *MenuQuery) Page(
 		Size: pageSize,
 	}
 
-	query := m.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -699,13 +699,13 @@ func (m *MenuQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		m = m.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		m = m.Order(DefaultMenuOrder)
+		_m = _m.Order(DefaultMenuOrder)
 	}
 
-	m = m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := m.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -749,7 +749,7 @@ type OauthProviderPageList struct {
 	PageDetails *PageDetails     `json:"pageDetails"`
 }
 
-func (op *OauthProviderQuery) Page(
+func (_m *OauthProviderQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...OauthProviderPaginateOption,
 ) (*OauthProviderPageList, error) {
 
@@ -758,7 +758,7 @@ func (op *OauthProviderQuery) Page(
 		return nil, err
 	}
 
-	if op, err = pager.ApplyFilter(op); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -769,7 +769,7 @@ func (op *OauthProviderQuery) Page(
 		Size: pageSize,
 	}
 
-	query := op.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -780,13 +780,13 @@ func (op *OauthProviderQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		op = op.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		op = op.Order(DefaultOauthProviderOrder)
+		_m = _m.Order(DefaultOauthProviderOrder)
 	}
 
-	op = op.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := op.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -830,7 +830,7 @@ type PositionPageList struct {
 	PageDetails *PageDetails `json:"pageDetails"`
 }
 
-func (po *PositionQuery) Page(
+func (_m *PositionQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...PositionPaginateOption,
 ) (*PositionPageList, error) {
 
@@ -839,7 +839,7 @@ func (po *PositionQuery) Page(
 		return nil, err
 	}
 
-	if po, err = pager.ApplyFilter(po); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -850,7 +850,7 @@ func (po *PositionQuery) Page(
 		Size: pageSize,
 	}
 
-	query := po.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -861,13 +861,13 @@ func (po *PositionQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		po = po.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		po = po.Order(DefaultPositionOrder)
+		_m = _m.Order(DefaultPositionOrder)
 	}
 
-	po = po.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := po.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -911,7 +911,7 @@ type RolePageList struct {
 	PageDetails *PageDetails `json:"pageDetails"`
 }
 
-func (r *RoleQuery) Page(
+func (_m *RoleQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...RolePaginateOption,
 ) (*RolePageList, error) {
 
@@ -920,7 +920,7 @@ func (r *RoleQuery) Page(
 		return nil, err
 	}
 
-	if r, err = pager.ApplyFilter(r); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -931,7 +931,7 @@ func (r *RoleQuery) Page(
 		Size: pageSize,
 	}
 
-	query := r.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -942,13 +942,13 @@ func (r *RoleQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		r = r.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		r = r.Order(DefaultRoleOrder)
+		_m = _m.Order(DefaultRoleOrder)
 	}
 
-	r = r.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := r.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -992,7 +992,7 @@ type TokenPageList struct {
 	PageDetails *PageDetails `json:"pageDetails"`
 }
 
-func (t *TokenQuery) Page(
+func (_m *TokenQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...TokenPaginateOption,
 ) (*TokenPageList, error) {
 
@@ -1001,7 +1001,7 @@ func (t *TokenQuery) Page(
 		return nil, err
 	}
 
-	if t, err = pager.ApplyFilter(t); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -1012,7 +1012,7 @@ func (t *TokenQuery) Page(
 		Size: pageSize,
 	}
 
-	query := t.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -1023,13 +1023,13 @@ func (t *TokenQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		t = t.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		t = t.Order(DefaultTokenOrder)
+		_m = _m.Order(DefaultTokenOrder)
 	}
 
-	t = t.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := t.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -1073,7 +1073,7 @@ type UserPageList struct {
 	PageDetails *PageDetails `json:"pageDetails"`
 }
 
-func (u *UserQuery) Page(
+func (_m *UserQuery) Page(
 	ctx context.Context, pageNum uint64, pageSize uint64, opts ...UserPaginateOption,
 ) (*UserPageList, error) {
 
@@ -1082,7 +1082,7 @@ func (u *UserQuery) Page(
 		return nil, err
 	}
 
-	if u, err = pager.ApplyFilter(u); err != nil {
+	if _m, err = pager.ApplyFilter(_m); err != nil {
 		return nil, err
 	}
 
@@ -1093,7 +1093,7 @@ func (u *UserQuery) Page(
 		Size: pageSize,
 	}
 
-	query := u.Clone()
+	query := _m.Clone()
 	query.ctx.Fields = nil
 	count, err := query.Count(ctx)
 
@@ -1104,13 +1104,13 @@ func (u *UserQuery) Page(
 	ret.PageDetails.Total = uint64(count)
 
 	if pager.Order != nil {
-		u = u.Order(pager.Order)
+		_m = _m.Order(pager.Order)
 	} else {
-		u = u.Order(DefaultUserOrder)
+		_m = _m.Order(DefaultUserOrder)
 	}
 
-	u = u.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
-	list, err := u.All(ctx)
+	_m = _m.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := _m.All(ctx)
 	if err != nil {
 		return nil, err
 	}

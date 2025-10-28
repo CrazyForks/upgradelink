@@ -31,6 +31,9 @@ func (l *UpdateCompanySecretLogic) UpdateCompanySecret(in *core.CompanySecretInf
 		SetNotNilCompanyID(in.CompanyId).
 		SetNotNilAccessKey(in.AccessKey).
 		SetNotNilSecretKey(in.SecretKey).
+		SetNotNilEnable(in.Enable).
+		SetNotNilDescription(in.Description).
+		SetNotNilIsDel(in.IsDel).
 		Exec(l.ctx)
 
 	if err != nil {

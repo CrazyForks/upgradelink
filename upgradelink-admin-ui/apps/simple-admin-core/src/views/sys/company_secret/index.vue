@@ -3,13 +3,14 @@ import type { VbenFormProps } from "@vben/common-ui";
 
 import type { VxeGridListeners, VxeGridProps } from "#/adapter/vxe-table";
 import type { CompanySecretInfo } from "#/api/sys/model/companySecretModel";
+import type { ActionItem } from "#/components/table/table-action";
 
-import { ref } from "vue";
+import { h, ref } from "vue";
 
 import { Page, useVbenModal } from "@vben/common-ui";
 import { $t } from "@vben/locales";
 
-import { Modal } from "ant-design-vue";
+import { Button, Modal } from "ant-design-vue";
 import { isPlainObject } from "remeda";
 
 import { useVbenVxeGrid } from "#/adapter/vxe-table";
@@ -17,6 +18,7 @@ import {
   deleteCompanySecret,
   getCompanySecretList,
 } from "#/api/sys/companySecret";
+import { TableAction } from "#/components/table/table-action";
 
 import CompanySecretForm from "./form.vue";
 import { searchFormSchemas, tableColumns } from "./schemas";
@@ -65,35 +67,35 @@ const gridOptions: VxeGridProps<CompanySecretInfo> = {
   },
   columns: [
     ...(tableColumns.columns as any),
-    // {
-    //   title: $t("common.action"),
-    //   fixed: "right",
-    //   field: "action",
-    //   slots: {
-    //     default: ({ row }) =>
-    //       h(TableAction, {
-    //         actions: [
-    //           {
-    //             type: "link",
-    //             icon: "clarity:note-edit-line",
-    //             tooltip: $t("common.edit"),
-    //             onClick: openFormModal.bind(null, row),
-    //           },
-    //           {
-    //             icon: "ant-design:delete-outlined",
-    //             type: "link",
-    //             color: "error",
-    //             tooltip: $t("common.delete"),
-    //             popConfirm: {
-    //               title: $t("common.deleteConfirm"),
-    //               placement: "left",
-    //               confirm: batchDelete.bind(null, [row.id]),
-    //             },
-    //           },
-    //         ] as ActionItem[],
-    //       }),
-    //   },
-    // },
+    {
+      title: $t("common.action"),
+      fixed: "right",
+      field: "action",
+      slots: {
+        default: ({ row }) =>
+          h(TableAction, {
+            actions: [
+              {
+                type: "link",
+                icon: "clarity:note-edit-line",
+                tooltip: $t("common.edit"),
+                onClick: openFormModal.bind(null, row),
+              },
+              {
+                icon: "ant-design:delete-outlined",
+                type: "link",
+                color: "error",
+                tooltip: $t("common.delete"),
+                popConfirm: {
+                  title: $t("common.deleteConfirm"),
+                  placement: "left",
+                  confirm: batchDelete.bind(null, [row.id]),
+                },
+              },
+            ] as ActionItem[],
+          }),
+      },
+    },
   ],
   height: "auto",
   keepSource: true,
@@ -113,7 +115,7 @@ const gridOptions: VxeGridProps<CompanySecretInfo> = {
 };
 
 const [Grid, gridApi] = useVbenVxeGrid({
-  // formOptions,
+  formOptions,
   gridOptions,
   gridEvents,
 });
@@ -161,22 +163,22 @@ async function batchDelete(ids: any[]) {
   <Page auto-content-height>
     <FormModal />
     <Grid>
-      <!--      <template #toolbar-buttons>-->
-      <!--        <Button-->
-      <!--          v-show="showDeleteButton"-->
-      <!--          danger-->
-      <!--          type="primary"-->
-      <!--          @click="handleBatchDelete"-->
-      <!--        >-->
-      <!--          {{ $t("common.delete") }}-->
-      <!--        </Button>-->
-      <!--      </template>-->
+      <template #toolbar-buttons>
+        <Button
+          v-show="showDeleteButton"
+          danger
+          type="primary"
+          @click="handleBatchDelete"
+        >
+          {{ $t("common.delete") }}
+        </Button>
+      </template>
 
-      <!--      <template #toolbar-tools>-->
-      <!--        <Button type="primary" @click="openFormModal">-->
-      <!--          {{ $t("sys.companySecret.addCompanySecret") }}-->
-      <!--        </Button>-->
-      <!--      </template>-->
+      <template #toolbar-tools>
+        <Button type="primary" @click="openFormModal">
+          {{ $t("sys.companySecret.addCompanySecret") }}
+        </Button>
+      </template>
     </Grid>
   </Page>
 </template>

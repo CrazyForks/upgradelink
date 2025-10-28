@@ -1672,8 +1672,11 @@ type ConfigurationInfoResp struct {
 // swagger:model CompanySecretInfo
 type CompanySecretInfo struct {
 	BaseIDInfo
-	AccessKey string `json:"access_key,optional"`
-	SecretKey string `json:"secret_key,optional"`
+	AccessKey   string  `json:"accessKey,optional"`
+	SecretKey   string  `json:"secretKey,optional"`
+	Enable      *uint32 `json:"enable,optional"`
+	IsDel       *uint32 `json:"isDel,optional"`
+	Description string  `json:"description,optional"`
 }
 
 // swagger:model CompanySecretListResp
@@ -1691,6 +1694,9 @@ type CompanySecretListInfo struct {
 // swagger:model CompanySecretListReq
 type CompanySecretListReq struct {
 	PageInfo
+	AccessKey string  `json:"accessKey,optional"`
+	SecretKey string  `json:"secretKey,optional"`
+	Enable    *uint32 `json:"enable,optional"`
 }
 
 // swagger:model CompanySecretInfoResp

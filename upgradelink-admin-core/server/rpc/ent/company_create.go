@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"upgradelink-admin-core/server/rpc/ent/company"
 	"time"
+	"upgradelink-admin-core/server/rpc/ent/company"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -21,59 +21,59 @@ type CompanyCreate struct {
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (cc *CompanyCreate) SetCreatedAt(t time.Time) *CompanyCreate {
-	cc.mutation.SetCreatedAt(t)
-	return cc
+func (_c *CompanyCreate) SetCreatedAt(v time.Time) *CompanyCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (cc *CompanyCreate) SetNillableCreatedAt(t *time.Time) *CompanyCreate {
-	if t != nil {
-		cc.SetCreatedAt(*t)
+func (_c *CompanyCreate) SetNillableCreatedAt(v *time.Time) *CompanyCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return cc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (cc *CompanyCreate) SetUpdatedAt(t time.Time) *CompanyCreate {
-	cc.mutation.SetUpdatedAt(t)
-	return cc
+func (_c *CompanyCreate) SetUpdatedAt(v time.Time) *CompanyCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (cc *CompanyCreate) SetNillableUpdatedAt(t *time.Time) *CompanyCreate {
-	if t != nil {
-		cc.SetUpdatedAt(*t)
+func (_c *CompanyCreate) SetNillableUpdatedAt(v *time.Time) *CompanyCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return cc
+	return _c
 }
 
 // SetName sets the "name" field.
-func (cc *CompanyCreate) SetName(s string) *CompanyCreate {
-	cc.mutation.SetName(s)
-	return cc
+func (_c *CompanyCreate) SetName(v string) *CompanyCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetID sets the "id" field.
-func (cc *CompanyCreate) SetID(u uint64) *CompanyCreate {
-	cc.mutation.SetID(u)
-	return cc
+func (_c *CompanyCreate) SetID(v uint64) *CompanyCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // Mutation returns the CompanyMutation object of the builder.
-func (cc *CompanyCreate) Mutation() *CompanyMutation {
-	return cc.mutation
+func (_c *CompanyCreate) Mutation() *CompanyMutation {
+	return _c.mutation
 }
 
 // Save creates the Company in the database.
-func (cc *CompanyCreate) Save(ctx context.Context) (*Company, error) {
-	cc.defaults()
-	return withHooks(ctx, cc.sqlSave, cc.mutation, cc.hooks)
+func (_c *CompanyCreate) Save(ctx context.Context) (*Company, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (cc *CompanyCreate) SaveX(ctx context.Context) *Company {
-	v, err := cc.Save(ctx)
+func (_c *CompanyCreate) SaveX(ctx context.Context) *Company {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -81,50 +81,50 @@ func (cc *CompanyCreate) SaveX(ctx context.Context) *Company {
 }
 
 // Exec executes the query.
-func (cc *CompanyCreate) Exec(ctx context.Context) error {
-	_, err := cc.Save(ctx)
+func (_c *CompanyCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (cc *CompanyCreate) ExecX(ctx context.Context) {
-	if err := cc.Exec(ctx); err != nil {
+func (_c *CompanyCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (cc *CompanyCreate) defaults() {
-	if _, ok := cc.mutation.CreatedAt(); !ok {
+func (_c *CompanyCreate) defaults() {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := company.DefaultCreatedAt()
-		cc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := cc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := company.DefaultUpdatedAt()
-		cc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (cc *CompanyCreate) check() error {
-	if _, ok := cc.mutation.CreatedAt(); !ok {
+func (_c *CompanyCreate) check() error {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Company.created_at"`)}
 	}
-	if _, ok := cc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Company.updated_at"`)}
 	}
-	if _, ok := cc.mutation.Name(); !ok {
+	if _, ok := _c.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Company.name"`)}
 	}
 	return nil
 }
 
-func (cc *CompanyCreate) sqlSave(ctx context.Context) (*Company, error) {
-	if err := cc.check(); err != nil {
+func (_c *CompanyCreate) sqlSave(ctx context.Context) (*Company, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := cc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, cc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -134,29 +134,29 @@ func (cc *CompanyCreate) sqlSave(ctx context.Context) (*Company, error) {
 		id := _spec.ID.Value.(int64)
 		_node.ID = uint64(id)
 	}
-	cc.mutation.id = &_node.ID
-	cc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (cc *CompanyCreate) createSpec() (*Company, *sqlgraph.CreateSpec) {
+func (_c *CompanyCreate) createSpec() (*Company, *sqlgraph.CreateSpec) {
 	var (
-		_node = &Company{config: cc.config}
+		_node = &Company{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(company.Table, sqlgraph.NewFieldSpec(company.FieldID, field.TypeUint64))
 	)
-	if id, ok := cc.mutation.ID(); ok {
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := cc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(company.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if value, ok := cc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(company.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
-	if value, ok := cc.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(company.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
@@ -171,16 +171,16 @@ type CompanyCreateBulk struct {
 }
 
 // Save creates the Company entities in the database.
-func (ccb *CompanyCreateBulk) Save(ctx context.Context) ([]*Company, error) {
-	if ccb.err != nil {
-		return nil, ccb.err
+func (_c *CompanyCreateBulk) Save(ctx context.Context) ([]*Company, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(ccb.builders))
-	nodes := make([]*Company, len(ccb.builders))
-	mutators := make([]Mutator, len(ccb.builders))
-	for i := range ccb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*Company, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := ccb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*CompanyMutation)
@@ -194,11 +194,11 @@ func (ccb *CompanyCreateBulk) Save(ctx context.Context) ([]*Company, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, ccb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, ccb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -222,7 +222,7 @@ func (ccb *CompanyCreateBulk) Save(ctx context.Context) ([]*Company, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, ccb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -230,8 +230,8 @@ func (ccb *CompanyCreateBulk) Save(ctx context.Context) ([]*Company, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (ccb *CompanyCreateBulk) SaveX(ctx context.Context) []*Company {
-	v, err := ccb.Save(ctx)
+func (_c *CompanyCreateBulk) SaveX(ctx context.Context) []*Company {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -239,14 +239,14 @@ func (ccb *CompanyCreateBulk) SaveX(ctx context.Context) []*Company {
 }
 
 // Exec executes the query.
-func (ccb *CompanyCreateBulk) Exec(ctx context.Context) error {
-	_, err := ccb.Save(ctx)
+func (_c *CompanyCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (ccb *CompanyCreateBulk) ExecX(ctx context.Context) {
-	if err := ccb.Exec(ctx); err != nil {
+func (_c *CompanyCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

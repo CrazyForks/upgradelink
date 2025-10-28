@@ -1,22 +1,22 @@
 module upgradelink-admin-core
 
-go 1.25.0
+go 1.24.0
 
 require (
-	entgo.io/ent v0.14.5
+	entgo.io/ent v0.14.2
 	github.com/bsm/redislock v0.9.4
-	github.com/casbin/casbin/v2 v2.126.0
+	github.com/casbin/casbin/v2 v2.103.0
 	github.com/duke-git/lancet/v2 v2.3.4
-	github.com/gofrs/uuid/v5 v5.3.2
+	github.com/gofrs/uuid/v5 v5.3.1
 	github.com/larksuite/oapi-sdk-go/v3 v3.4.8
 	github.com/mojocn/base64Captcha v1.3.8
-	github.com/redis/go-redis/v9 v9.14.0
+	github.com/redis/go-redis/v9 v9.7.1
 	github.com/suyuan32/simple-admin-common v1.6.4
 	github.com/suyuan32/simple-admin-job v1.6.4
 	github.com/suyuan32/simple-admin-message-center v1.6.4
 	github.com/zeromicro/go-zero v1.8.0
 	golang.org/x/oauth2 v0.30.0
-	google.golang.org/grpc v1.75.1
+	google.golang.org/grpc v1.73.0
 	google.golang.org/protobuf v1.36.7
 )
 
