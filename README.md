@@ -146,24 +146,3 @@ Enterprise Edition Open Source Plan - Free Service [Plan Link](https://www.tools
 [![Star History Chart](https://api.star-history.com/svg?repos=toolsetlink/upgradelink&type=Date)](https://www.star-history.com/#toolsetlink/upgradelink&Date)
 
 
-#
-#
-#
-
-### License
-To avoid misunderstandings about the scope of the license, this project defines "personal use" and "commercial use" as follows:
-#### 🔍 Permitted "Personal Use" Behaviors (No additional authorization required)
-1. **Personal Scenarios**:
-    - Personal non-profit use (such as learning, personal tool deployment, personal projects for non-commercial purposes);
-    - Modifying the code for personal use only (not propagating, providing services, or charging to any third party).
-2. **Enterprise/Organization Scenarios**:
-    - Internal use by enterprise employees (such as deployment in the company's intranet for employee office use, internal system integration);
-    - Secondary development by enterprises for their own business needs, but the modified version is only used for internal enterprise operations (not provided externally).
-#### ❌ Prohibited "Commercial Use" Behaviors (Written authorization from the author is required in advance)
-1. Directly or indirectly selling, renting, or licensing this project (or modified derivative versions) to third parties as commodities;
-2. Providing paid services based on this project (such as paid hosting, technical support, customized development services, etc.);
-3. Embedding this project (or modified derivative versions) into commercial products and providing them to customers for profit;
-4. Using this project to profit through advertising, traffic, data collection, etc. under the pretext of "open source and free";
-5. Other profit-oriented usage methods (behaviors not explicitly listed but conforming to the nature of "commercial use").
-#### 📩 Authorization Application
-If you need to use this project within the scope of the above "prohibited commercial behaviors", please contact the author via [toolsetlink@163.com](https://www.toolsetlink.com/) to obtain written authorization.
