@@ -30,6 +30,7 @@ DatabaseConf:
   MaxOpenConn: 100
   SSLMode: disable # disable or require
   CacheTime: 5
+  MysqlConfig: "&loc=Asia%2FShanghai"
 
 CoreRpc:
   Target: 0.0.0.0:9101

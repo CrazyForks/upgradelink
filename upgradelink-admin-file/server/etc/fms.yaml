@@ -39,7 +39,7 @@ DatabaseConf:
   MaxOpenConn: 100
   SSLMode: disable # disable or require
   CacheTime: 5
-  MysqlConfig: "&timeout=600s&readTimeout=600s&writeTimeout=600s"
+  MysqlConfig: "&loc=Asia%2FShanghai&timeout=600s&readTimeout=600s&writeTimeout=600s"
 
 # CasbinDatabaseConf sets the core database if you use the Casbin of Core.
 CasbinDatabaseConf:
@@ -52,8 +52,7 @@ CasbinDatabaseConf:
   MaxOpenConn: 100
   SSLMode: disable # disable or require
   CacheTime: 5
-  MysqlConfig: "&timeout=600s&readTimeout=600s&writeTimeout=600s"
-  
+  MysqlConfig: "&loc=Asia%2FShanghai&timeout=600s&readTimeout=600s&writeTimeout=600s"
 
 UploadConf:
   MaxImageSize: 33554432  # 32 mb

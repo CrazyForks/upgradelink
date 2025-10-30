@@ -32,7 +32,8 @@ DatabaseConf:
   MaxOpenConn: 100
   SSLMode: disable # disable or require
   CacheTime: 5
-
+  MysqlConfig: "&loc=Asia%2FShanghai"
+  
 ProjectConf:
   DefaultRoleId: 1  # default role id when register
   DefaultDepartmentId: 1  # default department id when register

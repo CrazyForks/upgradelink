@@ -12,6 +12,7 @@ DatabaseConf:
   MaxOpenConn: 100
   SSLMode: disable # disable or require
   CacheTime: 5
+  MysqlConfig: "&loc=Asia%2FShanghai"
 
 RedisConf:
   Host: 127.0.0.1:6379
