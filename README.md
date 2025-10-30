@@ -93,7 +93,7 @@ docker-compose up -d
 首次执行会自动下载Docker镜像，等待时长取决于网络速度：
 
 ```shell
-docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:8888 toolsetlink/upgradelink-standalone:v2.0.6
+docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:8888 toolsetlink/upgradelink-standalone:v2.1.0
 ```
 
 #### 验证启动成功

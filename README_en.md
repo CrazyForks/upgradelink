@@ -86,7 +86,7 @@ docker-compose up -d
 ### 4. Start UpgradeLink
 The first execution will automatically download the Docker image; the waiting time depends on network speed:
 ```shell
-docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:8888 toolsetlink/upgradelink-standalone:v2.0.6
+docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:8888 toolsetlink/upgradelink-standalone:v2.1.0
 ```
 
 #### Verify Successful Startup
