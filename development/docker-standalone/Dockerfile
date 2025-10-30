@@ -59,22 +59,22 @@ WORKDIR /link/upgradelink-standalone
 RUN mkdir -p /link/upgradelink-standalone/etc /link/upgradelink-standalone/build
 
 COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-core/server/api/core-api  /link/upgradelink-standalone/
-COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-core/server/api/etc/core-api.yaml  /link/upgradelink-standalone/etc/
+COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone/upgradelink-admin-core/core-api.yaml  /link/upgradelink-standalone/etc/
 
 COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-core/server/rpc/core-rpc  /link/upgradelink-standalone/
-COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-core/server/rpc/etc/core-rpc.yaml  /link/upgradelink-standalone/etc/
+COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone/upgradelink-admin-core/core-rpc.yaml  /link/upgradelink-standalone/etc/
 
 COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-file/server/file  /link/upgradelink-standalone/
-COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-file/server/etc/fms.yaml  /link/upgradelink-standalone/etc/
+COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone/upgradelink-admin-file/fms.yaml  /link/upgradelink-standalone/etc/
 
 COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-message/server/message  /link/upgradelink-standalone/
-COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-message/server/etc/mcms.yaml  /link/upgradelink-standalone/etc/
+COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone/upgradelink-admin-message/mcms.yaml  /link/upgradelink-standalone/etc/
 
 COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-upgrade/server/upgrade  /link/upgradelink-standalone/
-COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-upgrade/server/etc/upgrade.yaml  /link/upgradelink-standalone/etc/
+COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone/upgradelink-admin-upgrade/upgrade.yaml  /link/upgradelink-standalone/etc/
 
 COPY --from=builder /go/src/upgradelink-standalone/upgradelink-api/server/api/api  /link/upgradelink-standalone/
-COPY --from=builder /go/src/upgradelink-standalone/upgradelink-api/server/api/etc/api.yaml  /link/upgradelink-standalone/etc/
+COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone/upgradelink-api/api.yaml  /link/upgradelink-standalone/etc/
 
 
 # 创建 Nginx html 目录
@@ -100,5 +100,5 @@ CMD [ "/bin/bash", "start.sh" ]
 
 
 # 在当前目录执行
-# docker buildx build -t toolsetlink/upgradelink-standalone:v2.0.6 --platform=linux/amd64,linux/arm64 -f ./Dockerfile ../../ --push
+# docker buildx build -t toolsetlink/upgradelink-standalone:v2.1.0 --platform=linux/amd64,linux/arm64 -f ./Dockerfile ../../ --push
 

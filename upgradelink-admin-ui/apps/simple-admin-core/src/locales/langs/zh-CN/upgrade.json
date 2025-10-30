@@ -1,4 +1,8 @@
 {
+  "base": {
+    "upgradeConditions": "升级条件",
+    "upgradeFlowLimit": "流量策略"
+  },
   "upgradeUrl": {
     "id": "Id",
     "companyId": "公司Id",
@@ -67,9 +71,9 @@
     "totalDevCount": "TotalDevCount",
     "yesterdayReqCount": "YesterdayReqCount",
     "totalReqCount": "TotalReqCount",
-    "addUpgradeDashboard": "添加 UpgradeDashboard",
-    "editUpgradeDashboard": "编辑 UpgradeDashboard",
-    "upgradeDashboardList": "UpgradeDashboard 列表"
+    "addUpgradeDashboard": "添加",
+    "editUpgradeDashboard": "编辑",
+    "upgradeDashboardList": "列表"
   },
   "upgradeFile": {
     "id": "Id",

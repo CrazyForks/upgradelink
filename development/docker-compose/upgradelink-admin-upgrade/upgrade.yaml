@@ -30,6 +30,7 @@ DatabaseConf:
   MaxOpenConn: 100
   SSLMode: disable # disable or require
   CacheTime: 5
+  MysqlConfig: "&loc=Asia%2FShanghai"
 
 CoreRpc:
   Target: upgradelink-admin-core-rpc:9101
@@ -50,6 +51,7 @@ CasbinDatabaseConf:
   MaxOpenConn: 100
   SSLMode: disable # disable or require
   CacheTime: 5
+  MysqlConfig: "&loc=Asia%2FShanghai"
 
 CasbinConf:
   ModelText: |

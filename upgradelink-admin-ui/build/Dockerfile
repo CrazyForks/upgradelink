@@ -29,8 +29,10 @@ CMD [ "/bin/bash", "start.sh"]
 # arm架构
 # docker buildx build --no-cache -t upgradelink-admin-ui:2.0.0 --platform=linux/arm64 -f build/Dockerfile . --load
 
-
+# 构建命令
+# pnpm install
+# pnpm build:simple-admin-core
 # 打包开源镜像
-# docker buildx build -t toolsetlink/upgradelink-admin-ui:2.0.0 --platform=linux/amd64,linux/arm64 -f build/Dockerfile . --push
+# docker buildx build -t toolsetlink/upgradelink-admin-ui:2.1.0 --platform=linux/amd64,linux/arm64 -f build/Dockerfile . --push
 
 

@@ -318,7 +318,7 @@ export const dataFormSchemas: VbenFormProps = {
       hideLabel: true,
       renderComponentContent: () => {
         return {
-          default: () => h("div", "升级条件"),
+          default: () => h("div", $t("upgrade.base.upgradeConditions")),
         };
       },
     },
@@ -500,7 +500,7 @@ export const dataFormSchemas: VbenFormProps = {
       hideLabel: true,
       renderComponentContent: () => {
         return {
-          default: () => h("div", "流量策略"),
+          default: () => h("div", $t("upgrade.base.upgradeFlowLimit")),
         };
       },
     },

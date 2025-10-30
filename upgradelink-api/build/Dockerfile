@@ -56,4 +56,4 @@ CMD [ "/bin/bash", "start.sh" ]
 
 
 # 打包开源镜像
-# docker buildx build -t toolsetlink/upgradelink-api:2.0.0 --platform=linux/amd64,linux/arm64 -f build/Dockerfile . --push
+# docker buildx build -t toolsetlink/upgradelink-api:2.1.0 --platform=linux/amd64,linux/arm64 -f build/Dockerfile . --push

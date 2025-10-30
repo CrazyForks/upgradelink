@@ -2,23 +2,27 @@ module upgradelink-admin-message
 
 go 1.23.0
 
+replace github.com/zeromicro/go-zero v1.8.0 => github.com/suyuan32/simple-admin-tools v1.8.0
+
 require (
-	entgo.io/ent v0.14.2
-	github.com/bsm/redislock v0.9.4
-	github.com/casbin/casbin/v2 v2.103.0
-	github.com/duke-git/lancet/v2 v2.3.4
+	entgo.io/ent v0.14.3
+	github.com/alibabacloud-go/darabonba-openapi/v2 v2.0.10
+	github.com/alibabacloud-go/dysmsapi-20170525/v3 v3.0.6
+	github.com/alibabacloud-go/tea v1.3.2
+	github.com/alibabacloud-go/tea-utils/v2 v2.0.7
+	github.com/apistd/uni-go-sdk v0.0.2
+	github.com/go-resty/resty/v2 v2.16.5
 	github.com/gofrs/uuid/v5 v5.3.1
-	github.com/larksuite/oapi-sdk-go/v3 v3.4.8
-	github.com/mojocn/base64Captcha v1.3.8
+	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.7.1
 	github.com/suyuan32/simple-admin-common v1.6.4
-	github.com/suyuan32/simple-admin-job v1.6.4
-	github.com/suyuan32/simple-admin-message-center v1.6.4
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1106
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.1106
 	github.com/zeromicro/go-zero v1.8.0
-	golang.org/x/oauth2 v0.27.0
 	google.golang.org/grpc v1.70.0
 	google.golang.org/protobuf v1.36.5
 )
+
 
 require github.com/bmatcuk/doublestar/v4 v4.8.1 // indirect
 
@@ -34,6 +38,7 @@ require (
 	github.com/aliyun/credentials-go v1.4.3 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
+	github.com/bmatcuk/doublestar v1.3.4 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
@@ -43,6 +48,7 @@ require (
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/emicklei/go-restful/v3 v3.12.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
+	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-openapi/inflect v0.21.0 // indirect
@@ -61,6 +67,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.23.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/mailru/easyjson v0.9.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
@@ -79,12 +86,15 @@ require (
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/tjfoc/gmsm v1.4.1 // indirect
+	github.com/x448/float16 v0.8.4 // indirect
 	github.com/zclconf/go-cty v1.16.2 // indirect
 	github.com/zclconf/go-cty-yaml v1.1.0 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.18 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.18 // indirect
 	go.etcd.io/etcd/client/v3 v3.5.18 // indirect
+	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel v1.34.0 // indirect
+	go.opentelemetry.io/otel/exporters/jaeger v1.17.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.34.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.34.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.34.0 // indirect
@@ -99,6 +109,7 @@ require (
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/mod v0.23.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
+	golang.org/x/oauth2 v0.26.0 // indirect
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/term v0.29.0 // indirect
@@ -107,6 +118,7 @@ require (
 	golang.org/x/tools v0.30.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250224174004-546df14abb99 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250224174004-546df14abb99 // indirect
+	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

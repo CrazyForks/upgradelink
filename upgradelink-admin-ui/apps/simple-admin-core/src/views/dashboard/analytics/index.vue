@@ -113,12 +113,12 @@ onMounted(async () => {
 //   },
 // ];
 
-const chartTabs5: TabOption[] = [
-  {
-    label: "近7天流量使用量(G)",
-    value: "7day-trafficusage-count",
-  },
-];
+// const chartTabs5: TabOption[] = [
+//   {
+//     label: "近7天流量使用量(G)",
+//     value: "7day-trafficusage-count",
+//   },
+// ];
 
 const chartTabs1: TabOption[] = [
   {
@@ -177,13 +177,13 @@ const chartTabs2: TabOption[] = [
     <!--      </template>-->
     <!--    </AnalysisChartsTabs>-->
 
-    <AnalysisChartsTabs :tabs="chartTabs5" class="mt-5">
-      <template #7day-trafficusage-count>
-        <Analytics7DayTrafficUsageCount
-          :chart-data="dashboardData?.trafficUsageCount7Day"
-        />
-      </template>
-    </AnalysisChartsTabs>
+<!--    <AnalysisChartsTabs :tabs="chartTabs5" class="mt-5">-->
+<!--      <template #7day-trafficusage-count>-->
+<!--        <Analytics7DayTrafficUsageCount-->
+<!--          :chart-data="dashboardData?.trafficUsageCount7Day"-->
+<!--        />-->
+<!--      </template>-->
+<!--    </AnalysisChartsTabs>-->
 
     <AnalysisChartsTabs :tabs="chartTabs1" class="mt-5">
       <template #7day-download-count>
