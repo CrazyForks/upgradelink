@@ -98,6 +98,7 @@ docker run -d --add-host=host.docker.internal:host-gateway -p 8081:8080 -p 8888:
 
 #### 验证启动成功
 访问 `http://localhost:8081`，能正常打开Web控制台即部署成功。
+> 注意：默认账号密码为   admin  simple-admin
 - 8081端口：Web管理控制台
 - 8888端口：API服务端口（供应用接入SDK使用）
 
