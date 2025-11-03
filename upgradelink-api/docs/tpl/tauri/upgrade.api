@@ -29,8 +29,11 @@ type (
         // 客户端应用版本名
         VersionName string `form:"versionName"`
 
-        // 升级指定版本（可空，为空时是最新版本）
+        // 升级指定版本名（可空，为空时是最新版本）
         AppointVersionName string `form:"appointVersionName,optional,default="`
+
+        // 升级指定版本号（可空，为空时是最新版本）
+        AppointVersionCode int64 `form:"appointVersionCode,default=0"`
 
         // 设备机型唯一标识
         DevModelKey string `form:"devModelKey,optional,default="`
@@ -115,6 +118,70 @@ service api {
     @handler getTauriUpgradeInfo
     get /upgrade (GetTauriUpgradeInfoReq) returns (GetTauriUpgradeInfoResp)
 }
+
+
+
+type (
+
+    GetTauriVersionInfoReq {
+        // Tauri应用 唯一标识
+        TauriKey string `json:"tauriKey"`
+
+        // target
+        Target string `json:"target"`
+
+        // arch
+        Arch string `json:"arch"`
+
+        // 客户端应用版本名
+        VersionName string `json:"versionName"`
+    }
+
+    GetTauriVersionInfoResp {
+        BaseDataInfo
+
+        Data GetTauriVersionInfoRespData `json:"data"`
+    }
+
+    GetTauriVersionInfoRespData {
+
+        // tauri 应用 唯一标识
+        TauriKey string `json:"tauriKey,optional"`
+
+        // target
+        Target string `form:"target"`
+
+        // arch
+        Arch string `form:"arch"`
+
+        // 客户端应用版本名称
+        VersionName string `json:"versionName,optional"`
+
+        // 应用版本号
+        VersionCode int64 `json:"versionCode,optional"`
+
+        // 描述
+        Description string `json:"description,optional"`
+    }
+)
+
+
+// RateLimit 流量控制
+// ReplayAttack 防重放攻击
+// Signature 签名认证
+@server(
+    prefix: /v1/tauri
+    group: tauri
+    timeout: 30s
+    middleware: RateLimit, ReplayAttack, Signature
+)
+
+service api {
+    // 获取版本信息
+    @handler getTauriVersionInfo
+    get /version (GetTauriVersionInfoReq) returns (GetTauriVersionInfoResp)
+}
+
 
 
 

@@ -54,7 +54,11 @@ func (l *GetElectronUpgradeInfoLogic) GetElectronUpgradeInfo(req *types.GetElect
 	if err != nil {
 		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err101Msg, config.Err101Docs)
 	}
+	
 	appointVersionCode := int64(0)
+	if req.AppointVersionCode != 0 {
+		appointVersionCode = req.AppointVersionCode
+	}
 	if req.AppointVersionName == "" {
 	} else {
 		// 转换版本号

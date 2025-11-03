@@ -199,6 +199,7 @@ type GetElectronUpgradeInfoReq struct {
 	Arch               string `form:"arch"`
 	VersionName        string `form:"versionName"`
 	AppointVersionName string `form:"appointVersionName,optional,default="`
+	AppointVersionCode int64  `form:"appointVersionCode,default=0"`
 	DevModelKey        string `form:"devModelKey,optional,default="`
 	DevKey             string `form:"devKey,optional,default="`
 }
@@ -211,6 +212,27 @@ type GetElectronUpgradeInfoResp struct {
 	Path                 string                           `json:"path,optional"`
 	Sha512               string                           `json:"sha512,optional"`
 	ReleaseDate          string                           `json:"releaseDate,optional"`
+}
+
+type GetElectronVersionInfoReq struct {
+	ElectronKey string `json:"electronKey"`
+	Platform    string `json:"platform"`
+	Arch        string `json:"arch"`
+	VersionName string `json:"versionName"`
+}
+
+type GetElectronVersionInfoResp struct {
+	BaseDataInfo
+	Data GetElectronVersionInfoRespData `json:"data"`
+}
+
+type GetElectronVersionInfoRespData struct {
+	ElectronKey string `json:"electronKey,optional"`
+	Platform    string `json:"platform"`
+	Arch        string `json:"arch"`
+	VersionName string `json:"versionName,optional"`
+	VersionCode int64  `json:"versionCode,optional"`
+	Description string `json:"description,optional"`
 }
 
 type GetFileDownloadInfoReq struct {
@@ -381,6 +403,7 @@ type GetTauriUpgradeInfoReq struct {
 	Arch               string `form:"arch"`
 	VersionName        string `form:"versionName"`
 	AppointVersionName string `form:"appointVersionName,optional,default="`
+	AppointVersionCode int64  `form:"appointVersionCode,default=0"`
 	DevModelKey        string `form:"devModelKey,optional,default="`
 	DevKey             string `form:"devKey,optional,default="`
 }
@@ -392,6 +415,27 @@ type GetTauriUpgradeInfoResp struct {
 	Signature   string `json:"signature,optional"`
 	Notes       string `json:"notes,optional"`
 	UpgradeType int64  `json:"upgradeType,optional,default=0"`
+}
+
+type GetTauriVersionInfoReq struct {
+	TauriKey    string `json:"tauriKey"`
+	Target      string `json:"target"`
+	Arch        string `json:"arch"`
+	VersionName string `json:"versionName"`
+}
+
+type GetTauriVersionInfoResp struct {
+	BaseDataInfo
+	Data GetTauriVersionInfoRespData `json:"data"`
+}
+
+type GetTauriVersionInfoRespData struct {
+	TauriKey    string `json:"tauriKey,optional"`
+	Target      string `form:"target"`
+	Arch        string `form:"arch"`
+	VersionName string `json:"versionName,optional"`
+	VersionCode int64  `json:"versionCode,optional"`
+	Description string `json:"description,optional"`
 }
 
 type GetUrlDownloadInfoReq struct {
