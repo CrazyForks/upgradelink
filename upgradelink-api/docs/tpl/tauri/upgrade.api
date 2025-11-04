@@ -179,7 +179,7 @@ type (
 service api {
     // 获取版本信息
     @handler getTauriVersionInfo
-    get /version (GetTauriVersionInfoReq) returns (GetTauriVersionInfoResp)
+    post /version (GetTauriVersionInfoReq) returns (GetTauriVersionInfoResp)
 }
 
 

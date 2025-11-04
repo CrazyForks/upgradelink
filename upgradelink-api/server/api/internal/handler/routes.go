@@ -136,6 +136,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				{
 					Method:  http.MethodGet,
 					Path:    "/download",
+					Handler: download.GetMacDownloadInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/v1/mac"),
+		rest.WithTimeout(30000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.CdnRateLimit},
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/download",
 					Handler: download.GetUrlDownloadInfoHandler(serverCtx),
 				},
 			}...,
@@ -151,41 +166,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				{
 					Method:  http.MethodGet,
 					Path:    "/download",
-					Handler: download.GetTauriDownloadInfoHandler(serverCtx),
-				},
-			}...,
-		),
-		rest.WithPrefix("/v1/tauri"),
-		rest.WithTimeout(30000*time.Millisecond),
-	)
-
-	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.CdnRateLimit},
-			[]rest.Route{
-				{
-					Method:  http.MethodGet,
-					Path:    "/download",
 					Handler: download.GetWinDownloadInfoHandler(serverCtx),
 				},
 			}...,
 		),
 		rest.WithPrefix("/v1/win"),
-		rest.WithTimeout(30000*time.Millisecond),
-	)
-
-	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.CdnRateLimit},
-			[]rest.Route{
-				{
-					Method:  http.MethodGet,
-					Path:    "/download",
-					Handler: download.GetMacDownloadInfoHandler(serverCtx),
-				},
-			}...,
-		),
-		rest.WithPrefix("/v1/mac"),
 		rest.WithTimeout(30000*time.Millisecond),
 	)
 
@@ -216,6 +201,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			}...,
 		),
 		rest.WithPrefix("/v1/file"),
+		rest.WithTimeout(30000*time.Millisecond),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.CdnRateLimit},
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/download",
+					Handler: download.GetTauriDownloadInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/v1/tauri"),
 		rest.WithTimeout(30000*time.Millisecond),
 	)
 
@@ -259,7 +259,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Middleware{serverCtx.RateLimit, serverCtx.ReplayAttack, serverCtx.Signature},
 			[]rest.Route{
 				{
-					Method:  http.MethodGet,
+					Method:  http.MethodPost,
 					Path:    "/version",
 					Handler: electron.GetElectronVersionInfoHandler(serverCtx),
 				},
@@ -349,7 +349,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Middleware{serverCtx.RateLimit, serverCtx.ReplayAttack, serverCtx.Signature},
 			[]rest.Route{
 				{
-					Method:  http.MethodGet,
+					Method:  http.MethodPost,
 					Path:    "/version",
 					Handler: tauri.GetTauriVersionInfoHandler(serverCtx),
 				},

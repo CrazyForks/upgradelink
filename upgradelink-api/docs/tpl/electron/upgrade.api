@@ -194,7 +194,7 @@ type (
 service api {
     // 获取版本信息
     @handler getElectronVersionInfo
-    get /version (GetElectronVersionInfoReq) returns (GetElectronVersionInfoResp)
+    post /version (GetElectronVersionInfoReq) returns (GetElectronVersionInfoResp)
 }
 
 
