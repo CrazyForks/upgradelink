@@ -99,6 +99,7 @@ func (l *GetUpgradeFileVersionListLogic) GetUpgradeFileVersionList(req *types.Up
 				FileName:        &fileData.Name,
 				CloudFileId:     &v.CloudFileID,
 				CloudFileName:   &cloudFileData.Name,
+				CloudFilePath:   &cloudFileData.URL,
 				VersionName:     &v.VersionName,
 				VersionCode:     &v.VersionCode,
 				VersionFileSize: &fileSize,

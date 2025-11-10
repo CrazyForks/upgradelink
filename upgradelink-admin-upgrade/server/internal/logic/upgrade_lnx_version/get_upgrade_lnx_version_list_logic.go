@@ -103,6 +103,7 @@ func (l *GetUpgradeLnxVersionListLogic) GetUpgradeLnxVersionList(req *types.Upgr
 				LnxName:         &fileData.Name,
 				CloudFileId:     &v.CloudFileID,
 				CloudFileName:   &cloudFileData.Name,
+				CloudFilePath:   &cloudFileData.URL,
 				VersionName:     &v.VersionName,
 				VersionCode:     &v.VersionCode,
 				Arch:            &v.Arch,

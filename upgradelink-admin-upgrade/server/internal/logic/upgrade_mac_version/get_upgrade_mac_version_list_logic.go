@@ -103,6 +103,7 @@ func (l *GetUpgradeMacVersionListLogic) GetUpgradeMacVersionList(req *types.Upgr
 				MacName:         &fileData.Name,
 				CloudFileId:     &v.CloudFileID,
 				CloudFileName:   &cloudFileData.Name,
+				CloudFilePath:   &cloudFileData.URL,
 				VersionName:     &v.VersionName,
 				VersionCode:     &v.VersionCode,
 				Arch:            &v.Arch,

@@ -20,6 +20,9 @@ type (
         // 云文件id 安装文件
         InstallCloudFileId  *string `json:"installCloudFileId,optional"`
 
+        // 云文件 安装文件下载地址
+        InstallCloudFilePath  *string `json:"installCloudFilePath,optional"`
+
         // 生成的sha512
         InstallSha512  *string `json:"installSha512,optional"`
 
@@ -78,6 +81,9 @@ type (
         // 云文件名称
         InstallCloudFileName  *string `json:"InstallCloudFileName,optional"`
 
+        // 云文件 安装文件下载地址
+        InstallCloudFilePath  *string `json:"installCloudFilePath,optional"`
+    
         // 版本名
         VersionName  *string `json:"versionName,optional"`
 

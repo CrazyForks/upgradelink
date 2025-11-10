@@ -114,6 +114,7 @@ func (l *GetUpgradeTauriVersionListLogic) GetUpgradeTauriVersionList(req *types.
 				CloudFileName:          &cloudFileData.Name,
 				InstallCloudFileId:     &v.InstallCloudFileID,
 				InstallCloudFileName:   &InstallCloudFileData.Name,
+				InstallCloudFilePath:   &InstallCloudFileData.URL,
 				VersionName:            &v.VersionName,
 				VersionCode:            &v.VersionCode,
 				InstallVersionFileSize: &installFileSize,

@@ -6047,6 +6047,11 @@
           "type": "string",
           "x-go-name": "CloudFileName"
         },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
+        },
         "createAt": {
           "description": "创建时间",
           "type": "integer",
@@ -6562,6 +6567,11 @@
           "type": "string",
           "x-go-name": "InstallCloudFileId"
         },
+        "installCloudFilePath": {
+          "description": "云文件 安装文件下载地址",
+          "type": "string",
+          "x-go-name": "InstallCloudFilePath"
+        },
         "installSha512": {
           "description": "生成的sha512",
           "type": "string",
@@ -6800,6 +6810,11 @@
           "description": "云文件名称",
           "type": "string",
           "x-go-name": "CloudFileName"
+        },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
         },
         "createAt": {
           "description": "创建时间",
@@ -7051,6 +7066,11 @@
           "type": "string",
           "x-go-name": "CloudFileName"
         },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
+        },
         "createAt": {
           "description": "创建时间",
           "type": "integer",
@@ -7300,6 +7320,11 @@
           "description": "云文件名称",
           "type": "string",
           "x-go-name": "CloudFileName"
+        },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
         },
         "createAt": {
           "description": "创建时间",
@@ -7584,6 +7609,11 @@
           "description": "云文件id 安装文件",
           "type": "string",
           "x-go-name": "InstallCloudFileId"
+        },
+        "installCloudFilePath": {
+          "description": "云文件 安装文件下载地址",
+          "type": "string",
+          "x-go-name": "InstallCloudFilePath"
         },
         "installVersionFileSize": {
           "description": "安装包文件大小",
@@ -8064,6 +8094,11 @@
           "description": "云文件名称",
           "type": "string",
           "x-go-name": "CloudFileName"
+        },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
         },
         "createAt": {
           "description": "创建时间",
@@ -8876,6 +8911,11 @@
           "description": "云文件id",
           "type": "string",
           "x-go-name": "CloudFileId"
+        },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
         },
         "createAt": {
           "description": "创建时间",
@@ -11546,6 +11586,11 @@
           "type": "string",
           "x-go-name": "InstallCloudFileId"
         },
+        "installCloudFilePath": {
+          "description": "云文件 安装文件下载地址",
+          "type": "string",
+          "x-go-name": "InstallCloudFilePath"
+        },
         "installSha512": {
           "description": "生成的sha512",
           "type": "string",
@@ -12265,6 +12310,11 @@
           "description": "云文件id",
           "type": "string",
           "x-go-name": "CloudFileId"
+        },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
         },
         "createAt": {
           "description": "创建时间",
@@ -13021,6 +13071,11 @@
           "description": "云文件id",
           "type": "string",
           "x-go-name": "CloudFileId"
+        },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
         },
         "createAt": {
           "description": "创建时间",
@@ -13782,6 +13837,11 @@
           "description": "云文件id",
           "type": "string",
           "x-go-name": "CloudFileId"
+        },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
         },
         "createAt": {
           "description": "创建时间",
@@ -14571,6 +14631,11 @@
           "description": "云文件id 安装文件",
           "type": "string",
           "x-go-name": "InstallCloudFileId"
+        },
+        "installCloudFilePath": {
+          "description": "云文件 安装文件下载地址",
+          "type": "string",
+          "x-go-name": "InstallCloudFilePath"
         },
         "installVersionFileSize": {
           "description": "安装包文件大小",
@@ -15935,6 +16000,11 @@
           "description": "云文件id",
           "type": "string",
           "x-go-name": "CloudFileId"
+        },
+        "cloudFilePath": {
+          "description": "云文件下载地址",
+          "type": "string",
+          "x-go-name": "CloudFilePath"
         },
         "createAt": {
           "description": "创建时间",

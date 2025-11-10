@@ -11,6 +11,9 @@ type (
         // 云文件id
         CloudFileId  *string `json:"cloudFileId,optional"`
 
+        // 云文件下载地址
+        CloudFilePath  *string `json:"cloudFilePath,optional"`
+
         // 版本名 
         VersionName  *string `json:"versionName,optional"`
 
@@ -47,6 +50,9 @@ type (
 
         // 云文件名称
         CloudFileName  *string `json:"cloudFileName,optional"`
+
+        // 云文件下载地址
+        CloudFilePath  *string `json:"cloudFilePath,optional"`
 
         // 版本名
         VersionName  *string `json:"versionName,optional"`

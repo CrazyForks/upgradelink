@@ -1027,6 +1027,8 @@ type UpgradeFileVersionInfo struct {
 	FileId *int `json:"fileId,optional"`
 	// 云文件id
 	CloudFileId *string `json:"cloudFileId,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -1054,6 +1056,8 @@ type RespUpgradeFileVersionInfo struct {
 	CloudFileId *string `json:"cloudFileId,optional"`
 	// 云文件名称
 	CloudFileName *string `json:"cloudFileName,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -1548,6 +1552,8 @@ type UpgradeTauriVersionInfo struct {
 	CloudFileId *string `json:"cloudFileId,optional"`
 	// 云文件id 安装文件
 	InstallCloudFileId *string `json:"installCloudFileId,optional"`
+	// 云文件 安装文件下载地址
+	InstallCloudFilePath *string `json:"installCloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -1587,6 +1593,8 @@ type RespUpgradeTauriVersionInfo struct {
 	InstallCloudFileId *string `json:"installCloudFileId,optional"`
 	// 云文件名称
 	InstallCloudFileName *string `json:"InstallCloudFileName,optional"`
+	// 云文件 安装文件下载地址
+	InstallCloudFilePath *string `json:"installCloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -2298,6 +2306,8 @@ type UpgradeApkVersionInfo struct {
 	ApkId *int `json:"apkId,optional"`
 	// 云文件id
 	CloudFileId *string `json:"cloudFileId,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -2325,6 +2335,8 @@ type RespUpgradeApkVersionInfo struct {
 	CloudFileId *string `json:"cloudFileId,optional"`
 	// 云文件名称
 	CloudFileName *string `json:"cloudFileName,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -2675,6 +2687,8 @@ type UpgradeElectronVersionInfo struct {
 	Sha512 *string `json:"sha512,optional"`
 	// 云文件id 安装文件
 	InstallCloudFileId *string `json:"installCloudFileId,optional"`
+	// 云文件 安装文件下载地址
+	InstallCloudFilePath *string `json:"installCloudFilePath,optional"`
 	// 生成的sha512
 	InstallSha512 *string `json:"installSha512,optional"`
 	// 版本名
@@ -2716,6 +2730,8 @@ type RespUpgradeElectronVersionInfo struct {
 	InstallCloudFileId *string `json:"installCloudFileId,optional"`
 	// 云文件名称
 	InstallCloudFileName *string `json:"InstallCloudFileName,optional"`
+	// 云文件 安装文件下载地址
+	InstallCloudFilePath *string `json:"installCloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -3213,6 +3229,8 @@ type UpgradeWinVersionInfo struct {
 	WinId *int `json:"winId,optional"`
 	// 云文件id
 	CloudFileId *string `json:"cloudFileId,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -3242,6 +3260,8 @@ type RespUpgradeWinVersionInfo struct {
 	CloudFileId *string `json:"cloudFileId,optional"`
 	// 云文件名称
 	CloudFileName *string `json:"cloudFileName,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -3581,6 +3601,8 @@ type UpgradeLnxVersionInfo struct {
 	LnxId *int `json:"lnxId,optional"`
 	// 云文件id
 	CloudFileId *string `json:"cloudFileId,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -3610,6 +3632,8 @@ type RespUpgradeLnxVersionInfo struct {
 	CloudFileId *string `json:"cloudFileId,optional"`
 	// 云文件名称
 	CloudFileName *string `json:"cloudFileName,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -3951,6 +3975,8 @@ type UpgradeMacVersionInfo struct {
 	MacId *int `json:"macId,optional"`
 	// 云文件id
 	CloudFileId *string `json:"cloudFileId,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号
@@ -3980,6 +4006,8 @@ type RespUpgradeMacVersionInfo struct {
 	CloudFileId *string `json:"cloudFileId,optional"`
 	// 云文件名称
 	CloudFileName *string `json:"cloudFileName,optional"`
+	// 云文件下载地址
+	CloudFilePath *string `json:"cloudFilePath,optional"`
 	// 版本名
 	VersionName *string `json:"versionName,optional"`
 	// 版本号

@@ -103,6 +103,7 @@ func (l *GetUpgradeApkVersionListLogic) GetUpgradeApkVersionList(req *types.Upgr
 				ApkName:         &fileData.Name,
 				CloudFileId:     &v.CloudFileID,
 				CloudFileName:   &cloudFileData.Name,
+				CloudFilePath:   &cloudFileData.URL,
 				VersionName:     &v.VersionName,
 				VersionCode:     &v.VersionCode,
 				VersionFileSize: &fileSize,

@@ -112,6 +112,7 @@ func (l *GetUpgradeElectronVersionListLogic) GetUpgradeElectronVersionList(req *
 				CloudFileName:          &cloudFileData.Name,
 				InstallCloudFileId:     &v.InstallCloudFileID,
 				InstallCloudFileName:   &InstallCloudFileData.Name,
+				InstallCloudFilePath:   &InstallCloudFileData.URL,
 				VersionName:            &v.VersionName,
 				VersionCode:            &v.VersionCode,
 				InstallVersionFileSize: &installFileSize,
