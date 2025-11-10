@@ -67,5 +67,8 @@
   "wrongFormat": "格式错误",
   "required": "必须",
   "viewLog": "查看日志",
-  "edit": "编辑"
+  "edit": "编辑",
+  "download": "下载",
+  "downloadQrcode": "下载二维码",
+  "showQrcode": "二维码"
 }

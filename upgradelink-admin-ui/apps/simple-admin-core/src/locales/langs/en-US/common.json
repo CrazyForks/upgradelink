@@ -67,5 +67,8 @@
   "wrongFormat": "Wrong format",
   "required": "Required",
   "viewLog": "View logs",
-  "edit": "Edit"
+  "edit": "Edit",
+  "download": "Download",
+  "downloadQrcode": "Download QR Code",
+  "showQrcode": "QR Code"
 }

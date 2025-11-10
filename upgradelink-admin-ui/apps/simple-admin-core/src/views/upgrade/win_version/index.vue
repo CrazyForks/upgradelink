@@ -10,7 +10,7 @@ import { h, ref } from "vue";
 import { Page, useVbenModal } from "@vben/common-ui";
 import { $t } from "@vben/locales";
 
-import { Button, Modal } from "ant-design-vue";
+import { Button, Modal, QRCode } from "ant-design-vue";
 import { isPlainObject } from "remeda";
 
 import { useVbenVxeGrid } from "#/adapter/vxe-table";
@@ -34,6 +34,9 @@ const [FormModal, formModalApi] = useVbenModal({
 });
 
 const showDeleteButton = ref<boolean>(false);
+const qrCodeVisible = ref<boolean>(false);
+const currentQrCodeUrl = ref<string>("");
+const currentVersionName = ref<string>("");
 
 const gridEvents: VxeGridListeners<any> = {
   checkboxChange(e) {
@@ -75,6 +78,18 @@ const gridOptions: VxeGridProps<UpgradeWinVersionInfo> = {
         default: ({ row }) =>
           h(TableAction, {
             actions: [
+              {
+                type: "link",
+                icon: "ant-design:qrcode-outlined",
+                tooltip: $t("common.showQrcode"),
+                onClick: showQrCode.bind(null, row),
+              },
+              {
+                type: "link",
+                icon: "ant-design:cloud-download-outlined",
+                tooltip: $t("common.download"),
+                onClick: handleDownload.bind(null, row),
+              },
               {
                 type: "link",
                 icon: "clarity:note-edit-line",
@@ -157,11 +172,56 @@ async function batchDelete(ids: any[]) {
     showDeleteButton.value = false;
   }
 }
+
+async function handleDownload(record: any) {
+  const link = document.createElement("a");
+  link.href = record.cloudFilePath;
+  link.download = record.versionName;
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(link.href);
+}
+
+function showQrCode(record: any) {
+  currentQrCodeUrl.value = record.cloudFilePath;
+  currentVersionName.value = record.versionName;
+  qrCodeVisible.value = true;
+}
+
+const downloadQrCode = () => {
+  // 获取二维码Canvas元素
+  const qrCodeCanvas = document.querySelector(
+    ".ant-qrcode canvas",
+  ) as HTMLCanvasElement;
+  if (qrCodeCanvas) {
+    // 创建下载链接
+    const link = document.createElement("a");
+    link.download = `qrcode-${currentVersionName.value || "download"}.png`;
+    link.href = qrCodeCanvas.toDataURL("image/png");
+    link.click();
+    link.remove();
+  }
+};
 </script>
 
 <template>
   <Page auto-content-height>
     <FormModal />
+    <Modal v-model:visible="qrCodeVisible" :footer="null" width="300px">
+      <div style="text-align: center; padding: 20px">
+        <QRCode
+          :value="currentQrCodeUrl"
+          :size="200"
+          color="#000"
+          bg-color="#fff"
+        />
+        <div style="margin-top: 20px">
+          <Button type="primary" @click="downloadQrCode">
+            {{ $t("common.downloadQrcode") }}
+          </Button>
+        </div>
+      </div>
+    </Modal>
     <Grid>
       <template #toolbar-buttons>
         <Button

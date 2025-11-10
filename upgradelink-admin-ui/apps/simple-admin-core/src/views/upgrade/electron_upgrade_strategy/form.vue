@@ -43,7 +43,6 @@ const [Form, formApi] = useVbenForm({
   schema: [...(dataFormSchemas.schema as any)],
   showDefaultActions: false,
   layout: "horizontal",
-  // layout: "vertical",
 });
 
 const [Modal, modalApi] = useVbenDrawer({

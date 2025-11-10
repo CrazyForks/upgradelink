@@ -81,10 +81,10 @@ function navTo(nav: WorkbenchProjectItem | WorkbenchQuickNavItem) {
           <TypographyTitle :level="5" class="p-2">
             文档地址：
             <a
-              href="https://www.toolsetlink.com/upgrade/what-is-upgrade.html"
+              href="https://www.toolsetlink.com"
               class="text-blue-500 hover:text-blue-700 hover:underline"
             >
-              https://www.toolsetlink.com/upgrade/what-is-upgrade
+              https://www.toolsetlink.com
             </a>
           </TypographyTitle>
         </Card>

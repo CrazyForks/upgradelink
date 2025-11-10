@@ -5,6 +5,7 @@ import type { TabOption } from "@vben/types";
 import { onMounted, ref } from "vue";
 
 import { AnalysisChartsTabs, AnalysisOverview } from "@vben/common-ui";
+import { $t } from "@vben/locales";
 
 import { getUpgradeDashboard } from "#/api/upgrade/upgradeDashboard";
 
@@ -37,29 +38,29 @@ const overviewItems = ref<AnalysisOverviewItem[]>([
   // },
   {
     icon: "i-fluent:device-phone-24-filled",
-    title: "昨日下载量",
-    totalTitle: "总下载量",
+    title: $t("page.dashboard.yesterdayDownloadCount"),
+    totalTitle: $t("page.dashboard.totalDownloadCount"),
     totalValue: 0,
     value: 0,
   },
   {
     icon: "i-fluent:device-phone-24-filled",
-    title: "昨日请求升级量",
-    totalTitle: "总应用请求升级量",
+    title: $t("page.dashboard.yesterdayUpgradeReqCount"),
+    totalTitle: $t("page.dashboard.totalUpgradeReqCount"),
     totalValue: 0,
     value: 0,
   },
   {
     icon: "i-fluent:device-phone-24-filled",
-    title: "昨日升级量",
-    totalTitle: "总应用升级量",
+    title: $t("page.dashboard.yesterdayUpgradeCount"),
+    totalTitle: $t("page.dashboard.totalUpgradeCount"),
     totalValue: 0,
     value: 0,
   },
   {
     icon: "i-fluent:device-phone-24-filled",
-    title: "昨日启动量",
-    totalTitle: "总应用启动量",
+    title: $t("page.dashboard.yesterdayStartCount"),
+    totalTitle: $t("page.dashboard.totalStartCount"),
     totalValue: 0,
     value: 0,
   },
@@ -115,35 +116,35 @@ onMounted(async () => {
 
 // const chartTabs5: TabOption[] = [
 //   {
-//     label: "近7天流量使用量(G)",
+//     label: $t("page.dashboard.trafficUsage7Day"),
 //     value: "7day-trafficusage-count",
 //   },
 // ];
 
 const chartTabs1: TabOption[] = [
   {
-    label: "近7天下载次数",
+    label: $t("page.dashboard.downloadCount7Day"),
     value: "7day-download-count",
   },
 ];
 
 const chartTabs4: TabOption[] = [
   {
-    label: "近7天应用请求升级次数",
+    label: $t("page.dashboard.upgradeReqCount7Day"),
     value: "7day-appgetstrategy-count",
   },
 ];
 
 const chartTabs3: TabOption[] = [
   {
-    label: "近7天应用升级次数",
+    label: $t("page.dashboard.upgradeCount7Day"),
     value: "7day-appupgrade-count",
   },
 ];
 
 const chartTabs2: TabOption[] = [
   {
-    label: "近7天应用启动次数",
+    label: $t("page.dashboard.startCount7Day"),
     value: "7day-appstart-count",
   },
 ];
