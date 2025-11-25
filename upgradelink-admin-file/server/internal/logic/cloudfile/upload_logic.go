@@ -71,8 +71,6 @@ func (l *UploadLogic) Upload() (resp *types.CloudFileInfoResp, err error) {
 	}
 	md5Sum := hex.EncodeToString(md5Hash.Sum(nil)) // 转为 32 位十六进制字符串
 
-	fmt.Println("md5Sum: ", md5Sum)
-
 	// 重置文件指针到开头（否则后续上传会读取空内容）
 	if _, err := file.Seek(0, io.SeekStart); err != nil {
 		logx.Errorw("重置文件指针失败", logx.Field("error", err))
@@ -148,6 +146,7 @@ func (l *UploadLogic) Upload() (resp *types.CloudFileInfoResp, err error) {
 		SetStorageProvidersID(l.svcCtx.CloudStorage.ProviderData[provider].Id).
 		SetURL(url).
 		SetSize(uint64(handler.Size)).
+		SetMd5(md5Sum).
 		SetUserID(userId)
 
 	if fileTagId != 0 {

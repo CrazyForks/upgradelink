@@ -87,7 +87,7 @@ func Size(v uint64) predicate.CloudFile {
 }
 
 // Md5 applies equality check predicate on the "md5" field. It's identical to Md5EQ.
-func Md5(v uint64) predicate.CloudFile {
+func Md5(v string) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldEQ(FieldMd5, v))
 }
 
@@ -372,43 +372,68 @@ func SizeLTE(v uint64) predicate.CloudFile {
 }
 
 // Md5EQ applies the EQ predicate on the "md5" field.
-func Md5EQ(v uint64) predicate.CloudFile {
+func Md5EQ(v string) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldEQ(FieldMd5, v))
 }
 
 // Md5NEQ applies the NEQ predicate on the "md5" field.
-func Md5NEQ(v uint64) predicate.CloudFile {
+func Md5NEQ(v string) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldNEQ(FieldMd5, v))
 }
 
 // Md5In applies the In predicate on the "md5" field.
-func Md5In(vs ...uint64) predicate.CloudFile {
+func Md5In(vs ...string) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldIn(FieldMd5, vs...))
 }
 
 // Md5NotIn applies the NotIn predicate on the "md5" field.
-func Md5NotIn(vs ...uint64) predicate.CloudFile {
+func Md5NotIn(vs ...string) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldNotIn(FieldMd5, vs...))
 }
 
 // Md5GT applies the GT predicate on the "md5" field.
-func Md5GT(v uint64) predicate.CloudFile {
+func Md5GT(v string) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldGT(FieldMd5, v))
 }
 
 // Md5GTE applies the GTE predicate on the "md5" field.
-func Md5GTE(v uint64) predicate.CloudFile {
+func Md5GTE(v string) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldGTE(FieldMd5, v))
 }
 
 // Md5LT applies the LT predicate on the "md5" field.
-func Md5LT(v uint64) predicate.CloudFile {
+func Md5LT(v string) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldLT(FieldMd5, v))
 }
 
 // Md5LTE applies the LTE predicate on the "md5" field.
-func Md5LTE(v uint64) predicate.CloudFile {
+func Md5LTE(v string) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldLTE(FieldMd5, v))
+}
+
+// Md5Contains applies the Contains predicate on the "md5" field.
+func Md5Contains(v string) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldContains(FieldMd5, v))
+}
+
+// Md5HasPrefix applies the HasPrefix predicate on the "md5" field.
+func Md5HasPrefix(v string) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldHasPrefix(FieldMd5, v))
+}
+
+// Md5HasSuffix applies the HasSuffix predicate on the "md5" field.
+func Md5HasSuffix(v string) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldHasSuffix(FieldMd5, v))
+}
+
+// Md5EqualFold applies the EqualFold predicate on the "md5" field.
+func Md5EqualFold(v string) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldEqualFold(FieldMd5, v))
+}
+
+// Md5ContainsFold applies the ContainsFold predicate on the "md5" field.
+func Md5ContainsFold(v string) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldContainsFold(FieldMd5, v))
 }
 
 // FileTypeEQ applies the EQ predicate on the "file_type" field.

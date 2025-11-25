@@ -84,8 +84,8 @@ func (cfc *CloudFileCreate) SetSize(u uint64) *CloudFileCreate {
 }
 
 // SetMd5 sets the "md5" field.
-func (cfc *CloudFileCreate) SetMd5(u uint64) *CloudFileCreate {
-	cfc.mutation.SetMd5(u)
+func (cfc *CloudFileCreate) SetMd5(s string) *CloudFileCreate {
+	cfc.mutation.SetMd5(s)
 	return cfc
 }
 
@@ -288,7 +288,7 @@ func (cfc *CloudFileCreate) createSpec() (*CloudFile, *sqlgraph.CreateSpec) {
 		_node.Size = value
 	}
 	if value, ok := cfc.mutation.Md5(); ok {
-		_spec.SetField(cloudfile.FieldMd5, field.TypeUint64, value)
+		_spec.SetField(cloudfile.FieldMd5, field.TypeString, value)
 		_node.Md5 = value
 	}
 	if value, ok := cfc.mutation.FileType(); ok {

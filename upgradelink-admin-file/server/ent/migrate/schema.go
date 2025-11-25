@@ -18,7 +18,7 @@ var (
 		{Name: "name", Type: field.TypeString, Comment: "The file's name | 文件名"},
 		{Name: "url", Type: field.TypeString, Comment: "The file's url | 文件地址"},
 		{Name: "size", Type: field.TypeUint64, Comment: "The file's size | 文件大小"},
-		{Name: "md5", Type: field.TypeUint64, Comment: "The file's md5 | 文件md5"},
+		{Name: "md5", Type: field.TypeString, Comment: "The file's md5 | 文件md5"},
 		{Name: "file_type", Type: field.TypeUint8, Comment: "The file's type | 文件类型"},
 		{Name: "user_id", Type: field.TypeString, Comment: "The user who upload the file | 上传用户的 ID"},
 		{Name: "cloud_file_storage_providers", Type: field.TypeUint64, Nullable: true},

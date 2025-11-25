@@ -49,8 +49,7 @@ type CloudFileMutation struct {
 	url                      *string
 	size                     *uint64
 	addsize                  *int64
-	md5                      *uint64
-	addmd5                   *int64
+	md5                      *string
 	file_type                *uint8
 	addfile_type             *int8
 	user_id                  *string
@@ -419,13 +418,12 @@ func (m *CloudFileMutation) ResetSize() {
 }
 
 // SetMd5 sets the "md5" field.
-func (m *CloudFileMutation) SetMd5(u uint64) {
-	m.md5 = &u
-	m.addmd5 = nil
+func (m *CloudFileMutation) SetMd5(s string) {
+	m.md5 = &s
 }
 
 // Md5 returns the value of the "md5" field in the mutation.
-func (m *CloudFileMutation) Md5() (r uint64, exists bool) {
+func (m *CloudFileMutation) Md5() (r string, exists bool) {
 	v := m.md5
 	if v == nil {
 		return
@@ -436,7 +434,7 @@ func (m *CloudFileMutation) Md5() (r uint64, exists bool) {
 // OldMd5 returns the old "md5" field's value of the CloudFile entity.
 // If the CloudFile object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *CloudFileMutation) OldMd5(ctx context.Context) (v uint64, err error) {
+func (m *CloudFileMutation) OldMd5(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldMd5 is only allowed on UpdateOne operations")
 	}
@@ -450,28 +448,9 @@ func (m *CloudFileMutation) OldMd5(ctx context.Context) (v uint64, err error) {
 	return oldValue.Md5, nil
 }
 
-// AddMd5 adds u to the "md5" field.
-func (m *CloudFileMutation) AddMd5(u int64) {
-	if m.addmd5 != nil {
-		*m.addmd5 += u
-	} else {
-		m.addmd5 = &u
-	}
-}
-
-// AddedMd5 returns the value that was added to the "md5" field in this mutation.
-func (m *CloudFileMutation) AddedMd5() (r int64, exists bool) {
-	v := m.addmd5
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
 // ResetMd5 resets all changes to the "md5" field.
 func (m *CloudFileMutation) ResetMd5() {
 	m.md5 = nil
-	m.addmd5 = nil
 }
 
 // SetFileType sets the "file_type" field.
@@ -826,7 +805,7 @@ func (m *CloudFileMutation) SetField(name string, value ent.Value) error {
 		m.SetSize(v)
 		return nil
 	case cloudfile.FieldMd5:
-		v, ok := value.(uint64)
+		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -857,9 +836,6 @@ func (m *CloudFileMutation) AddedFields() []string {
 	if m.addsize != nil {
 		fields = append(fields, cloudfile.FieldSize)
 	}
-	if m.addmd5 != nil {
-		fields = append(fields, cloudfile.FieldMd5)
-	}
 	if m.addfile_type != nil {
 		fields = append(fields, cloudfile.FieldFileType)
 	}
@@ -873,8 +849,6 @@ func (m *CloudFileMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case cloudfile.FieldSize:
 		return m.AddedSize()
-	case cloudfile.FieldMd5:
-		return m.AddedMd5()
 	case cloudfile.FieldFileType:
 		return m.AddedFileType()
 	}
@@ -892,13 +866,6 @@ func (m *CloudFileMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddSize(v)
-		return nil
-	case cloudfile.FieldMd5:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddMd5(v)
 		return nil
 	case cloudfile.FieldFileType:
 		v, ok := value.(int8)
