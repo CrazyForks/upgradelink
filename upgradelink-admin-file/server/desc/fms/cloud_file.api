@@ -113,3 +113,13 @@ service Fms {
     @handler upload
     post /cloud_file/upload returns (CloudFileInfoResp)
 }
+
+@server(
+    group: cloudfile
+)
+
+service Fms {
+    // Cloud file upload | 内部系统上传文件
+    @handler internalUpload
+    post /cloud_file/internal_upload returns (CloudFileInfoResp)
+}
