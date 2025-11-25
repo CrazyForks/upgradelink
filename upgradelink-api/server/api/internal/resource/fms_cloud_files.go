@@ -22,6 +22,7 @@ type AddFmsCloudFilesReq struct {
 	Name                      string    `db:"name"`       // The file''s name | 文件名
 	Url                       string    `db:"url"`        // The file''s url | 文件地址
 	Size                      uint64    `db:"size"`       // The file''s size | 文件大小
+	Md5                       string    `db:"md5"`        // The file''s md5 | 文件md5
 	FileType                  uint64    `db:"file_type"`  // The file''s type | 文件类型
 	UserId                    string    `db:"user_id"`    // The user who upload the file | 上传用户的 ID
 	CloudFileStorageProviders int64     `db:"cloud_file_storage_providers"`

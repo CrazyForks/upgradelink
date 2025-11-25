@@ -101,6 +101,58 @@ func (l *GetApkUpgradeInfoLogic) GetApkUpgradeInfo(req *types.GetApkUpgradeInfoR
 	// 获取云文件地址
 	urlPath = cloudFileInfo.Url
 
+	// patch 模块
+	var patchInfo *model.UpgradeApkPatch
+	var patchCloudFileInfo *model.FmsCloudFiles
+
+	// 判断下当前请求 patch 算法
+	if req.PatchAlgo == 0 {
+		// 当前请求是全量升级
+		res.Data.PatchAlgo = 0
+	} else if req.PatchAlgo == 1 {
+		// 当前请求是 HDiffPatch 算法
+		// 查询出当前请求参数的 apk_version_id
+		lowApkVersionInfo, err := l.svcCtx.ResourceCtx.GetApkVersionInfoByApkIdAndVersionCode(l.ctx, apkInfo.Id, req.VersionCode)
+		if err != nil && errors.Is(err, model.ErrNotFound) {
+			// 因为当前请求版本在系统中找不到，则不需要返回相关patch 信息
+		} else if err != nil {
+			return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+		} else {
+
+			// 查询 patch 表是否有对应记录
+			patchInfo, err = l.svcCtx.ResourceCtx.GetPatchInfo(l.ctx, apkStrategyInfo.ApkId, req.PatchAlgo, apkStrategyInfo.ApkVersionId, lowApkVersionInfo.Id)
+			if err != nil && errors.Is(err, model.ErrNotFound) {
+				cc := resource.AddPatchInfoReq{
+					CompanyId:        apkStrategyInfo.CompanyId,
+					ApkId:            apkStrategyInfo.ApkId,
+					HighApkVersionId: apkStrategyInfo.ApkVersionId,
+					LowApkVersionId:  lowApkVersionInfo.Id,
+					PatchAlgo:        req.PatchAlgo,
+				}
+				// 说明当前版本无 patch 记录，需要插入一条记录
+				err = l.svcCtx.ResourceCtx.AddPatchInfo(l.ctx, cc)
+				if err != nil {
+					return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+				}
+			} else if err != nil {
+				return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+			}
+
+			// 通过 patch 信息查询出对应的文件信息
+			if patchInfo != nil && patchInfo.Status == 9 {
+				patchCloudFileInfo, err = l.svcCtx.ResourceCtx.GetCloudFileInfoById(l.ctx, patchInfo.CloudFileId)
+				if err != nil && errors.Is(err, model.ErrNotFound) {
+					return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+				} else if err != nil {
+					return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+				}
+
+			}
+
+		}
+
+	}
+
 	// 插入获取日志上报
 	timestamp, err := common.ParseRFC3339ToTime(time.Now().Format(time.RFC3339))
 	if err != nil {
@@ -140,10 +192,17 @@ func (l *GetApkUpgradeInfoLogic) GetApkUpgradeInfo(req *types.GetApkUpgradeInfoR
 		VersionCode:          apkVersionInfo.VersionCode,
 		UrlPath:              urlPath,
 		UrlFileSize:          cloudFileInfo.Size,
-		UrlFileMd5:           "",
+		UrlFileMd5:           cloudFileInfo.Md5,
 		UpgradeType:          apkStrategyInfo.UpgradeType,
 		PromptUpgradeContent: apkStrategyInfo.PromptUpgradeContent,
 	}
+	if patchInfo != nil && patchCloudFileInfo != nil {
+		res.Data.PatchAlgo = patchInfo.PatchAlgo
+		res.Data.PatchUrlPath = patchCloudFileInfo.Url
+		res.Data.PatchUrlFileSize = patchCloudFileInfo.Size
+		res.Data.PatchUrlFileMd5 = patchCloudFileInfo.Md5
+	}
+
 	return &res, nil
 }
 

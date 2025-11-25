@@ -44,6 +44,7 @@ type (
 		Name                      string        `db:"name"`       // The file''s name | 文件名
 		Url                       string        `db:"url"`        // The file''s url | 文件地址
 		Size                      uint64        `db:"size"`       // The file''s size | 文件大小
+		Md5                       string        `db:"md5"`        // md5
 		FileType                  uint64        `db:"file_type"`  // The file''s type | 文件类型
 		UserId                    string        `db:"user_id"`    // The user who upload the file | 上传用户的 ID
 		CloudFileStorageProviders sql.NullInt64 `db:"cloud_file_storage_providers"`
@@ -78,14 +79,14 @@ func (m *defaultFmsCloudFilesModel) FindOne(ctx context.Context, id string) (*Fm
 }
 
 func (m *defaultFmsCloudFilesModel) Insert(ctx context.Context, data *FmsCloudFiles) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?)", m.table, fmsCloudFilesRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.Id, data.State, data.Name, data.Url, data.Size, data.FileType, data.UserId, data.CloudFileStorageProviders)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, fmsCloudFilesRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Id, data.State, data.Name, data.Url, data.Size, data.Md5, data.FileType, data.UserId, data.CloudFileStorageProviders)
 	return ret, err
 }
 
 func (m *defaultFmsCloudFilesModel) Update(ctx context.Context, data *FmsCloudFiles) error {
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, fmsCloudFilesRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.State, data.Name, data.Url, data.Size, data.FileType, data.UserId, data.CloudFileStorageProviders, data.Id)
+	_, err := m.conn.ExecCtx(ctx, query, data.State, data.Name, data.Url, data.Size, data.Md5, data.FileType, data.UserId, data.CloudFileStorageProviders, data.Id)
 	return err
 }
 

@@ -10,36 +10,6 @@ info(
 
 import "../base.api"
 
-type GetApkUpgradeInfoRespData {
-
-    // apk 应用 唯一标识
-    ApkKey string `json:"apkKey,optional"`
-
-    // 应用包名
-    PackageName string `json:"packageName,optional"`
-
-    // 客户端应用版本名称
-    VersionName string `json:"versionName,optional"`
-
-    // 应用版本号
-    VersionCode int64 `json:"versionCode,optional"`
-
-    // 最新版本下载地址
-    UrlPath string `json:"urlPath,optional"`
-
-    // 文件 大小
-    UrlFileSize uint64 `json:"urlFileSize,optional"`
-
-    // 文件 Md5
-    UrlFileMd5 string `json:"urlFileMd5,optional"`
-
-    // 升级类型 0：未知方式；1：提示升级；2：静默升级；3: 强制升级
-    UpgradeType int64 `json:"upgradeType,optional"`
-
-    // 提示升级描述内容
-    PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
-}
-
 type (
 
     GetApkUpgradeInfoReq {
@@ -57,6 +27,9 @@ type (
 
         // 设备唯一标识
         DevKey string `json:"devKey,optional"`
+
+        // 差分算法 0：默认值 不使用差分算法 1：HDiffPatch; 2：bsdiff;
+        PatchAlgo int64 `json:"patchAlgo,default=0"`
     }
 
     GetApkUpgradeInfoResp {
@@ -64,6 +37,49 @@ type (
 
         Data GetApkUpgradeInfoRespData `json:"data"`
     }
+
+    GetApkUpgradeInfoRespData {
+
+        // apk 应用 唯一标识
+        ApkKey string `json:"apkKey,optional"`
+
+        // 应用包名
+        PackageName string `json:"packageName,optional"`
+
+        // 客户端应用版本名称
+        VersionName string `json:"versionName,optional"`
+
+        // 应用版本号
+        VersionCode int64 `json:"versionCode,optional"`
+
+        // 最新版本下载地址
+        UrlPath string `json:"urlPath,optional"`
+
+        // 文件 大小
+        UrlFileSize uint64 `json:"urlFileSize,optional"`
+
+        // 文件 Md5
+        UrlFileMd5 string `json:"urlFileMd5,optional"`
+
+        // 差分包算法 0:默认值，无差分包; 1 HDiffPatch;2 bsdiff;
+        PatchAlgo int64 `json:"patchAlgo,optional"`
+
+        // 差分包下载地址
+        PatchUrlPath string `json:"patchUrlPath,optional"`
+
+        // 差分包 大小
+        PatchUrlFileSize uint64 `json:"patchUrlFileSize,optional"`
+
+        // 差分包 Md5
+        PatchUrlFileMd5 string `json:"patchUrlFileMd5,optional"`
+
+        // 升级类型 0：未知方式；1：提示升级；2：静默升级；3: 强制升级
+        UpgradeType int64 `json:"upgradeType,optional"`
+
+        // 提示升级描述内容
+        PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
+    }
+
 )
 
 

@@ -24,13 +24,6 @@ func (m *CdnRateLimitMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc 
 
 		next(w, r)
 		return
-		
-		// 测试
-		xTest := r.Header.Get("test")
-		if xTest == "test" {
-			next(w, r)
-			return
-		}
 
 		// 检查请求ip请求是否超出频率限制
 		ip := getClientIP(r)

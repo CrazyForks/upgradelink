@@ -61,6 +61,7 @@ type GetApkUpgradeInfoReq struct {
 	AppointVersionCode int64  `json:"appointVersionCode,default=0"`
 	DevModelKey        string `json:"devModelKey,optional"`
 	DevKey             string `json:"devKey,optional"`
+	PatchAlgo          int64  `json:"patchAlgo,default=0"`
 }
 
 type GetApkUpgradeInfoResp struct {
@@ -76,6 +77,10 @@ type GetApkUpgradeInfoRespData struct {
 	UrlPath              string `json:"urlPath,optional"`
 	UrlFileSize          uint64 `json:"urlFileSize,optional"`
 	UrlFileMd5           string `json:"urlFileMd5,optional"`
+	PatchAlgo            int64  `json:"patchAlgo,optional"`
+	PatchUrlPath         string `json:"patchUrlPath,optional"`
+	PatchUrlFileSize     uint64 `json:"patchUrlFileSize,optional"`
+	PatchUrlFileMd5      string `json:"patchUrlFileMd5,optional"`
 	UpgradeType          int64  `json:"upgradeType,optional"`
 	PromptUpgradeContent string `json:"promptUpgradeContent,optional"`
 }
