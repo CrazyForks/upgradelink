@@ -11,7 +11,7 @@
  Target Server Version : 80403 (8.4.3)
  File Encoding         : 65001
 
- Date: 30/10/2025 17:09:32
+ Date: 25/11/2025 16:48:35
 */
 
 SET NAMES utf8mb4;
@@ -617,6 +617,7 @@ CREATE TABLE `fms_cloud_files` (
   `file_type` tinyint unsigned NOT NULL COMMENT 'The file''s type | 文件类型',
   `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT 'The user who upload the file | 上传用户的 ID',
   `cloud_file_storage_providers` bigint unsigned DEFAULT NULL,
+  `md5` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT 'md5',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `cloudfile_file_type` (`file_type`) USING BTREE,
   KEY `cloudfile_name` (`name`) USING BTREE
@@ -2059,6 +2060,32 @@ CREATE TABLE `upgrade_apk` (
 
 -- ----------------------------
 -- Records of upgrade_apk
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for upgrade_apk_patch
+-- ----------------------------
+DROP TABLE IF EXISTS `upgrade_apk_patch`;
+CREATE TABLE `upgrade_apk_patch` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `company_id` bigint NOT NULL DEFAULT '0' COMMENT '公司ID',
+  `apk_id` bigint NOT NULL DEFAULT '0' COMMENT '安卓应用ID',
+  `high_apk_version_id` bigint NOT NULL DEFAULT '0' COMMENT '外键：apk_version.id',
+  `low_apk_version_id` bigint NOT NULL DEFAULT '0' COMMENT '外键：apk_version.id',
+  `patch_algo` int NOT NULL DEFAULT '0' COMMENT '差分算法 0:默认值无; 1 HDiffPatch;2 bsdiff;',
+  `status` int NOT NULL DEFAULT '0' COMMENT '处理状态：0:尚未进行差分处理; 1:正在处理差分; 2:差分过程错误; 3:差分过程超时; 4:差分包有问题; 5:差分处理成功; 6:差分包大于新版本全量包; 7:上传文件中; 8:上传文件失败; 9:处理完成 ',
+  `cloud_file_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '云文件id',
+  `description` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '描述信息',
+  `is_del` int NOT NULL DEFAULT '0' COMMENT '是否删除 0：正常；1：已删除',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='差分信息表；记录APK的差分基本信息';
+
+-- ----------------------------
+-- Records of upgrade_apk_patch
 -- ----------------------------
 BEGIN;
 COMMIT;
