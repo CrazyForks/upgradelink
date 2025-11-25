@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 
-	"entgo.io/ent/dialect/sql"
 	"upgradelink-admin-file/server/ent"
 	"upgradelink-admin-file/server/ent/cloudfile"
 	"upgradelink-admin-file/server/ent/cloudfiletag"
@@ -14,6 +13,8 @@ import (
 	"upgradelink-admin-file/server/ent/filetag"
 	"upgradelink-admin-file/server/ent/predicate"
 	"upgradelink-admin-file/server/ent/storageprovider"
+
+	"entgo.io/ent/dialect/sql"
 )
 
 // The Query interface represents an operation that queries a graph.

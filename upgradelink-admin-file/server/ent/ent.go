@@ -8,15 +8,15 @@ import (
 	"fmt"
 	"reflect"
 	"sync"
-
-	"entgo.io/ent"
-	"entgo.io/ent/dialect/sql"
-	"entgo.io/ent/dialect/sql/sqlgraph"
 	"upgradelink-admin-file/server/ent/cloudfile"
 	"upgradelink-admin-file/server/ent/cloudfiletag"
 	"upgradelink-admin-file/server/ent/file"
 	"upgradelink-admin-file/server/ent/filetag"
 	"upgradelink-admin-file/server/ent/storageprovider"
+
+	"entgo.io/ent"
+	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ent aliases to avoid import conflicts in user's code.

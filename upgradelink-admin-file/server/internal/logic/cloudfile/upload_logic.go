@@ -10,6 +10,10 @@ import (
 	"strings"
 	"time"
 
+	"crypto/md5"
+	"encoding/hex"
+	"io"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/request"
@@ -58,6 +62,22 @@ func (l *UploadLogic) Upload() (resp *types.CloudFileInfoResp, err error) {
 		return nil, errorx.NewCodeInvalidArgumentError("file.parseFormFailed")
 	}
 	defer file.Close()
+
+	// 计算文件 MD5
+	md5Hash := md5.New()
+	if _, err := io.Copy(md5Hash, file); err != nil {
+		logx.Errorw("计算文件 MD5 失败", logx.Field("error", err), logx.Field("fileName", handler.Filename))
+		return nil, errorx.NewCodeInternalError("file.calculateMD5Failed")
+	}
+	md5Sum := hex.EncodeToString(md5Hash.Sum(nil)) // 转为 32 位十六进制字符串
+
+	fmt.Println("md5Sum: ", md5Sum)
+
+	// 重置文件指针到开头（否则后续上传会读取空内容）
+	if _, err := file.Seek(0, io.SeekStart); err != nil {
+		logx.Errorw("重置文件指针失败", logx.Field("error", err))
+		return nil, errorx.NewCodeInternalError("file.resetPointerFailed")
+	}
 
 	// judge if the suffix is legal
 	// 校验后缀是否合法

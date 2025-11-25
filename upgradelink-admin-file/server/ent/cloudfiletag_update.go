@@ -7,14 +7,14 @@ import (
 	"errors"
 	"fmt"
 	"time"
+	"upgradelink-admin-file/server/ent/cloudfile"
+	"upgradelink-admin-file/server/ent/cloudfiletag"
+	"upgradelink-admin-file/server/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	uuid "github.com/gofrs/uuid/v5"
-	"upgradelink-admin-file/server/ent/cloudfile"
-	"upgradelink-admin-file/server/ent/cloudfiletag"
-	"upgradelink-admin-file/server/ent/predicate"
 )
 
 // CloudFileTagUpdate is the builder for updating CloudFileTag entities.

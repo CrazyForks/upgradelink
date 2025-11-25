@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	"upgradelink-admin-file/server/ent/cloudfile"
+	"upgradelink-admin-file/server/ent/storageprovider"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	uuid "github.com/gofrs/uuid/v5"
-	"upgradelink-admin-file/server/ent/cloudfile"
-	"upgradelink-admin-file/server/ent/storageprovider"
 )
 
 // CloudFile is the model entity for the CloudFile schema.
@@ -32,6 +32,8 @@ type CloudFile struct {
 	URL string `json:"url,omitempty"`
 	// The file's size | 文件大小
 	Size uint64 `json:"size,omitempty"`
+	// The file's md5 | 文件md5
+	Md5 uint64 `json:"md5,omitempty"`
 	// The file's type | 文件类型
 	FileType uint8 `json:"file_type,omitempty"`
 	// The user who upload the file | 上传用户的 ID
@@ -81,7 +83,7 @@ func (*CloudFile) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case cloudfile.FieldState:
 			values[i] = new(sql.NullBool)
-		case cloudfile.FieldSize, cloudfile.FieldFileType:
+		case cloudfile.FieldSize, cloudfile.FieldMd5, cloudfile.FieldFileType:
 			values[i] = new(sql.NullInt64)
 		case cloudfile.FieldName, cloudfile.FieldURL, cloudfile.FieldUserID:
 			values[i] = new(sql.NullString)
@@ -147,6 +149,12 @@ func (cf *CloudFile) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field size", values[i])
 			} else if value.Valid {
 				cf.Size = uint64(value.Int64)
+			}
+		case cloudfile.FieldMd5:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field md5", values[i])
+			} else if value.Valid {
+				cf.Md5 = uint64(value.Int64)
 			}
 		case cloudfile.FieldFileType:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -230,6 +238,9 @@ func (cf *CloudFile) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("size=")
 	builder.WriteString(fmt.Sprintf("%v", cf.Size))
+	builder.WriteString(", ")
+	builder.WriteString("md5=")
+	builder.WriteString(fmt.Sprintf("%v", cf.Md5))
 	builder.WriteString(", ")
 	builder.WriteString("file_type=")
 	builder.WriteString(fmt.Sprintf("%v", cf.FileType))

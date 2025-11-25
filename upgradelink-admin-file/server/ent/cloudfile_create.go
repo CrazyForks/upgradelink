@@ -7,13 +7,13 @@ import (
 	"errors"
 	"fmt"
 	"time"
+	"upgradelink-admin-file/server/ent/cloudfile"
+	"upgradelink-admin-file/server/ent/cloudfiletag"
+	"upgradelink-admin-file/server/ent/storageprovider"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	uuid "github.com/gofrs/uuid/v5"
-	"upgradelink-admin-file/server/ent/cloudfile"
-	"upgradelink-admin-file/server/ent/cloudfiletag"
-	"upgradelink-admin-file/server/ent/storageprovider"
 )
 
 // CloudFileCreate is the builder for creating a CloudFile entity.
@@ -80,6 +80,12 @@ func (cfc *CloudFileCreate) SetURL(s string) *CloudFileCreate {
 // SetSize sets the "size" field.
 func (cfc *CloudFileCreate) SetSize(u uint64) *CloudFileCreate {
 	cfc.mutation.SetSize(u)
+	return cfc
+}
+
+// SetMd5 sets the "md5" field.
+func (cfc *CloudFileCreate) SetMd5(u uint64) *CloudFileCreate {
+	cfc.mutation.SetMd5(u)
 	return cfc
 }
 
@@ -213,6 +219,9 @@ func (cfc *CloudFileCreate) check() error {
 	if _, ok := cfc.mutation.Size(); !ok {
 		return &ValidationError{Name: "size", err: errors.New(`ent: missing required field "CloudFile.size"`)}
 	}
+	if _, ok := cfc.mutation.Md5(); !ok {
+		return &ValidationError{Name: "md5", err: errors.New(`ent: missing required field "CloudFile.md5"`)}
+	}
 	if _, ok := cfc.mutation.FileType(); !ok {
 		return &ValidationError{Name: "file_type", err: errors.New(`ent: missing required field "CloudFile.file_type"`)}
 	}
@@ -277,6 +286,10 @@ func (cfc *CloudFileCreate) createSpec() (*CloudFile, *sqlgraph.CreateSpec) {
 	if value, ok := cfc.mutation.Size(); ok {
 		_spec.SetField(cloudfile.FieldSize, field.TypeUint64, value)
 		_node.Size = value
+	}
+	if value, ok := cfc.mutation.Md5(); ok {
+		_spec.SetField(cloudfile.FieldMd5, field.TypeUint64, value)
+		_node.Md5 = value
 	}
 	if value, ok := cfc.mutation.FileType(); ok {
 		_spec.SetField(cloudfile.FieldFileType, field.TypeUint8, value)

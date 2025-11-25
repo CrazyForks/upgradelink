@@ -7,15 +7,15 @@ import (
 	"database/sql/driver"
 	"fmt"
 	"math"
+	"upgradelink-admin-file/server/ent/cloudfile"
+	"upgradelink-admin-file/server/ent/cloudfiletag"
+	"upgradelink-admin-file/server/ent/predicate"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	uuid "github.com/gofrs/uuid/v5"
-	"upgradelink-admin-file/server/ent/cloudfile"
-	"upgradelink-admin-file/server/ent/cloudfiletag"
-	"upgradelink-admin-file/server/ent/predicate"
 )
 
 // CloudFileTagQuery is the builder for querying CloudFileTag entities.

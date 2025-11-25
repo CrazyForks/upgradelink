@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	"upgradelink-admin-file/server/ent/file"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	uuid "github.com/gofrs/uuid/v5"
-	"upgradelink-admin-file/server/ent/file"
 )
 
 // File is the model entity for the File schema.

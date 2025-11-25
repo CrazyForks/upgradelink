@@ -7,14 +7,14 @@ import (
 	"errors"
 	"fmt"
 	"time"
-
-	"entgo.io/ent/dialect/sql"
-	"entgo.io/ent/dialect/sql/sqlgraph"
-	"entgo.io/ent/schema/field"
 	"upgradelink-admin-file/server/ent/cloudfile"
 	"upgradelink-admin-file/server/ent/cloudfiletag"
 	"upgradelink-admin-file/server/ent/predicate"
 	"upgradelink-admin-file/server/ent/storageprovider"
+
+	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
+	"entgo.io/ent/schema/field"
 )
 
 // CloudFileUpdate is the builder for updating CloudFile entities.
@@ -102,6 +102,27 @@ func (cfu *CloudFileUpdate) SetNillableSize(u *uint64) *CloudFileUpdate {
 // AddSize adds u to the "size" field.
 func (cfu *CloudFileUpdate) AddSize(u int64) *CloudFileUpdate {
 	cfu.mutation.AddSize(u)
+	return cfu
+}
+
+// SetMd5 sets the "md5" field.
+func (cfu *CloudFileUpdate) SetMd5(u uint64) *CloudFileUpdate {
+	cfu.mutation.ResetMd5()
+	cfu.mutation.SetMd5(u)
+	return cfu
+}
+
+// SetNillableMd5 sets the "md5" field if the given value is not nil.
+func (cfu *CloudFileUpdate) SetNillableMd5(u *uint64) *CloudFileUpdate {
+	if u != nil {
+		cfu.SetMd5(*u)
+	}
+	return cfu
+}
+
+// AddMd5 adds u to the "md5" field.
+func (cfu *CloudFileUpdate) AddMd5(u int64) *CloudFileUpdate {
+	cfu.mutation.AddMd5(u)
 	return cfu
 }
 
@@ -271,6 +292,12 @@ func (cfu *CloudFileUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := cfu.mutation.AddedSize(); ok {
 		_spec.AddField(cloudfile.FieldSize, field.TypeUint64, value)
+	}
+	if value, ok := cfu.mutation.Md5(); ok {
+		_spec.SetField(cloudfile.FieldMd5, field.TypeUint64, value)
+	}
+	if value, ok := cfu.mutation.AddedMd5(); ok {
+		_spec.AddField(cloudfile.FieldMd5, field.TypeUint64, value)
 	}
 	if value, ok := cfu.mutation.FileType(); ok {
 		_spec.SetField(cloudfile.FieldFileType, field.TypeUint8, value)
@@ -447,6 +474,27 @@ func (cfuo *CloudFileUpdateOne) SetNillableSize(u *uint64) *CloudFileUpdateOne {
 // AddSize adds u to the "size" field.
 func (cfuo *CloudFileUpdateOne) AddSize(u int64) *CloudFileUpdateOne {
 	cfuo.mutation.AddSize(u)
+	return cfuo
+}
+
+// SetMd5 sets the "md5" field.
+func (cfuo *CloudFileUpdateOne) SetMd5(u uint64) *CloudFileUpdateOne {
+	cfuo.mutation.ResetMd5()
+	cfuo.mutation.SetMd5(u)
+	return cfuo
+}
+
+// SetNillableMd5 sets the "md5" field if the given value is not nil.
+func (cfuo *CloudFileUpdateOne) SetNillableMd5(u *uint64) *CloudFileUpdateOne {
+	if u != nil {
+		cfuo.SetMd5(*u)
+	}
+	return cfuo
+}
+
+// AddMd5 adds u to the "md5" field.
+func (cfuo *CloudFileUpdateOne) AddMd5(u int64) *CloudFileUpdateOne {
+	cfuo.mutation.AddMd5(u)
 	return cfuo
 }
 
@@ -646,6 +694,12 @@ func (cfuo *CloudFileUpdateOne) sqlSave(ctx context.Context) (_node *CloudFile, 
 	}
 	if value, ok := cfuo.mutation.AddedSize(); ok {
 		_spec.AddField(cloudfile.FieldSize, field.TypeUint64, value)
+	}
+	if value, ok := cfuo.mutation.Md5(); ok {
+		_spec.SetField(cloudfile.FieldMd5, field.TypeUint64, value)
+	}
+	if value, ok := cfuo.mutation.AddedMd5(); ok {
+		_spec.AddField(cloudfile.FieldMd5, field.TypeUint64, value)
 	}
 	if value, ok := cfuo.mutation.FileType(); ok {
 		_spec.SetField(cloudfile.FieldFileType, field.TypeUint8, value)

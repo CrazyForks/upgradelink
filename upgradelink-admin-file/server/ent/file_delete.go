@@ -4,12 +4,12 @@ package ent
 
 import (
 	"context"
+	"upgradelink-admin-file/server/ent/file"
+	"upgradelink-admin-file/server/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"upgradelink-admin-file/server/ent/file"
-	"upgradelink-admin-file/server/ent/predicate"
 )
 
 // FileDelete is the builder for deleting a File entity.

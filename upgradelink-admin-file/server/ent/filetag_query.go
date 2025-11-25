@@ -7,15 +7,15 @@ import (
 	"database/sql/driver"
 	"fmt"
 	"math"
+	"upgradelink-admin-file/server/ent/file"
+	"upgradelink-admin-file/server/ent/filetag"
+	"upgradelink-admin-file/server/ent/predicate"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	uuid "github.com/gofrs/uuid/v5"
-	"upgradelink-admin-file/server/ent/file"
-	"upgradelink-admin-file/server/ent/filetag"
-	"upgradelink-admin-file/server/ent/predicate"
 )
 
 // FileTagQuery is the builder for querying FileTag entities.

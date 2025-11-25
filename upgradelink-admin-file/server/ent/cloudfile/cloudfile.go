@@ -27,6 +27,8 @@ const (
 	FieldURL = "url"
 	// FieldSize holds the string denoting the size field in the database.
 	FieldSize = "size"
+	// FieldMd5 holds the string denoting the md5 field in the database.
+	FieldMd5 = "md5"
 	// FieldFileType holds the string denoting the file_type field in the database.
 	FieldFileType = "file_type"
 	// FieldUserID holds the string denoting the user_id field in the database.
@@ -60,6 +62,7 @@ var Columns = []string{
 	FieldName,
 	FieldURL,
 	FieldSize,
+	FieldMd5,
 	FieldFileType,
 	FieldUserID,
 }
@@ -140,6 +143,11 @@ func ByURL(opts ...sql.OrderTermOption) OrderOption {
 // BySize orders the results by the size field.
 func BySize(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSize, opts...).ToFunc()
+}
+
+// ByMd5 orders the results by the md5 field.
+func ByMd5(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMd5, opts...).ToFunc()
 }
 
 // ByFileType orders the results by the file_type field.

@@ -4,11 +4,11 @@ package cloudfile
 
 import (
 	"time"
+	"upgradelink-admin-file/server/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	uuid "github.com/gofrs/uuid/v5"
-	"upgradelink-admin-file/server/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.
@@ -84,6 +84,11 @@ func URL(v string) predicate.CloudFile {
 // Size applies equality check predicate on the "size" field. It's identical to SizeEQ.
 func Size(v uint64) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldEQ(FieldSize, v))
+}
+
+// Md5 applies equality check predicate on the "md5" field. It's identical to Md5EQ.
+func Md5(v uint64) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldEQ(FieldMd5, v))
 }
 
 // FileType applies equality check predicate on the "file_type" field. It's identical to FileTypeEQ.
@@ -364,6 +369,46 @@ func SizeLT(v uint64) predicate.CloudFile {
 // SizeLTE applies the LTE predicate on the "size" field.
 func SizeLTE(v uint64) predicate.CloudFile {
 	return predicate.CloudFile(sql.FieldLTE(FieldSize, v))
+}
+
+// Md5EQ applies the EQ predicate on the "md5" field.
+func Md5EQ(v uint64) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldEQ(FieldMd5, v))
+}
+
+// Md5NEQ applies the NEQ predicate on the "md5" field.
+func Md5NEQ(v uint64) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldNEQ(FieldMd5, v))
+}
+
+// Md5In applies the In predicate on the "md5" field.
+func Md5In(vs ...uint64) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldIn(FieldMd5, vs...))
+}
+
+// Md5NotIn applies the NotIn predicate on the "md5" field.
+func Md5NotIn(vs ...uint64) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldNotIn(FieldMd5, vs...))
+}
+
+// Md5GT applies the GT predicate on the "md5" field.
+func Md5GT(v uint64) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldGT(FieldMd5, v))
+}
+
+// Md5GTE applies the GTE predicate on the "md5" field.
+func Md5GTE(v uint64) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldGTE(FieldMd5, v))
+}
+
+// Md5LT applies the LT predicate on the "md5" field.
+func Md5LT(v uint64) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldLT(FieldMd5, v))
+}
+
+// Md5LTE applies the LTE predicate on the "md5" field.
+func Md5LTE(v uint64) predicate.CloudFile {
+	return predicate.CloudFile(sql.FieldLTE(FieldMd5, v))
 }
 
 // FileTypeEQ applies the EQ predicate on the "file_type" field.

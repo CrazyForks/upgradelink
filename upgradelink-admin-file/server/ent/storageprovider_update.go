@@ -7,14 +7,14 @@ import (
 	"errors"
 	"fmt"
 	"time"
+	"upgradelink-admin-file/server/ent/cloudfile"
+	"upgradelink-admin-file/server/ent/predicate"
+	"upgradelink-admin-file/server/ent/storageprovider"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	uuid "github.com/gofrs/uuid/v5"
-	"upgradelink-admin-file/server/ent/cloudfile"
-	"upgradelink-admin-file/server/ent/predicate"
-	"upgradelink-admin-file/server/ent/storageprovider"
 )
 
 // StorageProviderUpdate is the builder for updating StorageProvider entities.

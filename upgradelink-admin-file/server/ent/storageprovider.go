@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	"upgradelink-admin-file/server/ent/storageprovider"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"upgradelink-admin-file/server/ent/storageprovider"
 )
 
 // StorageProvider is the model entity for the StorageProvider schema.

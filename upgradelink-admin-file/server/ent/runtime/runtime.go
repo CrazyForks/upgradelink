@@ -2,7 +2,7 @@
 
 package runtime
 
-// The schema-stitching logic is generated in github.com/suyuan32/simple-admin-file/ent/runtime.go
+// The schema-stitching logic is generated in upgradelink-admin-file/server/ent/runtime.go
 
 const (
 	Version = "v0.14.2"                                         // Version of ent codegen.

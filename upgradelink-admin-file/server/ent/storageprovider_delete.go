@@ -4,12 +4,12 @@ package ent
 
 import (
 	"context"
+	"upgradelink-admin-file/server/ent/predicate"
+	"upgradelink-admin-file/server/ent/storageprovider"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"upgradelink-admin-file/server/ent/predicate"
-	"upgradelink-admin-file/server/ent/storageprovider"
 )
 
 // StorageProviderDelete is the builder for deleting a StorageProvider entity.

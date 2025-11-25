@@ -125,6 +125,30 @@ func (cf *CloudFileCreate) SetNotNilSize(value *uint64) *CloudFileCreate {
 }
 
 // set field if value's pointer is not nil.
+func (cf *CloudFileUpdate) SetNotNilMd5(value *uint64) *CloudFileUpdate {
+	if value != nil {
+		return cf.SetMd5(*value)
+	}
+	return cf
+}
+
+// set field if value's pointer is not nil.
+func (cf *CloudFileUpdateOne) SetNotNilMd5(value *uint64) *CloudFileUpdateOne {
+	if value != nil {
+		return cf.SetMd5(*value)
+	}
+	return cf
+}
+
+// set field if value's pointer is not nil.
+func (cf *CloudFileCreate) SetNotNilMd5(value *uint64) *CloudFileCreate {
+	if value != nil {
+		return cf.SetMd5(*value)
+	}
+	return cf
+}
+
+// set field if value's pointer is not nil.
 func (cf *CloudFileUpdate) SetNotNilFileType(value *uint8) *CloudFileUpdate {
 	if value != nil {
 		return cf.SetFileType(*value)

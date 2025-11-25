@@ -24,6 +24,8 @@ func (CloudFile) Fields() []ent.Field {
 			Comment("The file's url | 文件地址"),
 		field.Uint64("size").
 			Comment("The file's size | 文件大小"),
+		field.Uint64("md5").
+			Comment("The file's md5 | 文件md5"),
 		field.Uint8("file_type").
 			Comment("The file's type | 文件类型"),
 		field.String("user_id").

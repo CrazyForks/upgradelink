@@ -9,8 +9,9 @@ import (
 	// required by schema hooks.
 	_ "upgradelink-admin-file/server/ent/runtime"
 
-	"entgo.io/ent/dialect/sql/schema"
 	"upgradelink-admin-file/server/ent/migrate"
+
+	"entgo.io/ent/dialect/sql/schema"
 )
 
 type (

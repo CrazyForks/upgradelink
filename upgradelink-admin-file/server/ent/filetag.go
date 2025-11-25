@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	"upgradelink-admin-file/server/ent/filetag"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"upgradelink-admin-file/server/ent/filetag"
 )
 
 // FileTag is the model entity for the FileTag schema.

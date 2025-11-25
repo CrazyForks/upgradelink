@@ -18,6 +18,7 @@ var (
 		{Name: "name", Type: field.TypeString, Comment: "The file's name | 文件名"},
 		{Name: "url", Type: field.TypeString, Comment: "The file's url | 文件地址"},
 		{Name: "size", Type: field.TypeUint64, Comment: "The file's size | 文件大小"},
+		{Name: "md5", Type: field.TypeUint64, Comment: "The file's md5 | 文件md5"},
 		{Name: "file_type", Type: field.TypeUint8, Comment: "The file's type | 文件类型"},
 		{Name: "user_id", Type: field.TypeString, Comment: "The user who upload the file | 上传用户的 ID"},
 		{Name: "cloud_file_storage_providers", Type: field.TypeUint64, Nullable: true},
@@ -30,7 +31,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "fms_cloud_files_fms_storage_providers_storage_providers",
-				Columns:    []*schema.Column{FmsCloudFilesColumns[9]},
+				Columns:    []*schema.Column{FmsCloudFilesColumns[10]},
 				RefColumns: []*schema.Column{FmsStorageProvidersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -44,7 +45,7 @@ var (
 			{
 				Name:    "cloudfile_file_type",
 				Unique:  false,
-				Columns: []*schema.Column{FmsCloudFilesColumns[7]},
+				Columns: []*schema.Column{FmsCloudFilesColumns[8]},
 			},
 		},
 	}

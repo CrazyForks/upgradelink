@@ -4,11 +4,11 @@ package file
 
 import (
 	"time"
+	"upgradelink-admin-file/server/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	uuid "github.com/gofrs/uuid/v5"
-	"upgradelink-admin-file/server/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.
