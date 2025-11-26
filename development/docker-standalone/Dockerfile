@@ -30,7 +30,12 @@ WORKDIR /go/src/upgradelink-standalone/upgradelink-admin-upgrade
 RUN go mod tidy && go mod download
 RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -ldflags="-s -w" -o /go/src/upgradelink-standalone/upgradelink-admin-upgrade/server/upgrade /go/src/upgradelink-standalone/upgradelink-admin-upgrade/server/upgrade.go
 
-# 5. upgradelink-api 项目
+# 5. upgradelink-admin-task 项目
+WORKDIR /go/src/upgradelink-standalone/upgradelink-admin-task
+RUN go mod tidy && go mod download
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -ldflags="-s -w" -o /go/src/upgradelink-standalone/upgradelink-admin-task/server/task/task /go/src/upgradelink-standalone/upgradelink-admin-task/server/task/task.go
+
+# 6. upgradelink-api 项目
 WORKDIR /go/src/upgradelink-standalone/upgradelink-api
 RUN go mod tidy && go mod download
 RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -ldflags="-s -w" -o /go/src/upgradelink-standalone/upgradelink-api/server/api/api /go/src/upgradelink-standalone/upgradelink-api/server/api/api.go
@@ -65,8 +70,22 @@ COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone
 COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-upgrade/server/upgrade  ./
 COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone/upgradelink-admin-upgrade/upgrade.yaml  ./etc/
 
+COPY --from=builder /go/src/upgradelink-standalone/upgradelink-admin-task/server/task  ./
+COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone/upgradelink-admin-task/task.yaml  ./etc/
+
 COPY --from=builder /go/src/upgradelink-standalone/upgradelink-api/server/api/api  ./
 COPY --from=builder /go/src/upgradelink-standalone/development/docker-standalone/upgradelink-api/api.yaml  ./etc/
+
+# 拷贝 task项目所需 HdiffPatch 文件
+# 根据不同架构选择对应的 HDiffPatch 文件路径
+ARG TARGETARCH
+RUN --mount=type=bind,from=builder,source=/go/src/upgradelink-standalone/upgradelink-admin-task/build/HDiffPatch,target=/tmp/hdiffpatch \
+    if [ "$TARGETARCH" = "arm64" ]; then \
+        cp /tmp/hdiffpatch/linux_arm64/hdiffz /usr/local/bin/hdiffz; \
+    else \
+        cp /tmp/hdiffpatch/linux64/hdiffz /usr/local/bin/hdiffz; \
+    fi && \
+    chown root:root /usr/local/bin/hdiffz 
 
 # 复制前端文件和服务配置
 COPY upgradelink-admin-ui/apps/simple-admin-core/dist /usr/share/nginx/html/
@@ -74,17 +93,15 @@ COPY development/docker-standalone/nginx.conf /etc/nginx/
 COPY development/docker-standalone/logrotate-nginx ./
 COPY development/docker-standalone/supervisord.conf ./
 
-
 # 关键优化：删除未使用的配置文件（根据实际项目中冗余配置的路径调整）
 # 假设项目中存在以下未使用的配置文件路径（例如子项目自带的默认配置）
 RUN rm -rf \
-    # 删除各子项目中可能存在的默认配置目录
     /go/src/upgradelink-standalone/upgradelink-admin-core/server/etc \
     /go/src/upgradelink-standalone/upgradelink-admin-file/etc \
     /go/src/upgradelink-standalone/upgradelink-admin-message/etc \
     /go/src/upgradelink-standalone/upgradelink-admin-upgrade/etc \
     /go/src/upgradelink-standalone/upgradelink-api/server/etc \
-    # 如需删除其他冗余配置（如本地开发配置），可继续添加路径
+    # 如需删除其他冗余配置
     # /go/src/upgradelink-standalone/configs \
     # /go/src/upgradelink-standalone/local-conf \
     # 清理复制过程中可能带入的空目录或临时文件
@@ -101,5 +118,5 @@ EXPOSE 8080
 CMD [ "/bin/bash", "start.sh" ]
 
 # 在当前目录执行
-# docker buildx build -t toolsetlink/upgradelink-standalone:v2.2.0 --platform=linux/amd64,linux/arm64 -f ./Dockerfile ../../ --push
+# docker buildx build -t toolsetlink/upgradelink-standalone:v2.3.0 --platform=linux/amd64,linux/arm64 -f ./Dockerfile ../../ --push
 
