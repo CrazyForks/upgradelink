@@ -25,14 +25,14 @@ CMD [ "/bin/bash", "start.sh"]
 # 在当面模块根目录下执行  /upgradelink/upgradelink-admin-ui
 
 # amd架构
-# docker buildx build --no-cache -t upgradelink-admin-ui:2.2.0 --platform=linux/amd64 -f build/Dockerfile . --load
+# docker buildx build --no-cache -t upgradelink-admin-ui:2.3.0 --platform=linux/amd64 -f build/Dockerfile . --load
 # arm架构
-# docker buildx build --no-cache -t upgradelink-admin-ui:2.2.0 --platform=linux/arm64 -f build/Dockerfile . --load
+# docker buildx build --no-cache -t upgradelink-admin-ui:2.3.0 --platform=linux/arm64 -f build/Dockerfile . --load
 
 # 构建命令
 # pnpm install
 # pnpm build:simple-admin-core
 # 打包开源镜像
-# docker buildx build -t toolsetlink/upgradelink-admin-ui:2.2.0 --platform=linux/amd64,linux/arm64 -f build/Dockerfile . --push
+# docker buildx build -t toolsetlink/upgradelink-admin-ui:2.3.0 --platform=linux/amd64,linux/arm64 -f build/Dockerfile . --push
 
 

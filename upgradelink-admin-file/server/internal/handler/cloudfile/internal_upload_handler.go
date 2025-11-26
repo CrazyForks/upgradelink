@@ -20,7 +20,7 @@ import (
 
 func InternalUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		l := cloudfile.NewInternalUploadLogic(r.Context(), svcCtx)
+		l := cloudfile.NewInternalUploadLogic(r, svcCtx)
 		resp, err := l.InternalUpload()
 		if err != nil {
 			err = svcCtx.Trans.TransError(r.Context(), err)
