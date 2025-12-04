@@ -29,6 +29,15 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
+	// 缓存配置常量定义
+	// Redis 作为 MySQL 查询缓存的权重，用于多缓存源场景
+	const redisCacheWeight = 100
+	// MySQL 查询结果缓存过期时间
+	const mysqlCacheExpiry = time.Second * 60
+	// 本地内存缓存过期时间
+	const localCacheExpiry = time.Second * 60
+	// 本地内存缓存最大条目数限制
+	const localCacheMaxItems = 10000
 
 	// 1. 注册全局异常处理
 	httpx.SetErrorHandlerCtx(http_handlers.ErrorHandler)
@@ -43,15 +52,15 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	mysqlCacheCli := sqlc.NewConn(mysqlCli, cache.CacheConf{
 		{
 			RedisConf: c.RedisConfig,
-			Weight:    100,
+			Weight:    redisCacheWeight,
 		},
-	}, cache.WithExpiry(time.Second*60))
+	}, cache.WithExpiry(mysqlCacheExpiry))
 
 	// 6. 注册 redisCli
 	redisCli := redis.MustNewRedis(c.RedisConfig)
 
 	// 注册 内存缓存
-	localCache, _ := collection.NewCache(time.Second*60, collection.WithLimit(10000))
+	localCache, _ := collection.NewCache(localCacheExpiry, collection.WithLimit(localCacheMaxItems))
 
 	// 注册 model
 	UrlModel := model.NewUpgradeUrlModel(mysqlCli)
