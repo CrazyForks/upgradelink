@@ -6,7 +6,7 @@ import { ref, watch } from "vue";
 import { $t } from "@vben/locales";
 
 import { InboxOutlined, LoadingOutlined } from "@ant-design/icons-vue";
-import { useClipboard, useVModel } from "@vueuse/core";
+import { useVModel } from "@vueuse/core";
 import { message, UploadDragger } from "ant-design-vue";
 
 import { uploadCloudFile } from "#/api/fms/cloudFile";
@@ -14,7 +14,7 @@ import { uploadFile } from "#/api/fms/file";
 
 defineOptions({
   name: "UploadDraggerOne",
-  inheritAttrs: false, // 禁止自动继承属性
+  inheritAttrs: false,
 });
 
 const props = defineProps({
@@ -30,25 +30,78 @@ const props = defineProps({
     type: [Array, Object, String, Number],
     default: undefined,
   },
+  accept: {
+    type: [String, Array],
+    default: null,
+    description: "接受的文件类型，例如 '.jpg,.png' 或 ['.jpg', '.png']",
+  },
 });
 
 const emits = defineEmits(["update:value"]);
 
-const { copy } = useClipboard();
-
-const fileUrlDict: { [key: string]: string } = {};
-
 const fileId = ref<string>();
 const fileList = ref<UploadProps["fileList"]>();
-const isUploading = ref<boolean>(false); // 新增：上传状态标识
+const isUploading = ref<boolean>(false);
 
 const state = useVModel(props, "value", emits, {
   defaultValue: props.value,
   passive: true,
 });
 
+function checkFileType(file: File): boolean {
+  if (!props.accept) return true;
+
+  const fileName = file.name.toLowerCase();
+  let allowedTypes: string[] = [];
+
+  if (typeof props.accept === "string") {
+    allowedTypes = props.accept
+      .split(",")
+      .map((type) => type.trim().toLowerCase());
+  } else if (Array.isArray(props.accept)) {
+    allowedTypes = props.accept.map((type) => type.trim().toLowerCase());
+  }
+
+  return allowedTypes.some((type) => {
+    if (type.startsWith(".")) {
+      return fileName.endsWith(type);
+    }
+    const fileExt = fileName.slice(fileName.lastIndexOf("."));
+    return (file as any).type?.includes(type) || allowedTypes.includes(fileExt);
+  });
+}
+
+function getAllowedTypesText(): string {
+  if (!props.accept) return $t("component.upload.supportAnyFormatOne");
+
+  let types: string[] = [];
+  if (typeof props.accept === "string") {
+    types = props.accept.split(",").map((type) => type.trim());
+  } else if (Array.isArray(props.accept)) {
+    types = props.accept.map((type) => type.trim());
+  }
+
+  return types.join(", ");
+}
+
 async function handleUpload(file: any) {
-  isUploading.value = true; // 开始上传，设置状态为 true
+  if (!checkFileType(file.file)) {
+    message.error(
+      `${$t("component.upload.fileTypeNotAllowed")}: ${getAllowedTypesText()}`,
+    );
+
+    if (fileList.value !== undefined) {
+      fileList.value.forEach((item) => {
+        if (item.uid === file.file.uid) {
+          item.status = "error";
+        }
+      });
+    }
+
+    return;
+  }
+
+  isUploading.value = true;
 
   try {
     if (props.provider === "local") {
@@ -84,11 +137,10 @@ async function handleUpload(file: any) {
       }
     }
   } catch (error) {
-    // 处理错误
     console.error("上传失败:", error);
     message.error($t("component.upload.uploadFailed"));
   } finally {
-    isUploading.value = false; // 上传完成（无论成功或失败），设置状态为 false
+    isUploading.value = false;
   }
 }
 
@@ -101,7 +153,6 @@ watch(
 </script>
 
 <template>
-  <!-- 上传区域 -->
   <div>
     <UploadDragger
       v-if="!fileList?.length"
@@ -110,6 +161,11 @@ watch(
       :multiple="props.multiple"
       :max-count="1"
       :show-upload-list="false"
+      :accept="
+        props.accept && Array.isArray(props.accept)
+          ? props.accept.join(',')
+          : props.accept
+      "
       v-bind="$attrs"
     >
       <p class="ant-upload-drag-icon">
@@ -119,21 +175,18 @@ watch(
         {{ $t("component.upload.uploadHelpMessage") }}
       </p>
       <p class="ant-upload-hint">
-        {{ $t("component.upload.supportAnyFormatOne") }}
+        {{ $t("component.upload.supportFormat") }}{{ getAllowedTypesText() }}
       </p>
     </UploadDragger>
 
-    <!-- 文件列表展示 -->
     <div v-if="fileList?.length" class="uploaded-file">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <!-- 显示加载状态图标 -->
           <span v-if="isUploading" class="mr-2 text-primary">
             <LoadingOutlined spin />
           </span>
           {{ fileList[0]?.name || $t("common.unnamedFile") }}
         </div>
-        <!-- 显示上传中文字 -->
         <span v-if="isUploading" class="text-sm text-primary">
           {{ $t("component.upload.uploading") }}
         </span>
