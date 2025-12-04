@@ -3,8 +3,8 @@ package mac
 import (
 	"context"
 	"errors"
+	"upgradelink-api/server/api/internal/common"
 	"upgradelink-api/server/api/internal/common/http_handlers"
-	"upgradelink-api/server/api/internal/config"
 	"upgradelink-api/server/api/internal/resource/model"
 
 	"upgradelink-api/server/api/internal/svc"
@@ -31,10 +31,10 @@ func (l *GetMacVersionInfoLogic) GetMacVersionInfo(req *types.GetMacVersionInfoR
 
 	// 请求参数效验
 	if req.MacKey == "" {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err300Msg, config.Err300Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrMac4Msg, common.ErrMac4Docs)
 	}
 	if req.VersionCode == 0 {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err301Msg, config.Err301Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrMac4Msg, common.ErrMac4Docs)
 	}
 
 	var res types.GetMacVersionInfoResp
@@ -42,16 +42,16 @@ func (l *GetMacVersionInfoLogic) GetMacVersionInfo(req *types.GetMacVersionInfoR
 	// 通过唯一标识 获取到对应的应用信息
 	macInfo, err := l.svcCtx.ResourceCtx.GetMacInfoByKey(l.ctx, req.MacKey)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err302Msg, config.Err302Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrMac2Msg, common.ErrMac2Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	macVersionInfo, err := l.svcCtx.ResourceCtx.GetMacVersionInfoByMacIdAndArchAndVersionCode(l.ctx, macInfo.Id, req.Arch, req.VersionCode)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err103Msg, config.Err103Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrMac3Msg, common.ErrMac3Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	res.Code = 200

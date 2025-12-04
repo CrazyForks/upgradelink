@@ -5,7 +5,6 @@ import (
 	"errors"
 	"upgradelink-api/server/api/internal/common"
 	"upgradelink-api/server/api/internal/common/http_handlers"
-	"upgradelink-api/server/api/internal/config"
 	"upgradelink-api/server/api/internal/resource"
 	"upgradelink-api/server/api/internal/resource/model"
 	"upgradelink-api/server/api/internal/svc"
@@ -31,18 +30,18 @@ func NewGetApkDownloadInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 func (l *GetApkDownloadInfoLogic) GetApkDownloadInfo(req *types.GetApkDownloadInfoReq) (resp string, err error) {
 	// 请求参数效验
 	if req.ApkKey == "" {
-		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrApk1Msg, common.ErrApk1Docs)
 	}
 	if req.VersionCode < 0 {
-		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err101Msg, config.Err101Docs)
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrApk1Msg, common.ErrApk1Docs)
 	}
 
 	// 通过唯一标识 获取到对应的应用信息
 	apkInfo, err := l.svcCtx.ResourceCtx.GetApkInfoByKey(l.ctx, req.ApkKey)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err102Msg, config.Err102Docs)
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrApk2Msg, common.ErrApk2Docs)
 	} else if err != nil {
-		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	var apkVersionInfo *model.UpgradeApkVersion
@@ -50,26 +49,26 @@ func (l *GetApkDownloadInfoLogic) GetApkDownloadInfo(req *types.GetApkDownloadIn
 	if req.VersionId > 0 {
 		apkVersionInfo, err = l.svcCtx.ResourceCtx.GetApkVersionInfoById(l.ctx, req.VersionId)
 		if err != nil && errors.Is(err, model.ErrNotFound) {
-			return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err103Msg, config.Err103Docs)
+			return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrApk3Msg, common.ErrApk3Docs)
 		} else if err != nil {
-			return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+			return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 		}
 	} else {
 		// 判断是否固定了版本号，如果没有固定 则获取详细的版本信息
 		if req.VersionCode == 0 {
 			apkVersionInfo, err = l.svcCtx.ResourceCtx.GetApkVersionLastInfoByApkId(l.ctx, apkInfo.Id)
 			if err != nil && errors.Is(err, model.ErrNotFound) {
-				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err103Msg, config.Err103Docs)
+				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrApk3Msg, common.ErrApk3Docs)
 			} else if err != nil {
-				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 			}
 
 		} else {
 			apkVersionInfo, err = l.svcCtx.ResourceCtx.GetApkVersionInfoByApkIdAndVersionCode(l.ctx, apkInfo.Id, req.VersionCode)
 			if err != nil && errors.Is(err, model.ErrNotFound) {
-				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err103Msg, config.Err103Docs)
+				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrApk3Msg, common.ErrApk3Docs)
 			} else if err != nil {
-				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 			}
 		}
 	}
@@ -77,9 +76,9 @@ func (l *GetApkDownloadInfoLogic) GetApkDownloadInfo(req *types.GetApkDownloadIn
 	// 通过文件信息 获取云文件地址
 	cloudFileInfo, err := l.svcCtx.ResourceCtx.GetCloudFileInfoById(l.ctx, apkVersionInfo.CloudFileId)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	} else if err != nil {
-		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 插入日志表
@@ -97,7 +96,7 @@ func (l *GetApkDownloadInfoLogic) GetApkDownloadInfo(req *types.GetApkDownloadIn
 	})
 
 	if err != nil {
-		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 接口返回文件下载地址

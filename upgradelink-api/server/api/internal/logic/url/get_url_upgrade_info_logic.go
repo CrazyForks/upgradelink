@@ -8,7 +8,6 @@ import (
 
 	"upgradelink-api/server/api/internal/common"
 	"upgradelink-api/server/api/internal/common/http_handlers"
-	"upgradelink-api/server/api/internal/config"
 	"upgradelink-api/server/api/internal/resource"
 	"upgradelink-api/server/api/internal/resource/model"
 	"upgradelink-api/server/api/internal/svc"
@@ -35,10 +34,10 @@ func (l *GetUrlUpgradeInfoLogic) GetUrlUpgradeInfo(req *types.GetUrlUpgradeInfoR
 
 	// 请求参数效验
 	if req.UrlKey == "" {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err200Msg, config.Err200Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrUrl1Msg, common.ErrUrl1Docs)
 	}
-	if req.VersionCode == 0 {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err201Msg, config.Err201Docs)
+	if req.VersionCode < 0 {
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrUrl1Msg, common.ErrUrl1Docs)
 	}
 
 	var res types.GetUrlUpgradeInfoResp
@@ -46,29 +45,31 @@ func (l *GetUrlUpgradeInfoLogic) GetUrlUpgradeInfo(req *types.GetUrlUpgradeInfoR
 	// 通过唯一标识 获取到对应的应用信息
 	urlInfo, err := l.svcCtx.ResourceCtx.GetUrlInfoByKey(l.ctx, req.UrlKey)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err202Msg, config.Err202Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrUrl2Msg, common.ErrUrl2Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 查询应用版本表，判断是否有大于当前版本的  没有的话则代表当前就是最高版本
 	_, err = l.svcCtx.ResourceCtx.GetUrlVersionListByUrlIdAndVersionCode(l.ctx, urlInfo.Id, req.VersionCode)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
 		res.Code = 0
-		res.Msg = "已经是最新版本"
+		res.Msg = common.AlreadyLatestVersionMsg
+		res.Docs = common.AlreadyLatestVersionDocs
 		return &res, nil
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 推出可使用的最高版本的升级策略
 	urlStrategyInfo, err := l.ReturnUpgradeStrategyInfo(urlInfo.Id, req.VersionCode, req.AppointVersionCode, req.DevModelKey, req.DevKey)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
 		res.Code = 0
-		res.Msg = "已经是最新版本"
+		res.Msg = common.AlreadyLatestVersionMsg
+		res.Docs = common.AlreadyLatestVersionDocs
 		return &res, nil
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 到这个地方的时候 说明前置条件已经都通过了，在这个位置再去判断 策略的频控配置是否符合
@@ -78,21 +79,21 @@ func (l *GetUrlUpgradeInfoLogic) GetUrlUpgradeInfo(req *types.GetUrlUpgradeInfoR
 	}
 	if !flowLimitOk {
 		// 被频控拦住 返回 429
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrStrategyTooManyReq, config.Err42901Msg, config.Err42901Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrStrategyTooManyReq, common.Err42901Msg, common.Err42901Docs)
 	}
 
 	// 通过升级版本 id 查询出对应版本信息 获取文件下载地址
 	urlVersionInfo, err := l.svcCtx.ResourceCtx.GetUrlVersionInfoById(l.ctx, urlStrategyInfo.UrlVersionId)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 插入获取日志上报
 	timestamp, err := common.ParseRFC3339ToTime(time.Now().Format(time.RFC3339))
 	if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 	// 获取应用版本 id
 	appVersionId, err := l.svcCtx.ResourceCtx.GetAppVersionIdByReport(l.ctx, resource.GetAppVersionIdByReportReq{
@@ -120,7 +121,7 @@ func (l *GetUrlUpgradeInfoLogic) GetUrlUpgradeInfo(req *types.GetUrlUpgradeInfoR
 	})
 
 	res.Code = 200
-	res.Msg = "获取到新版本"
+	res.Msg = common.NewVersionMsg
 	res.Data = types.GetUrlUpgradeInfoRespData{
 		UrlKey:               urlInfo.Key,
 		VersionName:          urlVersionInfo.VersionName,

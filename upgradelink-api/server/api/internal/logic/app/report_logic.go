@@ -5,7 +5,6 @@ import (
 
 	"upgradelink-api/server/api/internal/common"
 	"upgradelink-api/server/api/internal/common/http_handlers"
-	"upgradelink-api/server/api/internal/config"
 	"upgradelink-api/server/api/internal/resource"
 	"upgradelink-api/server/api/internal/svc"
 	"upgradelink-api/server/api/internal/types"
@@ -32,12 +31,12 @@ func (l *ReportLogic) Report(req *types.ReportReq) (resp *types.ReportResp, err 
 	// 获取公司 id
 	companyId, err := l.svcCtx.ResourceCtx.GetCompanyIdByAppKey(l.ctx, req.AppKey)
 	if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	timestamp, err := common.ParseRFC3339ToTime(req.Timestamp)
 	if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 获取应用版本 id
@@ -53,7 +52,7 @@ func (l *ReportLogic) Report(req *types.ReportReq) (resp *types.ReportResp, err 
 	// 获取应用版本类型
 	appType, err := l.svcCtx.ResourceCtx.GetAppTypeByAppKey(l.ctx, req.AppKey)
 	if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	var res types.ReportResp
@@ -63,7 +62,7 @@ func (l *ReportLogic) Report(req *types.ReportReq) (resp *types.ReportResp, err 
 
 		launchTime, err := common.ParseRFC3339ToTime(req.EventData.LaunchTime)
 		if err != nil {
-			return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+			return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 		}
 
 		_, err = l.svcCtx.ResourceCtx.AddAppStartReportLog(l.ctx, resource.AddAppStartReportLogReq{

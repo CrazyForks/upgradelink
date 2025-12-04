@@ -5,7 +5,6 @@ import (
 	"errors"
 	"upgradelink-api/server/api/internal/common"
 	"upgradelink-api/server/api/internal/common/http_handlers"
-	"upgradelink-api/server/api/internal/config"
 	"upgradelink-api/server/api/internal/resource/model"
 
 	"upgradelink-api/server/api/internal/svc"
@@ -31,15 +30,15 @@ func NewGetElectronVersionInfoLogic(ctx context.Context, svcCtx *svc.ServiceCont
 func (l *GetElectronVersionInfoLogic) GetElectronVersionInfo(req *types.GetElectronVersionInfoReq) (resp *types.GetElectronVersionInfoResp, err error) {
 	// 请求参数效验
 	if req.ElectronKey == "" {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrElectron4Msg, common.ErrElectron4Docs)
 	}
 
 	if req.VersionName == "" {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err101Msg, config.Err101Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrElectron4Msg, common.ErrElectron4Docs)
 	}
 	versionCode, err := common.SemVerToInt64(req.VersionName)
 	if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err101Msg, config.Err101Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrElectron4Msg, common.ErrElectron4Docs)
 	}
 
 	var res types.GetElectronVersionInfoResp
@@ -47,17 +46,17 @@ func (l *GetElectronVersionInfoLogic) GetElectronVersionInfo(req *types.GetElect
 	// 通过唯一标识 获取到对应的应用信息
 	electronInfo, err := l.svcCtx.ResourceCtx.GetElectronInfoByKey(l.ctx, req.ElectronKey)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err102Msg, config.Err102Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrElectron2Msg, common.ErrElectron2Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 获取版本信息
 	electronVersionInfo, err := l.svcCtx.ResourceCtx.GetElectronVersionInfoByElectronIdAndVersionCodeAndPlatformAndArch(l.ctx, electronInfo.Id, versionCode, req.Platform, req.Arch)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err103Msg, config.Err103Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrElectron3Msg, common.ErrElectron3Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	res.Code = 200

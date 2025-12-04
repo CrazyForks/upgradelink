@@ -3,8 +3,8 @@ package file
 import (
 	"context"
 	"errors"
+	"upgradelink-api/server/api/internal/common"
 	"upgradelink-api/server/api/internal/common/http_handlers"
-	"upgradelink-api/server/api/internal/config"
 	"upgradelink-api/server/api/internal/resource/model"
 
 	"upgradelink-api/server/api/internal/svc"
@@ -30,10 +30,10 @@ func NewGetFileVersionInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 func (l *GetFileVersionInfoLogic) GetFileVersionInfo(req *types.GetFileVersionInfoReq) (resp *types.GetFileVersionInfoResp, err error) {
 	// 请求参数效验
 	if req.FileKey == "" {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err300Msg, config.Err300Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrFile4Msg, common.ErrFile4Docs)
 	}
 	if req.VersionCode == 0 {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err301Msg, config.Err301Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrFile4Msg, common.ErrFile4Docs)
 	}
 
 	var res types.GetFileVersionInfoResp
@@ -41,16 +41,16 @@ func (l *GetFileVersionInfoLogic) GetFileVersionInfo(req *types.GetFileVersionIn
 	// 通过唯一标识 获取到对应的应用信息
 	fileInfo, err := l.svcCtx.ResourceCtx.GetFileInfoByKey(l.ctx, req.FileKey)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err302Msg, config.Err302Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrFile2Msg, common.ErrFile2Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	fileVersionInfo, err := l.svcCtx.ResourceCtx.GetFileVersionInfoByFileIdAndVersionCode(l.ctx, fileInfo.Id, req.VersionCode)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err103Msg, config.Err103Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrFile3Msg, common.ErrFile3Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	res.Code = 200

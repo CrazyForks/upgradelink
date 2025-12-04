@@ -6,7 +6,6 @@ import (
 
 	"upgradelink-api/server/api/internal/common"
 	"upgradelink-api/server/api/internal/common/http_handlers"
-	"upgradelink-api/server/api/internal/config"
 	"upgradelink-api/server/api/internal/resource"
 	"upgradelink-api/server/api/internal/resource/model"
 	"upgradelink-api/server/api/internal/svc"
@@ -32,18 +31,18 @@ func NewGetUrlDownloadInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 func (l *GetUrlDownloadInfoLogic) GetUrlDownloadInfo(req *types.GetUrlDownloadInfoReq) (resp *string, err error) {
 	// 请求参数效验
 	if req.UrlKey == "" {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err200Msg, config.Err200Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrUrl1Msg, common.ErrUrl1Docs)
 	}
 	if req.VersionCode < 0 {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err201Msg, config.Err201Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrUrl1Msg, common.ErrUrl1Docs)
 	}
 
 	// 通过唯一标识 获取到对应的应用信息
 	urlInfo, err := l.svcCtx.ResourceCtx.GetUrlInfoByKey(l.ctx, req.UrlKey)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err202Msg, config.Err202Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrUrl2Msg, common.ErrUrl2Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 		//return nil, err
 	}
 
@@ -52,26 +51,26 @@ func (l *GetUrlDownloadInfoLogic) GetUrlDownloadInfo(req *types.GetUrlDownloadIn
 	if req.VersionId > 0 {
 		urlVersionInfo, err = l.svcCtx.ResourceCtx.GetUrlVersionInfoById(l.ctx, req.VersionId)
 		if err != nil && errors.Is(err, model.ErrNotFound) {
-			return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err103Msg, config.Err103Docs)
+			return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrUrl3Msg, common.ErrUrl3Docs)
 		} else if err != nil {
-			return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+			return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 		}
 	} else {
 		// 判断是否固定了版本号，如果没有固定 则获取详细的版本信息
 		if req.VersionCode == 0 {
 			urlVersionInfo, err = l.svcCtx.ResourceCtx.GetUrlVersionLastInfoByUrlId(l.ctx, urlInfo.Id)
 			if err != nil && errors.Is(err, model.ErrNotFound) {
-				return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err203Msg, config.Err203Docs)
+				return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrUrl3Msg, common.ErrUrl3Docs)
 			} else if err != nil {
-				return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+				return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 				//return nil, err
 			}
 		} else {
 			urlVersionInfo, err = l.svcCtx.ResourceCtx.GetUrlVersionInfoByUrlIdAndVersionCode(l.ctx, urlInfo.Id, req.VersionCode)
 			if err != nil && errors.Is(err, model.ErrNotFound) {
-				return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err203Msg, config.Err203Docs)
+				return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrUrl3Msg, common.ErrUrl3Docs)
 			} else if err != nil {
-				return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+				return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 				//return nil, err
 			}
 		}
@@ -91,7 +90,7 @@ func (l *GetUrlDownloadInfoLogic) GetUrlDownloadInfo(req *types.GetUrlDownloadIn
 		DownloadCloudFileId: "",
 	})
 	if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	return &urlVersionInfo.UrlPath, nil

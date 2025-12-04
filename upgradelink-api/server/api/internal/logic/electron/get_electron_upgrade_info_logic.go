@@ -4,12 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strconv"
 	"time"
 
 	"upgradelink-api/server/api/internal/common"
 	"upgradelink-api/server/api/internal/common/http_handlers"
-	"upgradelink-api/server/api/internal/config"
 	"upgradelink-api/server/api/internal/resource"
 	"upgradelink-api/server/api/internal/resource/model"
 	"upgradelink-api/server/api/internal/svc"
@@ -39,10 +37,10 @@ func (l *GetElectronUpgradeInfoLogic) GetElectronUpgradeInfo(req *types.GetElect
 
 	// 请求参数效验
 	if req.ElectronKey == "" {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err100Msg, config.Err100Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrElectron1Msg, common.ErrElectron1Docs)
 	}
 	if req.VersionName == "" {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err101Msg, config.Err101Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrElectron1Msg, common.ErrElectron1Docs)
 	}
 
 	// 客户端windows 系统字段传的值为  win32
@@ -52,9 +50,9 @@ func (l *GetElectronUpgradeInfoLogic) GetElectronUpgradeInfo(req *types.GetElect
 
 	versionCode, err := common.SemVerToInt64(req.VersionName)
 	if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err101Msg, config.Err101Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrElectron1Msg, common.ErrElectron1Docs)
 	}
-	
+
 	appointVersionCode := int64(0)
 	if req.AppointVersionCode != 0 {
 		appointVersionCode = req.AppointVersionCode
@@ -64,159 +62,132 @@ func (l *GetElectronUpgradeInfoLogic) GetElectronUpgradeInfo(req *types.GetElect
 		// 转换版本号
 		appointVersionCode, err = common.SemVerToInt64(req.AppointVersionName)
 		if err != nil {
-			return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, config.Err101Msg, config.Err101Docs)
+			return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrElectron1Msg, common.ErrElectron1Docs)
 		}
 	}
 
 	// 通过唯一标识 获取到对应的应用信息
 	electronInfo, err := l.svcCtx.ResourceCtx.GetElectronInfoByKey(l.ctx, req.ElectronKey)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, config.Err102Msg, config.Err102Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrElectron2Msg, common.ErrElectron2Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 查询应用版本表，判断是否有大于当前版本的  没有的话则代表当前就是最高版本
 	_, err = l.svcCtx.ResourceCtx.GetElectronVersionListByKeyAndPlatformAndArch(l.ctx, electronInfo.Id, versionCode, req.Platform, req.Arch)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		//return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.NoContent, "已经是最新版本", "")
 		resp = &types.GetElectronUpgradeInfoResp{
 			Version:              req.VersionName,
-			Path:                 "",
-			Sha512:               "",
-			UpgradeType:          0,
-			PromptUpgradeContent: "",
+			PromptUpgradeContent: common.AlreadyLatestVersionMsg,
 		}
 		return resp, nil
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 推出可使用的最高版本的升级策略
 	electronStrategyInfo, err := l.ReturnUpgradeStrategyInfo(electronInfo.Id, versionCode, appointVersionCode, req.Platform, req.Arch, req.DevModelKey, req.DevKey)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		//return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.NoContent, "已经是最新版本", "")
 		resp = &types.GetElectronUpgradeInfoResp{
 			Version:              req.VersionName,
-			Path:                 "",
-			Sha512:               "",
-			UpgradeType:          0,
-			PromptUpgradeContent: "",
+			PromptUpgradeContent: common.AlreadyLatestVersionMsg,
 		}
 		return resp, nil
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 到这个地方的时候 说明前置条件已经都通过了，在这个位置再去判断 策略的频控配置是否符合
 	flowLimitOk, err := l.CheckUpgradeStrategyFlowLimit(electronStrategyInfo)
 	if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 	if !flowLimitOk {
 		// 被频控拦住 返回 429
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrStrategyTooManyReq, config.Err42901Msg, config.Err42901Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrStrategyTooManyReq, common.Err42901Msg, common.Err42901Docs)
 	}
 
 	// 通过升级版本 id 查询出对应版本信息 获取文件下载地址
 	electronVersionInfo, err := l.svcCtx.ResourceCtx.GetElectronVersionInfoById(l.ctx, electronStrategyInfo.ElectronVersionId)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 通过文件信息
 	cloudFileInfo, err := l.svcCtx.ResourceCtx.GetCloudFileInfoById(l.ctx, electronVersionInfo.CloudFileId)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	// 获取 install 文件信息
 	installCloudFileInfo, err := l.svcCtx.ResourceCtx.GetCloudFileInfoById(l.ctx, electronVersionInfo.InstallCloudFileId)
 	if err != nil && errors.Is(err, model.ErrNotFound) {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	} else if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 
 	files := make([]types.GetElectronUpgradeInfoFileResp, 0)
-	urlPath := ""
-	installUrlPath := ""
 
 	// 获取文件地址
 	if req.Platform == "darwin" {
-		// 返回拼接出来的下载接口地址   todo 最后再确认下是不是沿用了获取更新的请求参数
-		// 更新包地址
-		urlPath = "https://api.upgrade.toolsetlink.com/v1/electron/download.zip?electronKey=" + req.ElectronKey + "&versionId=" + strconv.FormatInt(electronVersionInfo.Id, 10)
-		// 安装包地址
-		installUrlPath = "https://api.upgrade.toolsetlink.com/v1/electron/download.dmg?electronKey=" + req.ElectronKey + "&versionId=" + strconv.FormatInt(electronVersionInfo.Id, 10)
-
 		// 更新包信息
 		var file1 types.GetElectronUpgradeInfoFileResp
 		file1.Size = int64(cloudFileInfo.Size)
 		file1.Sha512 = electronVersionInfo.Sha512
-		file1.Url = urlPath
+		file1.Url = cloudFileInfo.Url
 		files = append(files, file1)
 
 		// 安装包信息
 		var file types.GetElectronUpgradeInfoFileResp
 		file.Size = int64(installCloudFileInfo.Size)
 		file.Sha512 = electronVersionInfo.InstallSha512
-		file.Url = installUrlPath
+		file.Url = installCloudFileInfo.Url
 		files = append(files, file)
 	}
 
 	if req.Platform == "windows" {
-		// 返回拼接出来的下载接口地址   todo 最后再确认下是不是沿用了获取更新的请求参数
-		// 安装包地址
-		urlPath = "https://api.upgrade.toolsetlink.com/v1/electron/download.exe?electronKey=" + req.ElectronKey + "&versionId=" + strconv.FormatInt(electronVersionInfo.Id, 10)
-		// 更新包地址
-		installUrlPath = "https://api.upgrade.toolsetlink.com/v1/electron/download.exe?electronKey=" + req.ElectronKey + "&versionId=" + strconv.FormatInt(electronVersionInfo.Id, 10)
-
 		// 更新包信息
 		var file1 types.GetElectronUpgradeInfoFileResp
 		file1.Size = int64(cloudFileInfo.Size)
 		file1.Sha512 = electronVersionInfo.Sha512
-		file1.Url = urlPath
+		file1.Url = cloudFileInfo.Url
 		files = append(files, file1)
 
 		// 安装包信息
 		var file types.GetElectronUpgradeInfoFileResp
 		file.Size = int64(installCloudFileInfo.Size)
 		file.Sha512 = electronVersionInfo.InstallSha512
-		file.Url = installUrlPath
+		file.Url = installCloudFileInfo.Url
 		files = append(files, file)
 	}
 
 	if req.Platform == "linux" {
-		// 返回拼接出来的下载接口地址   todo 最后再确认下是不是沿用了获取更新的请求参数
-		// 安装包地址
-		urlPath = "https://api.upgrade.toolsetlink.com/v1/electron/download.AppImage?electronKey=" + req.ElectronKey + "&versionId=" + strconv.FormatInt(electronVersionInfo.Id, 10)
-		// 更新包地址
-		installUrlPath = "https://api.upgrade.toolsetlink.com/v1/electron/download.AppImage?electronKey=" + req.ElectronKey + "&versionId=" + strconv.FormatInt(electronVersionInfo.Id, 10)
 
 		// 更新包信息
 		var file1 types.GetElectronUpgradeInfoFileResp
 		file1.Size = int64(cloudFileInfo.Size)
 		file1.Sha512 = electronVersionInfo.Sha512
-		file1.Url = urlPath
+		file1.Url = cloudFileInfo.Url
 		files = append(files, file1)
 
 		// 安装包信息
 		var file types.GetElectronUpgradeInfoFileResp
 		file.Size = int64(installCloudFileInfo.Size)
 		file.Sha512 = electronVersionInfo.InstallSha512
-		file.Url = installUrlPath
+		file.Url = installCloudFileInfo.Url
 		files = append(files, file)
 	}
 
 	// 插入获取日志上报
 	timestamp, err := common.ParseRFC3339ToTime(time.Now().Format(time.RFC3339))
 	if err != nil {
-		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, config.Err1Msg, config.Err1Docs)
+		return nil, http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
 	}
 	// 获取应用版本 id
 	appVersionId, err := l.svcCtx.ResourceCtx.GetAppVersionIdByReport(l.ctx, resource.GetAppVersionIdByReportReq{
@@ -250,7 +221,7 @@ func (l *GetElectronUpgradeInfoLogic) GetElectronUpgradeInfo(req *types.GetElect
 		PromptUpgradeContent: electronStrategyInfo.PromptUpgradeContent,
 		Files:                files,
 		Version:              electronVersionInfo.VersionName,
-		Path:                 urlPath,
+		Path:                 cloudFileInfo.Url,
 		Sha512:               electronVersionInfo.Sha512,
 		ReleaseDate:          electronStrategyInfo.UpdateAt.Format(time.RFC3339),
 	}

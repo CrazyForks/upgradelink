@@ -10,16 +10,3 @@ type Config struct {
 	MysqlConfig string          `json:",optional,inherit"`
 	RedisConfig redis.RedisConf `json:",optional,inherit"`
 }
-
-const (
-	// UIDField uid header key
-	UIDField = "UID"
-	// SsoIDField sso id header key
-	SsoIDField = "SsoID"
-	// SignatureField  sign header key
-	SignatureField = "Signature"
-	// TkField tk header key
-	TkField = "Tk"
-	// SignatureExpired sign 过期时间
-	SignatureExpired = 50000 // 5分钟
-)
