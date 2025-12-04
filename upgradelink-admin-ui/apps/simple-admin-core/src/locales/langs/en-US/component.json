@@ -115,7 +115,8 @@
     "pending": "Pending",
     "uploadHelpMessage": "Click or drag file to this area to upload",
     "supportAnyFormat": "Support any type of file, support multiple file uploads",
-    "supportAnyFormatOne": "Support any type of file"
+    "supportAnyFormatOne": "Support any type of file",
+    "supportFormat": "Support {0} format file"
   },
   "verify": {
     "error": "verification failed!",
