@@ -57,6 +57,9 @@ func (l *CreateUpgradeElectronVersionLogic) CreateUpgradeElectronVersion(req *ty
 	if req.InstallCloudFileId == nil {
 		req.InstallCloudFileId = req.CloudFileId
 	}
+	if req.InstallSha512 == nil {
+		req.InstallSha512 = req.Sha512
+	}
 
 	isDel := int32(0)
 	_, err = l.svcCtx.DB.UpgradeElectronVersion.Create().

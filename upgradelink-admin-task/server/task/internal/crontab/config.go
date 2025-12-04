@@ -15,13 +15,8 @@ func DefaultTask() []TaskConfig {
 		},
 		{
 			Name:      "ApkPatch",
-			Scheduler: "@every 1m", // 每1分钟执行一次
+			Scheduler: "@every 30m", // 每30分钟执行一次
 			Enabled:   true,
 		},
-		//{
-		//	Name:      "StatisticsUserCount",
-		//	Scheduler: "@every 1m", //每1分钟执行一次
-		//	Enabled:   true,
-		//},
 	}
 }
