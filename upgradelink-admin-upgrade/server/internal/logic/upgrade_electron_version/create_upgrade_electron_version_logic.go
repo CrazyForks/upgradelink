@@ -98,6 +98,7 @@ func (l *CreateUpgradeElectronVersionLogic) CheckCreateUpgradeElectronVersion(re
 	var predicates []predicate.UpgradeElectronVersion
 	predicates = append(predicates, upgradeelectronversion.ElectronID(*req.ElectronId))
 	predicates = append(predicates, upgradeelectronversion.VersionName(*req.VersionName))
+	predicates = append(predicates, upgradeelectronversion.Platform(*req.Platform))
 	predicates = append(predicates, upgradeelectronversion.Arch(*req.Arch))
 	predicates = append(predicates, upgradeelectronversion.IsDelEQ(0))
 	predicates = append(predicates, upgradeelectronversion.CompanyIDEQ(l.companyID))
@@ -113,6 +114,7 @@ func (l *CreateUpgradeElectronVersionLogic) CheckCreateUpgradeElectronVersion(re
 	var predicates1 []predicate.UpgradeElectronVersion
 	predicates1 = append(predicates1, upgradeelectronversion.ElectronID(*req.ElectronId))
 	predicates1 = append(predicates1, upgradeelectronversion.VersionCode(versionCode))
+	predicates1 = append(predicates1, upgradeelectronversion.Platform(*req.Platform))
 	predicates1 = append(predicates1, upgradeelectronversion.Arch(*req.Arch))
 	predicates1 = append(predicates1, upgradeelectronversion.IsDelEQ(0))
 	predicates1 = append(predicates1, upgradeelectronversion.CompanyIDEQ(l.companyID))
