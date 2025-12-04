@@ -71,6 +71,7 @@ const gridOptions: VxeGridProps<UpgradeLnxUpgradeStrategyInfo> = {
       title: $t("common.action"),
       fixed: "right",
       field: "action",
+      width: "100",
       slots: {
         default: ({ row }) =>
           h(TableAction, {

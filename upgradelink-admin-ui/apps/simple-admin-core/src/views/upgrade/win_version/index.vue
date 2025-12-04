@@ -74,6 +74,7 @@ const gridOptions: VxeGridProps<UpgradeWinVersionInfo> = {
       title: $t("common.action"),
       fixed: "right",
       field: "action",
+      width: "150",
       slots: {
         default: ({ row }) =>
           h(TableAction, {
