@@ -96,7 +96,7 @@ type (
     }
 
     PostElectronUploadResp {
-        BaseMsgResp
+        BaseDataInfo
     }
 
 )

@@ -4,33 +4,11 @@
 package types
 
 type BaseDataInfo struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-	Docs string `json:"docs"`
-	Data string `json:"data"`
-}
-
-type BaseIDInfo struct {
-	Id        *uint64 `json:"id,optional"`
-	CreatedAt *int64  `json:"createdAt,optional"`
-	UpdatedAt *int64  `json:"updatedAt,optional"`
-}
-
-type BaseListInfo struct {
-	Total uint64 `json:"total"`
-	Data  string `json:"data,omitempty"`
-}
-
-type BaseMsgResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-	Docs string `json:"docs"`
-}
-
-type BaseUUIDInfo struct {
-	Id        *string `json:"id,optional"`
-	CreatedAt *int64  `json:"createdAt,optional"`
-	UpdatedAt *int64  `json:"updatedAt,optional"`
+	Code    int    `json:"code"`
+	Msg     string `json:"msg"`
+	TraceId string `json:"traceId"`
+	Docs    string `json:"docs"`
+	Data    string `json:"data"`
 }
 
 type ElectronPlatformsRequest struct {
@@ -541,23 +519,6 @@ type GetWinVersionInfoRespData struct {
 	Description string `json:"description,optional"`
 }
 
-type IDPathReq struct {
-	Id uint64 `path:"id"`
-}
-
-type IDReq struct {
-	Id uint64 `json:"id" validate:"number"`
-}
-
-type IDsReq struct {
-	Ids []uint64 `json:"ids"`
-}
-
-type PageInfo struct {
-	Page     uint64 `json:"page" validate:"required,number,gt=0"`
-	PageSize uint64 `json:"pageSize" validate:"required,number,lt=100000"`
-}
-
 type PlatformInfoRequest struct {
 	Signature string `json:"signature" form:"signature" validate:"required"`
 	Url       string `json:"url" form:"url" validate:"required,url"`
@@ -584,7 +545,7 @@ type PostElectronUploadReq struct {
 }
 
 type PostElectronUploadResp struct {
-	BaseMsgResp
+	BaseDataInfo
 }
 
 type PostTauriUploadReq struct {
@@ -598,7 +559,7 @@ type PostTauriUploadReq struct {
 }
 
 type PostTauriUploadResp struct {
-	BaseMsgResp
+	BaseDataInfo
 }
 
 type ReportReq struct {
@@ -609,13 +570,5 @@ type ReportReq struct {
 }
 
 type ReportResp struct {
-	BaseMsgResp
-}
-
-type UUIDReq struct {
-	Id string `json:"id" validate:"len=36"`
-}
-
-type UUIDsReq struct {
-	Ids []string `json:"ids"`
+	BaseDataInfo
 }

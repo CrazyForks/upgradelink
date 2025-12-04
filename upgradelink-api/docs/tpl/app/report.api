@@ -60,7 +60,7 @@ type (
     }
 
     ReportResp {
-        BaseMsgResp
+        BaseDataInfo
     }
 )
 

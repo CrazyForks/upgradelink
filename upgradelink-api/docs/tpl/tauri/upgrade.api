@@ -98,7 +98,7 @@ type (
     }
 
     PostTauriUploadResp {
-        BaseMsgResp
+        BaseDataInfo
     }
 
 )

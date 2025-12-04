@@ -1,6 +1,6 @@
-// Package http_handlers 乐视通用错误码处理方式
+// Package http_handlers 通用错误码处理方式
 //
-//	@Desc: 乐视通用错误码处理方式
+//	@Desc: 通用错误码处理方式
 package http_handlers
 
 import (
@@ -68,7 +68,7 @@ func ErrMsg2Code(m string) (httpCode int, code int, msg, docs, traceId string) {
 }
 
 // //////////////////////////////////////////////////////////////////////////////
-// 定义 LeError
+// 定义 LinkError
 
 type linkErr struct {
 	statusCode int
@@ -111,20 +111,4 @@ func LinkErr2Code(err error) (statusCode, code int, msg, docs, traceId string) {
 	}
 
 	return ErrMsg2Code(err.Error())
-}
-
-// IsLeMsg 判断是否为自定义异常
-//
-//	@desc    判断是否为自定义异常
-//	@param
-//	@return
-func IsLeMsg(m string) bool {
-	if len(m) < 11 {
-		return false
-	}
-	_, terr := strconv.Atoi(m[1:7])
-	if nil != terr {
-		return false
-	}
-	return true
 }
