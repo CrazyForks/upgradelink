@@ -6,8 +6,11 @@ import (
 	"upgradelink-admin-upgrade/server/ent/upgradeapk"
 	"upgradelink-admin-upgrade/server/ent/upgradeelectron"
 	"upgradelink-admin-upgrade/server/ent/upgradefile"
+	"upgradelink-admin-upgrade/server/ent/upgradelnx"
+	"upgradelink-admin-upgrade/server/ent/upgrademac"
 	"upgradelink-admin-upgrade/server/ent/upgradetauri"
 	"upgradelink-admin-upgrade/server/ent/upgradeurl"
+	"upgradelink-admin-upgrade/server/ent/upgradewin"
 	"upgradelink-admin-upgrade/server/internal/resource"
 
 	"upgradelink-admin-upgrade/server/internal/svc"
@@ -190,20 +193,6 @@ func (l *GetUpgradeDashboardLogic) GetUpgradeDashboard() (resp *types.UpgradeDas
 		return nil, err
 	}
 	for infoKey, info := range fileList.List {
-		// 获取应用近7天流量占用
-		weeklyTrafficUsageCountList, err := resource.GetFileWeeklyTrafficUsageCount(l.ctx, l.svcCtx, info.Key)
-		if err != nil {
-			return nil, err
-		}
-		var trafficUsage7DaySeriesItem types.TrafficUsageCount7DaySeriesItem
-		trafficUsage7DaySeriesItem.AppName = info.Name
-		for i := 0; i < len(weeklyTrafficUsageCountList); i++ {
-			if infoKey == 0 && len(trafficUsageCount7Days.TimeData) < len(weeklyTrafficUsageCountList) {
-				trafficUsageCount7Days.TimeData = append(trafficUsageCount7Days.TimeData, weeklyTrafficUsageCountList[i].Date)
-			}
-			trafficUsage7DaySeriesItem.Data = append(trafficUsage7DaySeriesItem.Data, weeklyTrafficUsageCountList[i].Count)
-		}
-		trafficUsageCount7Days.Series = append(trafficUsageCount7Days.Series, trafficUsage7DaySeriesItem)
 
 		// 获取应用近7天下载次数
 		weeklyDownloadCountList, err := resource.GetWeeklyDownloadCount(l.ctx, l.svcCtx, info.Key)
@@ -277,21 +266,6 @@ func (l *GetUpgradeDashboardLogic) GetUpgradeDashboard() (resp *types.UpgradeDas
 	}
 
 	for infoKey, info := range tauriList.List {
-
-		// 获取应用近7天流量占用
-		weeklyTrafficUsageCountList, err := resource.GetTauriWeeklyTrafficUsageCount(l.ctx, l.svcCtx, info.Key)
-		if err != nil {
-			return nil, err
-		}
-		var trafficUsage7DaySeriesItem types.TrafficUsageCount7DaySeriesItem
-		trafficUsage7DaySeriesItem.AppName = info.Name
-		for i := 0; i < len(weeklyTrafficUsageCountList); i++ {
-			if infoKey == 0 && len(trafficUsageCount7Days.TimeData) < len(weeklyTrafficUsageCountList) {
-				trafficUsageCount7Days.TimeData = append(trafficUsageCount7Days.TimeData, weeklyTrafficUsageCountList[i].Date)
-			}
-			trafficUsage7DaySeriesItem.Data = append(trafficUsage7DaySeriesItem.Data, weeklyTrafficUsageCountList[i].Count)
-		}
-		trafficUsageCount7Days.Series = append(trafficUsageCount7Days.Series, trafficUsage7DaySeriesItem)
 
 		// 获取应用近7天下载量
 		weeklyDownloadCountList, err := resource.GetWeeklyDownloadCount(l.ctx, l.svcCtx, info.Key)
@@ -367,21 +341,6 @@ func (l *GetUpgradeDashboardLogic) GetUpgradeDashboard() (resp *types.UpgradeDas
 
 	for infoKey, info := range electronList.List {
 
-		// 获取应用近7天流量占用
-		weeklyTrafficUsageCountList, err := resource.GetElectronWeeklyTrafficUsageCount(l.ctx, l.svcCtx, info.Key)
-		if err != nil {
-			return nil, err
-		}
-		var trafficUsage7DaySeriesItem types.TrafficUsageCount7DaySeriesItem
-		trafficUsage7DaySeriesItem.AppName = info.Name
-		for i := 0; i < len(weeklyTrafficUsageCountList); i++ {
-			if infoKey == 0 && len(trafficUsageCount7Days.TimeData) < len(weeklyTrafficUsageCountList) {
-				trafficUsageCount7Days.TimeData = append(trafficUsageCount7Days.TimeData, weeklyTrafficUsageCountList[i].Date)
-			}
-			trafficUsage7DaySeriesItem.Data = append(trafficUsage7DaySeriesItem.Data, weeklyTrafficUsageCountList[i].Count)
-		}
-		trafficUsageCount7Days.Series = append(trafficUsageCount7Days.Series, trafficUsage7DaySeriesItem)
-
 		// 获取应用近7天下载量
 		weeklyDownloadCountList, err := resource.GetWeeklyDownloadCount(l.ctx, l.svcCtx, info.Key)
 		if err != nil {
@@ -456,20 +415,224 @@ func (l *GetUpgradeDashboardLogic) GetUpgradeDashboard() (resp *types.UpgradeDas
 
 	for infoKey, info := range apkList.List {
 
-		// 获取应用近7天流量占用
-		weeklyTrafficUsageCountList, err := resource.GetApkWeeklyTrafficUsageCount(l.ctx, l.svcCtx, info.Key)
+		// 获取应用近7天设备新增量
+		weeklyDownloadCountList, err := resource.GetWeeklyDownloadCount(l.ctx, l.svcCtx, info.Key)
 		if err != nil {
 			return nil, err
 		}
-		var trafficUsage7DaySeriesItem types.TrafficUsageCount7DaySeriesItem
-		trafficUsage7DaySeriesItem.AppName = info.Name
-		for i := 0; i < len(weeklyTrafficUsageCountList); i++ {
-			if infoKey == 0 && len(trafficUsageCount7Days.TimeData) < len(weeklyTrafficUsageCountList) {
-				trafficUsageCount7Days.TimeData = append(trafficUsageCount7Days.TimeData, weeklyTrafficUsageCountList[i].Date)
+
+		var download7DaySeriesItem types.DownloadCount7DaySeriesItem
+		download7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyDownloadCountList); i++ {
+			if infoKey == 0 && len(downloadCount7Days.TimeData) < len(weeklyDownloadCountList) {
+				downloadCount7Days.TimeData = append(downloadCount7Days.TimeData, weeklyDownloadCountList[i].Date)
 			}
-			trafficUsage7DaySeriesItem.Data = append(trafficUsage7DaySeriesItem.Data, weeklyTrafficUsageCountList[i].Count)
+			download7DaySeriesItem.Data = append(download7DaySeriesItem.Data, weeklyDownloadCountList[i].Count)
 		}
-		trafficUsageCount7Days.Series = append(trafficUsageCount7Days.Series, trafficUsage7DaySeriesItem)
+		downloadCount7Days.Series = append(downloadCount7Days.Series, download7DaySeriesItem)
+
+		// 获取应用近7天应用启动次数
+		weeklyAppStartCountList, err := resource.GetWeeklyAppStartCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+		var appStart7DaySeriesItem types.AppStartCount7DaySeriesItem
+		appStart7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyAppStartCountList); i++ {
+			if infoKey == 0 && len(appStartCount7Days.TimeData) < len(weeklyAppStartCountList) {
+				appStartCount7Days.TimeData = append(appStartCount7Days.TimeData, weeklyAppStartCountList[i].Date)
+			}
+			appStart7DaySeriesItem.Data = append(appStart7DaySeriesItem.Data, weeklyAppStartCountList[i].Count)
+		}
+		appStartCount7Days.Series = append(appStartCount7Days.Series, appStart7DaySeriesItem)
+
+		// 获取应用近7天获取应用升级次数
+		weeklyAppGetStrategyCountList, err := resource.GetWeeklyAppGetStrategyCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+		var appGetStrategy7DaySeriesItem types.AppGetStrategyCount7DaySeriesItem
+		appGetStrategy7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyAppGetStrategyCountList); i++ {
+			if infoKey == 0 && len(appGetStrategyCount7Days.TimeData) < len(weeklyAppGetStrategyCountList) {
+				appGetStrategyCount7Days.TimeData = append(appGetStrategyCount7Days.TimeData, weeklyAppGetStrategyCountList[i].Date)
+			}
+			appGetStrategy7DaySeriesItem.Data = append(appGetStrategy7DaySeriesItem.Data, weeklyAppGetStrategyCountList[i].Count)
+		}
+		appGetStrategyCount7Days.Series = append(appGetStrategyCount7Days.Series, appGetStrategy7DaySeriesItem)
+
+		// 获取应用近7天应用升级次数
+		weeklyAppUpgradeCountList, err := resource.GetWeeklyAppUpgradeCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+		var appUpgrade7DaySeriesItem types.AppUpgradeCount7DaySeriesItem
+		appUpgrade7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyAppUpgradeCountList); i++ {
+			if infoKey == 0 && len(appUpgradeCount7Days.TimeData) < len(weeklyAppUpgradeCountList) {
+				appUpgradeCount7Days.TimeData = append(appUpgradeCount7Days.TimeData, weeklyAppUpgradeCountList[i].Date)
+			}
+			appUpgrade7DaySeriesItem.Data = append(appUpgrade7DaySeriesItem.Data, weeklyAppUpgradeCountList[i].Count)
+		}
+		appUpgradeCount7Days.Series = append(appUpgradeCount7Days.Series, appUpgrade7DaySeriesItem)
+
+	}
+
+	// 获取公司下的所有mac应用
+	var macPredicates []predicate.UpgradeMac
+	macPredicates = append(macPredicates, upgrademac.CompanyIDEQ(int(companyID)))
+	macPredicates = append(macPredicates, upgrademac.IsDelEQ(0))
+	macList, err := l.svcCtx.DB.UpgradeMac.Query().Where(macPredicates...).Page(l.ctx, 1, 100)
+	if err != nil {
+		return nil, err
+	}
+	for infoKey, info := range macList.List {
+
+		// 获取应用近7天设备新增量
+		weeklyDownloadCountList, err := resource.GetWeeklyDownloadCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+
+		var download7DaySeriesItem types.DownloadCount7DaySeriesItem
+		download7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyDownloadCountList); i++ {
+			if infoKey == 0 && len(downloadCount7Days.TimeData) < len(weeklyDownloadCountList) {
+				downloadCount7Days.TimeData = append(downloadCount7Days.TimeData, weeklyDownloadCountList[i].Date)
+			}
+			download7DaySeriesItem.Data = append(download7DaySeriesItem.Data, weeklyDownloadCountList[i].Count)
+		}
+		downloadCount7Days.Series = append(downloadCount7Days.Series, download7DaySeriesItem)
+
+		// 获取应用近7天应用启动次数
+		weeklyAppStartCountList, err := resource.GetWeeklyAppStartCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+		var appStart7DaySeriesItem types.AppStartCount7DaySeriesItem
+		appStart7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyAppStartCountList); i++ {
+			if infoKey == 0 && len(appStartCount7Days.TimeData) < len(weeklyAppStartCountList) {
+				appStartCount7Days.TimeData = append(appStartCount7Days.TimeData, weeklyAppStartCountList[i].Date)
+			}
+			appStart7DaySeriesItem.Data = append(appStart7DaySeriesItem.Data, weeklyAppStartCountList[i].Count)
+		}
+		appStartCount7Days.Series = append(appStartCount7Days.Series, appStart7DaySeriesItem)
+
+		// 获取应用近7天获取应用升级次数
+		weeklyAppGetStrategyCountList, err := resource.GetWeeklyAppGetStrategyCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+		var appGetStrategy7DaySeriesItem types.AppGetStrategyCount7DaySeriesItem
+		appGetStrategy7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyAppGetStrategyCountList); i++ {
+			if infoKey == 0 && len(appGetStrategyCount7Days.TimeData) < len(weeklyAppGetStrategyCountList) {
+				appGetStrategyCount7Days.TimeData = append(appGetStrategyCount7Days.TimeData, weeklyAppGetStrategyCountList[i].Date)
+			}
+			appGetStrategy7DaySeriesItem.Data = append(appGetStrategy7DaySeriesItem.Data, weeklyAppGetStrategyCountList[i].Count)
+		}
+		appGetStrategyCount7Days.Series = append(appGetStrategyCount7Days.Series, appGetStrategy7DaySeriesItem)
+
+		// 获取应用近7天应用升级次数
+		weeklyAppUpgradeCountList, err := resource.GetWeeklyAppUpgradeCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+		var appUpgrade7DaySeriesItem types.AppUpgradeCount7DaySeriesItem
+		appUpgrade7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyAppUpgradeCountList); i++ {
+			if infoKey == 0 && len(appUpgradeCount7Days.TimeData) < len(weeklyAppUpgradeCountList) {
+				appUpgradeCount7Days.TimeData = append(appUpgradeCount7Days.TimeData, weeklyAppUpgradeCountList[i].Date)
+			}
+			appUpgrade7DaySeriesItem.Data = append(appUpgrade7DaySeriesItem.Data, weeklyAppUpgradeCountList[i].Count)
+		}
+		appUpgradeCount7Days.Series = append(appUpgradeCount7Days.Series, appUpgrade7DaySeriesItem)
+
+	}
+
+	// 获取公司下的所有lnx应用
+	var lnxPredicates []predicate.UpgradeLnx
+	lnxPredicates = append(lnxPredicates, upgradelnx.CompanyIDEQ(int(companyID)))
+	lnxPredicates = append(lnxPredicates, upgradelnx.IsDelEQ(0))
+	lnxList, err := l.svcCtx.DB.UpgradeLnx.Query().Where(lnxPredicates...).Page(l.ctx, 1, 100)
+	if err != nil {
+		return nil, err
+	}
+	for infoKey, info := range lnxList.List {
+
+		// 获取应用近7天设备新增量
+		weeklyDownloadCountList, err := resource.GetWeeklyDownloadCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+
+		var download7DaySeriesItem types.DownloadCount7DaySeriesItem
+		download7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyDownloadCountList); i++ {
+			if infoKey == 0 && len(downloadCount7Days.TimeData) < len(weeklyDownloadCountList) {
+				downloadCount7Days.TimeData = append(downloadCount7Days.TimeData, weeklyDownloadCountList[i].Date)
+			}
+			download7DaySeriesItem.Data = append(download7DaySeriesItem.Data, weeklyDownloadCountList[i].Count)
+		}
+		downloadCount7Days.Series = append(downloadCount7Days.Series, download7DaySeriesItem)
+
+		// 获取应用近7天应用启动次数
+		weeklyAppStartCountList, err := resource.GetWeeklyAppStartCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+		var appStart7DaySeriesItem types.AppStartCount7DaySeriesItem
+		appStart7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyAppStartCountList); i++ {
+			if infoKey == 0 && len(appStartCount7Days.TimeData) < len(weeklyAppStartCountList) {
+				appStartCount7Days.TimeData = append(appStartCount7Days.TimeData, weeklyAppStartCountList[i].Date)
+			}
+			appStart7DaySeriesItem.Data = append(appStart7DaySeriesItem.Data, weeklyAppStartCountList[i].Count)
+		}
+		appStartCount7Days.Series = append(appStartCount7Days.Series, appStart7DaySeriesItem)
+
+		// 获取应用近7天获取应用升级次数
+		weeklyAppGetStrategyCountList, err := resource.GetWeeklyAppGetStrategyCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+		var appGetStrategy7DaySeriesItem types.AppGetStrategyCount7DaySeriesItem
+		appGetStrategy7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyAppGetStrategyCountList); i++ {
+			if infoKey == 0 && len(appGetStrategyCount7Days.TimeData) < len(weeklyAppGetStrategyCountList) {
+				appGetStrategyCount7Days.TimeData = append(appGetStrategyCount7Days.TimeData, weeklyAppGetStrategyCountList[i].Date)
+			}
+			appGetStrategy7DaySeriesItem.Data = append(appGetStrategy7DaySeriesItem.Data, weeklyAppGetStrategyCountList[i].Count)
+		}
+		appGetStrategyCount7Days.Series = append(appGetStrategyCount7Days.Series, appGetStrategy7DaySeriesItem)
+
+		// 获取应用近7天应用升级次数
+		weeklyAppUpgradeCountList, err := resource.GetWeeklyAppUpgradeCount(l.ctx, l.svcCtx, info.Key)
+		if err != nil {
+			return nil, err
+		}
+		var appUpgrade7DaySeriesItem types.AppUpgradeCount7DaySeriesItem
+		appUpgrade7DaySeriesItem.AppName = info.Name
+		for i := 0; i < len(weeklyAppUpgradeCountList); i++ {
+			if infoKey == 0 && len(appUpgradeCount7Days.TimeData) < len(weeklyAppUpgradeCountList) {
+				appUpgradeCount7Days.TimeData = append(appUpgradeCount7Days.TimeData, weeklyAppUpgradeCountList[i].Date)
+			}
+			appUpgrade7DaySeriesItem.Data = append(appUpgrade7DaySeriesItem.Data, weeklyAppUpgradeCountList[i].Count)
+		}
+		appUpgradeCount7Days.Series = append(appUpgradeCount7Days.Series, appUpgrade7DaySeriesItem)
+
+	}
+
+	// 获取公司下的所有lnx应用
+	var winPredicates []predicate.UpgradeWin
+	winPredicates = append(winPredicates, upgradewin.CompanyIDEQ(int(companyID)))
+	winPredicates = append(winPredicates, upgradewin.IsDelEQ(0))
+	winList, err := l.svcCtx.DB.UpgradeWin.Query().Where(winPredicates...).Page(l.ctx, 1, 100)
+	if err != nil {
+		return nil, err
+	}
+	for infoKey, info := range winList.List {
 
 		// 获取应用近7天设备新增量
 		weeklyDownloadCountList, err := resource.GetWeeklyDownloadCount(l.ctx, l.svcCtx, info.Key)
