@@ -3,10 +3,11 @@ package download
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"upgradelink-api/server/api/internal/logic/download"
 	"upgradelink-api/server/api/internal/svc"
 	"upgradelink-api/server/api/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 func GetMacDownloadInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
@@ -22,7 +23,8 @@ func GetMacDownloadInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
+			// 执行 HTTP 重定向
+			http.Redirect(w, r, resp, http.StatusFound) // 302 临时重定向
 		}
 	}
 }

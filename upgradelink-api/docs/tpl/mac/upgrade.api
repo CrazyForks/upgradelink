@@ -139,6 +139,8 @@ type (
     GetMacDownloadInfoReq {
         // mac 应用 唯一标识
         MacKey string `form:"macKey"`
+        // arch
+        Arch string `form:"arch"`
         // 指定版本（可空，为空时是最新版本）
         VersionCode int64 `form:"versionCode,default=0"`
         // 指定版本id

@@ -266,6 +266,7 @@ type GetFileVersionInfoRespData struct {
 
 type GetLnxDownloadInfoReq struct {
 	LnxKey      string `form:"lnxKey"`
+	Arch        string `form:"arch"`
 	VersionCode int64  `form:"versionCode,default=0"`
 	VersionId   int64  `form:"versionId,default=0"`
 }
@@ -319,6 +320,7 @@ type GetLnxVersionInfoRespData struct {
 
 type GetMacDownloadInfoReq struct {
 	MacKey      string `form:"macKey"`
+	Arch        string `form:"arch"`
 	VersionCode int64  `form:"versionCode,default=0"`
 	VersionId   int64  `form:"versionId,default=0"`
 }
@@ -468,6 +470,7 @@ type GetUrlVersionInfoRespData struct {
 
 type GetWinDownloadInfoReq struct {
 	WinKey      string `form:"winKey"`
+	Arch        string `form:"arch"`
 	VersionCode int64  `form:"versionCode,default=0"`
 	VersionId   int64  `form:"versionId,default=0"`
 }

@@ -2,6 +2,11 @@ package download
 
 import (
 	"context"
+	"errors"
+	"upgradelink-api/server/api/internal/common"
+	"upgradelink-api/server/api/internal/common/http_handlers"
+	"upgradelink-api/server/api/internal/resource"
+	"upgradelink-api/server/api/internal/resource/model"
 
 	"upgradelink-api/server/api/internal/svc"
 	"upgradelink-api/server/api/internal/types"
@@ -24,7 +29,79 @@ func NewGetMacDownloadInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 }
 
 func (l *GetMacDownloadInfoLogic) GetMacDownloadInfo(req *types.GetMacDownloadInfoReq) (resp string, err error) {
-	// todo: add your logic here and delete this line
+	// 请求参数效验
+	if req.MacKey == "" {
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrMac1Msg, common.ErrMac1Docs)
+	}
+	if req.VersionCode < 0 {
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrParamInvalid, common.ErrMac1Msg, common.ErrMac1Docs)
+	}
 
-	return
+	// 通过唯一标识 获取到对应的应用信息
+	macInfo, err := l.svcCtx.ResourceCtx.GetMacInfoByKey(l.ctx, req.MacKey)
+	if err != nil && errors.Is(err, model.ErrNotFound) {
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrMac2Msg, common.ErrMac2Docs)
+	} else if err != nil {
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
+	}
+
+	var macVersionInfo *model.UpgradeMacVersion
+	// 判断是否传了 versionId， 如果传了，则直接选择数据
+	if req.VersionId > 0 {
+		macVersionInfo, err = l.svcCtx.ResourceCtx.GetMacVersionInfoById(l.ctx, req.VersionId)
+		if err != nil && errors.Is(err, model.ErrNotFound) {
+			return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrMac3Msg, common.ErrMac3Docs)
+		} else if err != nil {
+			return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
+		}
+	} else {
+		// 判断是否固定了版本号，如果没有固定 则获取详细的版本信息
+		if req.VersionCode == 0 {
+			macVersionInfo, err = l.svcCtx.ResourceCtx.GetMacVersionLastInfoByMacId(l.ctx, macInfo.Id)
+			if err != nil && errors.Is(err, model.ErrNotFound) {
+				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrMac3Msg, common.ErrMac3Docs)
+			} else if err != nil {
+				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
+			}
+
+		} else {
+			macVersionInfo, err = l.svcCtx.ResourceCtx.GetMacVersionInfoByMacIdAndArchAndVersionCode(l.ctx, macInfo.Id, req.Arch, req.VersionCode)
+			if err != nil && errors.Is(err, model.ErrNotFound) {
+				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrNotFound, common.ErrMac3Msg, common.ErrMac3Docs)
+			} else if err != nil {
+				return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
+			}
+		}
+	}
+
+	// 通过文件信息 获取云文件地址
+	cloudFileInfo, err := l.svcCtx.ResourceCtx.GetCloudFileInfoById(l.ctx, macVersionInfo.CloudFileId)
+	if err != nil && errors.Is(err, model.ErrNotFound) {
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.ErrMac4Msg, common.ErrMac4Docs)
+	} else if err != nil {
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.ErrLnx4Msg, common.ErrLnx4Docs)
+	}
+
+	// 插入日志表
+	_, err = l.svcCtx.ResourceCtx.AddAppDownloadReportLog(l.ctx, resource.AddAppDownloadReportLogReq{
+		CompanyId:           macInfo.CompanyId,
+		Timestamp:           common.GetCurrentTime(),
+		AppKey:              macInfo.Key,
+		AppType:             "mac",
+		AppVersionId:        macVersionInfo.Id,
+		AppVersionCode:      macVersionInfo.VersionCode,
+		AppVersionPlatform:  "",
+		AppVersionTarget:    "",
+		AppVersionArch:      macVersionInfo.Arch,
+		DownloadCloudFileId: cloudFileInfo.Id,
+	})
+	if err != nil {
+		return "", http_handlers.NewLinkErr(l.ctx, http_handlers.ErrInternalServerError, common.Err1Msg, common.Err1Docs)
+	}
+
+	// 接口返回文件下载地址
+	urlPath := ""
+	urlPath = cloudFileInfo.Url
+
+	return urlPath, nil
 }
