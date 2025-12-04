@@ -61,7 +61,7 @@ services:
       - upgrade-mysql
       - upgrade-redis
   upgradelink-admin-upgrade:
-    image: toolsetlink/upgradelink-admin-upgrade:2.2.0
+    image: toolsetlink/upgradelink-admin-upgrade:2.3.1
     container_name: upgradelink-admin-upgrade # 容器名称
     volumes:
       - ./upgradelink-admin-upgrade/nginx.conf:/etc/nginx/nginx.conf
@@ -89,7 +89,7 @@ services:
       - upgradelink-admin-message
       - upgradelink-admin-upgrade
   upgradelink-admin-ui:
-    image: toolsetlink/upgradelink-admin-ui:2.2.0
+    image: toolsetlink/upgradelink-admin-ui:2.3.1
     container_name: upgradelink-admin-ui # 容器名称
     volumes:
       - ./upgradelink-admin-ui/nginx.conf:/etc/nginx/nginx.conf
@@ -100,7 +100,7 @@ services:
     depends_on: # 启动顺序
       - upgradelink-admin-core-api
   upgradelink-api:
-    image: toolsetlink/upgradelink-api:2.2.0
+    image: toolsetlink/upgradelink-api:2.3.1
     container_name: upgradelink-api # 容器名称
     volumes:
       - ./upgradelink-api/nginx.conf:/etc/nginx/nginx.conf
@@ -111,6 +111,19 @@ services:
       - '8080:8080'
     depends_on: # 启动顺序
       - upgradelink-admin-ui
+  upgradelink-admin-task:
+    image: toolsetlink/upgradelink-admin-task:2.3.1
+    container_name: upgradelink-admin-task # 容器名称
+    volumes:
+      - ./upgradelink-admin-task/nginx.conf:/etc/nginx/nginx.conf
+      - ./upgradelink-admin-task/logrotate-nginx:/link/upgradelink-admin-task/build/logrotate-nginx
+      - ./upgradelink-admin-task/supervisord.conf:/link/upgradelink-admin-task/build/supervisord.conf
+      - ./upgradelink-admin-task/task.yaml:/link/upgradelink-admin-task/etc/task.yaml
+    ports:
+      - '9110:9110'
+    depends_on: # 启动顺序
+      - upgradelink-admin-ui
+
 
 ## 各个模块文件下的配置文件为替换配置文件，容器内程序配置使用默认数据库连接，需要在此选择挂载重新配置
 ## 可选择自己所需启动的容器、修改端口映射关系
