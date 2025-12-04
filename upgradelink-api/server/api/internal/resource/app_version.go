@@ -136,6 +136,63 @@ func (c *Ctx) GetAppVersionIdByReport(ctx context.Context, req GetAppVersionIdBy
 		}
 
 		// 通过唯一标识 获取到对应的应用信息
+		macInfo, err := c.GetMacInfoByKey(ctx, req.AppKey)
+		if err != nil && errors.Is(err, model.ErrNotFound) {
+		} else if err != nil {
+			return versionId, err
+		}
+		if macInfo != nil {
+			// 查询出版本号 id
+			versionInfo, err := c.GetMacVersionInfoByMacIdAndArchAndVersionCode(ctx, macInfo.Id, req.AppVersionArch, req.AppVersionCode)
+			if err != nil && errors.Is(err, model.ErrNotFound) {
+			} else if err != nil {
+				return versionId, err
+			}
+			if versionInfo == nil {
+				return versionId, nil
+			}
+			return versionInfo.Id, nil
+		}
+
+		// 通过唯一标识 获取到对应的应用信息
+		lnxInfo, err := c.GetLnxInfoByKey(ctx, req.AppKey)
+		if err != nil && errors.Is(err, model.ErrNotFound) {
+		} else if err != nil {
+			return versionId, err
+		}
+		if lnxInfo != nil {
+			// 查询出版本号 id
+			versionInfo, err := c.GetLnxVersionInfoByLnxIdAndArchAndVersionCode(ctx, lnxInfo.Id, req.AppVersionArch, req.AppVersionCode)
+			if err != nil && errors.Is(err, model.ErrNotFound) {
+			} else if err != nil {
+				return versionId, err
+			}
+			if versionInfo == nil {
+				return versionId, nil
+			}
+			return versionInfo.Id, nil
+		}
+
+		// 通过唯一标识 获取到对应的应用信息
+		winInfo, err := c.GetWinInfoByKey(ctx, req.AppKey)
+		if err != nil && errors.Is(err, model.ErrNotFound) {
+		} else if err != nil {
+			return versionId, err
+		}
+		if winInfo != nil {
+			// 查询出版本号 id
+			versionInfo, err := c.GetWinVersionInfoByWinIdAndArchAndVersionCode(ctx, winInfo.Id, req.AppVersionArch, req.AppVersionCode)
+			if err != nil && errors.Is(err, model.ErrNotFound) {
+			} else if err != nil {
+				return versionId, err
+			}
+			if versionInfo == nil {
+				return versionId, nil
+			}
+			return versionInfo.Id, nil
+		}
+
+		// 通过唯一标识 获取到对应的应用信息
 		configurationInfo, err := c.GetConfigurationInfoByKey(ctx, req.AppKey)
 		if err != nil && errors.Is(err, model.ErrNotFound) {
 		} else if err != nil {
