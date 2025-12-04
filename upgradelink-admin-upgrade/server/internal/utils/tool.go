@@ -40,7 +40,7 @@ func StringToTime(timeStr string) (*time.Time, error) {
 	// 定义时间格式
 	layout := "2006-01-02 15:04:05"
 	// 解析字符串为时间对象
-	t, err := time.Parse(layout, timeStr)
+	t, err := time.ParseInLocation(layout, timeStr, time.Local)
 	if err != nil {
 		return nil, err
 	}
