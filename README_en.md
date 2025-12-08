@@ -95,12 +95,12 @@ Visit `http://localhost:8081`; the deployment is successful if the Web console o
 - Port 8888: API service port (for applications to integrate SDK)
 
 # Other Deployment Methods
-- [Standalone Quick Start Documentation](https://www.toolsetlink.com/upgrade/deploy/quick-start-docker2.html)
-- [Docker-Compose Quick Start Documentation](https://www.toolsetlink.com/upgrade/deploy/docker-compose.html)
-- [Cluster Deployment](https://www.toolsetlink.com/upgrade/deploy/cluster-docker.html)
+- [Standalone Quick Start Documentation](https://www.toolsetlink.com/en/upgrade/deploy/quick-start-docker2.html)
+- [Docker-Compose Quick Start Documentation](https://www.toolsetlink.com/en/upgrade/deploy/docker-compose.html)
+- [Cluster Deployment](https://www.toolsetlink.com/en/upgrade/deploy/cluster-docker.html)
 
 # Documentation
-You can view the complete documentation on the [UpgradeLink](https://www.toolsetlink.com/upgrade/) website.
+You can view the complete documentation on the [UpgradeLink](https://www.toolsetlink.com/en/upgrade/) website.
 
 All latest and long-term notifications can also be found here: [UpgradeLink Notification Issues](https://github.com/toolsetlink/upgradelink/issues)
 
@@ -123,7 +123,7 @@ All latest and long-term notifications can also be found here: [UpgradeLink Noti
 - [lazyeat (Gesture Control)](https://github.com/lanxiuyun/lazyeat) - Gesture control tool
 
 ## Enterprise Edition Open Source Plan
-Free enterprise-level services are provided. For details, check the [Open Source Plan Link](https://www.toolsetlink.com/upgrade/open-source/plan.html)
+Free enterprise-level services are provided. For details, check the [Open Source Plan Link](https://www.toolsetlink.com/en/upgrade/open-source/plan.html)
 
 # Contributors
 
