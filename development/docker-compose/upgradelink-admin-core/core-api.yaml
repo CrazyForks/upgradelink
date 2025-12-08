@@ -24,7 +24,7 @@ Captcha:
 
 DatabaseConf:
   Type: mysql
-  Host: upgrade-mysql
+  Host: upgradelink-mysql
   Port: 3306
   DBName: upgrade
   Username: root # set your username
@@ -75,7 +75,7 @@ CROSConf:
   Address: '*'    # if it is *, allow all ip and address. e.g. http://example.com
 
 RedisConf:
-  Host: upgrade-redis:6379
+  Host: upgradelink-redis:6379
   Db: 0
   Pass: a123456
 
@@ -86,9 +86,7 @@ CoreRpc:
 McmsRpc:
   Target: upgradelink-admin-message:9106
   Enabled: true
-  Timeout: 5000
 
 JobRpc:
   Target: k8s://default/job-rpc-svc:9105
   Enabled: false
-

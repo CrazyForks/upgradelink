@@ -1,8 +1,8 @@
 version: '2.2.0'
 services:
-  upgrade-mysql:
+  upgradelink-mysql:
     image: mysql:8.4.3 # MySQL 8.4.3 镜像
-    container_name: upgrade-mysql # 容器名称
+    container_name: upgradelink-mysql # 容器名称
     environment:
       MYSQL_ROOT_PASSWORD: Rootroot123! # 设置根用户密码
       MYSQL_DATABASE: upgrade # 创建默认数据库
@@ -14,9 +14,9 @@ services:
       - ../mysql-8.4.3/data:/var/lib/mysql # 映射数据目录，宿主机:容器
       - ../mysql-8.4.3/my.cnf:/etc/mysql/my.cnf # 映射配置文件目录
     restart: always # 容器开机自启
-  upgrade-redis: # 服务名称
+  upgradelink-redis: # 服务名称
     image: redis:6.0.20 # redis镜像版本
-    container_name: upgrade-redis # 容器名称
+    container_name: upgradelink-redis # 容器名称
     ports:
       - 6379:6379 # 指定宿主机端口与容器端口映射关系，宿主机：容器
     volumes:
@@ -34,8 +34,8 @@ services:
     ports:
       - '9101:9101'
     depends_on: # 启动顺序
-      - upgrade-mysql
-      - upgrade-redis
+      - upgradelink-mysql
+      - upgradelink-redis
   upgradelink-admin-file:
     image: toolsetlink/upgradelink-admin-file:2.2.0
     container_name: upgradelink-admin-file # 容器名称
@@ -47,8 +47,7 @@ services:
     ports:
       - '9112:9112'
     depends_on: # 启动顺序
-      - upgrade-mysql
-      - upgrade-redis
+      - upgradelink-admin-core-rpc
   upgradelink-admin-message:
     image: toolsetlink/upgradelink-admin-message:2.2.0
     container_name: upgradelink-admin-message # 容器名称
@@ -58,8 +57,7 @@ services:
     ports:
       - '9106:9106'
     depends_on: # 启动顺序
-      - upgrade-mysql
-      - upgrade-redis
+      - upgradelink-admin-core-rpc
   upgradelink-admin-upgrade:
     image: toolsetlink/upgradelink-admin-upgrade:2.3.1
     container_name: upgradelink-admin-upgrade # 容器名称
@@ -71,8 +69,7 @@ services:
     ports:
       - '8182:8182'
     depends_on: # 启动顺序
-      - upgrade-mysql
-      - upgrade-redis
+      - upgradelink-admin-core-rpc
   upgradelink-admin-core-api:
     image: toolsetlink/upgradelink-admin-core-api:2.2.0
     container_name: upgradelink-admin-core-api # 容器名称
@@ -84,9 +81,6 @@ services:
     ports:
       - '9110:9110'
     depends_on: # 启动顺序
-      - upgradelink-admin-core-rpc
-      - upgradelink-admin-file
-      - upgradelink-admin-message
       - upgradelink-admin-upgrade
   upgradelink-admin-ui:
     image: toolsetlink/upgradelink-admin-ui:2.3.1
@@ -120,7 +114,7 @@ services:
       - ./upgradelink-admin-task/supervisord.conf:/link/upgradelink-admin-task/build/supervisord.conf
       - ./upgradelink-admin-task/task.yaml:/link/upgradelink-admin-task/etc/task.yaml
     ports:
-      - '9110:9110'
+      - '9120:9120'
     depends_on: # 启动顺序
       - upgradelink-admin-ui
 

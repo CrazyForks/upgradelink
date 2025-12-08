@@ -3,7 +3,7 @@ ListenOn: 0.0.0.0:9101
 
 DatabaseConf:
   Type: mysql
-  Host: upgrade-mysql
+  Host: upgradelink-mysql
   Port: 3306
   DBName: upgrade
   Username: root # set your username
@@ -24,7 +24,7 @@ Log:
   StackCoolDownMillis: 100
 
 RedisConf:
-  Host: upgrade-redis:6379
+  Host: upgradelink-redis:6379
   Db: 0
   Pass: a123456
 

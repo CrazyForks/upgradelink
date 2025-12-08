@@ -1,6 +1,6 @@
 Name: task
 Host: 0.0.0.0
-Port: 9110
+Port: 9120
 MaxBytes: 1073741824 # max content length : 1 gb | 所有类型单个文件最大大小
 Timeout: 600000 # bigger max bytes need longer timeout | 超时时间
 

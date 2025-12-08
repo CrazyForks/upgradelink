@@ -4,7 +4,7 @@ Timeout: 5000
 
 DatabaseConf:
   Type: mysql
-  Host: upgrade-mysql
+  Host: upgradelink-mysql
   Port: 3306
   DBName: upgrade
   Username: root # set your username
@@ -15,7 +15,7 @@ DatabaseConf:
   MysqlConfig: "&loc=Asia%2FShanghai"
 
 RedisConf:
-  Host: upgrade-redis:6379
+  Host: upgradelink-redis:6379
   Db: 0
   Pass: a123456
 
