@@ -1,4 +1,3 @@
-version: '1'
 services:
   redis: # 服务名称
     image: redis:6.0.20 # redis镜像版本
