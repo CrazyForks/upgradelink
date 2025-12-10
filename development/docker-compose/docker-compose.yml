@@ -112,7 +112,7 @@ services:
       - ./upgradelink-admin-task/nginx.conf:/etc/nginx/nginx.conf
       - ./upgradelink-admin-task/logrotate-nginx:/link/upgradelink-admin-task/build/logrotate-nginx
       - ./upgradelink-admin-task/supervisord.conf:/link/upgradelink-admin-task/build/supervisord.conf
-      - ./upgradelink-admin-task/task.yaml:/link/upgradelink-admin-task/etc/task.yaml
+      - ./upgradelink-admin-task/task.yaml:/link/upgradelink-admin-task/task/etc/task.yaml
     ports:
       - '9120:9120'
     depends_on: # 启动顺序
