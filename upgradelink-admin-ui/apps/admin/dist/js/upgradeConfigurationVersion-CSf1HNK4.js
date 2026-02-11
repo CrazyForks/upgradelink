@@ -1,0 +1,1 @@
+import{b7 as e}from"./bootstrap-DSP3odkf.js";const n=r=>e.post("/upgrade_configuration_version/list",r),t=r=>e.post("/upgrade_configuration_version/create",r),i=r=>e.post("/upgrade_configuration_version/update",r),a=r=>e.post("/upgrade_configuration_version/delete",r);export{t as c,a as d,n as g,i as u};

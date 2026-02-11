@@ -241,9 +241,63 @@ const messages = {
     prompt: "\u63D0\u793A",
     reset: "\u91CD\u7F6E",
     submit: "\u63D0\u4EA4"
+  },
+  "ja-JP": {
+    cancel: "\u30AD\u30E3\u30F3\u30BB\u30EB",
+    collapse: "\u6298\u308A\u305F\u305F\u3080",
+    confirm: "\u78BA\u8A8D",
+    expand: "\u5C55\u958B",
+    prompt: "\u30D7\u30ED\u30F3\u30D7\u30C8",
+    reset: "\u30EA\u30BB\u30C3\u30C8",
+    submit: "\u9001\u4FE1"
+  },
+  "pt-BR": {
+    cancel: "Cancelar",
+    collapse: "Recolher",
+    confirm: "Confirmar",
+    expand: "Expandir",
+    prompt: "Prompt",
+    reset: "Redefinir",
+    submit: "Enviar"
+  },
+  "ru-RU": {
+    cancel: "\u041E\u0442\u043C\u0435\u043D\u0438\u0442\u044C",
+    collapse: "\u0421\u0432\u0435\u0440\u043D\u0443\u0442\u044C",
+    confirm: "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044C",
+    expand: "\u0420\u0430\u0437\u0432\u0435\u0440\u043D\u0443\u0442\u044C",
+    prompt: "\u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430",
+    reset: "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C",
+    submit: "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C"
+  },
+  "es-ES": {
+    cancel: "Cancelar",
+    collapse: "Colapsar",
+    confirm: "Confirmar",
+    expand: "Expandir",
+    prompt: "Prompt",
+    reset: "Restablecer",
+    submit: "Enviar"
+  },
+  "ko-KR": {
+    cancel: "\uCDE8\uC18C",
+    collapse: "\uC811\uAE30",
+    confirm: "\uD655\uC778",
+    expand: "\uD3BC\uCE58\uAE30",
+    prompt: "\uD504\uB86C\uD504\uD2B8",
+    reset: "\uCD08\uAE30\uD654",
+    submit: "\uC81C\uCD9C"
+  },
+  "fa-IR": {
+    cancel: "\u0644\u063A\u0648",
+    collapse: "\u0628\u0633\u062A\u0646",
+    confirm: "\u062A\u0627\u06CC\u06CC\u062F",
+    expand: "\u0628\u0627\u0632 \u06A9\u0631\u062F\u0646",
+    prompt: "\u067E\u06CC\u0627\u0645",
+    reset: "\u0631\u06CC\u0633\u062A",
+    submit: "\u0627\u0631\u0633\u0627\u0644"
   }
 };
-const getMessages = (locale) => messages[locale];
+const getMessages = (locale) => messages[locale] || messages["en-US"];
 
 const useSimpleLocale = createSharedComposable(() => {
   const currentLocale = ref("zh-CN");

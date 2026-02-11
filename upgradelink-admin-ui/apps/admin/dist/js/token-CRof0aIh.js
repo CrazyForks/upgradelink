@@ -1,0 +1,1 @@
+import{b7 as e}from"./bootstrap-DSP3odkf.js";const s=t=>e.post("/token/list",t),n=t=>e.post("/token/update",t),r=t=>e.post("/token/delete",t),u=t=>e.post("/token/logout",{id:t});export{r as d,s as g,u as l,n as u};

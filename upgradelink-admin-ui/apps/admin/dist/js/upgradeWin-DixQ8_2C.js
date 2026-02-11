@@ -1,0 +1,1 @@
+import{b7 as t}from"./bootstrap-DSP3odkf.js";const a=e=>t.post("/upgrade_win/list",e),n=e=>t.post("/upgrade_win/create",e),p=e=>t.post("/upgrade_win/update",e),s=e=>t.post("/upgrade_win/delete",e);export{n as c,s as d,a as g,p as u};

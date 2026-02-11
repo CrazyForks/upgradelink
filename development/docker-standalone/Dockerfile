@@ -79,5 +79,5 @@ EXPOSE 80 8888
 CMD [ "/bin/bash", "start.sh" ]
 
 # 在当前目录执行
-# docker buildx build -t toolsetlink/upgradelink-standalone:3.0.0 --platform=linux/amd64,linux/arm64 -f ./Dockerfile ../../ --push
+# docker buildx build -t toolsetlink/upgradelink-standalone:3.1.0 --platform=linux/amd64,linux/arm64 -f ./Dockerfile ../../ --push
 

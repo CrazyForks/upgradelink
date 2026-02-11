@@ -64,7 +64,7 @@ declare function useForwardPriorityValues<T extends Record<string, any>, S exten
 declare const SCROLL_FIXED_CLASS = "_scroll__fixed_";
 declare function useScrollLock(): void;
 
-type Locale = 'en-US' | 'zh-CN';
+type Locale = 'en-US' | 'zh-CN' | 'ja-JP' | 'pt-BR' | 'ru-RU' | 'es-ES' | 'ko-KR' | 'fa-IR';
 
 declare const useSimpleLocale: () => {
     $t: vue.ComputedRef<(key: string) => string>;

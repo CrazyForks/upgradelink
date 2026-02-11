@@ -1,0 +1,1 @@
+import{b7 as t}from"./bootstrap-DSP3odkf.js";const r=e=>t.post("/upgrade_apk/list",e),a=e=>t.post("/upgrade_apk/create",e),s=e=>t.post("/upgrade_apk/update",e),d=e=>t.post("/upgrade_apk/delete",e);export{a as c,d,r as g,s as u};

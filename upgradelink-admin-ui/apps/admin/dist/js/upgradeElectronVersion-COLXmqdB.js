@@ -1,0 +1,1 @@
+import{b7 as r}from"./bootstrap-DSP3odkf.js";const o=e=>r.post("/upgrade_electron_version/list",e),n=e=>r.post("/upgrade_electron_version/create",e),s=e=>r.post("/upgrade_electron_version/update",e),a=e=>r.post("/upgrade_electron_version/delete",e);export{n as c,a as d,o as g,s as u};

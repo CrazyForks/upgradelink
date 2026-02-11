@@ -1,0 +1,1 @@
+import{b7 as r}from"./bootstrap-DSP3odkf.js";const p=e=>r.post("/upgrade_dev_group/list",e),u=e=>r.post("/upgrade_dev_group/create",e),o=e=>r.post("/upgrade_dev_group/update",e),a=e=>r.post("/upgrade_dev_group/delete",e);export{u as c,a as d,p as g,o as u};

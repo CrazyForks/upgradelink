@@ -1,0 +1,1 @@
+import{b7 as e}from"./bootstrap-DSP3odkf.js";const a=r=>e.post("/upgrade_tauri/list",r),u=r=>e.post("/upgrade_tauri/create",r),p=r=>e.post("/upgrade_tauri/update",r),s=r=>e.post("/upgrade_tauri/delete",r);export{u as c,s as d,a as g,p as u};
