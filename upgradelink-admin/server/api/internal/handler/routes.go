@@ -182,21 +182,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
+				Path:    "/cloud_file/presigned_url",
+				Handler: cloudfile.PresignedUrlHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/cloud_file/upload",
 				Handler: cloudfile.UploadHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/cloud_file/internal_upload_fasdadw",
-				Handler: cloudfile.InternalUploadHandler(serverCtx),
-			},
-		},
+		rest.WithTimeout(300000*time.Millisecond),
 	)
 
 	server.AddRoutes(
@@ -618,6 +614,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			}...,
 		),
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithTimeout(30000*time.Millisecond),
 	)
 
 	server.AddRoutes(
